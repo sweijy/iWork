@@ -14,7 +14,6 @@ import java.util.zip.GZIPInputStream;
 import instant.bean.Session;
 import instant.parser.localreceiver.CommandLocalReceiver;
 import instant.parser.localreceiver.ConnectLocalReceiver;
-import instant.parser.localreceiver.RobotLocalReceiver;
 import instant.utils.SharedUtil;
 import instant.utils.log.LogManager;
 import instant.utils.manager.FailMsgsManager;
@@ -55,6 +54,7 @@ public class CommandParser extends InterParse {
                 case 0x17:
                 case 0x1a:
                 case 0x1b:
+                case 0x1e:
                     break;
                 default:
                     backOnLineAck(4, msgid);
@@ -108,6 +108,9 @@ public class CommandParser extends InterParse {
                     break;
                 case 0x1b://burn reading receipt
                     // burnReadingReceipt(command.getDetail(), msgid);
+                    break;
+                case 0x1e://同步常用群
+                    commonGroups(command.getDetail());
                     break;
             }
         }
@@ -180,6 +183,9 @@ public class CommandParser extends InterParse {
                                     break;
                                 case 0x12://outer red packet
                                     // handlerOuterRedPacket(transferDataByte, messageId, errorNumber);
+                                    break;
+                                case 0x1e:
+                                    commonGroups(transferDataByte);
                                     break;
                             }
                             break;
@@ -254,6 +260,11 @@ public class CommandParser extends InterParse {
             CommandLocalReceiver.receiver.contactChanges(changeRecords);
         }
         SharedUtil.getInstance().putValue(SharedUtil.CONTACTS_VERSION, version);
+    }
+
+    private void commonGroups(ByteString buffer) throws Exception {
+        Connect.UserCommonGroups commonGroups = Connect.UserCommonGroups.parseFrom(buffer);
+        CommandLocalReceiver.receiver.commonGroups(commonGroups);
     }
 
     /**

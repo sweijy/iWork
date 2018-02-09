@@ -52,6 +52,11 @@ public class CommandLocalReceiver implements CommandListener {
     }
 
     @Override
+    public void commonGroups(Connect.UserCommonGroups commonGroups) {
+        getCommandListener().commonGroups(commonGroups);
+    }
+
+    @Override
     public void conversationMute(Connect.ManageSession manageSession) {
         getCommandListener().conversationMute(manageSession);
     }

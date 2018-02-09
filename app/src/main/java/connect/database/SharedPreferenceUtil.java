@@ -31,6 +31,7 @@ public class SharedPreferenceUtil {
     public static final String WEB_OPEN_APP = "web_open_app";
     public static final String APP_LANGUAGE_CODE = "app_language_code";
     public static final String USER_INFO = "user_info";
+    public static final String USER_LOGIN = "USER_LOGIN";
 
     public SharedPreferenceUtil() {}
 
@@ -67,6 +68,10 @@ public class SharedPreferenceUtil {
         SharedPreferences.Editor editor = sharePre.edit();
         editor.remove(key);
         editor.apply();
+    }
+
+    public int getIntValue(String key) {
+        return sharePre.getInt(key, 0);
     }
 
     public String getStringValue(String key) {
@@ -157,5 +162,15 @@ public class SharedPreferenceUtil {
                 .clear()
                 .apply();
         sharePre = null;
+    }
+
+
+
+    public void setUserLogin(int value){
+        putValue(USER_LOGIN,value);
+    }
+
+    public int getUserLogin() {
+        return getIntValue(USER_LOGIN);
     }
 }

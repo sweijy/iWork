@@ -136,6 +136,8 @@ public class LoginUserActivity extends BaseActivity {
         Animation loadAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.loading_white);
         imageLoading.startAnimation(loadAnimation);
 
+        SharedPreferenceUtil.getInstance().setUserLogin(0);
+
         final String userName = nameEt.getText().toString().trim();
         String password = passwordEt.getText().toString();
         Connect.LoginReq loginReq = Connect.LoginReq.newBuilder()

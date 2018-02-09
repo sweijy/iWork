@@ -232,6 +232,48 @@ public class CommandReceiver implements CommandListener {
     }
 
     @Override
+    public void commonGroups(Connect.UserCommonGroups commonGroups) {
+        ContactHelper.getInstance().removeCommonGroupEntity();
+
+        Map<String, GroupEntity> groupEntityMap = new HashMap<>();
+        Map<String, GroupMemberEntity> memberEntityMap = new HashMap<>();
+        List<Connect.GroupInfo> groupInfos = commonGroups.getGroupsList();
+        for (Connect.GroupInfo groupInfo : groupInfos) {
+            Connect.Group group = groupInfo.getGroup();
+
+            String groupIdentifier = group.getIdentifier();
+            GroupEntity groupEntity = new GroupEntity();
+            groupEntity.setIdentifier(groupIdentifier);
+            groupEntity.setAvatar(RegularUtil.groupAvatar(groupIdentifier));
+            groupEntity.setName(group.getName());
+            groupEntity.setCategory(group.getCategory());
+            groupEntity.setSummary(group.getSummary());
+            groupEntity.setCommon(1);
+            groupEntityMap.put(groupIdentifier, groupEntity);
+
+            List<Connect.GroupMember> members = groupInfo.getMembersList();
+            for (Connect.GroupMember member : members) {
+                GroupMemberEntity memberEntity = new GroupMemberEntity();
+                memberEntity.setIdentifier(groupIdentifier);
+                memberEntity.setUid(member.getUid());
+                memberEntity.setAvatar(member.getAvatar());
+                memberEntity.setUsername(member.getName());
+                memberEntity.setRole(member.getRole());
+                String memberIdentifyKey = groupIdentifier + member.getUid();
+                memberEntityMap.put(memberIdentifyKey, memberEntity);
+            }
+        }
+
+        Collection<GroupEntity> groupEntityCollection = groupEntityMap.values();
+        List<GroupEntity> groupEntities = new ArrayList<GroupEntity>(groupEntityCollection);
+        ContactHelper.getInstance().inserGroupEntity(groupEntities);
+
+        Collection<GroupMemberEntity> memberEntityCollection = memberEntityMap.values();
+        List<GroupMemberEntity> memEntities = new ArrayList<GroupMemberEntity>(memberEntityCollection);
+        ContactHelper.getInstance().inserGroupMemEntity(memEntities);
+    }
+
+    @Override
     public void updateGroupChange(Connect.GroupChange groupChange) throws Exception {
         Context context = BaseApplication.getInstance().getBaseContext();
         String groupKey = "";
@@ -282,7 +324,7 @@ public class CommandReceiver implements CommandListener {
                 List<GroupMemberEntity> memEntities = new ArrayList<GroupMemberEntity>(memberEntityCollection);
                 ContactHelper.getInstance().inserGroupMemEntity(memEntities);
 
-                StringBuffer stringBuffer =new StringBuffer();
+                StringBuffer stringBuffer = new StringBuffer();
                 for (GroupMemberEntity memEntity : memEntities) {
                     String memberName = memEntity.getUsername();
                     stringBuffer.append(memberName);

@@ -76,18 +76,6 @@
             android:name="connect.activity.login.GuidePageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.login.LoginPhoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.login.LoginPhoneCountryCodeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.login.LoginPhoneVerifyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.login.RegisterActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.workbench.VisitorsAuditActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -95,9 +83,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.workbench.WarehouseDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.login.LoginPassVerifyActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.widget.camera.CameraTakeActivity"
@@ -110,9 +95,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.contact.ContactInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.login.RegisterGetRandomActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.login.LoginUserActivity"

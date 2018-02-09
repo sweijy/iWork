@@ -3,7 +3,6 @@ package connect.activity.set;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,7 +16,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
-import connect.activity.login.LoginPhoneCountryCodeActivity;
 import connect.activity.login.bean.CountryBean;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -90,11 +88,6 @@ public class SafetyNewPhoneActivity extends BaseActivity {
     @OnClick(R.id.left_img)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
-    }
-
-    @OnClick(R.id.country_ll)
-    void countryCodeClick(View view) {
-        ActivityUtil.next(mActivity, LoginPhoneCountryCodeActivity.class, COUNTRY_CODE);
     }
 
     @OnClick(R.id.send_tv)

@@ -110,8 +110,6 @@ public class ContactFragment extends BaseFragment {
         public void itemClick(int position, ContactBean entity) {
             switch (entity.getStatus()) {
                 case 1:
-                    ((HomeActivity) mActivity).setFragmentDot(1, 0);
-                    ActivityUtil.next(mActivity, AddFriendActivity.class);
                     break;
                 case 6:
                     ChatActivity.startActivity(mActivity, Connect.ChatType.CONNECT_SYSTEM, "Connect");

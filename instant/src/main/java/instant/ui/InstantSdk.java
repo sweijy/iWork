@@ -7,6 +7,7 @@ import instant.bean.UserCookie;
 import instant.sender.SenderManager;
 import instant.ui.service.RemoteServeice;
 import instant.ui.service.SenderService;
+import instant.utils.SharedUtil;
 import instant.utils.log.LogManager;
 
 /**
@@ -32,7 +33,7 @@ public class InstantSdk {
         this.context = context;
     }
 
-    public void registerUserInfo(Context context, String uid,String privateKey,String publicKey,String token,String username,String avatar,long contactsCount) {
+    public void registerUserInfo(Context context, String uid,String privateKey,String publicKey,String token,String username,String avatar,long contactsCount,int userlogin) {
         UserCookie userCookie = new UserCookie();
         LogManager.getLogger().d(TAG, "uid :" + uid + "   token : " + token);
         userCookie.setUid(uid);
@@ -49,6 +50,8 @@ public class InstantSdk {
 
         SenderService.startService(context);
         RemoteServeice.startService(context);
+
+        SharedUtil.getInstance().updateUserLogin(userlogin);
     }
 
     public Context getBaseContext() {

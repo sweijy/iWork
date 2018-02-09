@@ -34,6 +34,7 @@ public class SharedUtil {
     public static String UPLOAD_APPINFO_VERSION = "UPLOAD_APPINFO_VERSION";
     public static String COOKIE_CONNECT_USER = "COOKIE_CONNECT_USER";
     public static String COOKIE_CHATUSER = "COOKIE_CHATUSER";
+    public static String USER_LOGIN = "USER_LOGIN";
 
     public static SharedUtil getInstance() {
         return getInstance(InstantSdk.getInstance().getBaseContext());
@@ -209,5 +210,13 @@ public class SharedUtil {
             }
         }
         return userCookie;
+    }
+
+    public int loadUserLogin(){
+        return getIntValue(USER_LOGIN);
+    }
+
+    public void updateUserLogin(int value){
+        putValue(USER_LOGIN,value);
     }
 }

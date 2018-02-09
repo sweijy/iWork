@@ -20,5 +20,4 @@ public interface StartContract {
     interface Presenter extends BasePresenter {
 
     }
-
 }

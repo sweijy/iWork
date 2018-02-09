@@ -209,4 +209,18 @@ public abstract class InterParse {
                 .setVersion(version).build();
         commandToIMTransfer(TimeUtil.timestampToMsgid(), SocketACK.CONTACT_SYNC, syncRelationship.toByteString());
     }
+
+
+    /**
+     * sycn contact
+     *
+     * @return
+     */
+    protected void requestCommonGroup() {
+        Connect.SyncRelationship syncRelationship = Connect.SyncRelationship.newBuilder()
+                .setVersion("0")
+                .build();
+
+        commandToIMTransfer(TimeUtil.timestampToMsgid(), SocketACK.UPLOAD_COMMON_GROUP, syncRelationship.toByteString());
+    }
 }

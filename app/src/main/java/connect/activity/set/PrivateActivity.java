@@ -54,7 +54,6 @@ public class PrivateActivity extends BaseActivity {
 
     @OnClick(R.id.black_list_ll)
     void goBlackList(View view) {
-        ActivityUtil.next(mActivity, PrivateBlackActivity.class);
     }
 
 }

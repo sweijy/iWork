@@ -17,6 +17,8 @@ public interface CommandListener {
 
     void contactChanges(Connect.WorkmateChangeRecords changeRecords);
 
+    void commonGroups(Connect.UserCommonGroups commonGroups);
+
     void conversationMute(Connect.ManageSession manageSession);
 
     void updateGroupChange( Connect.GroupChange groupChange) throws Exception;

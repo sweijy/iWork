@@ -29,7 +29,7 @@ public class ReceiverHelper {
 
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
         long count = ContactHelper.getInstance().contactsCount();
-
+        int userLogin = SharedPreferenceUtil.getInstance().getUserLogin();
         InstantSdk.getInstance().registerUserInfo(context,
                 userBean.getUid(),
                 userBean.getPriKey(),
@@ -37,7 +37,10 @@ public class ReceiverHelper {
                 userBean.getToken(),
                 userBean.getName(),
                 userBean.getAvatar(),
-                count);
+                count,
+                userLogin);
+
+        SharedPreferenceUtil.getInstance().setUserLogin(1);
 
         try {
             ConnectLocalReceiver.receiver.registerConnect(ConnectReceiver.receiver);
