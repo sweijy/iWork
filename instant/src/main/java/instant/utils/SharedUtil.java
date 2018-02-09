@@ -34,18 +34,15 @@ public class SharedUtil {
     public static String UPLOAD_APPINFO_VERSION = "UPLOAD_APPINFO_VERSION";
     public static String COOKIE_CONNECT_USER = "COOKIE_CONNECT_USER";
     public static String COOKIE_CHATUSER = "COOKIE_CHATUSER";
-    public static String COOKIE_RANDOM = "COOKIE_RANDOM";
-    public static String COOKIE_CHATFRIEND = "COOKIE_CHATFRIEND:";
-    public static String COOKIE_CHATGROUP_MEMBER = "COOKIE_CHATGROUP_MEMBER";
 
     public static SharedUtil getInstance() {
-        return getInstance(InstantSdk.instantSdk.getBaseContext());
+        return getInstance(InstantSdk.getInstance().getBaseContext());
     }
 
     private synchronized static SharedUtil getInstance(Context context) {
         if (null == sharePreUtil || null == sharePre) {
             sharePreUtil = new SharedUtil();
-            UserCookie userCookie = InstantSdk.instantSdk.getDefaultCookie();
+            UserCookie userCookie = InstantSdk.getInstance().getDefaultCookie();
             if (null == userCookie || TextUtils.isEmpty(userCookie.getUid())) {
                 userCookie = sharePreUtil.loadDefaultConnectCookie();
             }
@@ -57,7 +54,7 @@ public class SharedUtil {
 
     /****************************** Default Cookie ********************************************************/
     public void insertDefaultConnectCookie(UserCookie userCookie) {
-        Context context = InstantSdk.instantSdk.getBaseContext();
+        Context context = InstantSdk.getInstance().getBaseContext();
         SharedPreferences defaultSharePre = context.getSharedPreferences(SHAREPREFERENCES_DEFAULT, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = defaultSharePre.edit();
         editor.putString(COOKIE_CONNECT_USER, new Gson().toJson(userCookie));
@@ -65,7 +62,7 @@ public class SharedUtil {
     }
 
     public UserCookie loadDefaultConnectCookie() {
-        Context context = InstantSdk.instantSdk.getBaseContext();
+        Context context = InstantSdk.getInstance().getBaseContext();
         SharedPreferences defaultSharePre = context.getSharedPreferences(SHAREPREFERENCES_DEFAULT, Context.MODE_PRIVATE);
         String connectCookieKey = COOKIE_CONNECT_USER;
         UserCookie userCookie = null;
@@ -142,7 +139,8 @@ public class SharedUtil {
 
         sharePre.edit()
                 .clear()
-                .commit();
+                .apply();
+        sharePre = null;
     }
 
     /******************************  Connect Cookie  ********************************************************/

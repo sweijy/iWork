@@ -57,17 +57,12 @@ public class ConnectReceiver implements ConnectListener {
     @Override
     public void welcome() {
         String mypublickey = Session.getInstance().getConnectCookie().getUid();
-        ChatMsgEntity msgEntity = RobotChat.getInstance().txtMsg(InstantSdk.instantSdk.getBaseContext().getString(instant.R.string.Login_Welcome));
+        ChatMsgEntity msgEntity = RobotChat.getInstance().txtMsg(InstantSdk.getInstance().getBaseContext().getString(instant.R.string.Login_Welcome));
         msgEntity.setMessage_from(RobotChat.getInstance().nickName());
         msgEntity.setMessage_to(mypublickey);
 
         MessageHelper.getInstance().insertMsgExtEntity(msgEntity);
         CRobotChat.getInstance().updateRoomMsg(null, msgEntity.showContent(), msgEntity.getCreatetime(), -1, 1);
-    }
-
-    @Override
-    public void notifyBarNotice(String pubkey, int type, String content) {
-        NotificationBar.notificationBar.noticeBarMsg(pubkey, type, content);
     }
 
     @Override

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,15 +20,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
 import connect.activity.home.HomeActivity;
+import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
-import connect.utils.DialogUtil;
-import connect.utils.ProgressUtil;
 import connect.utils.StringUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
+import connect.utils.dialog.DialogUtil;
 import connect.utils.okhttp.HttpRequest;
 import connect.utils.okhttp.ResultCall;
 import connect.wallet.jni.AllNativeMethod;
@@ -79,6 +78,28 @@ public class LoginUserActivity extends BaseActivity {
         nameEt.addTextChangedListener(textWatcher);
         passwordEt.addTextChangedListener(textWatcher);
         relativeLogin.setEnabled(false);
+
+        String deveiceName = getIntent().getStringExtra("VALUE");
+        if (!TextUtils.isEmpty(deveiceName)) {
+            popRomteLoginDialog(deveiceName);
+        }
+    }
+
+    public void popRomteLoginDialog(String deveiceName){
+        String showContent = TextUtils.isEmpty(deveiceName) ?
+                getString(R.string.Error_Device_Remote_Other_Login) :
+                getString(R.string.Error_Device_Remote_Login, deveiceName);
+        DialogUtil.showAlertTextView(mActivity, null,showContent , null, getString(R.string.Common_OK), true, false, new DialogUtil.OnItemClickListener() {
+            @Override
+            public void confirm(String value) {
+                HomeAction.getInstance().sendEvent(HomeAction.HomeType.EXIT);
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        });
     }
 
     @OnClick(R.id.name_text)
@@ -115,10 +136,10 @@ public class LoginUserActivity extends BaseActivity {
         Animation loadAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.loading_white);
         imageLoading.startAnimation(loadAnimation);
 
-        String name = nameEt.getText().toString().trim();
+        final String userName = nameEt.getText().toString().trim();
         String password = passwordEt.getText().toString();
         Connect.LoginReq loginReq = Connect.LoginReq.newBuilder()
-                .setUsername(name)
+                .setUsername(userName)
                 .setPassword(password).build();
         HttpRequest.getInstance().post(UriUtil.CONNECT_V3_LOGIN, loginReq, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
@@ -132,9 +153,9 @@ public class LoginUserActivity extends BaseActivity {
                     UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
                     if (userBean == null || TextUtils.isEmpty(userLoginInfo.getPubKey())
                             || !userLoginInfo.getPubKey().equals(userBean.getPubKey())) {
-                        requestUpdatePub(userLoginInfo);
+                        requestUpdatePub(userLoginInfo, userName);
                     } else {
-                        UserBean userBean1 = new UserBean(userLoginInfo.getName(), userLoginInfo.getAvatar(), userLoginInfo.getUid(),
+                        UserBean userBean1 = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
                                 userLoginInfo.getOU(), userLoginInfo.getToken(), userBean.getPubKey(), userBean.getPriKey());
                         userBean1.setEmp_no(userLoginInfo.getEmpNo());
                         userBean1.setGender(userLoginInfo.getGender());
@@ -154,7 +175,7 @@ public class LoginUserActivity extends BaseActivity {
             public void onError(Connect.HttpNotSignResponse response) {
                 imageLoading.clearAnimation();
                 imageLoading.setVisibility(View.GONE);
-                ToastUtil.getInstance().showToast(R.string.Login_Password_incorrect);
+                ToastUtil.getInstance().showToast(R.string.Login_User_name_or_password_error);
             }
 
             @Override
@@ -166,7 +187,7 @@ public class LoginUserActivity extends BaseActivity {
         });
     }
 
-    private void requestUpdatePub(final Connect.UserLoginInfo userLoginInfo) {
+    private void requestUpdatePub(final Connect.UserLoginInfo userLoginInfo, final String userName) {
         final String priKey = AllNativeMethod.cdCreateNewPrivKey();
         final String pubKey1 = AllNativeMethod.cdGetPubKeyFromPrivKey(priKey);
         Connect.PubKey pubKey = Connect.PubKey.newBuilder()
@@ -184,7 +205,7 @@ public class LoginUserActivity extends BaseActivity {
         HttpRequest.getInstance().post(UriUtil.CONNECT_V3_PUBKEY, httpRequest, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
-                UserBean userBean1 = new UserBean(userLoginInfo.getName(), userLoginInfo.getAvatar(), userLoginInfo.getUid(),
+                UserBean userBean1 = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
                         userLoginInfo.getOU(), userLoginInfo.getToken(), pubKey1, priKey);
                 userBean1.setEmp_no(userLoginInfo.getEmpNo());
                 userBean1.setGender(userLoginInfo.getGender());

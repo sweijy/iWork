@@ -1,15 +1,13 @@
 package connect.activity.chat.set.presenter;
 
 import android.app.Activity;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import connect.activity.chat.ChatActivity;
 import connect.activity.chat.bean.Talker;
-import connect.activity.chat.set.contract.TalkGroupCreateContract;
-import connect.activity.home.bean.GroupRecBean;
+import connect.activity.chat.set.contract.GroupCreateContract;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
@@ -19,6 +17,7 @@ import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.GroupEntity;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
+import connect.utils.ActivityUtil;
 import connect.utils.ProtoBufUtil;
 import connect.utils.RegularUtil;
 import connect.utils.TimeUtil;
@@ -34,13 +33,13 @@ import protos.Connect;
  * Created by PuJin on 2018/1/11.
  */
 
-public class TalkGroupCreatePresenter implements TalkGroupCreateContract.Presenter {
+public class GroupCreatePresenter implements GroupCreateContract.Presenter {
 
     private Activity activity;
-    private TalkGroupCreateContract.BView view;
+    private GroupCreateContract.BView view;
     private List<Connect.Workmate> contactEntities = new ArrayList<>();
 
-    public TalkGroupCreatePresenter(TalkGroupCreateContract.BView view) {
+    public GroupCreatePresenter(GroupCreateContract.BView view) {
         this.view = view;
         view.setPresenter(this);
     }
@@ -53,11 +52,11 @@ public class TalkGroupCreatePresenter implements TalkGroupCreateContract.Present
 
     /**
      * @param groupName
-     * @param groupCategory “LOW”:1,
-     *                      “HIGH”:2
      */
     @Override
     public void createGroup(String groupName) {
+        view.setLeftEnanle(false);
+
         List<Connect.AddGroupUserInfo> groupUserInfos = new ArrayList<>();
         for (Connect.Workmate entity : contactEntities) {
             Connect.AddGroupUserInfo userInfo = Connect.AddGroupUserInfo.newBuilder()
@@ -89,6 +88,7 @@ public class TalkGroupCreatePresenter implements TalkGroupCreateContract.Present
             public void onError(Connect.HttpResponse response) {
                 // - 2421 groupinfo error
                 // - 2422 group create failed
+                view.setLeftEnanle(true);
                 if (response.getCode() == 2421) {
                     ToastEUtil.makeText(activity, R.string.Link_Group_create_information_error, ToastEUtil.TOAST_STATUS_FAILE).show();
                 } else if (response.getCode() == 2422) {
@@ -126,7 +126,6 @@ public class TalkGroupCreatePresenter implements TalkGroupCreateContract.Present
             memEntity.setIdentifier(groupKey);
             memEntity.setUid(contact.getUid());
             memEntity.setAvatar(contact.getAvatar());
-            memEntity.setNick(contact.getName());
             memEntity.setRole(0);
             memEntity.setUsername(contact.getName());
             memEntities.add(memEntity);
@@ -151,7 +150,7 @@ public class TalkGroupCreatePresenter implements TalkGroupCreateContract.Present
         ToastEUtil.makeText(activity, activity.getString(R.string.Chat_Create_Group_Success), 1, new ToastEUtil.OnToastListener() {
             @Override
             public void animFinish() {
-                ChatActivity.startActivity(activity, new Talker(Connect.ChatType.GROUP_DISCUSSION, groupKey));
+                ChatActivity.startActivity(activity, Connect.ChatType.GROUPCHAT, groupKey);
             }
         }).show();
     }

@@ -42,7 +42,6 @@ public class RobotChat extends NormalChat {
         msgExtEntity.setMessage_to(chatKey());
         msgExtEntity.setMessageType(type.type);
         msgExtEntity.setRead_time(0L);
-        msgExtEntity.setSnap_time(0L);
         msgExtEntity.setCreatetime(TimeUtil.getCurrentTimeInLong());
         msgExtEntity.setSend_status(1);
         return msgExtEntity;
@@ -60,7 +59,7 @@ public class RobotChat extends NormalChat {
 
     @Override
     public String chatKey() {
-        return InstantSdk.instantSdk.getBaseContext().getString(R.string.app_name);
+        return InstantSdk.getInstance().getBaseContext().getString(R.string.app_name);
     }
 
     @Override
@@ -70,25 +69,28 @@ public class RobotChat extends NormalChat {
 
     @Override
     public String headImg() {
-        return InstantSdk.instantSdk.getBaseContext().getString(R.string.app_name);
+        return InstantSdk.getInstance().getBaseContext().getString(R.string.app_name);
     }
 
     @Override
     public String nickName() {
-        return InstantSdk.instantSdk.getBaseContext().getString(R.string.app_name);
+        return InstantSdk.getInstance().getBaseContext().getString(R.string.app_name);
     }
 
-    public ChatMsgEntity groupReviewMsg(Connect.Reviewed reviewed) {
-        ChatMsgEntity msgExtEntity = createBaseChat(MessageType.GROUP_REVIEW);
-        msgExtEntity.setContents(reviewed.toByteArray());
+    public ChatMsgEntity wareHouseMsg(int wareType, String content) {
+        ChatMsgEntity msgExtEntity = (ChatMsgEntity) createBaseChat(MessageType.ROBOT_WAREHOSE);
+        Connect.NotifyMessage notifyMessage = Connect.NotifyMessage.newBuilder()
+                .setNotifyType(wareType)
+                .setContent(content)
+                .build();
 
+        msgExtEntity.setContents(notifyMessage.toByteArray());
         return msgExtEntity;
     }
 
     public ChatMsgEntity systemAdNotice(Connect.Announcement announcement) {
         ChatMsgEntity msgExtEntity = createBaseChat(MessageType.SYSTEM_AD);
         msgExtEntity.setContents(announcement.toByteArray());
-
         return msgExtEntity;
     }
 }

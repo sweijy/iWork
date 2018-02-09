@@ -9,14 +9,13 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import instant.bean.Session;
 import instant.parser.localreceiver.CommandLocalReceiver;
 import instant.parser.localreceiver.ConnectLocalReceiver;
+import instant.parser.localreceiver.RobotLocalReceiver;
 import instant.utils.SharedUtil;
-import instant.utils.StringUtil;
 import instant.utils.log.LogManager;
 import instant.utils.manager.FailMsgsManager;
 import protos.Connect;
@@ -72,13 +71,13 @@ public class CommandParser extends InterParse {
                     //HomeAction.sendTypeMsg(HomeAction.HomeType.EXIT);
                     break;
                 case 0x08://receive add friend request
-                    receiverAddFriendRequest(command.getDetail(), command.getErrNo(),msgid);
+                    // receiverAddFriendRequest(command.getDetail(), command.getErrNo(),msgid);
                     break;
                 case 0x09://Accept agreed to be a friend request
-                    receiverAcceptAddFriend(command.getDetail(), msgid, command.getErrNo());
+                    // receiverAcceptAddFriend(command.getDetail(), msgid, command.getErrNo());
                     break;
                 case 0x0a://delete friend
-                    receiverAcceptDelFriend(command.getDetail(), msgid, command.getErrNo());
+                    // receiverAcceptDelFriend(command.getDetail(), msgid, command.getErrNo());
                     break;
                 case 0x0b://Modify the friends remark and common friends
                     receiverSetUserInfo(command.getDetail(), msgid, command.getErrNo());
@@ -93,7 +92,7 @@ public class CommandParser extends InterParse {
                     handlerOuterTransfer(command.getDetail(), msgid, command.getErrNo());
                     break;
                 case 0x12://outer red packet
-                    handlerOuterRedPacket(command.getDetail(), msgid, command.getErrNo());
+                    // handlerOuterRedPacket(command.getDetail(), msgid, command.getErrNo());
                     break;
                 case 0x17://upload cookie
                     chatCookieInfo(command.getErrNo());
@@ -105,10 +104,10 @@ public class CommandParser extends InterParse {
                     //reloadUserCookie();
                     break;
                 case 0x1a://burn reading setting
-                    burnReadingSetting(command.getDetail(), msgid);
+                    // burnReadingSetting(command.getDetail(), msgid);
                     break;
                 case 0x1b://burn reading receipt
-                    burnReadingReceipt(command.getDetail(), msgid);
+                    // burnReadingReceipt(command.getDetail(), msgid);
                     break;
             }
         }
@@ -162,13 +161,13 @@ public class CommandParser extends InterParse {
                                     //HomeAction.sendTypeMsg(HomeAction.HomeType.EXIT);
                                     break;
                                 case 0x08://receive add friend request
-                                    receiverAddFriendRequest(transferDataByte, errorNumber);
+                                    // receiverAddFriendRequest(transferDataByte, errorNumber);
                                     break;
                                 case 0x09://Accept agreed to be a friend request
-                                    receiverAcceptAddFriend(transferDataByte, messageId, errorNumber);
+                                    // receiverAcceptAddFriend(transferDataByte, messageId, errorNumber);
                                     break;
                                 case 0x0a://delete friend
-                                    receiverAcceptDelFriend(transferDataByte, messageId, errorNumber);
+                                    // receiverAcceptDelFriend(transferDataByte, messageId, errorNumber);
                                     break;
                                 case 0x0b://Modify the friends remark and common friends
                                     receiverSetUserInfo(transferDataByte, messageId, errorNumber);
@@ -180,7 +179,7 @@ public class CommandParser extends InterParse {
                                     handlerOuterTransfer(transferDataByte, messageId, errorNumber);
                                     break;
                                 case 0x12://outer red packet
-                                    handlerOuterRedPacket(transferDataByte, messageId, errorNumber);
+                                    // handlerOuterRedPacket(transferDataByte, messageId, errorNumber);
                                     break;
                             }
                             break;
@@ -244,6 +243,7 @@ public class CommandParser extends InterParse {
      */
     private void syncContacts(ByteString buffer) throws Exception {
         String version = SharedUtil.getInstance().getStringValue(SharedUtil.CONTACTS_VERSION);
+        version= "";
         if (TextUtils.isEmpty(version)) {
             Connect.SyncCompany relationship = Connect.SyncCompany.parseFrom(buffer);
             version = relationship.getWorkmatesVersion().getVersion();
@@ -254,93 +254,6 @@ public class CommandParser extends InterParse {
             CommandLocalReceiver.receiver.contactChanges(changeRecords);
         }
         SharedUtil.getInstance().putValue(SharedUtil.CONTACTS_VERSION, version);
-    }
-
-    /**
-     * Add Friend request
-     *
-     * @param buffer
-     * @throws Exception
-     */
-    private void receiverAddFriendRequest(ByteString buffer, Object... objs) throws Exception {
-        boolean isMySend = false;
-        String msgid = null;
-
-        if (objs.length == 2) {
-            msgid = (String) objs[1];
-            Map<String, Object> failMap = FailMsgsManager.getInstance().getFailMap(msgid);
-            if (failMap != null) {
-                isMySend = true;
-            }
-        }
-
-        if (isMySend) {//youself send add Friend request
-            switch ((int) objs[0]) {
-                case 0:
-                    receiptUserSendAckMsg(msgid, true);
-                    break;
-                case 100:
-                case 200:
-                    receiptUserSendAckMsg(msgid, true, objs[0]);
-                    break;
-                default:
-                    receiptUserSendAckMsg(msgid, false, objs[0]);
-                    break;
-            }
-        } else {
-            Connect.ReceiveFriendRequest friendRequest = Connect.ReceiveFriendRequest.parseFrom(buffer);
-            CommandLocalReceiver.receiver.receiverFriendRequest((int)objs[0],friendRequest);
-        }
-    }
-
-    /**
-     * Agree to add buddy request
-     *
-     * @param buffer
-     * @throws Exception
-     */
-    private void receiverAcceptAddFriend(ByteString buffer, Object... objs) throws Exception {
-        switch ((int) objs[1]) {
-            case 1:
-                receiptUserSendAckMsg(objs[0], false, objs[1]);
-                break;
-            case 4:
-                receiptUserSendAckMsg(objs[0], false, objs[1]);
-                break;
-            default:
-                Connect.FriendListChange listChange = Connect.FriendListChange.parseFrom(buffer);
-
-                String version = listChange.getVersion();
-                SharedUtil.getInstance().putValue(SharedUtil.CONTACTS_VERSION, version);
-
-                CommandLocalReceiver.receiver.acceptFriendRequest(listChange);
-                receiptUserSendAckMsg(objs[0], true);
-                break;
-        }
-    }
-
-    /**
-     * Remove buddy
-     *
-     * @param buffer
-     * @throws Exception
-     */
-    private void receiverAcceptDelFriend(ByteString buffer, Object... objs) throws Exception {
-        switch ((int) objs[1]) {
-            case 0:
-                Connect.FriendListChange listChange = Connect.FriendListChange.parseFrom(buffer);
-
-                String version = listChange.getVersion();
-                SharedUtil.getInstance().putValue(SharedUtil.CONTACTS_VERSION, version);
-
-                CommandLocalReceiver.receiver.acceptDelFriend(listChange);
-
-                receiptUserSendAckMsg(objs[0], true);
-                break;
-            default://
-                receiptUserSendAckMsg(objs[0], false, objs[1]);
-                break;
-        }
     }
 
     /**
@@ -383,44 +296,6 @@ public class CommandParser extends InterParse {
     private void updateGroupInfo(ByteString buffer, Object... objs) throws Exception {
         Connect.GroupChange groupChange = Connect.GroupChange.parseFrom(buffer);
         CommandLocalReceiver.receiver.updateGroupChange(groupChange);
-    }
-
-    /**
-     * Burn after reading setting
-     *
-     * @param buffer
-     * @param objs
-     * @throws Exception
-     */
-    private void burnReadingSetting(ByteString buffer, Object... objs) throws Exception {
-        Connect.EphemeralSetting setting = Connect.EphemeralSetting.parseFrom(buffer);
-
-        String myUid = Session.getInstance().getConnectCookie().getUid();
-        if (myUid.equals(setting.getUid())) {
-            String messgaeId = (String) objs[0];
-            FailMsgsManager.getInstance().removeFailMap(messgaeId);
-        } else {
-            CommandLocalReceiver.receiver.burnReadingSetting(setting);
-        }
-    }
-
-    /**
-     * Burning receipt after reading
-     *
-     * @param buffer
-     * @param objs
-     * @throws Exception
-     */
-    private void burnReadingReceipt(ByteString buffer, Object... objs) throws Exception {
-        Connect.EphemeralAck ack = Connect.EphemeralAck.parseFrom(buffer);
-
-        String myUid = Session.getInstance().getConnectCookie().getUid();
-        if (myUid.equals(ack.getUid())) {
-            String messgaeId = (String) objs[0];
-            FailMsgsManager.getInstance().removeFailMap(messgaeId);
-        } else {
-            CommandLocalReceiver.receiver.burnReadingReceipt(ack);
-        }
     }
 
     /**
@@ -471,34 +346,6 @@ public class CommandParser extends InterParse {
         }
 
         if ((int) objs[1] > 0) {//Get the failure
-            receiptUserSendAckMsg(objs[0], false, objs[1]);
-        } else {
-            receiptUserSendAckMsg(objs[0], true);
-        }
-    }
-
-    /**
-     * Outside a red envelope
-     *
-     * @param buffer
-     * @throws Exception
-     */
-    private void handlerOuterRedPacket(ByteString buffer, Object... objs) throws Exception {
-        Connect.ExternalRedPackageInfo packageInfo = null;
-        switch ((int) objs[1]) {
-            case 0://Get the success
-                packageInfo = Connect.ExternalRedPackageInfo.parseFrom(buffer);
-                CommandLocalReceiver.receiver.handlerOuterRedPacket(packageInfo);
-                break;
-            case 1:
-                break;
-            case 2://It is to receive
-                break;
-            case 3://Red packets suspended
-                break;
-        }
-
-        if ((int) objs[1] > 0) {
             receiptUserSendAckMsg(objs[0], false, objs[1]);
         } else {
             receiptUserSendAckMsg(objs[0], true);

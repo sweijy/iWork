@@ -91,6 +91,12 @@
             android:name="connect.activity.workbench.VisitorsAuditActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="connect.activity.workbench.WarehouseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.workbench.WarehouseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="connect.activity.login.LoginPassVerifyActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -154,9 +160,6 @@
             android:name="connect.activity.set.UserInfoAvatarActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.set.PrivateBlackActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.set.SupportFeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -172,9 +175,6 @@
             android:name="connect.widget.random.RandomVoiceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.contact.AddFriendActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.contact.SearchFriendActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -184,10 +184,7 @@
             android:name="connect.activity.contact.ScanAddFriendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.contact.FriendInfoAliasActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.contact.AddFriendAcceptActivity"
+            android:name="connect.activity.contact.ScanResultActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.contact.AddFriendPhoneActivity"
@@ -204,6 +201,14 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="connect.activity.chat.ChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="connect.activity.chat.SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="connect.activity.chat.SearchContentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
