@@ -46,7 +46,6 @@ public class ExBottomLayout extends RelativeLayout {
     LinearLayout emojiTabview;
     LinearLayout includeEmoji;
 
-
     public static ExBottomLayout exBottomLayout;
 
     private static String TAG = "_ExBottomLayout";

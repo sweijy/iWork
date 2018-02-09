@@ -20,16 +20,14 @@
             android:layout_marginLeft="@dimen/dp_14"
             android:scaleType="centerCrop" />
 
-        <connect.widget.MaterialBadgeTextView
+        <connect.widget.badge.BadgeView
             android:id="@id/badgetv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
             android:layout_alignEnd="@id/roundimg_head"
             android:layout_alignRight="@id/roundimg_head"
             android:layout_marginRight="@dimen/dp__8"
             android:layout_marginTop="@dimen/dp_2"
-            android:background="@color/color_red"
-            android:textColor="@color/color_white"
             android:textSize="@dimen/sp_6" />
     </RelativeLayout>
 

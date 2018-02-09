@@ -24,7 +24,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_1"
-        android:background="@color/color_e7e7e7" />
+        android:background="@color/color_E7E7E7" />
 
     <RelativeLayout
         android:id="@id/relative_worksearch_content"

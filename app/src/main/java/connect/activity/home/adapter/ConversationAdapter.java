@@ -25,7 +25,7 @@ import connect.utils.FileUtil;
 import connect.utils.TimeUtil;
 import connect.utils.dialog.DialogUtil;
 import connect.utils.glide.GlideUtil;
-import connect.widget.MaterialBadgeTextView;
+import connect.widget.badge.BadgeView;
 import protos.Connect;
 
 /**
@@ -83,7 +83,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         } else if (roomAttr.getRoomtype() == Connect.ChatType.SUBSCRIBER_VALUE) {
             holder.nameTxt.setText(context.getString(R.string.Chat_Subscriber));
             GlideUtil.loadAvatarRound(holder.headImg, R.mipmap.chat_rss_subscribe);
-            holder.badgeTxt.setBadgeCount(1, roomAttr.getUnread());
+            holder.badgeTxt.setBadgeCount(roomAttr.getDisturb(), roomAttr.getUnread());
         } else if (roomAttr.getRoomtype() == Connect.ChatType.PRIVATE_VALUE ||
                 roomAttr.getRoomtype() == Connect.ChatType.GROUPCHAT_VALUE ||
                 roomAttr.getRoomtype() == Connect.ChatType.GROUP_DISCUSSION_VALUE) {
@@ -109,7 +109,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         holder.itemRelative.setTag(R.id.position, position);
         holder.itemRelative.setTag(R.id.roomid, roomAttr.getRoomid());
         holder.itemRelative.setTag(R.id.roomtype, roomAttr.getRoomtype());
-        holder.itemRelative.setTag(R.id.roomtop,roomAttr.getTop());
+        holder.itemRelative.setTag(R.id.roomtop, roomAttr.getTop());
         holder.itemRelative.setOnClickListener(itemClickListener);
         holder.itemRelative.setOnLongClickListener(longClickListener);
     }
@@ -204,7 +204,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
         private RelativeLayout itemRelative;
 
-        private MaterialBadgeTextView badgeTxt;
+        private BadgeView badgeTxt;
         private ImageView headImg;
 
         private TextView nameTxt;
@@ -225,7 +225,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             topImg = (ImageView) itemView.findViewById(R.id.top);
             notifyImg = (ImageView) itemView.findViewById(R.id.notify);
 
-            badgeTxt = (MaterialBadgeTextView) itemView.findViewById(R.id.badgetv);
+            badgeTxt = (BadgeView) itemView.findViewById(R.id.badgetv);
         }
     }
 
@@ -233,8 +233,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         this.itemListener = itemListener;
     }
 
-    public interface ItemListener{
-        void itemClick(Connect.ChatType chatType,String identify);
+    public interface ItemListener {
+        void itemClick(Connect.ChatType chatType, String identify);
     }
 }
 

@@ -22,10 +22,15 @@
         android:gravity="center"
         android:orientation="horizontal"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="@color/color_line_diviver" />
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_6d6e75"
+        android:background="@color/color_F5F5F5"
         android:scrollbars="none">
 
         <LinearLayout
@@ -34,7 +39,6 @@
             android:layout_height="@dimen/dp_40"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:orientation="horizontal">
-        </LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>

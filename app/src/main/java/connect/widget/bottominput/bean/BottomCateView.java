@@ -38,7 +38,7 @@ public class BottomCateView extends FrameLayout {
     }
 
     public void setPress() {
-        setBackgroundColor(getResources().getColor(R.color.color_e7e7e7));
+        setBackgroundColor(getResources().getColor(R.color.color_E7E7E7));
         GlideUtil.loadImageAssets(img, EmoManager.EMOJI_PATH + "/" + cateName + "_press.png");
     }
 }
