@@ -10,9 +10,10 @@ import protos.Connect;
  * Created by PuJin on 2018/1/11.
  */
 
-public interface TalkGroupCreateContract {
+public interface GroupCreateContract {
 
-    interface BView extends BaseView<TalkGroupCreateContract.Presenter> {
+    interface BView extends BaseView<GroupCreateContract.Presenter> {
+
         List<Connect.Workmate> groupMemberList();
 
         void setLeftEnanle(boolean b);

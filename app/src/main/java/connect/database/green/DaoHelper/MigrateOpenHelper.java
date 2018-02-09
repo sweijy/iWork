@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import org.greenrobot.greendao.database.Database;
 
-import java.io.File;
-
-import connect.activity.base.BaseApplication;
 import connect.activity.home.DBUpdateActivity;
 import connect.database.green.DaoHelper.mergin.MigrationHelper;
 import connect.database.green.dao.ApplicationEntityDao;

@@ -122,5 +122,4 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public interface OnItemChildClickListener {
         void itemClick(int position, SearchBean searchBean);
     }
-
 }
