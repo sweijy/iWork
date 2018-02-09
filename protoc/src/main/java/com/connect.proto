@@ -1955,8 +1955,10 @@ message StaffLogsReq {
 }
 
 message UnRegisterCheck {
-  int32 status = 1;
-  int64 id = 2;
+ int32 status = 1;
+ int64 id = 2;
+ string name = 3;
+ string username = 4;
 }
 
 message UnRegisterMessage {

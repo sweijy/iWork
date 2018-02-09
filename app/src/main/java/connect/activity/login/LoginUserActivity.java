@@ -136,10 +136,10 @@ public class LoginUserActivity extends BaseActivity {
         Animation loadAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.loading_white);
         imageLoading.startAnimation(loadAnimation);
 
-        String name = nameEt.getText().toString().trim();
+        final String userName = nameEt.getText().toString().trim();
         String password = passwordEt.getText().toString();
         Connect.LoginReq loginReq = Connect.LoginReq.newBuilder()
-                .setUsername(name)
+                .setUsername(userName)
                 .setPassword(password).build();
         HttpRequest.getInstance().post(UriUtil.CONNECT_V3_LOGIN, loginReq, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
@@ -153,9 +153,9 @@ public class LoginUserActivity extends BaseActivity {
                     UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
                     if (userBean == null || TextUtils.isEmpty(userLoginInfo.getPubKey())
                             || !userLoginInfo.getPubKey().equals(userBean.getPubKey())) {
-                        requestUpdatePub(userLoginInfo);
+                        requestUpdatePub(userLoginInfo, userName);
                     } else {
-                        UserBean userBean1 = new UserBean(userLoginInfo.getName(), userLoginInfo.getAvatar(), userLoginInfo.getUid(),
+                        UserBean userBean1 = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
                                 userLoginInfo.getOU(), userLoginInfo.getToken(), userBean.getPubKey(), userBean.getPriKey());
                         userBean1.setEmp_no(userLoginInfo.getEmpNo());
                         userBean1.setGender(userLoginInfo.getGender());
@@ -187,7 +187,7 @@ public class LoginUserActivity extends BaseActivity {
         });
     }
 
-    private void requestUpdatePub(final Connect.UserLoginInfo userLoginInfo) {
+    private void requestUpdatePub(final Connect.UserLoginInfo userLoginInfo, final String userName) {
         final String priKey = AllNativeMethod.cdCreateNewPrivKey();
         final String pubKey1 = AllNativeMethod.cdGetPubKeyFromPrivKey(priKey);
         Connect.PubKey pubKey = Connect.PubKey.newBuilder()
@@ -205,7 +205,7 @@ public class LoginUserActivity extends BaseActivity {
         HttpRequest.getInstance().post(UriUtil.CONNECT_V3_PUBKEY, httpRequest, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
-                UserBean userBean1 = new UserBean(userLoginInfo.getName(), userLoginInfo.getAvatar(), userLoginInfo.getUid(),
+                UserBean userBean1 = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
                         userLoginInfo.getOU(), userLoginInfo.getToken(), pubKey1, priKey);
                 userBean1.setEmp_no(userLoginInfo.getEmpNo());
                 userBean1.setGender(userLoginInfo.getGender());

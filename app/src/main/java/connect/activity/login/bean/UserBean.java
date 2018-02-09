@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class UserBean implements Serializable{
 
     private String name;
+    private String userName;
     private String avatar;
     private String uid;
     private String token;
@@ -18,8 +19,9 @@ public class UserBean implements Serializable{
 
     public UserBean() {}
 
-    public UserBean(String name, String avatar, String uid, String o_u, String token, String pubKey,String priKey) {
+    public UserBean(String name, String userName, String avatar, String uid, String o_u, String token, String pubKey,String priKey) {
         this.name = name;
+        this.userName = userName;
         this.avatar = avatar;
         this.uid = uid;
         this.o_u = o_u;
@@ -34,6 +36,14 @@ public class UserBean implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getAvatar() {

@@ -14,7 +14,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
+import connect.activity.login.bean.UserBean;
 import connect.activity.workbench.bean.UpdateState;
+import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.BitmapUtil;
@@ -49,6 +51,7 @@ public class WarehouseDetailActivity extends BaseActivity {
     private WarehouseDetailActivity mActivity;
     private long staffId;
     private Connect.StaffLog staffLog;
+    private UserBean userBean;
 
     public static void lunchActivity(Activity activity, Long id) {
         Bundle bundle = new Bundle();
@@ -70,6 +73,8 @@ public class WarehouseDetailActivity extends BaseActivity {
         toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Work_Warehouse_abnormal_records);
+        userBean = SharedPreferenceUtil.getInstance().getUser();
+
         staffId = getIntent().getExtras().getLong("id");
         requestStaff();
     }
@@ -123,6 +128,8 @@ public class WarehouseDetailActivity extends BaseActivity {
     private void requestConfirm(){
         Connect.UnRegisterCheck  unRegisterCheck = Connect.UnRegisterCheck .newBuilder()
                 .setId(staffId)
+                .setName(userBean.getName())
+                .setUsername(userBean.getUserName())
                 .setStatus(1).build();
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.STORES_V1_IWORK_LOG_COMFIRM, unRegisterCheck, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
