@@ -185,7 +185,7 @@ public class MessageParser extends InterParse {
                 UnreachableLocalReceiver.localReceiver.publicKeyNotMatch(msgid, rejectUid,pubKey);
                 break;
         }
-        receiptMsg(msgid, 2);
+        // receiptMsg(msgid, 2);
     }
 
     /**

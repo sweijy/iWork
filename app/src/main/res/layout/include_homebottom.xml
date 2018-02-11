@@ -41,15 +41,15 @@
                     android:textColor="@drawable/home_selector_text_color"
                     android:text="@string/Link_Dialogue"/>
             </LinearLayout>
-            <connect.widget.MaterialBadgeTextView
+            <connect.widget.badge.BadgeView
                 android:id="@id/badgetv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
                 android:layout_marginLeft="@dimen/dp__10"
+                android:layout_marginTop="@dimen/dp_2"
                 android:layout_toRightOf="@id/msg_content_rela"
-                android:background="@color/color_red"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/sp_10"
+                android:textSize="@dimen/sp_6"
                 android:visibility="gone"/>
         </RelativeLayout>
 
@@ -81,15 +81,15 @@
                     android:layout_marginTop="3dp"
                     android:text="@string/Link_Contacts"/>
             </LinearLayout>
-            <connect.widget.MaterialBadgeTextView
+            <connect.widget.badge.BadgeView
                 android:id="@id/contact_badgetv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_2"
                 android:layout_marginLeft="@dimen/dp__10"
                 android:layout_toRightOf="@id/contact_content_rela"
-                android:background="@color/color_red"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/sp_10"
+                android:textSize="@dimen/sp_6"
                 android:visibility="gone"/>
         </RelativeLayout>
 
@@ -121,16 +121,6 @@
                     android:layout_marginTop="3dp"
                     android:text="@string/Link_Workbench"/>
             </LinearLayout>
-            <connect.widget.MaterialBadgeTextView
-                android:id="@+id/workbench_badgetv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp__10"
-                android:layout_toRightOf="@id/workbench_content_rela"
-                android:background="@color/color_red"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/sp_10"
-                android:visibility="gone"/>
         </RelativeLayout>
 
         <!-- 设置 -->

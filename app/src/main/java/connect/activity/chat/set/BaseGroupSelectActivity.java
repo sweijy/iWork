@@ -240,11 +240,11 @@ public class BaseGroupSelectActivity extends BaseActivity {
                 }
             }
 
-            if (isCreateGroup) {
-                toolbar.setRightText(getString(R.string.Chat_Select_Count, selectMembers.size() + organizeWorks.size()));
-            } else {
-                toolbar.setRightText(getString(R.string.Chat_Select_Count, organizeWorks.size()));
-            }
+//            if (isCreateGroup) {
+//                toolbar.setRightText(getString(R.string.Chat_Select_Count, selectMembers.size() + organizeWorks.size()));
+//            } else {
+//                toolbar.setRightText(getString(R.string.Chat_Select_Count, organizeWorks.size()));
+//            }
 
             if (isCreateGroup) {
                 GroupCreateActivity.startActivity(activity, true, workmates);

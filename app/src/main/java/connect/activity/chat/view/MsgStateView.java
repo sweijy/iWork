@@ -70,7 +70,10 @@ public class MsgStateView extends RelativeLayout {
         return super.onTouchEvent(event);
     }
 
-    public void updateMsgState(int state){
+    private int sendState;
+
+    public void updateMsgState(int state) {
+        this.sendState = state;
         removeAllViews();
         switch (state){
             case 0:
@@ -102,7 +105,7 @@ public class MsgStateView extends RelativeLayout {
                 String msgid = (String) objects[0];
                 int state = (int) objects[1];
                 if (msgExtEntity.getMessage_id().equals(msgid)) {
-                    if (state != 1) {
+                    if (sendState != 1) {
                         updateMsgState(state);
                     }
                 }

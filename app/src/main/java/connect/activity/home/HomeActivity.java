@@ -22,7 +22,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,7 +51,7 @@ import connect.utils.ActivityUtil;
 import connect.utils.log.LogManager;
 import connect.utils.permission.PermissionUtil;
 import connect.utils.scan.ResolveUrlUtil;
-import connect.widget.MaterialBadgeTextView;
+import connect.widget.badge.BadgeView;
 import instant.bean.UserOrderBean;
 import instant.utils.manager.FailMsgsManager;
 import protos.Connect;
@@ -79,9 +78,9 @@ public class HomeActivity extends BaseFragmentActivity {
     @Bind(R.id.workbench_rela)
     RelativeLayout workbenchRela;
     @Bind(R.id.badgetv)
-    MaterialBadgeTextView badgetv;
+    BadgeView badgetv;
     @Bind(R.id.contact_badgetv)
-    MaterialBadgeTextView contactBadgetv;
+    BadgeView contactBadgetv;
 
     private static String TAG = "Tag_HomeActivity";
     @Bind(R.id.msg_text)
@@ -112,12 +111,14 @@ public class HomeActivity extends BaseFragmentActivity {
         bundle.putSerializable("SERIALIZE", objs);
 
         Intent intent = new Intent(activity, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtras(bundle);
+
+//        intent.putExtra("CATEGORY",category);
+//        intent.putExtra("SERIALIZE",objs);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.activity_in_from_right, R.anim.activity_0_to_0);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,7 @@ public class HomeActivity extends BaseFragmentActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             int category = bundle.getInt("CATEGORY");
@@ -384,12 +386,12 @@ public class HomeActivity extends BaseFragmentActivity {
         switch (pager) {
             case 0:
                 if (badgetv != null) {
-                    badgetv.setBadgeCount(count);
+                    badgetv.setBadgeCount(0, count);
                 }
                 break;
             case 1:
                 if (contactBadgetv != null) {
-                    contactBadgetv.setBadgeCount(count);
+                    contactBadgetv.setBadgeCount(0, count);
                 }
                 break;
         }
