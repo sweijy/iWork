@@ -263,4 +263,7 @@
     <item name="groupset_clear_history" type="id"/>
     <item name="groupset_exit_group" type="id"/>
     <item name="popup_turn_notify" type="id"/>
+    <item name="edittext_search_user" type="id"/>
+    <item name="imageview_clear" type="id"/>
+    <item name="imageview_department_avatar" type="id"/>
 </resources>

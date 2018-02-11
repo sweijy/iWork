@@ -4,9 +4,16 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -17,6 +24,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
 import connect.activity.base.BaseListener;
 import connect.activity.chat.adapter.GroupDepartSelectAdapter;
@@ -27,6 +35,7 @@ import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
+import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
@@ -44,6 +53,10 @@ public class GroupDepartSelectActivity extends BaseActivity {
     HorizontalScrollView scrollview;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.edittext_search_user)
+    EditText edittextSearchUser;
+    @Bind(R.id.imageview_clear)
+    ImageView imageviewClear;
 
     private GroupDepartSelectActivity activity;
     private boolean isCreate = true;
@@ -192,7 +205,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
                             for (Connect.Workmate workmate : workmates.getListList()) {
                                 if (workmate.getRegisted()) {
                                     String uid = workmate.getUid();
-                                    String myUid =userBean.getUid();
+                                    String myUid = userBean.getUid();
                                     if (!selectedUids.contains(uid) && !uid.equals(myUid)) {
                                         String workmateKey = "W" + uid;
                                         OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
@@ -211,7 +224,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
                                 countSelect = countSelect + selectedUids.size();
                             }
                             toolbarTop.setRightText(getString(R.string.Chat_Select_Count, countSelect));
-                            toolbarTop.setRightTextEnable(isCreate?countSelect >= 2:countSelect >= 1);
+                            toolbarTop.setRightTextEnable(isCreate ? countSelect >= 2 : countSelect >= 1);
                         }
 
                         @Override
@@ -239,7 +252,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
                                 countSelect = countSelect + selectedUids.size();
                             }
                             toolbarTop.setRightText(getString(R.string.Chat_Select_Count, countSelect));
-                            toolbarTop.setRightTextEnable(isCreate?countSelect >= 2:countSelect >= 1);
+                            toolbarTop.setRightTextEnable(isCreate ? countSelect >= 2 : countSelect >= 1);
                         }
 
                         @Override
@@ -277,6 +290,42 @@ public class GroupDepartSelectActivity extends BaseActivity {
                 } else {
                     toolbarTop.setRightTextEnable(false);
                 }
+            }
+        });
+
+        edittextSearchUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchTxt = editable.toString();
+                if (TextUtils.isEmpty(searchTxt)) {
+                    imageviewClear.setVisibility(View.GONE);
+                    nameLinear.setVisibility(View.VISIBLE);
+                } else {
+                    imageviewClear.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        edittextSearchUser.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEND ||
+                        actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    String mateName = edittextSearchUser.getText().toString();
+                    requestWorkmateSearch(mateName);
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -357,7 +406,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
             }
             nameLinear.notifyAddView(nameList, scrollview);
             Connect.Department department = nameList.get(position);
-            if(department!=null){
+            if (department != null) {
                 long id = department.getId();
                 requestDepartmentInfoShow(id);
             }
@@ -436,7 +485,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
         });
     }
 
-    private OrganizerEntity getOrganizerEntity(Connect.Workmate workmate){
+    private OrganizerEntity getOrganizerEntity(Connect.Workmate workmate) {
         OrganizerEntity entity = new OrganizerEntity();
         entity.setUid(workmate.getUid());
         entity.setName(workmate.getName());
@@ -449,5 +498,49 @@ public class GroupDepartSelectActivity extends BaseActivity {
         entity.setGender(workmate.getGender());
         entity.setTips(workmate.getTips());
         return entity;
+    }
+
+    private void requestWorkmateSearch(String username){
+        if(TextUtils.isEmpty(username)){
+            return;
+        }
+        Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
+                .setCriteria(username)
+                .build();
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
+            @Override
+            public void onResponse(Connect.HttpNotSignResponse response) {
+                try {
+                    Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
+                    Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
+                    if(workmates.getListList().size() == 0){
+                        ToastEUtil.makeText(activity, R.string.Wallet_No_match_user).show();
+                        return;
+                    }
+                    ArrayList<OrganizerEntity> list = new ArrayList<>();
+                    for (Connect.Workmate workmate : workmates.getListList()) {
+                        OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
+                        list.add(organizerEntity);
+                    }
+                    departSelectAdapter.notifyData(list);
+                    nameLinear.setVisibility(View.GONE);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Connect.HttpNotSignResponse response) {}
+        });
+    }
+
+    @OnClick({R.id.imageview_clear})
+    void OnClickListener(View view){
+        switch (view.getId()) {
+            case R.id.imageview_clear:
+                edittextSearchUser.setText("");
+                onItemClickListener.itemClick(0);
+                break;
+        }
     }
 }

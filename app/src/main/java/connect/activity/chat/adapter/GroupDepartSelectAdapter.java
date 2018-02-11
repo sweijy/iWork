@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,13 +15,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import connect.activity.chat.bean.DepartSelectBean;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
+import connect.utils.glide.GlideUtil;
 import connect.widget.DepartmentAvatar;
-import protos.Connect;
 
 /**
  * Created by PuJin on 2018/1/10.
@@ -92,8 +92,12 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
                 holder.nicName.setText(department.getO_u());
             }
             if (department.getRegisted()) {
-                holder.avater.setAvatarName(department.getName(), false, department.getGender());
+                holder.avater.setVisibility(View.GONE);
+                holder.registerAvatar.setVisibility(View.VISIBLE);
+                GlideUtil.loadAvatarRound(holder.registerAvatar, department.getAvatar());
             } else {
+                holder.avater.setVisibility(View.VISIBLE);
+                holder.registerAvatar.setVisibility(View.GONE);
                 holder.avater.setAvatarName(department.getName(), true, department.getGender());
             }
             holder.workmateSelectView.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +124,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout contentLin;
         DepartmentAvatar avater;
+        ImageView registerAvatar;
         TextView nameTvS;
         TextView nicName;
         Button addBtn;
@@ -135,6 +140,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             super(itemView);
             contentLin = (RelativeLayout) itemView.findViewById(R.id.content_layout);
             avater = (DepartmentAvatar) itemView.findViewById(R.id.avatar_rimg);
+            registerAvatar = (ImageView) itemView.findViewById(R.id.imageview_department_avatar);
             nameTvS = (TextView) itemView.findViewById(R.id.nickname_tv);
             nicName = (TextView) itemView.findViewById(R.id.hint_tv);
             addBtn = (Button) itemView.findViewById(R.id.status_btn);

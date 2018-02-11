@@ -37,8 +37,8 @@ public class ToastEUtil {
 
     public static final int TOAST_STATUS_SUCCESS = 1;
     public static final int TOAST_STATUS_FAILE = 2;
-    private final int ANIMATION_DURATION = 600;
-    private int HIDE_DELAY = 1500;
+    private final int ANIMATION_DURATION = 200;
+    private int HIDE_DELAY = 500;
 
     private ToastEUtil(Context context) {
         mContext = context;
