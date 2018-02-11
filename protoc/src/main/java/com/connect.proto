@@ -1980,7 +1980,8 @@ message AesGcm {
 }
 
 message VisitorNotify {
- string uid= 1;
+  string uid = 1;
  int64 time = 2;
  string reason = 3;
+ string guest_name = 4;
 }
