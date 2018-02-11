@@ -156,7 +156,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
         nameList.clear();
         Connect.Department department = Connect.Department.newBuilder()
                 .setId(2)
-                .setName("比特大陆")
+                .setName("组织架构")
                 .build();
         nameList.add(department);
         nameLinear.notifyAddView(nameList, scrollview);
