@@ -14,8 +14,8 @@ android {
         applicationId "com.iwork.im"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 4
-        versionName "0.0.4"
+        versionCode 5
+        versionName "0.0.5"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -71,7 +71,7 @@ android {
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
 
         release {
@@ -79,7 +79,7 @@ android {
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 
@@ -113,6 +113,7 @@ def releaseTime() {
 /**
  * 0.0.3  ==> 5
  * 0.0.4  ==> 6
+ * 0.0.5  ==> 6
  */
 greendao {
     schemaVersion 6
