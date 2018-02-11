@@ -1985,3 +1985,9 @@ message VisitorNotify {
  string reason = 3;
  string guest_name = 4;
 }
+
+message RecordsUpdate {
+ string guest_id = 1;
+ int64 start_time = 2;
+ int64 end_time = 3;
+}

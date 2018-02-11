@@ -32,13 +32,11 @@ import connect.activity.home.bean.RoomAttrBean;
 import connect.activity.home.fragment.view.ChatAddPopWindow;
 import connect.activity.home.view.ConnectStateView;
 import connect.activity.home.view.LineDecoration;
-import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.log.LogManager;
 import connect.utils.system.SystemUtil;
-import instant.utils.SharedUtil;
 import protos.Connect;
 
 /**
@@ -96,24 +94,30 @@ public class ConversationFragment extends BaseFragment {
         }
     }
 
+    private boolean isThreadRun = false;
+
     /**
      * Query chat message list
      */
     protected void loadRooms() {
-        new AsyncTask<Void, Void, List<RoomAttrBean>>() {
+        if (!isThreadRun) {
+            isThreadRun = true;
+            new AsyncTask<Void, Void, List<RoomAttrBean>>() {
 
-            @Override
-            protected List<RoomAttrBean> doInBackground(Void... params) {
-                return ConversionHelper.getInstance().loadRoomEntites();
-            }
+                @Override
+                protected List<RoomAttrBean> doInBackground(Void... params) {
+                    return ConversionHelper.getInstance().loadRoomEntites();
+                }
 
-            @Override
-            protected void onPostExecute(List<RoomAttrBean> entities) {
-                super.onPostExecute(entities);
-                chatFragmentAdapter.setData(entities);
-                countUnread();
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);//并行执行任务
+                @Override
+                protected void onPostExecute(List<RoomAttrBean> entities) {
+                    super.onPostExecute(entities);
+                    chatFragmentAdapter.setData(entities);
+                    countUnread();
+                    isThreadRun = false;
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);//并行执行任务
+        }
     }
 
     protected void countUnread() {
@@ -141,11 +145,13 @@ public class ConversationFragment extends BaseFragment {
 
             @Override
             protected void onPostExecute(Integer integer) {
-                if (integer == 0) {
-                    relativeAt.setVisibility(View.GONE);
-                } else {
-                    relativeAt.setVisibility(View.VISIBLE);
-                    txtCountAt.setText(getResources().getString(R.string.Chat_There_Are_News_Mentions_You, integer));
+                if (relativeAt != null && txtCountAt != null) {
+                    if (integer == 0) {
+                        relativeAt.setVisibility(View.GONE);
+                    } else {
+                        relativeAt.setVisibility(View.VISIBLE);
+                        txtCountAt.setText(getResources().getString(R.string.Chat_There_Are_News_Mentions_You, integer));
+                    }
                 }
             }
         }.execute();
@@ -161,11 +167,13 @@ public class ConversationFragment extends BaseFragment {
 
             @Override
             protected void onPostExecute(Integer integer) {
-                if (integer == 0) {
-                    relativeAttention.setVisibility(View.GONE);
-                } else {
-                    relativeAttention.setVisibility(View.VISIBLE);
-                    txtCountAttention.setText(getResources().getString(R.string.Chat_There_Are_News_Attention_You, integer));
+                if(relativeAttention!=null){
+                    if (integer == 0) {
+                        relativeAttention.setVisibility(View.GONE);
+                    } else {
+                        relativeAttention.setVisibility(View.VISIBLE);
+                        txtCountAttention.setText(getResources().getString(R.string.Chat_There_Are_News_Attention_You, integer));
+                    }
                 }
             }
         }.execute();

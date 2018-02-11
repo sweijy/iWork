@@ -5,9 +5,9 @@ import android.app.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import connect.activity.chat.ChatActivity;
-import connect.activity.chat.bean.Talker;
 import connect.activity.chat.set.contract.GroupCreateContract;
+import connect.activity.home.HomeActivity;
+import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
@@ -17,7 +17,6 @@ import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.GroupEntity;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.utils.ProtoBufUtil;
 import connect.utils.RegularUtil;
 import connect.utils.TimeUtil;
@@ -150,7 +149,8 @@ public class GroupCreatePresenter implements GroupCreateContract.Presenter {
         ToastEUtil.makeText(activity, activity.getString(R.string.Chat_Create_Group_Success), 1, new ToastEUtil.OnToastListener() {
             @Override
             public void animFinish() {
-                ChatActivity.startActivity(activity, Connect.ChatType.GROUPCHAT, groupKey);
+                HomeActivity.startActivity(activity);
+                HomeAction.getInstance().sendEvent(HomeAction.HomeType.TO_CHAT, Connect.ChatType.GROUPCHAT, groupKey);
             }
         }).show();
     }

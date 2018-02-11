@@ -243,6 +243,12 @@ public class ChatActivity extends BaseChatSendActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
     public void updateTitleName() {
         new AsyncTask<Void, Void, ConversionSettingEntity>() {
 

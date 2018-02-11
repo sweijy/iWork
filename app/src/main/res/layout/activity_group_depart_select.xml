@@ -24,6 +24,7 @@
             android:background="@drawable/shape_search"
             android:drawableLeft="@mipmap/department_search"
             android:hint="@string/Link_Search"
+            android:textSize="@dimen/sp_12"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingLeft="@dimen/dp_5" />

@@ -178,7 +178,7 @@ public class MessageParser extends InterParse {
                 UnreachableLocalReceiver.localReceiver.friendCookieExpired(rejectUid);
                 break;
             case 9://upload cookie salt not match
-                reloadUserCookie(msgid, rejectUid);
+                // reloadUserCookie(msgid, rejectUid);
                 break;
             case 10://PUBKEY_NOT_MATCH
                 Connect.PubKey pubKey = Connect.PubKey.parseFrom(data);
@@ -219,12 +219,5 @@ public class MessageParser extends InterParse {
 
         ChatParser parseBean = new ChatParser(ackByte, messagePost);
         parseBean.msgParse();
-    }
-
-    private void reloadUserCookie(String msgid, String uid) throws Exception {
-        FailMsgsManager.getInstance().insertFailMsg(uid, msgid);
-
-        CommandParser commandBean = new CommandParser((byte) 0x00, null);
-        //commandBean.reloadUserCookie();
     }
 }

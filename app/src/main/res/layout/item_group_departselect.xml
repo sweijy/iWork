@@ -76,21 +76,26 @@
             android:background="@drawable/sec_pickstate" />
 
 
-        <connect.widget.DepartmentAvatar
-            android:id="@+id/avatar_rimg"
-            android:layout_width="@dimen/dp_38"
-            android:layout_height="@dimen/dp_38"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@id/workmate_select"
-            android:layout_toRightOf="@id/workmate_select" />
-
-        <ImageView
-            android:id="@id/imageview_department_avatar"
-            android:layout_width="@dimen/dp_38"
-            android:layout_height="@dimen/dp_38"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_22"
             android:layout_toEndOf="@id/workmate_select"
             android:layout_toRightOf="@id/workmate_select"
-            android:scaleType="fitXY"/>
+            android:id="@id/relative_mult_avatar">
+
+            <connect.widget.DepartmentAvatar
+                android:id="@+id/avatar_rimg"
+                android:layout_width="@dimen/dp_38"
+                android:layout_height="@dimen/dp_38"
+                android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:id="@id/imageview_department_avatar"
+                android:layout_width="@dimen/dp_38"
+                android:layout_height="@dimen/dp_38"
+                android:scaleType="fitXY" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -99,9 +104,8 @@
             android:layout_marginLeft="@dimen/dp_22"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_toLeftOf="@+id/status_btn"
-            android:layout_toRightOf="@+id/avatar_rimg"
+            android:layout_toRightOf="@+id/relative_mult_avatar"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/nickname_tv"

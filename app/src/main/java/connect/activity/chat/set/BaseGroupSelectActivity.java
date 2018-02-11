@@ -49,6 +49,8 @@ public class BaseGroupSelectActivity extends BaseActivity {
     private String uid = "";
     private Map<String, Object> selectMembers = new HashMap<>();
     private BaseGroupSelectAdapter selectAdapter = null;
+    private RightClickListener rightClickListener =new RightClickListener();
+    private GroupSelectListener groupSelectListener = new GroupSelectListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,36 +85,7 @@ public class BaseGroupSelectActivity extends BaseActivity {
                 ActivityUtil.goBack(activity);
             }
         });
-        toolbar.setRightListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toolbar.setRightTextEnable(false);
-
-                ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
-                for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
-                    String key = it.getKey();
-                    ContactEntity entity = (ContactEntity) it.getValue();
-
-                    Connect.Workmate workmate = Connect.Workmate.newBuilder()
-                            .setPubKey(entity.getPublicKey())
-                            .setUid(entity.getUid())
-                            .setName(entity.getName())
-                            .setAvatar(entity.getAvatar())
-                            .setGender(null == entity.getGender() ? 1 : entity.getGender())
-                            .setMobile(TextUtils.isEmpty(entity.getMobile()) ? "" : entity.getMobile())
-                            .setOU(TextUtils.isEmpty(entity.getOu()) ? "" : entity.getOu())
-                            .setRegisted(null == entity.getRegisted() ? false : entity.getRegisted())
-                            .setTips(TextUtils.isEmpty(entity.getTips()) ? "" : entity.getTips())
-                            .build();
-                    workmates.add(workmate);
-                }
-                GroupCreateActivity.startActivity(activity, isCreateGroup, workmates);
-
-                Message message = new Message();
-                message.what = 100;
-                handler.sendMessageDelayed(message, 3000);
-            }
-        });
+        toolbar.setRightListener(rightClickListener);
 
         isCreateGroup = getIntent().getBooleanExtra("Is_Create", true);
         uid = getIntent().getStringExtra("Uid");
@@ -120,6 +93,9 @@ public class BaseGroupSelectActivity extends BaseActivity {
             toolbar.setTitle(getResources().getString(R.string.Link_Group_Create));
         } else {
             toolbar.setTitle(getResources().getString(R.string.Link_Group_Invite));
+            Message message = new Message();
+            message.what = 200;
+            handler.sendMessage(message);
         }
 
         List<ContactEntity> contactEntities = new ArrayList<>();
@@ -144,47 +120,7 @@ public class BaseGroupSelectActivity extends BaseActivity {
         if (isCreateGroup) {
             selectAdapter.setFriendUid(uid);
         }
-        selectAdapter.setGroupSelectListener(new BaseGroupSelectAdapter.BaseGroupSelectListener() {
-            @Override
-            public boolean isContains(String selectKey) {
-                return selectMembers.containsKey(selectKey) || (isCreateGroup && uid.equals(selectKey));
-            }
-
-            @Override
-            public void organizeClick() {
-                ArrayList<String> selectedUid = new ArrayList<String>();
-                if (isCreateGroup) {
-                    for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
-                        String key = it.getKey();
-                        if (!TextUtils.isEmpty(key)) {
-                            selectedUid.add(key);
-                        }
-                    }
-                } else {
-                    List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemEntities(uid);
-                    for (GroupMemberEntity entity : memberEntities) {
-                        String uid = entity.getUid();
-                        if (!TextUtils.isEmpty(uid)) {
-                            selectedUid.add(entity.getUid());
-                        }
-                    }
-                }
-                GroupDepartSelectActivity.startActivity(activity, isCreateGroup, selectedUid);
-            }
-
-            @Override
-            public void itemClick(boolean isSelect, ContactEntity contactEntity) {
-                String uid = contactEntity.getUid();
-                if (isSelect) {
-                    selectMembers.put(uid, contactEntity);
-                } else {
-                    selectMembers.remove(uid);
-                }
-
-                toolbar.setRightText(getString(R.string.Chat_Select_Count, selectMembers.size()));
-                toolbar.setRightTextEnable(selectMembers.size() >= 2);
-            }
-        });
+        selectAdapter.setGroupSelectListener(groupSelectListener);
     }
 
     private Handler handler = new Handler() {
@@ -195,9 +131,86 @@ public class BaseGroupSelectActivity extends BaseActivity {
                 case 100:
                     toolbar.setRightTextEnable(true);
                     break;
+                case 200:
+                    groupSelectListener.organizeClick();
+                    break;
             }
         }
     };
+
+    private class RightClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+            toolbar.setRightTextEnable(false);
+
+            ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
+            for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
+                String key = it.getKey();
+                ContactEntity entity = (ContactEntity) it.getValue();
+
+                Connect.Workmate workmate = Connect.Workmate.newBuilder()
+                        .setPubKey(entity.getPublicKey())
+                        .setUid(entity.getUid())
+                        .setName(entity.getName())
+                        .setAvatar(entity.getAvatar())
+                        .setGender(null == entity.getGender() ? 1 : entity.getGender())
+                        .setMobile(TextUtils.isEmpty(entity.getMobile()) ? "" : entity.getMobile())
+                        .setOU(TextUtils.isEmpty(entity.getOu()) ? "" : entity.getOu())
+                        .setRegisted(null == entity.getRegisted() ? false : entity.getRegisted())
+                        .setTips(TextUtils.isEmpty(entity.getTips()) ? "" : entity.getTips())
+                        .build();
+                workmates.add(workmate);
+            }
+            GroupCreateActivity.startActivity(activity, isCreateGroup, workmates);
+
+            Message message = new Message();
+            message.what = 100;
+            handler.sendMessageDelayed(message, 3000);
+        }
+    }
+
+    private class GroupSelectListener implements BaseGroupSelectAdapter.BaseGroupSelectListener{
+        @Override
+        public boolean isContains(String selectKey) {
+            return selectMembers.containsKey(selectKey) || (isCreateGroup && uid.equals(selectKey));
+        }
+
+        @Override
+        public void organizeClick() {
+            ArrayList<String> selectedUid = new ArrayList<String>();
+            if (isCreateGroup) {
+                for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
+                    String key = it.getKey();
+                    if (!TextUtils.isEmpty(key)) {
+                        selectedUid.add(key);
+                    }
+                }
+            } else {
+                List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemEntities(uid);
+                for (GroupMemberEntity entity : memberEntities) {
+                    String uid = entity.getUid();
+                    if (!TextUtils.isEmpty(uid)) {
+                        selectedUid.add(entity.getUid());
+                    }
+                }
+            }
+            GroupDepartSelectActivity.startActivity(activity, isCreateGroup, selectedUid);
+        }
+
+        @Override
+        public void itemClick(boolean isSelect, ContactEntity contactEntity) {
+            String uid = contactEntity.getUid();
+            if (isSelect) {
+                selectMembers.put(uid, contactEntity);
+            } else {
+                selectMembers.remove(uid);
+            }
+
+            toolbar.setRightText(getString(R.string.Chat_Select_Count, selectMembers.size()));
+            toolbar.setRightTextEnable(selectMembers.size() >= 2);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -11,7 +11,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseApplication;
 import connect.activity.base.BaseFragmentActivity;
+import connect.activity.chat.ChatActivity;
 import connect.activity.chat.set.BaseGroupSelectActivity;
 import connect.activity.contact.ScanAddFriendActivity;
 import connect.activity.contact.bean.MsgSendBean;
@@ -47,13 +48,13 @@ import connect.service.GroupService;
 import connect.service.UpdateInfoService;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
-import connect.utils.dialog.DialogUtil;
 import connect.utils.log.LogManager;
 import connect.utils.permission.PermissionUtil;
 import connect.utils.scan.ResolveUrlUtil;
 import connect.widget.MaterialBadgeTextView;
 import instant.bean.UserOrderBean;
 import instant.utils.manager.FailMsgsManager;
+import protos.Connect;
 
 /**
  * Created by gtq on 2016/11/19.
@@ -233,6 +234,11 @@ public class HomeActivity extends BaseFragmentActivity {
                 activity.startActivity(intent);
                 finish();
                 break;
+            case TO_CHAT:
+                Connect.ChatType chatType = (Connect.ChatType) objects[0];
+                String groupKey = (String) objects[1];
+                ChatActivity.startActivity(activity, chatType, groupKey);
+                break;
         }
     }
 
@@ -363,6 +369,19 @@ public class HomeActivity extends BaseFragmentActivity {
     private void requestAppUpdata() {
         checkUpdata = new CheckUpdate(activity);
         checkUpdata.check();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK://点击back  实现Home键功能
+                Intent i = new Intent(Intent.ACTION_MAIN);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addCategory(Intent.CATEGORY_HOME);
+                startActivity(i);
+                break;
+        }
+        return true;
     }
 
     @Override

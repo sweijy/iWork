@@ -25,9 +25,7 @@ public class HomeAction extends BaseEvent {
         EXIT,// Quit to the main interface
         SWITCHFRAGMENT,// switch to fragment
 
-        TOCHAT_FRIEND,
-        TOCHAT_GROUP,
-        TOCHAT_ROBOT,
+        TO_CHAT,
 
         GROUP_NEWCHAT,
         REMOTE_LOGIN;

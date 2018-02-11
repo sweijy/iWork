@@ -66,8 +66,8 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
                 GlideUtil.loadAvatarRound(holder.avatarImage, departmentBean.getAvatar(), 8);
             }else{
                 holder.avater.setVisibility(View.VISIBLE);
-                holder.avatarImage.setVisibility(View.GONE);
                 holder.avater.setAvatarName(departmentBean.getName(), true, departmentBean.getGender());
+                holder.avatarImage.setVisibility(View.GONE);
             }
         }
         holder.contentLin.setOnClickListener(new View.OnClickListener() {

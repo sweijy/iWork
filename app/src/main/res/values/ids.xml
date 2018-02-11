@@ -266,4 +266,5 @@
     <item name="edittext_search_user" type="id"/>
     <item name="imageview_clear" type="id"/>
     <item name="imageview_department_avatar" type="id"/>
+    <item name="relative_mult_avatar" type="id"/>
 </resources>
