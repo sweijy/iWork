@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f0f0f6"
+    android:background="@color/color_F6F6F6"
     android:orientation="vertical">
 
     <connect.widget.TopToolBar
@@ -13,18 +13,22 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10">
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:background="@color/color_ffffff">
 
         <EditText
             android:id="@id/edittext_search_user"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_28"
+            android:layout_height="@dimen/dp_35"
             android:layout_marginLeft="@dimen/dp_32"
             android:layout_marginRight="@dimen/dp_32"
-            android:background="@drawable/shape_search"
+            android:background="@drawable/shaoe_search_department"
             android:drawableLeft="@mipmap/department_search"
+            android:drawablePadding="@dimen/dp_10"
             android:hint="@string/Link_Search"
-            android:textSize="@dimen/sp_12"
+            android:textColorHint="@color/color_b3b5bc"
+            android:textSize="@dimen/sp_14"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingLeft="@dimen/dp_5" />
@@ -43,10 +47,8 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/color_ffffff"
         android:scrollbars="none">
-
         <connect.widget.NameLinear
             android:id="@+id/name_linear"
             android:layout_width="match_parent"
