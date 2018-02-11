@@ -149,8 +149,7 @@ public class GroupCreatePresenter implements GroupCreateContract.Presenter {
         ToastEUtil.makeText(activity, activity.getString(R.string.Chat_Create_Group_Success), 1, new ToastEUtil.OnToastListener() {
             @Override
             public void animFinish() {
-                HomeActivity.startActivity(activity);
-                HomeAction.getInstance().sendEvent(HomeAction.HomeType.TO_CHAT, Connect.ChatType.GROUPCHAT, groupKey);
+                HomeActivity.startActivity(activity, 100, Connect.ChatType.GROUPCHAT, groupKey);
             }
         }).show();
     }
