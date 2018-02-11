@@ -69,7 +69,6 @@
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_250"
-            android:scaleType="fitXY"
             android:src="@mipmap/warehouse_bg"/>
     </LinearLayout>
 
