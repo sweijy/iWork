@@ -6,6 +6,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import connect.activity.base.BaseApplication;
+import connect.activity.base.BaseListener;
 import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -92,6 +93,48 @@ public class DaoManager {
             mDaoMaster = new DaoMaster(db);
         }
         return mDaoMaster;
+    }
+
+    public void testDaoMaster(BaseListener<String> baseListener) {
+        String DB_NAME = null;
+        String DB_PWD = null;
+
+        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
+        if (userBean == null) {
+            DB_NAME = "connect_exception.db";
+            DB_PWD = "connect_exception_pwd";
+        } else {
+            String uid = userBean.getUid();
+            DB_NAME = "connect_" + StringUtil.bytesToHexString(StringUtil.digest(StringUtil.MD5,
+                    StringUtil.hexStringToBytes(uid))) + ".db";
+            DB_PWD = "connect_" + StringUtil.bytesToHexString(StringUtil.digest(StringUtil.SHA_256,
+                    StringUtil.hexStringToBytes(uid)));
+        }
+
+        Context context = BaseApplication.getInstance().getBaseContext();
+        MigrateOpenHelper helper = new MigrateOpenHelper(
+                context,
+                DB_NAME,
+                null);
+
+        Database db = null;
+        boolean appMode = ConfigUtil.getInstance().appMode();
+        if (appMode) {//release version
+            setDebug(false);//log
+            try {
+                db = helper.getEncryptedWritableDb(DB_PWD);
+            } catch (Exception e) {
+                e.printStackTrace();
+                context.deleteDatabase(DB_NAME);
+                SharedUtil.getInstance().deleteUserInfo();
+                baseListener.fail();
+            }
+        } else {//debug version
+            setDebug(true);
+            db = helper.getWritableDb();
+        }
+        mDaoMaster = new DaoMaster(db);
+        baseListener.Success("");
     }
 
     public DaoSession getDaoSession() {

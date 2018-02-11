@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseApplication;
 import connect.activity.base.BaseFragmentActivity;
+import connect.activity.base.BaseListener;
 import connect.activity.chat.ChatActivity;
 import connect.activity.chat.set.BaseGroupSelectActivity;
 import connect.activity.contact.ScanAddFriendActivity;
@@ -43,6 +44,7 @@ import connect.activity.login.LoginUserActivity;
 import connect.activity.set.SupportFeedbackActivity;
 import connect.activity.set.bean.SystemSetBean;
 import connect.database.green.DaoHelper.ParamManager;
+import connect.database.green.DaoManager;
 import connect.instant.bean.ConnectState;
 import connect.service.GroupService;
 import connect.service.UpdateInfoService;
@@ -113,9 +115,6 @@ public class HomeActivity extends BaseFragmentActivity {
         Intent intent = new Intent(activity, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtras(bundle);
-
-//        intent.putExtra("CATEGORY",category);
-//        intent.putExtra("SERIALIZE",objs);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.activity_in_from_right, R.anim.activity_0_to_0);
     }
@@ -134,24 +133,34 @@ public class HomeActivity extends BaseFragmentActivity {
         activity = this;
         setDefaultFragment();
 
-        new AsyncTask<Void, Void, Void>() {
+        DaoManager.getInstance().testDaoMaster(new BaseListener<String>() {
             @Override
-            protected Void doInBackground(Void... params) {
-                BaseApplication.getInstance().initRegisterAccount();
-                return null;
+            public void Success(String ts) {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        BaseApplication.getInstance().initRegisterAccount();
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
+                        LogManager.getLogger().d(TAG, "onPostExecute");
+                        UpdateInfoService.startService(activity);
+                        GroupService.startService(activity);
+
+                        ConnectState.getInstance().sendEvent(ConnectState.ConnectType.CONNECT);
+                        requestAppUpdata();
+                    }
+                }.execute();
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                LogManager.getLogger().d(TAG, "onPostExecute");
-                UpdateInfoService.startService(activity);
-                GroupService.startService(activity);
-
-                ConnectState.getInstance().sendEvent(ConnectState.ConnectType.CONNECT);
-                requestAppUpdata();
+            public void fail(Object... objects) {
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
-        }.execute();
+        });
     }
 
     @Override
