@@ -2,6 +2,7 @@ package connect.activity.chat.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import connect.activity.chat.fragment.bean.SearchBean;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
+import connect.widget.DepartmentAvatar;
 
 /**
  * Created by Administrator on 2018/1/31 0031.
@@ -63,7 +65,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             holder.hintTv.setText(activity.getString(R.string.Link_Relevant_record, searchBean.getHinit()));
         }
 
-        GlideUtil.loadAvatarRound(holder.avatarImage, searchBean.getAvatar());
+        if(searchBean.getStyle() == 1 && TextUtils.isEmpty(searchBean.getUid())){
+            holder.avatarRimg.setVisibility(View.VISIBLE);
+            holder.avatarImage.setVisibility(View.GONE);
+            holder.avatarRimg.setAvatarName(searchBean.getName(), true, 1);
+        }else{
+            holder.avatarRimg.setVisibility(View.GONE);
+            holder.avatarImage.setVisibility(View.VISIBLE);
+            GlideUtil.loadAvatarRound(holder.avatarImage, searchBean.getAvatar());
+        }
         holder.nicknameTv.setText(searchBean.getName());
         holder.contentLinear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +97,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private final ImageView avatarImage;
         private final TextView nicknameTv;
         private final TextView hintTv;
+        private final DepartmentAvatar avatarRimg;
+
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -96,6 +108,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             avatarImage = (ImageView) itemView.findViewById(R.id.avatar_image);
             nicknameTv = (TextView) itemView.findViewById(R.id.nickname_tv);
             hintTv = (TextView) itemView.findViewById(R.id.hint_tv);
+            avatarRimg = (DepartmentAvatar) itemView.findViewById(R.id.avatar_rimg);
+
         }
     }
 

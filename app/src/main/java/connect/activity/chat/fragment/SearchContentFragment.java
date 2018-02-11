@@ -26,6 +26,7 @@ import connect.database.green.DaoHelper.ParamManager;
 import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
+import connect.utils.ProgressUtil;
 import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
@@ -45,6 +46,7 @@ public class SearchContentFragment extends BaseFragment {
 
     private FragmentActivity mActivity;
     private SearchAdapter adapter;
+    private Connect.Workmates workmates;
 
     public static SearchContentFragment startFragment() {
         SearchContentFragment searchContentFragment = new SearchContentFragment();
@@ -90,7 +92,22 @@ public class SearchContentFragment extends BaseFragment {
         @Override
         public void itemClick(int position, SearchBean searchBean) {
             if (searchBean.getStyle() == 1) {
-                ContactInfoActivity.lunchActivity(mActivity, searchBean.getUid());
+                if(workmates.getListList().size() > position){
+                    Connect.Workmate workmate = workmates.getListList().get(position);
+                    ContactEntity contactEntity = new ContactEntity();
+                    contactEntity.setName(workmate.getName());
+                    contactEntity.setAvatar(workmate.getAvatar());
+                    contactEntity.setPublicKey(workmate.getPubKey());
+                    contactEntity.setEmpNo(workmate.getEmpNo());
+                    contactEntity.setMobile(workmate.getMobile());
+                    contactEntity.setGender(workmate.getGender());
+                    contactEntity.setTips(workmate.getTips());
+                    contactEntity.setRegisted(workmate.getRegisted());
+                    contactEntity.setUid(workmate.getUid());
+                    contactEntity.setOu(workmate.getOU());
+                    ContactInfoActivity.lunchActivity(mActivity, contactEntity, "");
+                }
+
             } else if (searchBean.getStyle() == 2) {
                 ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, searchBean.getUid());
             } else if (searchBean.getStyle() == 3) {
@@ -120,6 +137,7 @@ public class SearchContentFragment extends BaseFragment {
     }
 
     private void requestSearch(final String value, final int status){
+        ProgressUtil.getInstance().showProgress(mActivity);
         Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
                 .setCriteria(value)
                 .build();
@@ -127,8 +145,9 @@ public class SearchContentFragment extends BaseFragment {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
                 try {
+                    ProgressUtil.getInstance().dismissProgress();
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                    Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
+                    workmates = Connect.Workmates.parseFrom(structData.getPlainData());
                     ArrayList<SearchBean> list = new ArrayList<>();
                     for (Connect.Workmate workmate : workmates.getListList()) {
                         SearchBean searchBean = new SearchBean();
@@ -151,6 +170,7 @@ public class SearchContentFragment extends BaseFragment {
 
             @Override
             public void onError(Connect.HttpNotSignResponse response) {
+                ProgressUtil.getInstance().dismissProgress();
                 ArrayList<SearchBean> list = new ArrayList<>();
                 if(status == 0){
                     list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
