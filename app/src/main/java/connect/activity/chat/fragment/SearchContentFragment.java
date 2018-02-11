@@ -24,7 +24,12 @@ import connect.activity.contact.ContactInfoActivity;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ParamManager;
 import connect.database.green.bean.ContactEntity;
+import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
+import connect.utils.ToastEUtil;
+import connect.utils.UriUtil;
+import connect.utils.okhttp.OkHttpUtil;
+import connect.utils.okhttp.ResultCall;
 import protos.Connect;
 
 /**
@@ -70,6 +75,17 @@ public class SearchContentFragment extends BaseFragment {
         recyclerview.setAdapter(adapter);
     }
 
+    private void updateView(ArrayList<SearchBean> list){
+        if(list.size() > 0){
+            noDataLin.setVisibility(View.GONE);
+            recyclerview.setVisibility(View.VISIBLE);
+            adapter.setDataNotify(list);
+        }else{
+            noDataLin.setVisibility(View.VISIBLE);
+            recyclerview.setVisibility(View.GONE);
+        }
+    }
+
     SearchAdapter.OnItemChildClickListener onItemChildClickListener = new SearchAdapter.OnItemChildClickListener(){
         @Override
         public void itemClick(int position, SearchBean searchBean) {
@@ -90,29 +106,62 @@ public class SearchContentFragment extends BaseFragment {
     public void updateView(String value, int status){
         ParamManager.getInstance().putCommonlyString(value);
         ArrayList<SearchBean> list = new ArrayList<>();
-        if(status == 0){
-            list.addAll(getFriendData(value));
-            list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
-            list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
-            list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
-        }else if(status == 1){
-            list.addAll(getFriendData(value));
+        if(status == 0 || status == 1){
+            requestSearch(value, status);
+            return;
         }else if(status == 2){
             list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
+            updateView(list);
         } else if(status == 3){
             list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
             list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
-        }
-
-        if(list.size() > 0){
-            noDataLin.setVisibility(View.GONE);
-            recyclerview.setVisibility(View.VISIBLE);
-            adapter.setDataNotify(list);
-        }else{
-            noDataLin.setVisibility(View.VISIBLE);
-            recyclerview.setVisibility(View.GONE);
+            updateView(list);
         }
     }
+
+    private void requestSearch(final String value, final int status){
+        Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
+                .setCriteria(value)
+                .build();
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
+            @Override
+            public void onResponse(Connect.HttpNotSignResponse response) {
+                try {
+                    Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
+                    Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
+                    ArrayList<SearchBean> list = new ArrayList<>();
+                    for (Connect.Workmate workmate : workmates.getListList()) {
+                        SearchBean searchBean = new SearchBean();
+                        searchBean.setStyle(1);
+                        searchBean.setUid(workmate.getUid());
+                        searchBean.setName(workmate.getName());
+                        searchBean.setAvatar(workmate.getAvatar());
+                        list.add(searchBean);
+                    }
+                    if(status == 0){
+                        list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
+                        list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
+                        list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
+                    }
+                    updateView(list);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Connect.HttpNotSignResponse response) {
+                ArrayList<SearchBean> list = new ArrayList<>();
+                if(status == 0){
+                    list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
+                    list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
+                    list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
+                }
+                updateView(list);
+            }
+        });
+    }
+
 
     private ArrayList<SearchBean> getFriendData(String value){
         ArrayList<SearchBean> list = new ArrayList<>();

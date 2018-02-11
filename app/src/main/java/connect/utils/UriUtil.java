@@ -61,6 +61,9 @@ public class UriUtil {
     public static String STORES_V1_IWORK_LOG_COMFIRM = "/stores/v1/iwork/log/confirm";
     /** 查询陌生人信息详情 */
     public static String STORES_V1_IWORK_LOGS_DETAIL = "/stores/v1/iwork/logs/detail";
+    /** 修改访客时间 */
+    public static String VISITORS_V1_STAFF_RECORDS_UPDATE = "/visitors/v1/staff/records/update";
+
 
     /**======================================================================================
      *                                Login successfully initialized

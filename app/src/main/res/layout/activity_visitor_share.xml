@@ -41,9 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:text="邀请你访问公司，通过小程序录入基本信息和肖像，以便通过公司门禁AI人像识别设备
-二维码3小时内有效，并且只能使用一次"/>
+        android:layout_marginRight="@dimen/dp_20"/>
 
     <TextView
         android:id="@+id/share_texts"

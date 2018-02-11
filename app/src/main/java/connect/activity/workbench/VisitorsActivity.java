@@ -67,7 +67,6 @@ public class VisitorsActivity extends BaseFragmentActivity {
 
     private AuditFragment auditFragment;
     private ApprovedFragment approvedFragment;
-    private UserBean userBean;
 
     public static void lunchActivity(Activity activity) {
         ActivityUtil.next(activity, VisitorsActivity.class);
@@ -88,7 +87,6 @@ public class VisitorsActivity extends BaseFragmentActivity {
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Work_Visitors_info);
         toolbarTop.setRightText(R.string.Link_Invite);
-        userBean = SharedPreferenceUtil.getInstance().getUser();
 
         auditFragment = AuditFragment.startFragment();
         approvedFragment = ApprovedFragment.startFragment();
