@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -105,6 +106,19 @@ public class HomeActivity extends BaseFragmentActivity {
         ActivityUtil.next(activity, HomeActivity.class);
     }
 
+    public static void startActivity(Activity activity, int category, Object... objs) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("CATEGORY", category);
+        bundle.putSerializable("SERIALIZE", objs);
+
+        Intent intent = new Intent(activity, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.activity_in_from_right, R.anim.activity_0_to_0);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +151,21 @@ public class HomeActivity extends BaseFragmentActivity {
                 requestAppUpdata();
             }
         }.execute();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            int category = bundle.getInt("CATEGORY");
+            Object[] objs = (Object[]) bundle.getSerializable("SERIALIZE");
+            if (category == 100) {
+                int talType = (int) objs[0];
+                String talkKey = (String) objs[1];
+                ChatActivity.startActivity(activity, Connect.ChatType.forNumber(talType), talkKey);
+            }
+        }
     }
 
     private static final int TIMEOUT_DELAYEXIT = 120;
