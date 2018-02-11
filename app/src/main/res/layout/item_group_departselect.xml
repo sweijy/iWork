@@ -81,8 +81,16 @@
             android:layout_width="@dimen/dp_38"
             android:layout_height="@dimen/dp_38"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/workmate_select"
-            android:layout_toRightOf="@+id/workmate_select" />
+            android:layout_toEndOf="@id/workmate_select"
+            android:layout_toRightOf="@id/workmate_select" />
+
+        <ImageView
+            android:id="@id/imageview_department_avatar"
+            android:layout_width="@dimen/dp_38"
+            android:layout_height="@dimen/dp_38"
+            android:layout_toEndOf="@id/workmate_select"
+            android:layout_toRightOf="@id/workmate_select"
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

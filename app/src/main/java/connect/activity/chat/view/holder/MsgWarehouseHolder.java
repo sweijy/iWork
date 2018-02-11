@@ -59,7 +59,7 @@ public class MsgWarehouseHolder extends MsgBaseHolder {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                content = context.getString(R.string.Robot_Visiting_Purpose, visitorNotify.getReason());
+                content = context.getString(R.string.Robot_Visiting_Purpose, visitorNotify.getGuestName(), visitorNotify.getReason());
                 contentTxt.setText(content);
                 break;
             case 21:
