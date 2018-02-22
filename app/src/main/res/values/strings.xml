@@ -717,4 +717,7 @@
     <string name="Robot_Visiting_Purpose">Visitor: %1$s\nVisiting purpose: %2$s</string>
     <string name="Robot_WareHouse_Warn">%1$s Detected stranger to enter</string>
     <string name="Link_Today">Today</string>
+    <string name="Chat_Selected_Member">have chosen: %1$d</string>
+    <string name="Chat_Determine_Count">determine(%1$d)</string>
+    <string name="title_activity_group_select">GroupSelectActivity</string>
 </resources>

@@ -68,17 +68,15 @@ public class ContactFragment extends BaseFragment {
         EventBus.getDefault().register(this);
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         toolbarTop.setBlackStyle();
         toolbarTop.setTitle(null, R.string.Link_Contacts);
-        //toolbarTop.setRightImg(R.mipmap.add_white3x);
-        //toolbarTop.setLeftImg(R.mipmap.search3x);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         recyclerview.setLayoutManager(linearLayoutManager);
         adapter = new ContactAdapter(mActivity);
         recyclerview.setAdapter(adapter);
-        //recyclerview.addItemDecoration(new LineDecoration(mActivity));
         sideBar.setOnTouchingLetterChangedListener(changedListener);
 
         adapter.setOnSideMenuListener(onSideMenuListener);

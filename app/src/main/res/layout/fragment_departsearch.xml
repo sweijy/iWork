@@ -12,6 +12,7 @@
 
     <RelativeLayout
         android:id="@id/layout_edittext"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_ffffff"
@@ -25,7 +26,6 @@
             android:layout_marginLeft="@dimen/dp_32"
             android:layout_marginRight="@dimen/dp_32"
             android:background="@drawable/shaoe_search_department"
-            android:clickable="false"
             android:drawableLeft="@mipmap/department_search"
             android:drawablePadding="@dimen/dp_10"
             android:hint="@string/Link_Search"
@@ -49,14 +49,9 @@
         android:id="@id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/layout_edittext"
         android:divider="@color/color_clear"
         android:dividerHeight="@dimen/dp_0"
         android:listSelector="@android:color/transparent" />
 
-    <include
-        layout="@layout/include_selectcout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_alignParentBottom="true" />
 </RelativeLayout>

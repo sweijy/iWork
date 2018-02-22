@@ -1,14 +1,16 @@
-package connect.activity.chat.set;
+package connect.activity.chat.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -25,9 +27,10 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import connect.activity.base.BaseActivity;
+import connect.activity.base.BaseFragment;
 import connect.activity.base.BaseListener;
 import connect.activity.chat.adapter.GroupDepartSelectAdapter;
+import connect.activity.chat.set.GroupSelectActivity;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -43,54 +46,61 @@ import connect.widget.NameLinear;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
-public class GroupDepartSelectActivity extends BaseActivity {
+/**
+ * Created by PuJin on 2018/2/22.
+ */
+
+public class DetailDepartSelectFragment extends BaseFragment {
 
     @Bind(R.id.toolbar_top)
     TopToolBar toolbarTop;
+    @Bind(R.id.edittext_search_user)
+    EditText edittextSearchUser;
+    @Bind(R.id.imageview_clear)
+    ImageView imageviewClear;
     @Bind(R.id.name_linear)
     NameLinear nameLinear;
     @Bind(R.id.scrollview)
     HorizontalScrollView scrollview;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.edittext_search_user)
-    EditText edittextSearchUser;
-    @Bind(R.id.imageview_clear)
-    ImageView imageviewClear;
 
-    private GroupDepartSelectActivity activity;
+    private GroupSelectActivity activity;
+    private GroupDepartSelectAdapter departSelectAdapter;
     private boolean isCreate = true;
     private List<String> selectedUids = new ArrayList();
     private ArrayList<Connect.Department> nameList = new ArrayList<>();
     private Map<String, Object> selectDeparts = new HashMap<>();//部门 B  成员 W
 
-    private GroupDepartSelectAdapter departSelectAdapter = null;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_depart_select);
-        ButterKnife.bind(this);
-        initView();
+    public static DetailDepartSelectFragment startFragment() {
+        DetailDepartSelectFragment fragment = new DetailDepartSelectFragment();
+        return fragment;
     }
 
-    public static void startActivity(Activity activity, boolean iscreate, ArrayList<String> uids) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("Is_Create", iscreate);
-        bundle.putSerializable("Uids", uids);
-        ActivityUtil.next(activity, GroupDepartSelectActivity.class, bundle, 200);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_detaildepart_select, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity = (GroupSelectActivity) getActivity();
+        initView();
     }
 
     @Override
     public void initView() {
-        activity = this;
         toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
-        toolbarTop.setRightText(getString(R.string.Chat_Select_Count, 0));
         toolbarTop.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.goBack(activity);
+                activity.popBackStack();
             }
         });
         toolbarTop.setRightListener(new View.OnClickListener() {
@@ -136,20 +146,18 @@ public class GroupDepartSelectActivity extends BaseActivity {
             }
         });
 
-        isCreate = getIntent().getBooleanExtra("Is_Create", true);
-        selectedUids = (List<String>) getIntent().getSerializableExtra("Uids");
+        isCreate = activity.isCreateGroup();
+        for (Map.Entry<String, Object> it : activity.getSelectMembers().entrySet()) {
+            String key = it.getKey();
+            if (!TextUtils.isEmpty(key)) {
+                selectedUids.add(key);
+            }
+        }
+
         if (isCreate) {
             toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Create));
-            if (selectedUids.size() >= 2) {
-                toolbarTop.setRightTextEnable(true);
-            } else {
-                toolbarTop.setRightTextEnable(false);
-            }
-            toolbarTop.setRightText(getString(R.string.Chat_Select_Count, selectedUids.size()));
         } else {
             toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Invite));
-            toolbarTop.setRightTextEnable(false);
-            toolbarTop.setRightText(getString(R.string.Chat_Select_Count, 0));
         }
 
         nameLinear.setVisibility(View.VISIBLE);
@@ -542,5 +550,11 @@ public class GroupDepartSelectActivity extends BaseActivity {
                 onItemClickListener.itemClick(0);
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

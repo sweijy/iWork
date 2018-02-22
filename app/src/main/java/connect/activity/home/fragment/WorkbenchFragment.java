@@ -88,7 +88,8 @@ public class WorkbenchFragment extends BaseFragment {
         EventBus.getDefault().register(this);
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         initCyclePager();
         initMenu();
     }
