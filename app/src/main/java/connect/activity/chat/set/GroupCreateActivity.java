@@ -20,6 +20,7 @@ import connect.activity.base.BaseActivity;
 import connect.activity.chat.adapter.GroupCreateAdapter;
 import connect.activity.chat.set.contract.GroupCreateContract;
 import connect.activity.chat.set.presenter.GroupCreatePresenter;
+import connect.activity.home.HomeActivity;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -51,9 +52,8 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         initView();
     }
 
-    public static void startActivity(Activity activity, boolean isCreate, ArrayList<Connect.Workmate> workmates) {
+    public static void startActivity(Activity activity, ArrayList<Connect.Workmate> workmates) {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("Is_Create", isCreate);
         bundle.putSerializable(CONTACT_LIST, workmates);
         ActivityUtil.next(activity, GroupCreateActivity.class, bundle);
     }
@@ -69,7 +69,7 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtil.goBack(activity);
+                HomeActivity.startActivity(activity, 150);
             }
         });
         toolbar.setRightListener(new View.OnClickListener() {
@@ -94,7 +94,6 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
         edittxt1.setHint(String.format(activity.getString(R.string.Link_user_friends), userBean.getName()));
 
-        isCreate = getIntent().getBooleanExtra("Is_Create", true);
         workmates = (List<Connect.Workmate>) getIntent().getSerializableExtra(CONTACT_LIST);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         recyclerview.setLayoutManager(linearLayoutManager);

@@ -279,13 +279,7 @@
             android:exported="false" />
 
         <activity
-            android:name="connect.activity.chat.set.GroupDepartSelectActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.chat.set.GroupCreateActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.chat.set.BaseGroupSelectActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.workbench.WorkSeachActivity"
@@ -293,6 +287,12 @@
         <activity
             android:name="connect.activity.chat.set.OrgnizeSearchActivity"
             android:label="@string/title_activity_orgnize_search"></activity>
+        <activity
+            android:name="connect.activity.chat.set.DepartSelectShowAcitivty"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.chat.set.GroupSelectActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

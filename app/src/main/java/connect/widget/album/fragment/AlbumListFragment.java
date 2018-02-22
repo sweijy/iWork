@@ -147,4 +147,9 @@ public class AlbumListFragment extends BaseFragment implements View.OnClickListe
                 break;
         }
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

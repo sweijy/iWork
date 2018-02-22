@@ -30,7 +30,7 @@ import connect.activity.base.BaseApplication;
 import connect.activity.base.BaseFragmentActivity;
 import connect.activity.base.BaseListener;
 import connect.activity.chat.ChatActivity;
-import connect.activity.chat.set.BaseGroupSelectActivity;
+import connect.activity.chat.set.GroupSelectActivity;
 import connect.activity.contact.ScanAddFriendActivity;
 import connect.activity.contact.bean.MsgSendBean;
 import connect.activity.home.bean.HomeAction;
@@ -110,7 +110,9 @@ public class HomeActivity extends BaseFragmentActivity {
     public static void startActivity(Activity activity, int category, Object... objs) {
         Bundle bundle = new Bundle();
         bundle.putInt("CATEGORY", category);
-        bundle.putSerializable("SERIALIZE", objs);
+        if (objs.length > 0) {
+            bundle.putSerializable("SERIALIZE", objs);
+        }
 
         Intent intent = new Intent(activity, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -234,7 +236,7 @@ public class HomeActivity extends BaseFragmentActivity {
             case GROUP_NEWCHAT:
                 int position = (int) (objects[0]);
                 if(position == 1){
-                    BaseGroupSelectActivity.startActivity(activity, true, "");
+                    GroupSelectActivity.startActivity(activity, true, "");
                 }else if(position == 2){
                     ActivityUtil.next(activity, ScanAddFriendActivity.class);
                 }else if(position == 3){

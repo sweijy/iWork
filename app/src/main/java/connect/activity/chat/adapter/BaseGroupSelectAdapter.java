@@ -32,6 +32,10 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
     }
 
+    public void setData() {
+        notifyDataSetChanged();
+    }
+
     public void setData(List<ContactEntity> contactEntities) {
         this.contactEntities = contactEntities;
         notifyDataSetChanged();

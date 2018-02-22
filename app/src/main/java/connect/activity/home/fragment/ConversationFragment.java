@@ -189,7 +189,12 @@ public class ConversationFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         LogManager.getLogger().d(Tag, "onActivityCreated()");
         activity = getActivity();
+        initView();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void initView() {
         if (chatFragmentAdapter == null) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
             recyclerFragmentChat.setLayoutManager(linearLayoutManager);
@@ -199,8 +204,6 @@ public class ConversationFragment extends BaseFragment {
             chatFragmentAdapter.setConversationListener(conversationListener);
             loadRooms();
         }
-
-        EventBus.getDefault().register(this);
     }
 
     @OnClick({R.id.relativelayout_1, R.id.search_image1})

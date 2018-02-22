@@ -636,4 +636,8 @@
     <string name="Robot_Visiting_Purpose">来访人: %1$s\n来访目的: %2$s</string>
     <string name="Robot_WareHouse_Warn">%1$s 检测到陌生人进入</string>
     <string name="Link_Today">今天</string>
+    <string name="Chat_Selected_Member">已选择: %1$d人</string>
+    <string name="Chat_Determine_Count">确定(%1$d)</string>
+
+
 </resources>

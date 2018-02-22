@@ -215,7 +215,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
             public void onClick(View v) {
                 String uid = (String) v.getTag();
                 if (TextUtils.isEmpty(uid)) {
-                    BaseGroupSelectActivity.startActivity(activity, true, roomKey);
+                    GroupSelectActivity.startActivity(activity, true, roomKey);
                 } else if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(uid)) {
                     UserInfoActivity.startActivity(activity);
                 } else {

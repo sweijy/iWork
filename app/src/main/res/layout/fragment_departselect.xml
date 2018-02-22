@@ -14,49 +14,40 @@
         android:id="@id/layout_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
         android:background="@color/color_ffffff"
         android:paddingBottom="@dimen/dp_5"
         android:paddingTop="@dimen/dp_5">
 
-        <EditText
-            android:id="@id/edittext_search_user"
+        <TextView
+            android:id="@id/text_search_user"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_35"
             android:layout_marginLeft="@dimen/dp_32"
             android:layout_marginRight="@dimen/dp_32"
             android:background="@drawable/shaoe_search_department"
-            android:clickable="false"
-            android:drawableLeft="@mipmap/department_search"
-            android:drawablePadding="@dimen/dp_10"
-            android:hint="@string/Link_Search"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingLeft="@dimen/dp_5"
-            android:textColorHint="@color/color_b3b5bc"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_24"
+            android:text="@string/Link_Search"
+            android:textColor="@color/color_b3b5bc"
             android:textSize="@dimen/sp_14" />
 
         <ImageView
-            android:id="@id/imageview_clear"
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
-            android:layout_alignRight="@id/edittext_search_user"
+            android:layout_alignLeft="@id/text_search_user"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@mipmap/input_del" />
+            android:layout_marginLeft="@dimen/dp_5"
+            android:background="@mipmap/department_search" />
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/layout_edittext"
         android:divider="@color/color_clear"
         android:dividerHeight="@dimen/dp_0"
         android:listSelector="@android:color/transparent" />
-
-    <include
-        layout="@layout/include_selectcout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_alignParentBottom="true" />
 </RelativeLayout>
