@@ -717,4 +717,5 @@
     <string name="Robot_Visiting_Purpose">Visitor: %1$s\nVisiting purpose: %2$s</string>
     <string name="Robot_WareHouse_Warn">%1$s Detected stranger to enter</string>
     <string name="Link_Today">Today</string>
+    <string name="title_activity_orgnize_search">OrgnizeSearchActivity</string>
 </resources>
