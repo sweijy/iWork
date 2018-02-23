@@ -15,14 +15,6 @@
         android:paddingLeft="@dimen/dp_15"
         android:paddingTop="@dimen/dp_9">
 
-        <View
-            android:id="@id/select"
-            android:layout_width="@dimen/dp_27"
-            android:layout_height="@dimen/dp_27"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:background="@drawable/sec_pickstate" />
-
         <connect.widget.DepartmentAvatar
             android:id="@+id/avatar_lin"
             android:layout_width="@dimen/dp_38"
@@ -51,12 +43,18 @@
             android:textColor="@color/color_black" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@id/image_delete"
-        android:layout_width="@dimen/dp_16"
-        android:layout_height="@dimen/dp_16"
+    <RelativeLayout
+        android:id="@id/layout_delete"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_38"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dp_12"
-        android:background="@mipmap/input_del" />
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:background="@mipmap/input_del" />
+    </RelativeLayout>
 </RelativeLayout>

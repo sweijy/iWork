@@ -25,6 +25,8 @@
             android:layout_height="@dimen/dp_35"
             android:layout_marginLeft="@dimen/dp_32"
             android:layout_marginRight="@dimen/dp_32"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:background="@drawable/shaoe_search_department"
             android:drawableLeft="@mipmap/department_search"
             android:drawablePadding="@dimen/dp_10"

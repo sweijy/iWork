@@ -275,6 +275,7 @@
     <item name="btn_selected" type="id" />
 
     <item name="layout_avatar" type="id"/>
+    <item name="layout_delete" type="id"/>
     <item name="image_delete" type="id"/>
 
     <item name="group_select_content" type="id"/>

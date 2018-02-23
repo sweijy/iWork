@@ -1,12 +1,9 @@
 package connect.activity.chat.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -74,6 +70,12 @@ public class BaseDepartSelectFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+    }
+
+    @Override
     public void initView() {
         toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
@@ -88,26 +90,10 @@ public class BaseDepartSelectFragment extends BaseFragment {
             toolbar.setTitle(getResources().getString(R.string.Link_Group_Create));
         } else {
             toolbar.setTitle(getResources().getString(R.string.Link_Group_Invite));
-            Message message = new Message();
-            message.what = 200;
-            handler.sendMessage(message);
         }
 
-        List<ContactEntity> contactEntities = new ArrayList<>();
-        if (activity.isCreateGroup()) {
-            contactEntities = ContactHelper.getInstance().loadFriend();
-            requestUserInfo(activity.getUid());
-        }
-
-        if (activity.isCreateGroup()) {
-            if (TextUtils.isEmpty(activity.getUid())) {
-                activity.updateSelectMemeberCount(0);
-            } else {
-                activity.updateSelectMemeberCount(1);
-            }
-        } else {
-            activity.updateSelectMemeberCount(0);
-        }
+        List<ContactEntity> contactEntities = ContactHelper.getInstance().loadFriend();
+        requestUserInfo(activity.getUid());
 
         //添加组织架构
         ContactEntity originEntity = new ContactEntity();
@@ -120,28 +106,18 @@ public class BaseDepartSelectFragment extends BaseFragment {
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.setAdapter(selectAdapter);
         selectAdapter.setData(contactEntities);
-        if (activity.isCreateGroup()) {
-            selectAdapter.setFriendUid(activity.getUid());
-        }
         selectAdapter.setGroupSelectListener(groupSelectListener);
     }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 200:
-                    groupSelectListener.organizeClick();
-                    break;
-            }
-        }
-    };
 
     private class GroupSelectListener implements BaseGroupSelectAdapter.BaseGroupSelectListener {
         @Override
         public boolean isContains(String selectKey) {
-            return activity.isContains(selectKey) || (activity.isCreateGroup() && activity.getUid().equals(selectKey));
+            return activity.isContains(selectKey);
+        }
+
+        @Override
+        public boolean isMoveSelect(String selectKey) {
+            return activity.isRemoveSelect(selectKey);
         }
 
         @Override
