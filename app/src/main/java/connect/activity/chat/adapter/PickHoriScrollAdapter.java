@@ -6,25 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import connect.activity.base.BaseApplication;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
-
-import java.util.List;
 
 /**
  * Created by gtq on 2016/11/28.
  */
 public class PickHoriScrollAdapter {
 
-    private Context context;
-    private List<String> paths;
-
     private LayoutInflater inflate;
+    private List<String> paths = new ArrayList<>();
 
-    public PickHoriScrollAdapter(Context context, List<String> paths) {
-        this.context = context;
-        this.paths = paths;
+    public PickHoriScrollAdapter() {
+        Context context = BaseApplication.getInstance().getBaseContext();
         inflate = LayoutInflater.from(context);
+    }
+
+    public void setData(List<String> paths) {
+        this.paths = paths;
     }
 
     public int getCount(){
