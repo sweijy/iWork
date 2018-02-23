@@ -297,9 +297,6 @@ public class DialogUtil {
         void cancel();
     }
 
-
-
-
     /**
      * popup dialog
      *

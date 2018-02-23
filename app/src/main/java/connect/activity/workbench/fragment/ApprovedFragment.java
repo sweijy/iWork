@@ -28,10 +28,6 @@ import connect.utils.system.SystemUtil;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/1/17 0017.
- */
-
 public class ApprovedFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)

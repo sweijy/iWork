@@ -44,7 +44,6 @@ public class AboutActivity extends BaseActivity {
 
     private AboutActivity mActivity;
     private Connect.VersionResponse versionResponse;
-    private int compareInt = 0;
     private String downLoadPath;
 
     @Override
@@ -76,10 +75,6 @@ public class AboutActivity extends BaseActivity {
     @OnClick(R.id.llUpdate)
     void goUpdate(View view){
         requestAppUpdate();
-
-        if(compareInt == 1){
-
-        }
     }
 
     private PermissionUtil.ResultCallBack permissionCallBack = new PermissionUtil.ResultCallBack(){

@@ -67,7 +67,6 @@ public class UserInfoActivity extends BaseActivity {
         GlideUtil.loadAvatarRound(avatarIv, userBean.getAvatar());
 
         nameTv.setText(userBean.getName());
-        //idTv.setText(userBean.getConnectId());
         employeeNumberTv.setText(userBean.getEmp_no());
     }
 

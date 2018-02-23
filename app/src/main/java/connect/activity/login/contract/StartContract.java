@@ -8,8 +8,6 @@ import connect.activity.base.contract.BaseView;
 public interface StartContract {
 
     interface View extends BaseView<Presenter> {
-        void goIntoGuide();
-
         void goIntoLoginForPhone();
 
         void goIntoHome();

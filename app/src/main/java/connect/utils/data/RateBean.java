@@ -1,15 +1,6 @@
 package connect.utils.data;
 
-/**
- * Created by Administrator on 2016/12/15.
- */
 public class RateBean {
-
-    /**
-     * datetime : Dec 15, 2016 09:06:00 UTC
-     * rate : 5364.1467
-     * code : CNY
-     */
 
     private String datetime;
     private Double rate;

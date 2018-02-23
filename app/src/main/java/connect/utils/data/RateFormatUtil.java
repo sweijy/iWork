@@ -4,10 +4,6 @@ import android.text.TextUtils;
 
 import java.text.DecimalFormat;
 
-/**
- * Created by Administrator on 2017/1/17.
- */
-
 public class RateFormatUtil {
 
     /** BTC (decimal turn o tLong) */
