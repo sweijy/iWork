@@ -60,12 +60,6 @@ public class ApprovedFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        //initView();
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = getActivity();

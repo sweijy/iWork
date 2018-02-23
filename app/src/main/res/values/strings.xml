@@ -13,10 +13,6 @@
     <string name="Chat_Have_agreed">Accepted</string>
     <string name="Chat_Have_refused">Refused</string>
     <string name="Chat_Loc">location</string>
-    <string name="Chat_Member_Max">%1$d/%2$d members</string>
-    <string name="Chat_Message_Black_Friend_Notice">The message has been issued but is rejected by
-        the other party
-    </string>
     <string name="Chat_Message_Friend_Cookie_Expired_Notice">Friends are not logged in for a long time, login time has expired</string>
     <string name="Chat_Msg_Undefine">Message is undefined</string>
     <string name="Chat_No_Pictures">No picture</string>
@@ -31,77 +27,45 @@
     <string name="Chat_Select_Count_Max">select(%1$d/%2$d)</string>
     <string name="Chat_Send_Mulphoto">send%1$dphoto</string>
     <string name="Chat_Sharelink">[share link]</string>
-    <string name="Chat_Source_QR">Share of the group of qr code</string>
     <string name="Chat_Transfer_Detail">Transfer Detail</string>
-    <string name="Chat_one_device_can_only_grab_a_luckypackage">one device can only grab a
-        luckypackage
-    </string>
     <string name="Chat_system_luckypackage_have_been_frozen">system luckypackage have been frozen
     </string>
     <string name="Chat_the_day_before_yesterday_time">Chat the day before yesterday time %s</string>
-    <string name="Chat_Address_already_exists">Address already exists</string>
-    <string name="Chat_The_main_content">The main content</string>
-    <string name="Chat_Time">Time</string>
     <string name="Chat_Album">Photos</string>
     <string name="Chat_Organizational_structure">Organizational structure</string>
     <string name="Chat_Contact_details">Contact details</string>
     <string name="Chat_Audio">[Audio]</string>
-    <string name="Chat_Best_luck">Best luck</string>
-    <string name="Chat_Bitcoin_has_been_return_to_your_wallet">Bitcoin has been return to your
-        wallet
-    </string>
     <string name="Chat_Chats">Chats</string>
     <string name="Chat_Choose_Members">Choose Members</string>
     <string name="Chat_Choose_contact">Choose contact</string>
     <string name="Chat_Complete">Complete</string>
     <string name="Chat_Create_a_new_chat">Create a new chat</string>
-    <string name="Chat_Crowd_founding_in_progress">Crowd-founding in progress</string>
+
     <string name="Chat_Crowd_funding">Crowd-funding</string>
-    <string name="Chat_Crowd_funding_by_who">By %s</string>
-    <string name="Chat_Crowdfoundind_History">History</string>
-    <string name="Chat_Crowdfunding">Crowdfunding</string>
-    <string name="Chat_Crowfunding">Create</string>
     <string name="Chat_Draft">[Draft]</string>
-    <string name="Chat_Enter_BTC">%1$s\n%2$s BTC</string>
-    <string name="Chat_Expired">Expired %1$d/%2$d</string>
     <string name="Chat_Expression">[Expression]</string>
     <string name="Chat_Failed_to_get_redpact">Failed to get redpact</string>
-    <string name="Chat_Find_me_from_the_recommendation">Find me from the recommendation</string>
     <string name="Chat_Founded_complete">Founded complete</string>
     <string name="Chat_Group_Members">Members(%d)</string>
     <string name="Chat_Group_Namecard">[Group Namecard]</string>
     <string name="Chat_Group_certification">[Group certification]</string>
-    <string name="Chat_History">History</string>
     <string name="Chat_Loading">Loading</string>
     <string name="Chat_Location">[Location]</string>
-    <string name="Chat_Lucky_packet_Overtime">Lucky packet Overtime!</string>
-    <string name="Chat_Lucky_packet_transfering_to_your_wallet">Lucky packet transfering to your
-        wallet
-    </string>
-    <string name="Chat_Message_retweet">Message retweet</string>
     <string name="Chat_Mute_Notification">Mute Notification</string>
     <string name="Chat_Name_Card">Name Card</string>
     <string name="Chat_Network_connection_failed_please_check_network">Network connection failed,
         please check network
     </string>
-    <string name="Chat_New_application">New application</string>
-    <string name="Chat_New_message_notification">New message notification</string>
     <string name="Chat_Not_Group_Master">You are not the group adminer</string>
     <string name="Chat_Not_connected">Not connected</string>
     <string name="Chat_Photo">Photo</string>
     <string name="Chat_Picture">[Picture]</string>
     <string name="Chat_Preview">Preview</string>
-    <string name="Chat_Read_Burn">Read &amp; Burn</string>
     <string name="Chat_Recent_chat">Recent chat</string>
     <string name="Chat_Red_packet">[Lucky packet]</string>
-    <string name="Chat_Refreshing_Secret_Key">Refreshing Secret Key...</string>
     <string name="Chat_Release_to_cancel">Release to cancel</string>
-    <string name="Chat_Secret_Key_Refreshed">Secret Key Refreshed</string>
     <string name="Chat_Send_a_Luck_Packet_Click_to_view">Send Lucky Packet\nClick to view</string>
     <string name="Chat_Send_a_namecard">Send a namecard</string>
-    <string name="Chat_Send_vioce">Send vioce</string>
-    <string name="Chat_Share_contact">Share the Contact Card</string>
-    <string name="Chat_Share_contact_to">Share %1$s to %2$s</string>
     <string name="Chat_Sight">Sight</string>
     <string name="Chat_Slide_left_to_cancel">Swipe to the left to cancel</string>
     <string name="Chat_Snapchat">[Snapchat]</string>
@@ -109,16 +73,11 @@
     <string name="Chat_Sticky_on_Top_chat">Sticky on Top chat</string>
     <string name="Chat_Tips">[Tips message]</string>
     <string name="Chat_Transfer">[Transfer]</string>
-    <string name="Chat_Transfer_to_other_BTC">Transfer to other \n%s BTC</string>
-    <string name="Chat_Transfer_to_you_BTC">Transfer to you \n%s BTC</string>
     <string name="Chat_Unpaid">Unpaid</string>
     <string name="Chat_Update_Database">Update Database</string>
     <string name="Chat_Updating_Database">Updating Database</string>
-    <string name="Chat_User_already_in_group">User already in group</string>
-    <string name="Chat_VerifyCode_has_expired">VerifyCode has expired</string>
     <string name="Chat_Video">[Video]</string>
     <string name="Chat_Visting_card">[Visting card]</string>
-    <string name="Chat_Waitting_for_open">Waitting for open</string>
     <string name="Chat_Yesterday">Yesterday</string>
     <string name="Chat_You">You</string>
     <string name="Chat_You_are_start_encrypt_chat_Messages_encrypted">Starting encrypted
@@ -128,29 +87,15 @@
     <string name="Chat_Your_Connect_ID_will_no_longer_be_linked_with_mobile_number">Your Connect ID
         will no longer be linked with mobile number as this number has been linked to %s
     </string>
-    <string name="Chat_Your_account_is_not_bound_to_the_phone">Your account is haven\'t bind a
-        phone,Please try again after binded
-    </string>
-    <string name="Chat_disable_the_self_descruct">%s disabled the self-destruct</string>
-    <string name="Chat_et_self_destruct_timer">Set self-destruct timer</string>
-    <string name="Chat_founded">%1$d/%2$d founded</string>
     <string name="Chat_opened_Lucky_Packet_of">%1$s’ve opened Lucky Packet of %2$s</string>
     <string name="Chat_paid_the_bill_to">%1$s paid the bill to %2$s</string>
-    <string name="Chat_paid_the_crowd_founding_to">%1$s paid the crowd-founding to %2$s</string>
-    <string name="Chat_set_the_self_destruct_timer_to">%1$s set the self-destruct timer to %2$s
-    </string>
     <string name="Common_Cancel">Cancel</string>
     <string name="Common_Management">Manage</string>
     <string name="Common_The_search_application">Search application</string>
-    <string name="Common_Completed">Completed</string>
     <string name="Common_Download_App">Downloading%s</string>
-    <string name="Common_In">In \'%s</string>
     <string name="Common_Loading">Loading ...</string>
     <string name="Common_OK">OK</string>
     <string name="ErrorCode_Request_Error">Request Error</string>
-    <string name="Link_Friend">Friend</string>
-    <string name="Link_Market_value">Market value</string>
-    <string name="Link_From">from</string>
     <string name="Link_Open_in_Browser">Open in a browser</string>
     <string name="Link_Unable_to_access_permissom">No access granted. Please enable the relative
         access in the application access management.
@@ -164,89 +109,27 @@
     <string name="Link_contact_loading_failed_check_the_contact_pression">contact loading failed,
         please check the contact access in the settings of your phone
     </string>
-    <string name="Link_Accept">Accept</string>
     <string name="Link_Contains">Contains:%s</string>
     <string name="Link_Relevant_record">%s relevant record</string>
-    <string name="Link_Add">Add</string>
-    <string name="Link_Add_Failed">Add Failed</string>
-    <string name="Link_Add_focus">Set to pay special attention to</string>
-    <string name="Link_Cancle_focus">Cancel the special attention</string>
-    <string name="Link_Add_Successful">Add Successful</string>
     <string name="Link_Add_as_a_friend">Send friend verification</string>
-    <string name="Link_Add_to_Contacts">Add to Contacts</string>
-    <string name="Link_Added">Added</string>
-    <string name="Link_Not_logged_in">Not logged in</string>
     <string name="Link_An_error_occurred_change_nickname">An error occurred change nickname</string>
-    <string name="Link_Black_List">Block List</string>
-    <string name="Link_Block">Block</string>
     <string name="Link_Clear_All_Chat_History">Clear All Chat History</string>
     <string name="Link_Clear_Chat_History">Clear Chat History</string>
     <string name="Link_Contacts">Contacts</string>
     <string name="Link_My_group">My group</string>
     <string name="Link_Chat_record">Chat record</string>
-    <string name="Link_Delete">Delete</string>
-    <string name="Link_Delete_Failed">Delete Failed</string>
     <string name="Link_Delete_Successful">Delete Successful</string>
-    <string name="Link_Delete_This_Friend">Delete This Friend</string>
     <string name="Link_Delete_and_Leave">Delete and Leave</string>
     <string name="Link_Already_delete_and_Leave">You have already quit the group</string>
-    <string name="Link_Enter_Bitcoin_Address">Enter Bitcoin Address There</string>
     <string name="Link_Favorite_Friend">Favorite</string>
-    <string name="Link_Find_me_by_phone_number">Find me by phone number</string>
-    <string name="Link_Friend_Recommendation">Friend Recommendation</string>
-    <string name="Link_From_Contact_Match">From Contact Match</string>
-
-    <string name="Link_Subscribe_to_the_center">Subscribe to the center</string>
-    <string name="Link_Subscribe">Subscribe</string>
-    <string name="Link_Unsubscribe">Unsubscribe</string>
-    <string name="Link_Have_subscribed_to">Have subscribed to</string>
-    <string name="Link_Not_to_subscribe_to">Not to subscribe to</string>
-    <string name="Link_To_view_the_message">To view the message</string>
-    <string name="Link_Function_is_introduced">Function is introduced</string>
-    <string name="Link_Digital_currency_quotes">Digital currency quotes</string>
-
-    <string name="Link_From_Group">From Group</string>
-    <string name="Link_From_May_Know">From people you may know</string>
-    <string name="Link_From_QR_Code">From QR Code</string>
-    <string name="Link_From_Recommend">From friend\'s recommendation</string>
-    <string name="Link_From_Search">From Search</string>
-    <string name="Link_From_Transaction">From Transaction</string>
-    <string name="Link_From_Unknow">From unkown</string>
-    <string name="Link_From_friends_to_share">From friends to share</string>
-    <string name="Link_From_group_link">Link from group</string>
     <string name="Link_Group">Groups</string>
-    <string name="Link_Group_Introduction">Group Introduction</string>
     <string name="Link_Group_Name">Group Name</string>
-    <string name="Link_Group_Setting">Group Setting</string>
-    <string name="Link_Group_brief">Group brief</string>
-    <string name="Link_Group_invitation_is_invalid">Group invitation is invalid</string>
-    <string name="Link_Group_is_QR_Code">Group\'s QR Code</string>
     <string name="Link_Hello_I_am">Hello! I am %s</string>
     <string name="Link_Invite">Invite</string>
-    <string name="Link_Invite_Count">Invite(%d)</string>
-    <string name="Link_Invite_you_to_join">Invite you to join\n %s</string>
-    <string name="Link_Invite_friend_to_join">%s invite friend to start join group chat</string>
     <string name="Link_Join_Group">Join Group</string>
-    <string name="Link_ManageGroup">ManageGroup</string>
     <string name="Link_Group_create_information_error">Error creating group information</string>
-    <string name="Link_Members">Members (%d)</string>
-    <string name="Link_More">More</string>
-    <string name="Link_My_Alias_in_Group">My Alias in Group</string>
-    <string name="Link_New_Friends">New Friends</string>
-    <string name="Link_New_friend">New friend</string>
-    <string name="Link_Operation_failed">Operation failed</string>
-    <string name="Link_Operation_frequent">Operation frequent</string>
-    <string name="Link_Other">Other</string>
-    <string name="Link_Ownership_Transfer">Ownership Transfer</string>
-    <string name="Link_People_you_may_know">People you may know</string>
-    <string name="Link_Profile">Profile</string>
     <string name="Link_Qr_code_is_invalid">Qr code is invalid</string>
-    <string name="Link_Refresh_QR_Code">Refresh QR Code</string>
-    <string name="Link_Refresh_QR_tip">After refresh group\'s QRcode, the old group QRcode and
-        shared link will be disabled
-    </string>
     <string name="Link_Refuse">Refuse</string>
-    <string name="Link_Remove_Member_Failed">Remove Member Failed</string>
     <string name="Link_Save_to_Contacts">Save to Contacts</string>
     <string name="Link_Scan">Scan</string>
     <string name="Link_Close_to_remind">Close to remind</string>
@@ -256,38 +139,17 @@
     <string name="Link_Search_group">Search group</string>
     <string name="Link_Search_for_specified_content">Search for specified content</string>
     <string name="Link_Commonly_used_search">Commonly used search</string>
-    <string name="Link_Search_Result">Search Result</string>
-    <string name="Link_Search_friends">Search</string>
-    <string name="Link_Select_new_owner">Select new owner</string>
-    <string name="Login_username_can_not_empty">The username can not be empty</string>
-    <string name="Link_Selecting__new_owner__release_your_ownership">Selecting %s as new owner will
-        release your ownership
-    </string>
     <string name="Link_Scan_Result">Scan results</string>
     <string name="Link_Send">Send</string>
     <string name="Link_Dialogue">Dialogues</string>
     <string name="Link_Workbench">Workbench</string>
     <string name="Link_Inactive">Inactive</string>
-    <string name="Link_Send_friend_request">Send friend request</string>
-    <string name="Link_Send_successful">Send successful</string>
     <string name="Link_Send_to">Send to %s</string>
-    <string name="Link_Set_Remark_and_Tag">Set Remark</string>
-    <string name="Link_Department">Department</string>
-    <string name="Link_Set_Tag">Set Tag</string>
     <string name="Link_Set_group_nicknames_only_be_in_this_group">Set up a group nickname. The
         nickname will only be presented in this group
     </string>
     <string name="Link_Share">Share</string>
-    <string name="Link_Share_failed">Share failed</string>
-    <string name="Link_Share_to">Share to %s</string>
     <string name="Link_Share_to_Friend">Send to Friend</string>
-    <string name="Link_Stranger">Stranger</string>
-    <string name="Link_Tansfer_Record">Transfer record</string>
-    <string name="Link_The_group_is_not_public">The group is not for public</string>
-    <string name="Link_The_group_is_not_public_Not_Share">The group is not for public, can\'t be
-        shared
-    </string>
-    <string name="Link_Through_the_network_search">From network search</string>
     <string name="Link_Unable_to_get_the_camera_data">Unable to get the camera data, please open the
         camera permissions in the phone application rights management
     </string>
@@ -295,14 +157,9 @@
         in the application access management on your phone
     </string>
     <string name="Link_Update_Group_Name_Failed">Update Group Name Failed</string>
-    <string name="Link_Verify">Verify</string>
-    <string name="Link_Whether_Public">Public</string>
     <string name="Link_You_apply_to_join_has_passed">Your application to join『%s』was approved
     </string>
     <string name="Link_You_apply_to_join_rejected">Your application to join %s was rejected</string>
-    <string name="Link_Your_invitation">Your invitation</string>
-    <string name="Link_apply_to_join_group">Apply to join group</string>
-    <string name="Link_apply_to_join_group_chat">%1$s apply to join group chat %2$s</string>
     <string name="Link_become_new_group_owner">%s become new group owner</string>
     <string name="Link_contact_count">%1$d contact%2$s%3$s</string>
     <string name="Link_contact_count_group_count">%1$d contacts %2$d groups</string>
@@ -312,55 +169,27 @@
     <string name="Link_Employee_number">Employee number</string>
     <string name="Link_Subordinate_departments">Subordinate departments:</string>
     <string name="Link_Contact_number">Contact number:</string>
-    <string name="Link_have_joined_the_group">You\'ve joined in the group</string>
-    <string name="Link_invite_encrypted_chat_with_APP_Download">%s invite you to start encrypted
-        chat with connect.im Connect is an open source P2P encrypted messages APP.
-        Download:https://connect.im
-    </string>
     <string name="Link_invited_to_the_group_chat">%1$s invited %2$s to the group chat</string>
-    <string name="Link_search_someThing">Phone Number/CONNECT ID</string>
-    <string name="Link_the_group_member_can_see_the_QR">When enabled, the group member can see the
-        QR code
-    </string>
     <string name="Link_update_Failed">Update Failed</string>
     <string name="Link_user_friends">%s\'s group</string>
     <string name="Login_created_by_random_number_generator">Created by random number generator
     </string>
-    <string name="Login_Avatar_upload_failed">Avatar upload failed</string>
     <string name="Login_Camera_guide_tip">Tap to take photo and hold to record vedio</string>
-    <string name="Login_Code">Code</string>
-    <string name="Login_Login_Account">Login</string>
     <string name="Login_Collecting_Sounds_as_Random_Seed">Collecting Sounds as Random Seed...
     </string>
     <string name="Login_Generated_Failure">Create failed, please make sure you\'ve made sound/voice
         around the mic
     </string>
     <string name="Login_Generated_Successful">Generated Successful</string>
-    <string name="Login_Generating_Bitcoin_address">BTC address is being generated</string>
-    <string name="Login_Generating_Private_and_Public_Key">Generating Private &amp; Public Key
-    </string>
-    <string name="Login_Next">Next</string>
-    <string name="Login_Password">Password</string>
-    <string name="Login_username">Username</string>
-    <string name="Login_Confirm_password">Confirm password</string>
-    <string name="Login_Password_incorrect">Password incorrect</string>
     <string name="Login_User_name_or_password_error">User name or password error</string>
-    <string name="Login_Resend">Resend</string>
-    <string name="Login_Resend_Time">Resend(%d)</string>
-    <string name="Login_SMS_code_has_been_send">SMS code has been sent</string>
-    <string name="Login_SMS_code_sent_failure">SMS code sent failure</string>
     <string name="Login_Save_successful">Save successful</string>
     <string name="Link_Focus_successful">Focus on success</string>
     <string name="Link_Focus_cancle_successful">Abolish attention to success</string>
-    <string name="Login_Select_Country">Select Country</string>
     <string name="Login_Select_form_album">Choose from Photos</string>
-    <string name="Login_Send_failed">Send failed</string>
     <string name="Login_Take_Photo">Take Photo</string>
     <string name="Login_Update_successful">Update successful</string>
     <string name="Login_Review_successful">Review the success</string>
-    <string name="Login_Updated_failed">Updated failed</string>
     <string name="Login_User_avatar_is_illegal">User avatar is illegal</string>
-    <string name="Login_Verification_code_error">Verification code error</string>
     <string name="Login_Welcome">Welcome</string>
     <string name="Login_creat_account">Create account</string>
     <string name="Login_guide_bitcoinWallet">Bitcoin address</string>
@@ -373,268 +202,66 @@
     </string>
     <string name="Login_guide_funStickers">Funny stickers</string>
     <string name="Login_guide_funStickersDescribe">Better expression \n funny gif sticker</string>
-    <string name="Login_letter_number_and_character_must_be_included_in_your_login_password">The
-        password lenghth should be at least 8, in which must include 2 types among letter, number
-        and charater
-    </string>
     <string name="Login_scan_string_error">Wrong QR code</string>
-    <string name="Login_username_already_exists">username already exists</string>
     <string name="Message_send_fail_not_in_group">Message sending failed, you already not in the
         group
     </string>
     <string name="Network_No_data">No data</string>
-    <string name="Network_Timeout">Timeout</string>
     <string name="Network_equest_failed_please_try_again_later">Request failed, please try again
         later
     </string>
-    <string name="Set_CONNECT_ID_regular">The CONNECT ID must be a combination of 6-20 letters,
-        numbers, and underscores beginning with a letter
-    </string>
-    <string name="Set_A_phone_number_can_only_grab_once">A phone number can only grab once</string>
     <string name="Set_About">About</string>
     <string name="Set_Version_checking">Version checking</string>
-    <string name="Set_Account_security">Account &amp; security</string>
-    <string name="Set_Add_mobile">Add mobile</string>
-    <string name="Set_Auto">Auto</string>
-    <string name="Set_BTC_symbol">฿</string>
-    <string name="Set_CONNECT_ID_can_only_be_set_once">CONNECT ID can only be set once</string>
-    <string name="Set_CONNECT_ID_set_success_no_set">CONNECT ID can\'t be modified after setting
-        successfully
-    </string>
-    <string name="Set_Change_Pattern">Change Pattern</string>
-    <string name="Set_Open_password">Open the password authentication</string>
-    <string name="Set_Close_password">Close the password authentication</string>
     <string name="Set_Check_Update">Check the new version</string>
     <string name="Set_Copied">Copied</string>
-    <string name="Set_Currency">Currency</string>
-    <string name="Set_Did_not_receive_the_verification_code">Did not receive verification code
-    </string>
-    <string name="Set_Draw_Pattern">Draw Pattern</string>
-    <string name="Set_Draw_pattern_again">Draw pattern again</string>
-    <string name="Set_Draw_your_pattern">Draw your pattern</string>
-    <string name="Set_Enable_or_disable_Connect_Notification_via">Enable or disable Connect
-        Notification via “Setting”->”Notification” on your phone
-    </string>
-    <string name="Set_Enter_Login_Password">Enter Login Password</string>
-    <string name="Set_Enter_New_Mobile_Number">Enter New Mobile Number</string>
-    <string name="Set_Enter_correct_please_enter_a_new_gesture">Enter correct, please enter a new
-        pattern
-    </string>
     <string name="Set_FeedBack">FeedBack</string>
     <string name="Set_Found_new_version">New version</string>
     <string name="Set_General">General Settings</string>
     <string name="Set_Help_and_feedback">Help and feedback</string>
     <string name="Set_Feedback">Feedback</string>
-    <string name="Set_ID">ID</string>
-    <string name="Set_Installed">Installed</string>
     <string name="Set_Language">Language</string>
-    <string name="Set_Link_Mobile">Bind Mobile</string>
     <string name="Set_Load_failed_please_try_again_later">Load failed, please try again later
     </string>
     <string name="Set_Log_Out">Log Out</string>
-    <string name="Set_Delete_account">Delete the account</string>
     <string name="Set_Logging_out">Logging out...</string>
     <string name="Set_Logout_delete_login_data_still_log">Logout will not delete any data ,You can still log in with this account.</string>
-    <string name="Set_delete_account_hinit">Will not resume after the delete account, make sure to delete the current account?</string>
-    <string name="Set_Miner_fee">Transaction fee</string>
     <string name="Set_My_Profile">My Profile</string>
-    <string name="Set_My_QR_code">My QR code</string>
     <string name="Set_Name">Name</string>
-    <string name="Set_Not_synchronized">Not synchronized</string>
     <string name="Set_Now_update_app">Update now</string>
-    <string name="Set_Off">Disabled</string>
-    <string name="Set_On">On</string>
-    <string name="Set_Open_Source">Open Source</string>
-    <string name="Set_Scanned_the_qr_code_to_add_friends">Scanned the qr code to add friends</string>
-    <string name="Set_Password_incorrect_you_have_chance">Password incorrect, you have %d chance
-    </string>
-    <string name="Set_Patten_can_prevent_access_data_required_when_entering">Patten Password can
-        prevent unauthorized access to the data in the sandbox.\n Pattern will be required when
-        entering if you enable it.
-    </string>
-    <string name="Set_Pattern_Password">Pattern password</string>
-    <string name="Set_Pattern_Setting_Success">Set pattern successfully</string>
-    <string name="Set_Payment">Pay</string>
-    <string name="Set_Payment_Password">Payment password</string>
-    <string name="Set_Phone">Phone</string>
-    <string name="Set_Area_code">The area code</string>
-    <string name="Set_Phone_unbinded">Phone unbound</string>
-    <string name="Login_Secondary_authentication_password">Secondary authentication password</string>
-    <string name="Login_Secondary_authentication_password_describe">
-        Secondary authentication password for user when logging in, multiple protection account, improve the security of the account
-    </string>
     <string name="Set_Please_connect_at_least_4_points">Please connect at least 4 points</string>
-    <string name="Set_Privacy">Privacy</string>
     <string name="Set_Profile_Photo">Profile Photo</string>
-    <string name="Set_Remove_Success">Remove Successfully</string>
-    <string name="Set_Reset">Reset</string>
     <string name="Set_Save">Save</string>
     <string name="Set_Save_Failed">Save Failed</string>
     <string name="Set_Save_Photo">Save Photo</string>
     <string name="Set_Set_Avatar_success">Edit avatar successfully</string>
-    <string name="Set_Set_Payment_Password">Set Payment Password</string>
-    <string name="Set_Set_success">Edit successfully</string>
     <string name="Set_Setting">Setting</string>
-    <string name="Set_Setting_Faied">Setting Failed</string>
     <string name="Set_Sound">Voice remind</string>
     <string name="Set_Start_encrypted_messaging">You are starting an encrypt chat</string>
     <string name="Set_This_is_the_newest_version">This is the newest version</string>
-    <string name="Set_Two_Patterns_do_not_match">Two Patterns do not match</string>
-    <string name="Set_Use_Login_Password">Use Login Password</string>
-    <string name="Set_Verify_Phone">Verify Phone</string>
     <string name="Set_Versions_number">Version: %s</string>
     <string name="Set_Vibrate">Vibrate alert</string>
-    <string name="Set_Your_Phone">Your Phone</string>
-    <string name="Set_miner_fee_explain">A transaction fee is included to transactions so that
-        miners will include your transaction in the next block.The higher the fee, the faster
-        confirmed. They are recommended but not mandatory.
-    </string>
     <string name="Set_new_version">Latest version: %s</string>
     <string name="Set_tip_title">Tips</string>
-    <string name="Set_verification_code_has_been_send_to_phone">A verification code has been send to
-        phone.
-    </string>
-    <string name="Wallet_Auto_fees_greater_than_the_maximum_continue">Automatic calculation of fee
-        (% sBTC) is greater than the maximum set, whether or not to continue?
-    </string>
-    <string name="Wallet_Confirm_transfer">Confirm transfer</string>
     <string name="Wallet_Detail">detail</string>
-    <string name="Wallet_Expired">Expired</string>
-    <string name="Wallet_Get">Opened</string>
-    <string name="Wallet_Immediately_create">Immediately create</string>
-    <string name="Wallet_Immediately_update">Update now</string>
-    <string name="Wallet_Not_received">Not received</string>
-    <string name="Wallet_Packet_Send_User_Connect">Send the lucky packet via Connect</string>
-    <string name="Wallet_Scan_to_pay_me">Scan to pay me</string>
-    <string name="Wallet_The_Connect_system_address">The Connect system address</string>
-    <string name="Wallet_Transfer_Count">Transfer(%d)</string>
-    <string name="Wallet_You_do_not_have_any_data">You do not have any data</string>
-    <string name="Wallet_not_create_wallet">You haven\'t create the purse</string>
-    <string name="Wallet_not_initialized_the_wallet_and_can_not_trade">The other party has not
-        initialized the wallet and can not trade
-    </string>
-    <string name="Wallet_not_update_wallet">You haven\'t updated your wallet</string>
-    <string name="Wallet_synchronization_data_failed">synchronization data failed</string>
-    <string name="Wallet_Add_note">Add note</string>
-    <string name="Wallet_Address_Book">Address Book</string>
-    <string name="Wallet_Amount_BTC">Amount(BTC)</string>
-    <string name="Wallet_Amount_is_too_small">When packing a transaction, an error occurs and the
-        amount is too small
-    </string>
-    <string name="Wallet_Amount_of_member">Amount of member</string>
-    <string name="Wallet_Amount_Symbol">Amount(%s)</string>
-    <string name="Wallet_Auto_Calculate_Miner_Fee">Auto Calculate Transaction Fee</string>
-    <string name="Wallet_BTC_Each">%s BTC Each</string>
-    <string name="Wallet_BTC_Total">%s BTC Total</string>
-    <string name="Wallet_Balance">Balance: ฿%s</string>
-    <string name="Wallet_Balance_Credit">Available balance:฿%s</string>
-    <string name="Wallet_Best_wishes">Good luck</string>
-    <string name="Wallet_Canceled">Canceled</string>
-    <string name="Wallet_Charge_small_calculate_to_the_poundage">Charge address amount is too small!
-        Amount:%sBTC,Whether you need to change to calculate to the poundage?
-    </string>
-    <string name="Wallet_Clear">Clear</string>
     <string name="Wallet_Click_to_recive_payment">Click to receive payment</string>
     <string name="Wallet_Click_to_transfer_bitcoin">Click to pay</string>
-    <string name="Wallet_Confirm_PIN">Confirm PIN</string>
     <string name="Wallet_Confirmed">Confirmed</string>
-    <string name="Wallet_Congratulations">Congratulations!</string>
-    <string name="Wallet_Connect_Pay">Connect Pay</string>
-    <string name="Wallet_Enter_4_Digits">Enter 4 Digits</string>
-    <string name="Wallet_Enter_number">Enter number of members</string>
-    <string name="Wallet_Enter_your_PIN">Enter your PIN</string>
-    <string name="Wallet_Fee_BTC">Fee: %3.8f BTC</string>
-    <string name="Wallet_From_Connect_team">From Connect team</string>
-    <string name="Wallet_Goal">Goal %s BTC</string>
-    <string name="Wallet_Good_luck_next_time">Good luck next time</string>
-    <string name="Wallet_Insufficient_balance">Insufficient balance</string>
-    <string name="Wallet_Lucky_packet_transferred_to_your_wallet">Lucky packet transferred to your
-        wallet
-    </string>
-    <string name="Wallet_Multiple_transfers">Multiple transfers</string>
-    <string name="Wallet_My_Balance">My Balance</string>
-    <string name="Wallet_Nick_name">Nick name</string>
     <string name="Wallet_No_match_user">No match user</string>
-    <string name="Wallet_Note">Note</string>
-    <string name="Wallet_Opened">Opened %1$d/%2$d</string>
     <string name="Wallet_Packet">Lucky packet</string>
-    <string name="Wallet_Packet_Send_Share">Share the lucky packet to your friends</string>
-    <string name="Wallet_PacketSend_Opened">Open</string>
-    <string name="Wallet_Pay_Faied">Pay Failed</string>
-    <string name="Wallet_Payment_Password_do_not_match">Payment Passwords do not match</string>
-    <string name="Wallet_Payment_Password_is_incorrect">Payment Password is incorrect</string>
-    <string name="Wallet_Payment_Successful">Payment successful</string>
-    <string name="Wallet_Payment_to_friend">Request payment</string>
-    <string name="Wallet_Prepare_Lucky_Packet">Prepare Lucky Packet</string>
-    <string name="Wallet_Quantity">Quantity</string>
     <string name="Wallet_Receipt">Request</string>
-    <string name="Wallet_Received">Received</string>
-    <string name="Wallet_Recent_transfer">Recent transfers</string>
-    <string name="Wallet_Reset_password">Reset password</string>
-    <string name="Wallet_Result_is_not_a_bitcoin_address">It is not a bitcoin address</string>
-    <string name="Wallet_Retry">Retry</string>
     <string name="Wallet_Select_friends">Select friends</string>
-    <string name="Wallet_Send_Lucky_Packet_to">Send to %s</string>
     <string name="Wallet_Send_a_bitcoin_transfer_link">Send a bitcoin transfer link</string>
     <string name="Wallet_Send_the_payment_connection">Click to pay</string>
-    <string name="Wallet_Sent">Sent</string>
-    <string name="Wallet_Sent_to_friend">Sent to friend</string>
-    <string name="Wallet_Sent_to_group">Sent to group</string>
-    <string name="Wallet_Sent_via_link">Sent via link</string>
     <string name="Wallet_Sent_via_link_luck_packet">Send lucky packet via link</string>
-    <string name="Wallet_Set_Amount">Set Amount</string>
-    <string name="Wallet_Set_max_trasfer_fee">Set max transfer fee</string>
-    <string name="Wallet_Set_transaction_fee_specified">Set transaction fee specified</string>
-    <string name="Wallet_Tags">Tags</string>
-    <string name="Wallet_The_Countdown">Countdown</string>
-    <string name="Wallet_Too_much_transaction_can_not_generated">Too much input or output,
-        transaction can not generated
-    </string>
-    <string name="Wallet_Transaction_detail">Transaction detail</string>
-    <string name="Wallet_Transaction_fee_too_low_Continue">Transaction fee too low, Continue?
-    </string>
-    <string name="Wallet_Transactions">Transactions</string>
-    <string name="Wallet_Transcation">Transcation</string>
     <string name="Wallet_Transfer">Transfer</string>
-    <string name="Wallet_Transfer_Delete_Sele">Delete the selection</string>
     <string name="Wallet_Transfer_Failed">Transfer Failed!</string>
-    <string name="Wallet_Transfer_To_User">Transfer to %s</string>
-    <string name="Wallet_Transfer_to_Bitcoin_Address">Transfer to Bitcoin Address</string>
-    <string name="Wallet_Transfer_to_Friends">Transfer to Friends</string>
-    <string name="Wallet_Transfer_via_other_APP_messges">Transfer via other APP messages</string>
     <string name="Wallet_Unconfirmed">Unconfirmed</string>
-    <string name="Wallet_Unfortunately">Unfortunately</string>
-    <string name="Wallet_Verifying">Verifying</string>
-    <string name="Wallet_Waitting_for_pay">Waiting for payment</string>
-    <string name="Wallet_Wallet">Wallet</string>
-    <string name="Wallet_Wallet_Out_Send_Share">Share the transfer to your friends</string>
     <string name="Wallet_You_already_open_this_luckypacket">You already opened this lucky packet
     </string>
-    <string name="Wallet_You_do_not_have_any_Transactions">You don\'t have any Transactions</string>
-    <string name="Wallet_You_got_a_Lucky_Packet">You got a Lucky Packet</string>
-    <string name="Wallet_Your_Bitcoin_Address_Title">Your bitcoin address</string>
-    <string name="Wallet_crowdfunding_each">%@ BTC each</string>
-    <string name="Wallet_has_requested_for_payment">%s request for pay</string>
-    <string name="Wallet_has_requested_to_payment">request %s pay</string>
-    <string name="Wallet_members_paid_BTC">%1$d/%2$d members paid %3$s BTC</string>
-    <string name="Wallet_send_lucky_packet_via_Connect_packets">Send lucky packet via Connect \n%d
-        packets
-    </string>
     <string name="Wallet_transfer_man">Transfer (%d)</string>
-    <string name="Wallet_transferOutVia_return">Refund the transfer</string>
-    <string name="Wallet_transferOutVia_return_Success">Refund successfully</string>
     <string name="app_name">iWork</string>
-    <string name="app_name_im">CONNECT.IM</string>
-    <string name="Chat_Other_Part">the other</string>
-    <string name="title_activity_group_create">GroupCreateActivity</string>
     <string name="Chat_set_Create_New_Group">create group</string>
-    <string name="Chat_set_Group_Chat_Encrypt_Open">After opening, the group message is encrypted through point to point encryption</string>
     <string name="Chat_Subscriber">Subscribe</string>
-    <string name="Chat_Subscribe">Subscribe</string>
-    <string name="Chat_View_Full_Text">View full text</string>
-    <string name="Chat_Enter_Subscribe">Enter subscriber Account</string>
-    <string name="Chat_Subscribe_Success">[Subscribe Success]</string>
-
     <string name="Work_Add">add</string>
     <string name="Work_On_a_business_trip">Business trip</string>
     <string name="Work_Ask_for_leave">Leave work</string>
@@ -661,7 +288,6 @@
     <string name="Work_Visitors_sure_to_deny_access">Are you sure to reject access?</string>
     <string name="Work_Visitors_agree_to_visit">Do you approve the visit?</string>
     <string name="Work_Visitors_to_audit">Pending</string>
-    <string name="Work_Visitors_the_approved">Audited</string>
     <string name="Work_Visitors_apply_list">Apply list</string>
     <string name="Work_Visitors_audit_records">Audit records</string>
     <string name="Work_Pay_attention_to_him">Follow</string>
@@ -669,13 +295,9 @@
     <string name="Work_Cancel_the_attention">Unfollow</string>
     <string name="Work_Security_record_information">Security record information:</string>
     <string name="Work_Exception_type">Exception type: unrecognized personnel enter the warehouse.</string>
-
     <string name="Chat_Refreshing">Refreshing...</string>
-    <string name="Link_Join_Group_Success">Join the group chat successfully</string>
-    <string name="Chat_No_Data">No Data...</string>
     <string name="Chat_Create_Group_Success">Create group success</string>
     <string name="Error_Device_Remote_Login">Your account is already logged on on the%1$s device</string>
-    <string name="Company_company">Company</string>
     <string name="Login">Login</string>
     <string name="Login_Account">Company username</string>
     <string name="Login_password">Password</string>
@@ -717,5 +339,4 @@
     <string name="Robot_Visiting_Purpose">Visitor: %1$s\nVisiting purpose: %2$s</string>
     <string name="Robot_WareHouse_Warn">%1$s Detected stranger to enter</string>
     <string name="Link_Today">Today</string>
-    <string name="title_activity_orgnize_search">OrgnizeSearchActivity</string>
 </resources>

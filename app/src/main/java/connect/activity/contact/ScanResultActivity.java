@@ -9,15 +9,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
-import connect.activity.workbench.VisitorsAuditActivity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
-import protos.Connect;
-
-/**
- * Created by Administrator on 2018/2/6 0006.
- */
 
 public class ScanResultActivity extends BaseActivity {
 

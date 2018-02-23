@@ -51,10 +51,6 @@ public class SetFragment extends BaseFragment {
     TextView tvId;
     @Bind(R.id.llUserMsg)
     RelativeLayout llUserMsg;
-    @Bind(R.id.llSafety)
-    LinearLayout llSafety;
-    @Bind(R.id.llPrivate)
-    LinearLayout llPrivate;
     @Bind(R.id.llChatSetting)
     LinearLayout llChatSetting;
     @Bind(R.id.llProblem)
@@ -65,8 +61,6 @@ public class SetFragment extends BaseFragment {
     TextView logOutTv;
     @Bind(R.id.toolbar_top)
     TopToolBar toolbarTop;
-    @Bind(R.id.address_scan_img)
-    ImageView addressScanImg;
     @Bind(R.id.version_text)
     TextView versionText;
 
@@ -116,16 +110,6 @@ public class SetFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.llSafety)
-    void intoSafety(View view) {
-        // ActivityUtil.next(mActivity, SafetyActivity.class);
-    }
-
-    @OnClick(R.id.llPrivate)
-    void intoPrivate(View view) {
-        // ActivityUtil.next(mActivity, PrivateActivity.class);
-    }
-
     @OnClick(R.id.llChatSetting)
     void intoChatSetting(View view) {
         ActivityUtil.next(mActivity, GeneralActivity.class);
@@ -133,18 +117,12 @@ public class SetFragment extends BaseFragment {
 
     @OnClick(R.id.llProblem)
     void intoProblem(View view) {
-        //ActivityUtil.next(mActivity, SupportActivity.class);
         ActivityUtil.next(mActivity, SupportFeedbackActivity.class);
     }
 
     @OnClick(R.id.llAbout)
     void intoAbout(View view) {
         AboutActivity.startActivity(mActivity);
-    }
-
-    @OnClick(R.id.address_scan_img)
-    void showScanAddress(View view) {
-        //ActivityUtil.next(mActivity, UserConnectIdActivity.class);
     }
 
     @OnClick(R.id.log_out_tv)

@@ -69,16 +69,16 @@ public class GeneralActivity extends BaseActivity {
 
     @OnClick({R.id.sound_tb})
     public void soundCheckListener(View view) {
-        boolean isSele = soundTb.isSelected();
-        soundTb.setSelected(!isSele);
-        SystemSetBean.putRing(!isSele);
+        boolean isSelected = soundTb.isSelected();
+        soundTb.setSelected(!isSelected);
+        SystemSetBean.putRing(!isSelected);
     }
 
     @OnClick({R.id.vibrate_tb})
     public void vibrationCheckListener(View view) {
-        boolean isSele = vibrateTb.isSelected();
-        vibrateTb.setSelected(!isSele);
-        SystemSetBean.putVibrate(!isSele);
+        boolean isSelector = vibrateTb.isSelected();
+        vibrateTb.setSelected(!isSelector);
+        SystemSetBean.putVibrate(!isSelector);
     }
 
     @OnClick(R.id.left_img)

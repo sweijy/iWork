@@ -35,7 +35,6 @@ import connect.widget.TopToolBar;
 import instant.utils.SharedUtil;
 import protos.Connect;
 
-
 public class ContactInfoActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)

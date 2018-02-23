@@ -19,7 +19,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseFragment;
-import connect.activity.contact.bean.AppsState;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.workbench.VisitorsAuditActivity;
 import connect.activity.workbench.adapter.VisitorAdapter;
@@ -31,10 +30,6 @@ import connect.utils.okhttp.ResultCall;
 import connect.utils.system.SystemUtil;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
-
-/**
- * Created by Administrator on 2018/1/17 0017.
- */
 
 public class AuditFragment extends BaseFragment {
 
@@ -69,12 +64,6 @@ public class AuditFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         mActivity = getActivity();
         initView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //initView();
     }
 
     private void initView() {

@@ -5,7 +5,6 @@ import connect.database.green.DaoHelper.ParamManager;
 /**
  * system setting
  */
-
 public class SystemSetBean {
 
     private String language; // 系统语言

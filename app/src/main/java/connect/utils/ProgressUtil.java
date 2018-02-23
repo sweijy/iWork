@@ -12,9 +12,7 @@ import connect.ui.activity.R;
 
 /**
  * Loading ProgressBar
- * Created by john on 2016/11/25.
  */
-
 public class ProgressUtil {
 
     private static volatile ProgressUtil sProgressUtil = null;

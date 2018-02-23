@@ -228,56 +228,6 @@ public class DialogUtil {
     }
 
     /**
-     * lucky packet pop animation
-     * @param context
-     * @param state R.drawable.anim_redpacket_success, R.drawable.anim_redpacket_fail
-     * @return
-     */
-    public static Dialog showRedPacketState(final Context context, final int state, final OnGifListener listener) {
-        final Dialog dialog = new Dialog(context, R.style.Dialog);
-        LayoutInflater inflater = LayoutInflater.from(context);
-        final View view = inflater.inflate(state == 0 ? R.layout.dialog_redpacket_fail : R.layout.dialog_redpacket_success, null);
-        dialog.setContentView(view);
-
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight());
-        view.setLayoutParams(layoutParams);
-
-        final ImageView img = (ImageView) view.findViewById(R.id.img);
-        String title = 0 == state ? context.getString(R.string.Wallet_Unfortunately) : context.getString(R.string.Wallet_Congratulations);
-        String subtitle = 0 == state ? context.getString(R.string.Wallet_Good_luck_next_time) : context.getString(R.string.Wallet_You_got_a_Lucky_Packet);
-        (((TextView) (view.findViewById(R.id.txt1)))).setText(title);
-        (((TextView) (view.findViewById(R.id.txt2)))).setText(subtitle);
-
-        view.findViewById(R.id.img1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        view.findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.click();
-                dialog.dismiss();
-            }
-        });
-
-        FrameAnimationDrawable.animateDrawableLoad(state == 0 ? R.drawable.anim_redpacket_fail : R.drawable.anim_redpacket_success, img, new FrameAnimationDrawable.OnDrawablesListener() {
-            @Override
-            public void onDrawsStart() {}
-
-            @Override
-            public void onDrawsStop() {
-                view.findViewById(R.id.linearlayout).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.btn1).setVisibility(View.VISIBLE);
-            }
-        });
-
-        dialog.show();
-        return dialog;
-    }
-
-    /**
      * Bottom dialog adapter
      */
     public static class DialogBottomAdapter extends RecyclerView.Adapter<DialogBottomAdapter.ViewHolder>{

@@ -8,10 +8,6 @@ import java.util.List;
 
 import connect.activity.base.BaseFragment;
 
-/**
- * Created by PuJin on 2018/2/5.
- */
-
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
     private List<BaseFragment> baseFragments = null;

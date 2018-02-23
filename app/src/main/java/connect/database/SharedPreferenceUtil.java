@@ -17,18 +17,13 @@ import connect.utils.log.LogManager;
 /**
  * save App information
  */
-
 public class SharedPreferenceUtil {
 
     private static SharedPreferenceUtil sharePreUtil;
     private static SharedPreferences sharePre;
     public static String Tag = "_SharedPreferenceUtil";
-    public static final String SHAREPRE_NAME = "SHAREPRE_NAME";
     public static final String SP_NAME = "sp_name";
-    public static final String START_IMAGES_HASH = "start_hash";
-    public static final String START_IMAGES_ADDRESS = "start_images";
     public static final String FIRST_INTO_APP = "first_into_app";
-    public static final String WEB_OPEN_APP = "web_open_app";
     public static final String APP_LANGUAGE_CODE = "app_language_code";
     public static final String USER_INFO = "user_info";
     public static final String USER_LOGIN = "USER_LOGIN";

@@ -10,7 +10,6 @@
         android:layout_height="@dimen/dp_45"
         android:background="@color/color_161A21"
         android:orientation="horizontal">
-
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
@@ -21,14 +20,12 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_weight="3">
-
             <RelativeLayout
                 android:id="@id/search_relative"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_28"
                 android:layout_centerInParent="true"
                 android:background="@drawable/shape_search">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +42,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
-
             <TextView
                 android:id="@+id/manager_tv"
                 android:layout_width="wrap_content"
@@ -77,12 +73,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
-
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_2"
             android:background="@color/color_F6F6F6" />
-
         <TextView
             style="@style/BaseTextStyle.12"
             android:padding="@dimen/dp_10"

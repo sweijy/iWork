@@ -15,7 +15,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import connect.activity.contact.bean.DepartmentBean;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;

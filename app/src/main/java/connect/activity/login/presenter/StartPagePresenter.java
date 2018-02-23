@@ -1,14 +1,10 @@
 package connect.activity.login.presenter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 
 import connect.activity.login.contract.StartContract;
 import connect.database.SharedPreferenceUtil;
 import connect.utils.FileUtil;
-import connect.utils.RegularUtil;
-import connect.utils.scan.ResolveUrlUtil;
 import connect.utils.system.SystemDataUtil;
 
 public class StartPagePresenter implements StartContract.Presenter {

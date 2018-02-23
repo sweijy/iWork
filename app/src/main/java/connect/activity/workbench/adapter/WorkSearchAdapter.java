@@ -17,11 +17,6 @@ import connect.ui.activity.R;
 import connect.utils.dialog.DialogUtil;
 import protos.Connect;
 
-
-/**
- * Created by PuJin on 2018/1/15.
- */
-
 public class WorkSearchAdapter extends RecyclerView.Adapter<WorkSearchAdapter.ViewHolder> {
 
     private Context context;

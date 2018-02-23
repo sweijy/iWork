@@ -2,11 +2,6 @@ package connect.activity.contact.bean;
 
 import java.io.Serializable;
 
-/**
- * send message success,back Value
- * Created by Administrator on 2017/2/4.
- */
-
 public class MsgSendBean implements Serializable {
 
     private String username;

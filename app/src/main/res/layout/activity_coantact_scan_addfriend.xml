@@ -65,20 +65,6 @@
             android:layout_below="@id/capture_mask_top"
             android:layout_toRightOf="@id/content_rela"
             android:background="@color/color_161A21" />
-
-        <!--<TextView
-            android:id="@+id/bottom_capture_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:drawableTop="@mipmap/contract_add_scan3x"
-            android:textSize="@dimen/sp_12"
-            android:textColor="@color/color_ffffff"
-            android:text="@string/Set_My_QR_code"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dp_80" />-->
-
     </RelativeLayout>
 
     <RelativeLayout

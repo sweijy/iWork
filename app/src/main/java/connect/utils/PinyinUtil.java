@@ -7,9 +7,6 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by gtq on 2016/12/13.
- */
 public class PinyinUtil {
 
     public static String chatToPinyin(char c) {

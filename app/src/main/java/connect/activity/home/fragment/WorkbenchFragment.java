@@ -44,10 +44,6 @@ import connect.utils.okhttp.ResultCall;
 import connect.widget.cyclepager.CycleViewPager;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/1/15 0015.
- */
-
 public class WorkbenchFragment extends BaseFragment {
 
     @Bind(R.id.search_relative)
@@ -107,12 +103,12 @@ public class WorkbenchFragment extends BaseFragment {
 
     private void initMenu() {
         appMenuAdapter = new WorkbenchMenuAdapter(activity);
-        appMenuAdapter.setOnItemClickListence(onItemMenuClickListener);
+        appMenuAdapter.setOnItemClickListener(onItemMenuClickListener);
         applicationMenuRecycler.setLayoutManager(new GridLayoutManager(activity, 4));
         applicationMenuRecycler.setAdapter(appMenuAdapter);
 
         myAppMenuAdapter = new WorkbenchMenuAdapter(activity);
-        myAppMenuAdapter.setOnItemClickListence(onItemMyMenuClickListener);
+        myAppMenuAdapter.setOnItemClickListener(onItemMyMenuClickListener);
         myMenuRecycler.setLayoutManager(new GridLayoutManager(activity, 4));
         myMenuRecycler.setAdapter(myAppMenuAdapter);
 
@@ -223,23 +219,7 @@ public class WorkbenchFragment extends BaseFragment {
                                 }
                             }
                             ApplicationHelper.getInstance().insertAppEntityList(appList);
-
                             initData();
-                            /*ArrayList<MenuBean> listMenu = new ArrayList<>();
-
-                            ArrayList<MenuBean> myListMenu = new ArrayList<>();
-                            for (Connect.Application application : list) {
-                                MenuBean menuBean = MenuData.getInstance().getData(application.getCode());
-                                if (application.getCategory() == 1) {
-                                    listMenu.add(menuBean);
-                                } else if(application.getCategory() == 2 && application.getAdded()) {
-                                    myListMenu.add(menuBean);
-                                }
-                            }*/
-                            /*myListMenu.add(MenuData.getInstance().getData("add"));
-                            myAppLinear.setVisibility(View.VISIBLE);
-                            appMenuAdapter.setNotify(listMenu);
-                            myAppMenuAdapter.setNotify(myListMenu);*/
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

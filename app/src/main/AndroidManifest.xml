@@ -107,19 +107,10 @@
             android:name="connect.activity.set.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.set.UserConnectIdActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.workbench.VisitorsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.workbench.ShareVisitorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.set.SafetyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.set.PrivateActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.set.GeneralActivity"
@@ -131,55 +122,22 @@
             android:name="connect.activity.set.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.set.SafetyPhoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.set.SafetyNewPhoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.set.UserInfoNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.set.SafetyLoginPassActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.set.UserInfoAvatarActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.set.SupportFeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.set.AboutDeveloperActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.set.GeneralLanguageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.set.UserInfoConnectIdActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.widget.random.RandomVoiceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.contact.SearchFriendActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.contact.SearchFriendResultActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.contact.ScanAddFriendActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.contact.ScanResultActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.contact.AddFriendPhoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.contact.AddFriendRecommendActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.contact.FriendInfoRecordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.home.HomeActivity"
@@ -290,9 +248,6 @@
         <activity
             android:name="connect.activity.workbench.WorkSeachActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.chat.set.OrgnizeSearchActivity"
-            android:label="@string/title_activity_orgnize_search"></activity>
     </application>
 
 </manifest>

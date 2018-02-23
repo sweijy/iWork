@@ -6,12 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import connect.activity.contact.ContactInfoActivity;
-import connect.activity.contact.bean.SourceType;
 import connect.activity.login.bean.UserBean;
 import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
-import connect.database.green.DaoHelper.ContactHelper;
-import connect.database.green.bean.ContactEntity;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
 import instant.bean.ChatMsgEntity;

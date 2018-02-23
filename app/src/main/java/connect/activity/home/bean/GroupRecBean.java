@@ -2,10 +2,6 @@ package connect.activity.home.bean;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * Created by Administrator on 2017/11/8.
- */
-
 public class GroupRecBean {
 
     public enum GroupRecType {

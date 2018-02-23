@@ -13,17 +13,13 @@ import android.support.v7.app.NotificationCompat;
 
 import connect.activity.base.BaseApplication;
 import connect.activity.chat.ChatActivity;
-import connect.activity.chat.bean.Talker;
 import connect.activity.home.bean.ConversationAction;
 import connect.activity.home.bean.HttpRecBean;
 import connect.activity.set.bean.SystemSetBean;
 import connect.broadcast.NotificationBroadcastReceiver;
-import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.ParamManager;
-import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.ConversionSettingEntity;
-import connect.database.green.bean.GroupEntity;
 import connect.ui.activity.R;
 import connect.utils.system.SystemUtil;
 import protos.Connect;

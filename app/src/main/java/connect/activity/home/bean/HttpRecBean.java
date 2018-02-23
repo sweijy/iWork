@@ -4,23 +4,12 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
-/**
- * Created by gtq on 2016/12/23.
- */
-
 public class HttpRecBean implements Serializable {
 
     public enum HttpRecType {
         SALTEXPIRE,//salt timeout
-        SALT_VERIFY,//salt verify
-        PrivateSet,//private setting
-        BlackList,//black list
-        UpLoadBackUp,//upload backup
-        DownBackUp,//get backup by myself
-        DownGroupBackUp,//get backup by group
         SOUNDPOOL,//system voice
         SYSTEM_VIBRATION,//system vibrate
-        GroupNotificaton,//Mute Notification
     }
 
     public HttpRecType httpRecType;

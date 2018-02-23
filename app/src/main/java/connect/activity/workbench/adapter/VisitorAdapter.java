@@ -16,10 +16,6 @@ import connect.utils.StringUtil;
 import connect.utils.TimeUtil;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/1/16 0016.
- */
-
 public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.ViewHolder>  {
 
     private final Activity activity;

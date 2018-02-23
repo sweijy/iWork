@@ -16,10 +16,6 @@ import connect.ui.activity.R;
 import connect.utils.TimeUtil;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/2/5 0005.
- */
-
 public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.ViewHolder> {
 
     private final Activity activity;

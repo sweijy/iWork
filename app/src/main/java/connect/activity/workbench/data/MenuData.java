@@ -2,10 +2,6 @@ package connect.activity.workbench.data;
 
 import connect.ui.activity.R;
 
-/**
- * Created by Administrator on 2018/1/16 0016.
- */
-
 public class MenuData {
 
     private static MenuData menuData = null;

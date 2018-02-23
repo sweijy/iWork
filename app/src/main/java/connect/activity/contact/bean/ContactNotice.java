@@ -2,10 +2,6 @@ package connect.activity.contact.bean;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * Contact notice
- * Created by gtq on 2016/12/28.
- */
 public class ContactNotice {
 
     public enum ConNotice{

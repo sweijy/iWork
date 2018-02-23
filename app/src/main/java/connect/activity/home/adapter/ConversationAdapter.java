@@ -28,9 +28,6 @@ import connect.utils.glide.GlideUtil;
 import connect.widget.badge.BadgeView;
 import protos.Connect;
 
-/**
- * Created by pujin on 2016/11/25.
- */
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ConversationHolder> {
 
     private Context context;
