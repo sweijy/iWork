@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import connect.widget.recordvoice.RecordView;
 import connect.ui.activity.R;
 import connect.widget.bottominput.view.ExBottomLayout;
 import connect.widget.bottominput.view.InputBottomLayout;
+import connect.widget.recordvoice.VoiceRecordView;
 
 /**
  * Created by gtq on 2016/11/26.
@@ -23,7 +23,6 @@ public class InputPanel extends LinearLayout {
     private static String TAG = "_InputPanel";
 
     private Activity activity;
-    private RecordView recordView;
 
     public InputPanel(Context context) {
         super(context);
@@ -65,19 +64,15 @@ public class InputPanel extends LinearLayout {
         ExBottomLayout.exBottomLayout.hideExView();
     }
 
-    public void setRecordView(RecordView recordView) {
-        this.recordView = recordView;
-    }
-
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
-    public RecordView getRecordView() {
-        return recordView;
-    }
-
     public Activity getActivity() {
         return activity;
+    }
+
+    public void setVoiceRecordView(VoiceRecordView view){
+        InputBottomLayout.bottomLayout.setVoiceRecord(view);
     }
 }

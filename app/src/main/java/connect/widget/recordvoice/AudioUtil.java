@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import java.io.File;
 
 import connect.utils.FileUtil;
-import connect.utils.log.LogManager;
 
 public class AudioUtil {
 
@@ -15,6 +14,7 @@ public class AudioUtil {
 
     /** Total recording time */
     private final long RECORD_TOTAL = 60000;
+    private final long RECORD_MIN_MILLIS = 1000;
     /** Recording timing frequency */
     private final long RECORD_FREQUENCY = 100;
     /** Recording timer recording up to 60s per 1s return recording decibel */
@@ -23,11 +23,11 @@ public class AudioUtil {
     private String recordPath=null;
     private MediaRecorder mediaRecorder;
     public AudioRecordListener recordListener;
-    private static int BASE = 1;
+    private static int BASE = 600;
 
-    public static AudioUtil audioUtil = getInstance();
+    private static AudioUtil audioUtil;
 
-    private synchronized static AudioUtil getInstance() {
+    public synchronized static AudioUtil getInstance() {
         if (audioUtil == null) {
             audioUtil = new AudioUtil();
         }
@@ -92,10 +92,15 @@ public class AudioUtil {
     }
 
     public void cancleRecord() {
+        recordTimer.cancel();
         releaseRecorder();
         if (!TextUtils.isEmpty(recordPath)) {
             File file = new File(recordPath);
             file.delete();
+            recordPath = null;
+        }
+        if (recordListener != null) {
+            recordListener.cancelRecord();
             recordPath = null;
         }
     }
@@ -130,20 +135,20 @@ public class AudioUtil {
      */
     protected class RecordTimer extends CountDownTimer {
 
+        long millisUntilFinished;
+
         public RecordTimer(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
+            this.millisUntilFinished = millisInFuture;
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
+            this.millisUntilFinished = millisUntilFinished;
             if (mediaRecorder != null) {
-                double ratio = (double) mediaRecorder.getMaxAmplitude() / BASE;
-                if (ratio > 1) {
-                    double db = 20 * Math.log10(ratio);
-                    if (null != recordListener) {
-                        LogManager.getLogger().d(TAG, "" + (float) db);
-                        recordListener.recording(RECORD_TOTAL - millisUntilFinished, (float) db);
-                    }
+                int ratio =  mediaRecorder.getMaxAmplitude() / BASE;
+                if (null != recordListener) {
+                    recordListener.recording(RECORD_TOTAL - millisUntilFinished, ratio);
                 }
             }
         }
@@ -151,6 +156,10 @@ public class AudioUtil {
         @Override
         public void onFinish() {
             finishRecorder();//60s Forced recording complete
+        }
+
+        public long getRecordMillis() {
+            return RECORD_TOTAL - millisUntilFinished;
         }
     }
 
@@ -160,9 +169,10 @@ public class AudioUtil {
 
         void wellPrepared();
 
-        void recording(long recordtime,float decibel);
+        void recording(long recordtime,int decibel);
+
+        void cancelRecord();
 
         void recordFinish(String path);
     }
-
 }

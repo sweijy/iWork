@@ -638,6 +638,10 @@
     <string name="Link_Today">今天</string>
     <string name="Chat_Selected_Member">已选择: %1$d人</string>
     <string name="Chat_Determine_Count">确定(%1$d)</string>
-
+    <string name="Chat_Hold_To_Talk">按住说话</string>
+    <string name="Chat_Release_The_End">松开结束</string>
+    <string name="Chat_Finger_Slippery_Cancel_The_Sending">手指上滑，取消发送</string>
+    <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">松开手指，取消发送</string>
+    <string name="Chat_Voice_Record_Short">录音时间太短</string>
 
 </resources>

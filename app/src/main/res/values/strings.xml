@@ -720,4 +720,9 @@
     <string name="Chat_Selected_Member">have chosen: %1$d</string>
     <string name="Chat_Determine_Count">determine(%1$d)</string>
     <string name="title_activity_group_select">GroupSelectActivity</string>
+    <string name="Chat_Hold_To_Talk">Hold to talk</string>
+    <string name="Chat_Release_The_End">Release the end</string>
+    <string name="Chat_Finger_Slippery_Cancel_The_Sending">Slide on the finger, cancel sending</string>
+    <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">Loosen the finger and cancel the sending</string>
+    <string name="Chat_Voice_Record_Short">The recording time is short</string>
 </resources>

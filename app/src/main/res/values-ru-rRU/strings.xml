@@ -769,4 +769,9 @@
     <string name="Link_Today">сегодня</string>
     <string name="Chat_Selected_Member">уже выбор: %1$d</string>
     <string name="Chat_Determine_Count">определить(%1$d)</string>
+    <string name="Chat_Hold_To_Talk">Удерживайте говорить</string>
+    <string name="Chat_Release_The_End">ослабить конец</string>
+    <string name="Chat_Finger_Slippery_Cancel_The_Sending">пальцы на скользкой,отменить передачи</string>
+    <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">ослабить палец,отменить передачи</string>
+    <string name="Chat_Voice_Record_Short">запись времени слишком мало</string>
 </resources>
