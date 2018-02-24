@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,10 +24,14 @@ import protos.Connect;
 
 public class DepartSelectShowAdapter extends RecyclerView.Adapter<DepartSelectShowAdapter.DepartSelectShowHolder> {
 
+    private boolean iscreateGroup;
+    private String uid;
     private List<Connect.Workmate> workmates = new ArrayList<>();
     private Context context;
 
-    public void setData(List<Connect.Workmate> workmates) {
+    public void setData(boolean iscreate,String uid , List<Connect.Workmate> workmates) {
+        this.iscreateGroup = iscreate;
+        this.uid = uid;
         this.workmates = workmates;
         notifyDataSetChanged();
     }
@@ -62,12 +67,25 @@ public class DepartSelectShowAdapter extends RecyclerView.Adapter<DepartSelectSh
             GlideUtil.loadAvatarRound(holder.avatarImg, workmate.getAvatar());
         }
 
-        holder.deleteImg.setOnClickListener(new View.OnClickListener() {
+        if (iscreateGroup) {
+            String workmateUid = workmate.getUid();
+            if (uid.equals(workmateUid)) {
+                holder.deleteLayout.setVisibility(View.GONE);
+            } else {
+                holder.deleteLayout.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.deleteLayout.setVisibility(View.VISIBLE);
+        }
+        holder.deleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                workmates.remove(workmate);
-                notifyItemRemoved(position);
-                departRemoveListener.removeWorkMate(workmate);
+                String workmateUid = workmate.getUid();
+                if (!uid.equals(workmateUid)) {
+                    workmates.remove(workmate);
+                    notifyItemRemoved(position);
+                    departRemoveListener.removeWorkMate(workmate);
+                }
             }
         });
     }
@@ -82,14 +100,14 @@ public class DepartSelectShowAdapter extends RecyclerView.Adapter<DepartSelectSh
         DepartmentAvatar departmentAvatar;
         ImageView avatarImg;
         TextView nameTv;
-        ImageView deleteImg;
+        RelativeLayout deleteLayout;
 
         DepartSelectShowHolder(View view) {
             super(view);
             departmentAvatar = (DepartmentAvatar) view.findViewById(R.id.avatar_lin);
             avatarImg = (ImageView) view.findViewById(R.id.avatar_rimg);
             nameTv = (TextView) view.findViewById(R.id.text_view);
-            deleteImg = (ImageView) view.findViewById(R.id.image_delete);
+            deleteLayout = (RelativeLayout) view.findViewById(R.id.layout_delete);
         }
     }
 

@@ -166,6 +166,7 @@
     <item name="inputface" type="id"/>
     <item name="inputvoice" type="id"/>
     <item name="inputtxt" type="id"/>
+    <item name="btn_voice_record" type="id"/>
     <item name="layout_exbottom" type="id"/>
     <item name="emoji_pagernum" type="id"/>
     <item name="emoji_tabview" type="id"/>
@@ -275,9 +276,14 @@
     <item name="btn_selected" type="id" />
 
     <item name="layout_avatar" type="id"/>
+    <item name="layout_delete" type="id"/>
     <item name="image_delete" type="id"/>
 
     <item name="group_select_content" type="id"/>
     <item name="line_view" type="id"/>
 
+
+    <item name="view_voicerecord_state" type="id"/>
+    <item name="img_voicerecord_state" type="id"/>
+    <item name="txt_voicerecord_tips" type="id"/>
 </resources>

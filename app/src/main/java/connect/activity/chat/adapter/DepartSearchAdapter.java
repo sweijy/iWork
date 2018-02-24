@@ -48,13 +48,6 @@ public class DepartSearchAdapter extends RecyclerView.Adapter<DepartSearchAdapte
         String avatar = workmate.getAvatar();
         String name = workmate.getName();
 
-        if (position == 1) {
-            holder.topTv.setVisibility(View.VISIBLE);
-            holder.topTv.setText(context.getString(R.string.Link_Favorite_Friend));
-        } else {
-            holder.topTv.setVisibility(View.GONE);
-        }
-
         if (TextUtils.isEmpty(avatar)) {
             holder.selectView.setVisibility(View.VISIBLE);
             holder.nameTv.setVisibility(View.VISIBLE);

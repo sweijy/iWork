@@ -25,14 +25,14 @@ public class DaoMaster extends AbstractDaoMaster {
         FriendRequestEntityDao.createTable(db, ifNotExists);
         CurrencyEntityDao.createTable(db, ifNotExists);
         ContactEntityDao.createTable(db, ifNotExists);
+        ApplicationEntityDao.createTable(db, ifNotExists);
         ParamEntityDao.createTable(db, ifNotExists);
+        OrganizerEntityDao.createTable(db, ifNotExists);
         GroupMemberEntityDao.createTable(db, ifNotExists);
         GroupEntityDao.createTable(db, ifNotExists);
         ConversionEntityDao.createTable(db, ifNotExists);
         MessageEntityDao.createTable(db, ifNotExists);
         TransactionEntityDao.createTable(db, ifNotExists);
-        ApplicationEntityDao.createTable(db, ifNotExists);
-        OrganizerEntityDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -41,14 +41,14 @@ public class DaoMaster extends AbstractDaoMaster {
         FriendRequestEntityDao.dropTable(db, ifExists);
         CurrencyEntityDao.dropTable(db, ifExists);
         ContactEntityDao.dropTable(db, ifExists);
+        ApplicationEntityDao.dropTable(db, ifExists);
         ParamEntityDao.dropTable(db, ifExists);
+        OrganizerEntityDao.dropTable(db, ifExists);
         GroupMemberEntityDao.dropTable(db, ifExists);
         GroupEntityDao.dropTable(db, ifExists);
         ConversionEntityDao.dropTable(db, ifExists);
         MessageEntityDao.dropTable(db, ifExists);
         TransactionEntityDao.dropTable(db, ifExists);
-        ApplicationEntityDao.dropTable(db, ifExists);
-        OrganizerEntityDao.dropTable(db, ifExists);
     }
 
     /**
@@ -71,14 +71,14 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(FriendRequestEntityDao.class);
         registerDaoClass(CurrencyEntityDao.class);
         registerDaoClass(ContactEntityDao.class);
+        registerDaoClass(ApplicationEntityDao.class);
         registerDaoClass(ParamEntityDao.class);
+        registerDaoClass(OrganizerEntityDao.class);
         registerDaoClass(GroupMemberEntityDao.class);
         registerDaoClass(GroupEntityDao.class);
         registerDaoClass(ConversionEntityDao.class);
         registerDaoClass(MessageEntityDao.class);
         registerDaoClass(TransactionEntityDao.class);
-        registerDaoClass(ApplicationEntityDao.class);
-        registerDaoClass(OrganizerEntityDao.class);
     }
 
     public DaoSession newSession() {

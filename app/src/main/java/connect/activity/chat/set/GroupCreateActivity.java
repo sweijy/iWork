@@ -69,7 +69,7 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeActivity.startActivity(activity, 150);
+                activity.finish();
             }
         });
         toolbar.setRightListener(new View.OnClickListener() {

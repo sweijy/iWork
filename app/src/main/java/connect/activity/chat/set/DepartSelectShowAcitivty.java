@@ -1,7 +1,6 @@
 package connect.activity.chat.set;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +27,9 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
     RecyclerView recyclerview;
 
     private DepartSelectShowAcitivty acitivty;
-    private ArrayList<Connect.Workmate> workmates=new ArrayList<>();
+    private boolean isCreateGroup = true;
+    private String uid = "";
+    private ArrayList<Connect.Workmate> workmates = new ArrayList<>();
     private DepartSelectShowAdapter showAdapter;
 
     @Override
@@ -39,10 +40,12 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
         initView();
     }
 
-    public static void startActivity(Activity activity, ArrayList<Connect.Workmate> workmates){
-        Intent intent = new Intent(activity,DepartSelectShowAcitivty.class);
-        intent.putExtra("List_Workmate", workmates);
-        activity.startActivity(intent);
+    public static void startActivity(Activity activity, boolean iscreate, String uid, ArrayList<Connect.Workmate> workmates) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("Is_Create", iscreate);
+        bundle.putString("Uid", uid);
+        bundle.putSerializable("List_Workmate", workmates);
+        ActivityUtil.next(activity, DepartSelectShowAcitivty.class, bundle, 100);
     }
 
     @Override
@@ -50,9 +53,7 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
         acitivty = this;
         toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setTitle(getString(R.string.Chat_Select_Count, 0));
         toolbar.setRightText(getString(R.string.Common_OK));
-        toolbar.setRightTextEnable(false);
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +67,13 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
             }
         });
 
+        isCreateGroup = getIntent().getBooleanExtra("Is_Create", true);
+        uid = getIntent().getStringExtra("Uid");
         workmates = (ArrayList<Connect.Workmate>) getIntent().getSerializableExtra("List_Workmate");
+
+        int workMateSize = workmates.size();
+        toolbar.setTitle(getString(R.string.Chat_Select_Count, workmates.size()));
+        toolbar.setRightTextEnable(isCreateGroup ? workMateSize >= 2 : workMateSize >= 1);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(acitivty);
         showAdapter = new DepartSelectShowAdapter();
@@ -74,11 +81,15 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
             @Override
             public void removeWorkMate(Connect.Workmate workmate) {
                 workmates.remove(workmate);
+
+                int workMateSize = workmates.size();
+                toolbar.setTitle(getString(R.string.Chat_Select_Count, workMateSize));
+                toolbar.setRightTextEnable(isCreateGroup ? workMateSize >= 2 : workMateSize >= 1);
             }
         });
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.setAdapter(showAdapter);
-        showAdapter.setData(workmates);
+        showAdapter.setData(isCreateGroup,isCreateGroup ? uid : "", workmates);
 
         new DepartSelectShowPresenter(this).start();
     }

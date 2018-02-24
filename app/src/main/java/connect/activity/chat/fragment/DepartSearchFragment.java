@@ -16,22 +16,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.chat.adapter.DepartSearchAdapter;
 import connect.activity.chat.set.GroupSelectActivity;
-import connect.activity.login.bean.UserBean;
-import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
+import connect.utils.system.SystemUtil;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
@@ -52,8 +48,6 @@ public class DepartSearchFragment extends BaseFragment {
 
     private GroupSelectActivity activity;
     private DepartSearchAdapter searchAdapter;
-    private boolean isCreateGroup = true;
-    private Map<String, Object> selectedDeparts = new HashMap<>();
 
     public static DepartSearchFragment startFragment() {
         DepartSearchFragment fragment = new DepartSearchFragment();
@@ -80,13 +74,18 @@ public class DepartSearchFragment extends BaseFragment {
     public void initView() {
         toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
+        toolbar.setTitle(getString(R.string.Link_Search));
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.finish();
+                SystemUtil.hideKeyBoard(getContext(),edittextSearchUser);
+                activity.popBackLastFragment();
             }
         });
 
+        edittextSearchUser.setFocusable(true);
+        edittextSearchUser.setFocusableInTouchMode(true);
+        edittextSearchUser.requestFocus();
         edittextSearchUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -122,35 +121,27 @@ public class DepartSearchFragment extends BaseFragment {
             }
         });
 
-        isCreateGroup = activity.isCreateGroup();
-        selectedDeparts = activity.getSelectMembers();
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         searchAdapter = new DepartSearchAdapter();
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.setAdapter(searchAdapter);
         searchAdapter.setDepartSearchListener(new DepartSearchAdapter.DepartSearchListener() {
 
-            UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-
             @Override
             public boolean isContains(String selectKey) {
-                return selectedDeparts.containsKey(selectKey) || selectKey.equals(userBean.getUid());
+                return activity.isContains(selectKey);
             }
 
             @Override
             public void itemClick(boolean isSelect, Connect.Workmate workmate) {
                 String uid = workmate.getUid();
                 if (isSelect) {
-                    selectedDeparts.put(uid, workmate);
                     activity.addWorkMate(workmate);
                 } else {
-                    selectedDeparts.remove(uid);
                     activity.removeWorkMate(uid);
                 }
             }
         });
-
     }
 
     private void requestWorkmateSearch(String username) {

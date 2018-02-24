@@ -33,6 +33,8 @@ import connect.utils.data.ResourceUtil;
 import connect.utils.system.SystemUtil;
 import connect.widget.bottominput.InputPanel;
 import connect.widget.bottominput.bean.StickerCategory;
+import connect.widget.recordvoice.VoiceRecordButton;
+import connect.widget.recordvoice.VoiceRecordView;
 import protos.Connect;
 
 /**
@@ -45,6 +47,8 @@ public class InputBottomLayout extends LinearLayout {
     ImageView inputface;
     ImageView inputvoice;
     TextView inputtxt;
+    VoiceRecordButton voiceRecord;
+    VoiceRecordView voiceRecordView;
 
     private static String TAG = "_InputBottomLayout";
     public static InputBottomLayout bottomLayout;
@@ -53,7 +57,6 @@ public class InputBottomLayout extends LinearLayout {
     private InputBottomEditTouch editTouch = new InputBottomEditTouch();
     private InputTextWatcher textWatcher = new InputTextWatcher();
     private InputBottomFocusChange focusChange = new InputBottomFocusChange();
-    private InputBottomVoiceTouch voiceTouch = new InputBottomVoiceTouch();
 
     public InputBottomLayout(Context context) {
         super(context);
@@ -73,19 +76,33 @@ public class InputBottomLayout extends LinearLayout {
         inputface = (ImageView) view.findViewById(R.id.inputface);
         inputvoice = (ImageView) view.findViewById(R.id.inputvoice);
         inputtxt = (TextView) view.findViewById(R.id.inputtxt);
+        voiceRecord = (VoiceRecordButton) view.findViewById(R.id.btn_voice_record);
 
         inputedit.requestFocus();
         inputedit.setFocusableInTouchMode(true);
         inputedit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         inputedit.setOnKeyListener(keyListener);
         inputedit.setOnTouchListener(editTouch);
-        inputvoice.setOnTouchListener(voiceTouch);
         inputedit.setOnFocusChangeListener(focusChange);
         inputedit.addTextChangedListener(textWatcher);
 
         inputmore.setOnClickListener(clickListener);
         inputface.setOnClickListener(clickListener);
         inputtxt.setOnClickListener(clickListener);
+        inputvoice.setOnClickListener(clickListener);
+
+        voiceRecord.setButtonListener(new VoiceRecordButton.VoiceButtonListener() {
+
+            @Override
+            public void cancelRecord() {
+
+            }
+
+            @Override
+            public void stopRecord() {
+                inputvoice.performClick();
+            }
+        });
     }
 
     private class InputKeyListener implements View.OnKeyListener {
@@ -112,35 +129,6 @@ public class InputBottomLayout extends LinearLayout {
         }
     }
 
-    private class InputBottomVoiceTouch implements View.OnTouchListener {
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (!((ChatActivity) getContext()).isOpenRecord()) {
-                return true;
-            }
-
-            if (SystemUtil.isSoftShowing(InputPanel.inputPanel.getActivity())) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm.isActive()) {
-                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-                return false;
-            }
-            bottomLayout.setVisibility(View.INVISIBLE);
-            InputPanel.inputPanel.getRecordView().setVisibility(View.VISIBLE);
-
-            int[] location = new int[2];
-            inputvoice.getLocationOnScreen(location);
-            InputPanel.inputPanel.getRecordView().slideVRecord(event, location);
-            if (event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP) {
-                bottomLayout.setVisibility(View.VISIBLE);
-                InputPanel.inputPanel.getRecordView().setVisibility(View.GONE);
-            }
-            return true;
-        }
-    }
-
     private class InputBottomFocusChange implements View.OnFocusChangeListener {
 
         @Override
@@ -163,6 +151,18 @@ public class InputBottomLayout extends LinearLayout {
 
                     inputedit.requestFocus();
                     inputedit.setFocusableInTouchMode(true);
+                    break;
+                case R.id.inputvoice:
+                    if (((ChatActivity) getContext()).isOpenRecord()) {
+                        if (inputedit.getVisibility() == VISIBLE) {
+                            inputedit.setVisibility(GONE);
+                            hideInputBottomEditeText();
+                            voiceRecord.setVisibility(VISIBLE);
+                        } else {
+                            inputedit.setVisibility(VISIBLE);
+                            voiceRecord.setVisibility(GONE);
+                        }
+                    }
                     break;
                 case R.id.inputtxt:
                     String string = inputedit.getText().toString();
@@ -244,7 +244,7 @@ public class InputBottomLayout extends LinearLayout {
 
     public void checkSendState() {
         String textMessage = inputedit.getText().toString();
-        if (TextUtils.isEmpty(textMessage)||TextUtils.isEmpty(textMessage.trim())) {
+        if (TextUtils.isEmpty(textMessage) || TextUtils.isEmpty(textMessage.trim())) {
             inputvoice.setVisibility(View.VISIBLE);
             inputtxt.setVisibility(View.GONE);
         } else {
@@ -272,5 +272,10 @@ public class InputBottomLayout extends LinearLayout {
     public void hideInputBottomEditeText() {
         Context context = getContext();
         SystemUtil.hideKeyBoard(context, inputedit);
+    }
+
+    public void setVoiceRecord(VoiceRecordView view) {
+        this.voiceRecordView = view;
+        voiceRecord.setVoiceRecordView(view);
     }
 }

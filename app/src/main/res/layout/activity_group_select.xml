@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@id/group_select_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <include
+        android:id="@id/layout_selected"
         layout="@layout/include_selectcout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:layout_alignParentBottom="true" />
+
+    <FrameLayout
+        android:id="@id/group_select_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_selected" />
 </RelativeLayout>

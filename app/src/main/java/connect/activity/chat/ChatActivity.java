@@ -61,7 +61,7 @@ import connect.widget.album.model.AlbumFile;
 import connect.widget.bottominput.InputPanel;
 import connect.widget.bottominput.view.InputBottomLayout;
 import connect.widget.camera.CameraTakeActivity;
-import connect.widget.recordvoice.RecordView;
+import connect.widget.recordvoice.VoiceRecordView;
 import instant.bean.ChatMsgEntity;
 import instant.sender.model.NormalChat;
 import protos.Connect;
@@ -76,12 +76,12 @@ public class ChatActivity extends BaseChatSendActivity {
     TopToolBar toolbar;
     @Bind(R.id.recycler_chat)
     RecyclerView recyclerChat;
-    @Bind(R.id.recordview)
-    RecordView recordview;
     @Bind(R.id.inputPanel)
     InputPanel inputPanel;
     @Bind(R.id.relativelayout_1)
     RelativeLayout relativelayout1;
+    @Bind(R.id.view_voicerecord_state)
+    VoiceRecordView viewVoicerecordState;
 
     private static String TAG = "_ChatActivity";
     private String searchTxt = "";
@@ -159,9 +159,6 @@ public class ChatActivity extends BaseChatSendActivity {
                 }
             }
         });
-        recordview.setVisibility(View.GONE);
-        inputPanel.setActivity(this);
-        inputPanel.setRecordView(recordview);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
@@ -179,6 +176,7 @@ public class ChatActivity extends BaseChatSendActivity {
                 return false;
             }
         });
+        inputPanel.setVoiceRecordView(viewVoicerecordState);
 
         scrollHelper.setCheckIfItemViewFullRecycleViewForTop(true);
         scrollHelper.attachToRecycleView(recyclerChat);
@@ -271,7 +269,7 @@ public class ChatActivity extends BaseChatSendActivity {
                 String titleName = "";
                 switch (chatType) {
                     case CONNECT_SYSTEM:
-                        titleName =getString(R.string.app_name);
+                        titleName = getString(R.string.app_name);
                         toolbar.setTitle(titleName);
                         break;
                     case PRIVATE:
@@ -442,7 +440,7 @@ public class ChatActivity extends BaseChatSendActivity {
         long sendtime = 0;
         String draft = InputBottomLayout.bottomLayout.getDraft();
 
-        ChatMsgEntity lastExtEntity =null;
+        ChatMsgEntity lastExtEntity = null;
         if (chatAdapter.getMsgEntities().size() != 0) {
             lastExtEntity = chatAdapter.getMsgEntities().get(chatAdapter.getItemCount() - 1);
             if (lastExtEntity != null) {
