@@ -12,36 +12,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_15"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:background="@drawable/shape_8px_ffffff"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20">
         <ImageView
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:src="@mipmap/menu_visitors"/>
+            android:id="@+id/scan_image"
+            android:layout_width="@dimen/dp_220"
+            android:layout_height="@dimen/dp_220"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/hint_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:textSize="@dimen/sp_12"
+            android:gravity="center_horizontal"
+            android:textColor="@color/color_161A21"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_161A21"
-            android:text="BITMAIN 访客系统"/>
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:textSize="@dimen/sp_12"
+            android:text="二维码3小时内有效，并且只能使用一次"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/scan_image"
-        android:layout_width="@dimen/dp_220"
-        android:layout_height="@dimen/dp_220"
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_gravity="center_horizontal"/>
-
-    <TextView
-        android:id="@+id/hint_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"/>
 
     <TextView
         android:id="@+id/share_texts"
