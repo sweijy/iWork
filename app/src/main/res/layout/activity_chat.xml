@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_bg_activity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_activity">
 
     <connect.widget.TopToolBar
         android:id="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,22 +25,22 @@
                 android:id="@id/recycler_chat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_16"
                 android:fadeScrollbars="true"
                 android:overScrollMode="never"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:scrollbars="vertical"/>
+                android:scrollbars="vertical" />
+
+            <connect.widget.recordvoice.VoiceRecordView
+                android:id="@id/view_voicerecord_state"
+                android:layout_width="@dimen/dp_180"
+                android:layout_height="@dimen/dp_180"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <connect.widget.bottominput.InputPanel
             android:id="@id/inputPanel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
-    <connect.widget.recordvoice.RecordView
-        android:id="@id/recordview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"/>
 </RelativeLayout>

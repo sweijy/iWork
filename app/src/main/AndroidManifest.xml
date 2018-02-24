@@ -237,17 +237,18 @@
             android:exported="false" />
 
         <activity
-            android:name="connect.activity.chat.set.GroupDepartSelectActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.chat.set.GroupCreateActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.chat.set.BaseGroupSelectActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.workbench.WorkSeachActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="connect.activity.chat.set.DepartSelectShowAcitivty"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.chat.set.GroupSelectActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

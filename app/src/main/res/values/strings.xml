@@ -339,4 +339,11 @@
     <string name="Robot_Visiting_Purpose">Visitor: %1$s\nVisiting purpose: %2$s</string>
     <string name="Robot_WareHouse_Warn">%1$s Detected stranger to enter</string>
     <string name="Link_Today">Today</string>
+    <string name="Chat_Selected_Member">have chosen: %1$d</string>
+    <string name="Chat_Determine_Count">determine(%1$d)</string>
+    <string name="Chat_Hold_To_Talk">Hold to talk</string>
+    <string name="Chat_Release_The_End">Release the end</string>
+    <string name="Chat_Finger_Slippery_Cancel_The_Sending">Slide on the finger, cancel sending</string>
+    <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">Loosen the finger and cancel the sending</string>
+    <string name="Chat_Voice_Record_Short">The recording time is short</string>
 </resources>

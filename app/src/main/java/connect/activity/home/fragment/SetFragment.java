@@ -91,7 +91,8 @@ public class SetFragment extends BaseFragment {
         mActivity = getActivity();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         toolbarTop.setBlackStyle();
         toolbarTop.setTitle(null, R.string.Set_Setting);
 

@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.chat.ChatActivity;
 import connect.activity.chat.adapter.SearchAdapter;
@@ -68,11 +69,11 @@ public class SearchContentFragment extends BaseFragment {
         initView();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         recyclerview.setLayoutManager(linearLayoutManager);
         adapter = new SearchAdapter(mActivity);
-        //recyclerview.addItemDecoration(new LineDecoration(mActivity, false));
         adapter.setOnItemChildListence(onItemChildClickListener);
         recyclerview.setAdapter(adapter);
     }

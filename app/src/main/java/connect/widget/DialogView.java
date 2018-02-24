@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Environment;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,14 +41,8 @@ public class DialogView {
         final TextView library = (TextView)view.findViewById(R.id.photo_library);
         TextView cancel = (TextView)view.findViewById(R.id.cancel);
         final PickHorScrollView horScrollView= (PickHorScrollView) view.findViewById(R.id.pickscrollview);
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.linearlayout);
+        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.linearlayout);
 
-        List<String> images = recentImages();
-        if (images.size() == 0) {
-            linearLayout.setVisibility(View.GONE);
-        }
-
-        horScrollView.setPickAdapter(new PickHoriScrollAdapter(context,images));
         horScrollView.setItemClickListener(new PickHorScrollView.OnItemClickListener() {
             @Override
             public void itemOnClick(List<String> paths) {
@@ -59,6 +53,30 @@ public class DialogView {
                 }
             }
         });
+
+        new AsyncTask<Void, Void, List<String>>() {
+            @Override
+            protected List<String> doInBackground(Void... voids) {
+                List<String> strings = recentImages();
+                if (strings.size() > 6) {
+                    strings = strings.subList(0, 6);
+                }
+                return strings;
+            }
+
+            @Override
+            protected void onPostExecute(List<String> strings) {
+                super.onPostExecute(strings);
+                if (strings.size() == 0) {
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    linearLayout.setVisibility(View.VISIBLE);
+                    PickHoriScrollAdapter scrollAdapter = new PickHoriScrollAdapter();
+                    scrollAdapter.setData(strings);
+                    horScrollView.setPickAdapter(scrollAdapter);
+                }
+            }
+        }.execute();
 
         library.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,28 +108,54 @@ public class DialogView {
         return dialog;
     }
 
+    private static final String[] IMAGES = {
+            MediaStore.Images.Media._ID,
+            MediaStore.Images.Media.DATA,
+            MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.TITLE,
+            MediaStore.Images.Media.BUCKET_ID,
+            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
+            MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.DATE_ADDED,
+            MediaStore.Images.Media.DATE_MODIFIED,
+            MediaStore.Images.Media.LATITUDE,
+            MediaStore.Images.Media.LONGITUDE,
+            MediaStore.Images.Media.SIZE
+    };
+
     public List<String> recentImages() {
-        List<String> recentImgs = new ArrayList<>();
+        List<String> pathList = new ArrayList<>();
         Context context = BaseApplication.getInstance().getBaseContext();
-        String sdcardPath = Environment.getExternalStorageDirectory().toString();
-        ContentResolver mContentResolver = context.getContentResolver();
-        Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA},
-                MediaStore.Images.Media.MIME_TYPE + "=? OR " + MediaStore.Images.Media.MIME_TYPE + "=?",
-                new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media._ID + " DESC");
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                IMAGES,
+                null,
+                null,
+                MediaStore.Images.Media.DATE_ADDED + " desc");
 
-        while (mCursor.moveToNext()) {
-            long id = mCursor.getLong(mCursor.getColumnIndex(MediaStore.Images.Media._ID));
-            String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            if (path.startsWith(sdcardPath + "/DCIM/100MEDIA") || path.startsWith(sdcardPath + "/DCIM/Camera/")
-                    || path.startsWith(sdcardPath + "DCIM/100Andro")) {
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndex(IMAGES[0]));
 
-                File file = new File(path);
+                String imagePath = cursor.getString(cursor.getColumnIndex(IMAGES[1]));
+                File file = new File(imagePath);
                 if (!file.exists() || !file.canRead() || file.length() < 5 * 1024) continue;
-                recentImgs.add(path);
+
+                String name = cursor.getString(cursor.getColumnIndex(IMAGES[2]));
+                String title = cursor.getString(cursor.getColumnIndex(IMAGES[3]));
+                int bucketId = cursor.getInt(cursor.getColumnIndex(IMAGES[4]));
+                String bucketName = cursor.getString(cursor.getColumnIndex(IMAGES[5]));
+                String mimeType = cursor.getString(cursor.getColumnIndex(IMAGES[6]));
+                long addDate = cursor.getLong(cursor.getColumnIndex(IMAGES[7]));
+                long modifyDate = cursor.getLong(cursor.getColumnIndex(IMAGES[8]));
+                float latitude = cursor.getFloat(cursor.getColumnIndex(IMAGES[9]));
+                float longitude = cursor.getFloat(cursor.getColumnIndex(IMAGES[10]));
+                long size = cursor.getLong(cursor.getColumnIndex(IMAGES[11]));
+
+                pathList.add(imagePath);
             }
+            cursor.close();
         }
-        mCursor.close();
-        return recentImgs;
+        return pathList;
     }
 }

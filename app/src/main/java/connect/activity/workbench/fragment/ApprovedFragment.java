@@ -62,7 +62,8 @@ public class ApprovedFragment extends BaseFragment {
         initView();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         page = 1;
         refreshview.setColorSchemeResources(R.color.color_ebecee, R.color.color_c8ccd5, R.color.color_lightgray);
         refreshview.setOnRefreshListener(onRefreshListener);

@@ -80,7 +80,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
         toolbarTop.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseGroupSelectActivity.startActivity(activity, false, groupKey);
+                GroupSelectActivity.startActivity(activity, false, groupKey);
             }
         });
 

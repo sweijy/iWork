@@ -1,155 +1,114 @@
-package connect.activity.chat.set;
+package connect.activity.chat.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import connect.activity.base.BaseActivity;
+import connect.activity.base.BaseFragment;
 import connect.activity.base.BaseListener;
 import connect.activity.chat.adapter.GroupDepartSelectAdapter;
+import connect.activity.chat.set.GroupSelectActivity;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
+import connect.utils.system.SystemUtil;
 import connect.widget.NameLinear;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
-public class GroupDepartSelectActivity extends BaseActivity {
+/**
+ * Created by PuJin on 2018/2/22.
+ */
+
+public class DetailDepartSelectFragment extends BaseFragment {
 
     @Bind(R.id.toolbar_top)
     TopToolBar toolbarTop;
+    @Bind(R.id.edittext_search_user)
+    EditText edittextSearchUser;
+    @Bind(R.id.imageview_clear)
+    ImageView imageviewClear;
     @Bind(R.id.name_linear)
     NameLinear nameLinear;
     @Bind(R.id.scrollview)
     HorizontalScrollView scrollview;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.edittext_search_user)
-    EditText edittextSearchUser;
-    @Bind(R.id.imageview_clear)
-    ImageView imageviewClear;
 
-    private GroupDepartSelectActivity activity;
-    private boolean isCreate = true;
-    private List<String> selectedUids = new ArrayList();
+    private GroupSelectActivity activity;
+    private GroupDepartSelectAdapter departSelectAdapter;
     private ArrayList<Connect.Department> nameList = new ArrayList<>();
-    private Map<String, Object> selectDeparts = new HashMap<>();//部门 B  成员 W
+    private List<String> selectDeparts = new ArrayList<>();
 
-    private GroupDepartSelectAdapter departSelectAdapter = null;
+    public static DetailDepartSelectFragment startFragment() {
+        DetailDepartSelectFragment fragment = new DetailDepartSelectFragment();
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_detaildepart_select, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_depart_select);
-        ButterKnife.bind(this);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity = (GroupSelectActivity) getActivity();
         initView();
     }
 
-    public static void startActivity(Activity activity, boolean iscreate, ArrayList<String> uids) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("Is_Create", iscreate);
-        bundle.putSerializable("Uids", uids);
-        ActivityUtil.next(activity, GroupDepartSelectActivity.class, bundle, 200);
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
     }
 
     @Override
     public void initView() {
-        activity = this;
         toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
-        toolbarTop.setRightText(getString(R.string.Chat_Select_Count, 0));
         toolbarTop.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.goBack(activity);
-            }
-        });
-        toolbarTop.setRightListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
-                for (Map.Entry<String, Object> it : selectDeparts.entrySet()) {
-                    String key = it.getKey();
-                    Object object = it.getValue();
-
-                    if (key.startsWith("B")) {
-
-                    } else if (key.startsWith("W")) {
-                        OrganizerEntity entity = (OrganizerEntity) object;
-                        Connect.Workmate workmate = Connect.Workmate.newBuilder()
-                                .setName(entity.getName())
-                                .setMobile(entity.getMobile())
-                                .setAvatar(entity.getAvatar())
-                                .setGender(entity.getGender())
-                                .setEmpNo(entity.getEmpNo())
-                                .setUid(entity.getUid())
-                                .build();
-
-                        workmates.add(workmate);
-                    } else {
-                        OrganizerEntity entity = (OrganizerEntity) object;
-                        Connect.Workmate workmate = Connect.Workmate.newBuilder()
-                                .setName(entity.getName())
-                                .setMobile(entity.getMobile())
-                                .setAvatar(entity.getAvatar())
-                                .setGender(entity.getGender())
-                                .setEmpNo(entity.getEmpNo())
-                                .setUid(entity.getUid())
-                                .build();
-
-                        workmates.add(workmate);
-                    }
-                }
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("ArrayList", workmates);
-                ActivityUtil.goBackWithResult(activity, 200, bundle);
+                SystemUtil.hideKeyBoard(getContext(), edittextSearchUser);
+                activity.popBackLastFragment();
             }
         });
 
-        isCreate = getIntent().getBooleanExtra("Is_Create", true);
-        selectedUids = (List<String>) getIntent().getSerializableExtra("Uids");
-        if (isCreate) {
+        if (activity.isCreateGroup()) {
             toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Create));
-            if (selectedUids.size() >= 2) {
-                toolbarTop.setRightTextEnable(true);
-            } else {
-                toolbarTop.setRightTextEnable(false);
-            }
-            toolbarTop.setRightText(getString(R.string.Chat_Select_Count, selectedUids.size()));
         } else {
             toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Invite));
-            toolbarTop.setRightTextEnable(false);
-            toolbarTop.setRightText(getString(R.string.Chat_Select_Count, 0));
         }
 
         nameLinear.setVisibility(View.VISIBLE);
@@ -167,14 +126,22 @@ public class GroupDepartSelectActivity extends BaseActivity {
         recyclerview.addItemDecoration(new LineDecoration(activity));
         departSelectAdapter = new GroupDepartSelectAdapter(activity);
         recyclerview.setAdapter(departSelectAdapter);
-        departSelectAdapter.setFriendUid(selectedUids);
         departSelectAdapter.setItemClickListener(new GroupDepartSelectAdapter.GroupDepartSelectListener() {
 
             UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
 
             @Override
-            public boolean isContains(String selectKey) {
-                return selectDeparts.containsKey(selectKey) || selectedUids.contains(selectKey.substring(1));
+            public boolean isMoveSelect(String selectKey) {
+                return activity.isRemoveSelect(selectKey);
+            }
+
+            @Override
+            public boolean isContains(boolean isDepart, String selectKey) {
+                if (isDepart) {
+                    return selectDeparts.contains(selectKey);
+                } else {
+                    return activity.isContains(selectKey);
+                }
             }
 
             @Override
@@ -195,36 +162,18 @@ public class GroupDepartSelectActivity extends BaseActivity {
             @Override
             public void departmentClick(boolean isSelect, OrganizerEntity department) {
                 final long departmentId = department.getId();
-                final String departmentKey = "B" + departmentId;
+                final String departmentKey = String.valueOf(departmentId);
                 if (isSelect) {
                     requestDepartmentWorksById(departmentId, new BaseListener<Connect.Workmates>() {
                         @Override
                         public void Success(Connect.Workmates workmates) {
-                            selectDeparts.put(departmentKey, "");
+                            selectDeparts.add(departmentKey);
 
                             for (Connect.Workmate workmate : workmates.getListList()) {
                                 if (workmate.getRegisted()) {
-                                    String uid = workmate.getUid();
-                                    String myUid = userBean.getUid();
-                                    if (!selectedUids.contains(uid) && !uid.equals(myUid)) {
-                                        String workmateKey = "W" + uid;
-                                        OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
-                                        selectDeparts.put(workmateKey, organizerEntity);
-                                    }
+                                    activity.addWorkMate(workmate);
                                 }
                             }
-
-                            int countSelect = 0;
-                            for (String key : selectDeparts.keySet()) {
-                                if (key.contains("W")) {
-                                    countSelect++;
-                                }
-                            }
-                            if (isCreate) {
-                                countSelect = countSelect + selectedUids.size();
-                            }
-                            toolbarTop.setRightText(getString(R.string.Chat_Select_Count, countSelect));
-                            toolbarTop.setRightTextEnable(isCreate ? countSelect >= 2 : countSelect >= 1);
                         }
 
                         @Override
@@ -237,22 +186,11 @@ public class GroupDepartSelectActivity extends BaseActivity {
                         @Override
                         public void Success(Connect.Workmates workmates) {
                             selectDeparts.remove(departmentKey);
-                            for (Connect.Workmate workmate : workmates.getListList()) {
-                                String workmateKey = "W" + workmate.getUid();
-                                selectDeparts.remove(workmateKey);
-                            }
 
-                            int countSelect = 0;
-                            for (String key : selectDeparts.keySet()) {
-                                if (key.contains("W")) {
-                                    countSelect++;
-                                }
+                            for (Connect.Workmate workmate : workmates.getListList()) {
+                                String workMateUid = workmate.getUid();
+                                activity.removeWorkMate(workMateUid);
                             }
-                            if (isCreate) {
-                                countSelect = countSelect + selectedUids.size();
-                            }
-                            toolbarTop.setRightText(getString(R.string.Chat_Select_Count, countSelect));
-                            toolbarTop.setRightTextEnable(isCreate ? countSelect >= 2 : countSelect >= 1);
                         }
 
                         @Override
@@ -265,30 +203,20 @@ public class GroupDepartSelectActivity extends BaseActivity {
 
             @Override
             public void workmateClick(boolean isSelect, OrganizerEntity workmate) {
-                final String workmateId = workmate.getUid();
-                final String workmateKey = "W" + workmateId;
+                String workmateKey = workmate.getUid();
                 if (isSelect) {
                     if (workmate.getRegisted()) {
-                        selectDeparts.put(workmateKey, workmate);
+                        Connect.Workmate workmate1 = Connect.Workmate.newBuilder()
+                                .setName(workmate.getName())
+                                .setAvatar(workmate.getAvatar())
+                                .setGender(workmate.getGender())
+                                .setPubKey(workmate.getPub_key())
+                                .setUid(workmate.getUid())
+                                .build();
+                        activity.addWorkMate(workmate1);
                     }
                 } else {
-                    selectDeparts.remove(workmateKey);
-                }
-
-                int countSelect = 0;
-                for (String key : selectDeparts.keySet()) {
-                    if (key.contains("W")) {
-                        countSelect++;
-                    }
-                }
-                if (isCreate) {
-                    countSelect = countSelect + selectedUids.size();
-                }
-                toolbarTop.setRightText(getString(R.string.Chat_Select_Count, countSelect));
-                if (countSelect >= 1) {
-                    toolbarTop.setRightTextEnable(true);
-                } else {
-                    toolbarTop.setRightTextEnable(false);
+                    activity.removeWorkMate(workmateKey);
                 }
             }
         });
@@ -330,12 +258,6 @@ public class GroupDepartSelectActivity extends BaseActivity {
         });
 
         requestDepartmentInfoShow(2);
-        if (selectedUids != null && isCreate && selectedUids.size() > 0) {
-            String id = selectedUids.get(0);
-            if (!TextUtils.isEmpty(id)) {
-                requestUserInfo(id);
-            }
-        }
     }
 
     /**
@@ -453,38 +375,6 @@ public class GroupDepartSelectActivity extends BaseActivity {
         });
     }
 
-    public void requestUserInfo(String value) {
-        final Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
-                .setTyp(1)
-                .setCriteria(value)
-                .build();
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V1_USER_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
-            @Override
-            public void onResponse(Connect.HttpNotSignResponse response) {
-                try {
-                    Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                    Connect.UsersInfo userInfo = Connect.UsersInfo.parseFrom(structData.getPlainData());
-                    Connect.UserInfo userInfo1 = userInfo.getUsersList().get(0);
-                    Connect.Workmate workmate = Connect.Workmate.newBuilder()
-                            .setAvatar(userInfo1.getAvatar())
-                            .setName(userInfo1.getName())
-                            .setUid(userInfo1.getUid())
-                            .setPubKey(userInfo1.getCaPub())
-                            .build();
-
-                    OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
-                    selectDeparts.put("F", organizerEntity);
-                } catch (InvalidProtocolBufferException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Connect.HttpNotSignResponse response) {
-            }
-        });
-    }
-
     private OrganizerEntity getOrganizerEntity(Connect.Workmate workmate) {
         OrganizerEntity entity = new OrganizerEntity();
         entity.setUid(workmate.getUid());
@@ -500,8 +390,8 @@ public class GroupDepartSelectActivity extends BaseActivity {
         return entity;
     }
 
-    private void requestWorkmateSearch(String username){
-        if(TextUtils.isEmpty(username)){
+    private void requestWorkmateSearch(String username) {
+        if (TextUtils.isEmpty(username)) {
             return;
         }
         Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
@@ -513,7 +403,7 @@ public class GroupDepartSelectActivity extends BaseActivity {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
-                    if(workmates.getListList().size() == 0){
+                    if (workmates.getListList().size() == 0) {
                         ToastEUtil.makeText(activity, R.string.Wallet_No_match_user).show();
                         return;
                     }
@@ -524,23 +414,30 @@ public class GroupDepartSelectActivity extends BaseActivity {
                     }
                     departSelectAdapter.notifyData(list);
                     nameLinear.setVisibility(View.GONE);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onError(Connect.HttpNotSignResponse response) {}
+            public void onError(Connect.HttpNotSignResponse response) {
+            }
         });
     }
 
     @OnClick({R.id.imageview_clear})
-    void OnClickListener(View view){
+    void OnClickListener(View view) {
         switch (view.getId()) {
             case R.id.imageview_clear:
                 edittextSearchUser.setText("");
                 onItemClickListener.itemClick(0);
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

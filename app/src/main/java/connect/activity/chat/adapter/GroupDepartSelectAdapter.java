@@ -15,8 +15,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import connect.activity.login.bean.UserBean;
-import connect.database.SharedPreferenceUtil;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
@@ -29,8 +27,6 @@ import connect.widget.DepartmentAvatar;
 public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSelectAdapter.ViewHolder> {
 
     private Activity activity;
-    private List<String> uids = null;
-    private UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
     private List<OrganizerEntity> departSelectBeens = new ArrayList<>();
 
     public GroupDepartSelectAdapter(Activity activity) {
@@ -57,8 +53,8 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             holder.departmentLinear.setVisibility(View.VISIBLE);
             holder.contentLin.setVisibility(View.GONE);
 
-            final String departmentKey = "B" + department.getId();
-            holder.departmentSelectView.setSelected(departSelectListener.isContains(departmentKey));
+            final String departmentKey = String.valueOf(department.getId());
+            holder.departmentSelectView.setSelected(departSelectListener.isContains(true, departmentKey));
             holder.countTv.setText("(" + department.getCount() + ")");
             holder.departmentTv.setText(department.getName());
             holder.departmentSelectView.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +69,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             holder.departmentLinear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!departSelectListener.isContains(departmentKey)) {
+                    if (!departSelectListener.isContains(true,departmentKey)) {
                         departSelectListener.itemClick(department);
                     }
                 }
@@ -82,8 +78,8 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             holder.departmentLinear.setVisibility(View.GONE);
             holder.contentLin.setVisibility(View.VISIBLE);
 
-            final String workmateKey = "W" + department.getUid();
-            holder.workmateSelectView.setSelected(departSelectListener.isContains(workmateKey)|| ("W" + userBean.getUid()).equals(workmateKey));
+            final String workmateKey = department.getUid();
+            holder.workmateSelectView.setSelected(departSelectListener.isContains(false,workmateKey));
             holder.nameTvS.setText(department.getName());
             if (TextUtils.isEmpty(department.getO_u())) {
                 holder.nicName.setVisibility(View.GONE);
@@ -103,9 +99,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             holder.workmateSelectView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (("W" + userBean.getUid()).equals(workmateKey)) {
-
-                    } else if (!uids.contains(department.getUid()) && !TextUtils.isEmpty(department.getUid())) {
+                   if (departSelectListener.isMoveSelect(workmateKey)) {
                         boolean isselect = holder.workmateSelectView.isSelected();
                         isselect = !isselect;
                         departSelectListener.workmateClick(isselect, department);
@@ -167,12 +161,10 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
 
         void workmateClick(boolean isSelect, OrganizerEntity workmate);
 
-        boolean isContains(String selectKey);
+        boolean isContains(boolean isDepart, String selectKey);
+
+        boolean isMoveSelect(String selectKey);
 
         void itemClick(OrganizerEntity department);
-    }
-
-    public void setFriendUid(List<String> friendUid) {
-        this.uids = friendUid;
     }
 }

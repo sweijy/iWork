@@ -26,10 +26,13 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
     private List<ContactEntity> contactEntities = new ArrayList<>();
     private Context context;
-    private String friendUid = "";
 
     public BaseGroupSelectAdapter() {
 
+    }
+
+    public void setData() {
+        notifyDataSetChanged();
     }
 
     public void setData(List<ContactEntity> contactEntities) {
@@ -87,7 +90,7 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
                     @Override
                     public void onClick(View view) {
                         String uid = entity.getUid();
-                        if (!friendUid.equals(uid)) {
+                        if (groupSelectListener.isMoveSelect(uid)) {
                             boolean isselect = holder.selectView.isSelected();
                             isselect = !isselect;
                             groupSelectListener.itemClick(isselect, entity);
@@ -109,7 +112,7 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
                 @Override
                 public void onClick(View view) {
                     String uid = entity.getUid();
-                    if (!friendUid.equals(uid)) {
+                    if (groupSelectListener.isMoveSelect(uid)) {
                         boolean isselect = holder.selectView.isSelected();
                         isselect = !isselect;
                         groupSelectListener.itemClick(isselect, entity);
@@ -151,6 +154,8 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
         boolean isContains(String selectKey);
 
+        boolean isMoveSelect(String selectKey);
+
         void organizeClick();
 
         void itemClick(boolean isSelect, ContactEntity contactEntity);
@@ -158,9 +163,5 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
     public void setGroupSelectListener(BaseGroupSelectListener groupSelectListener) {
         this.groupSelectListener = groupSelectListener;
-    }
-
-    public void setFriendUid(String friendUid) {
-        this.friendUid = friendUid;
     }
 }
