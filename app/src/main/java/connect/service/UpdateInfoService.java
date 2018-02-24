@@ -69,7 +69,6 @@ public class UpdateInfoService extends Service {
         if(ParamManager.getInstance().getSystemSet() == null){
             SystemSetBean.initSystemSet();
         }
-        HttpRecBean.sendHttpRecMsg(HttpRecBean.HttpRecType.BlackList, "");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -85,9 +84,6 @@ public class UpdateInfoService extends Service {
             objects = (Object[]) httpRec.obj;
         }
         switch (httpRec.httpRecType) {
-            case BlackList://black list
-                requestBlackList();
-                break;
             case SOUNDPOOL:
                 if ((Integer) objects[0] == 0) {
                     SystemUtil.noticeVoice(service);
@@ -101,31 +97,6 @@ public class UpdateInfoService extends Service {
                 SystemUtil.noticeVibrate(service);
                 break;
         }
-    }
-
-    private void requestBlackList() {
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNEXT_V1_BLACKLIST_LIST, ByteString.copyFrom(new byte[]{}),
-                new ResultCall<Connect.HttpNotSignResponse>() {
-                    @Override
-                    public void onResponse(Connect.HttpNotSignResponse response) {
-                        try {
-                            Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                            if(structData == null || structData.getPlainData() == null){
-                                return;
-                            }
-                            Connect.UsersInfo usersInfo = Connect.UsersInfo.parseFrom(structData.getPlainData());
-                            List<Connect.UserInfo> list = usersInfo.getUsersList();
-                            for (Connect.UserInfo info : list) {
-                                ContactHelper.getInstance().updataFriendBlack(info.getUid(),true);
-                            }
-                        } catch (InvalidProtocolBufferException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Connect.HttpNotSignResponse response) {}
-                });
     }
 
     @Override

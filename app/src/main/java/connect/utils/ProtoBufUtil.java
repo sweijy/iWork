@@ -18,10 +18,6 @@ import java.util.Map;
 import connect.activity.base.BaseApplication;
 import connect.utils.log.LogManager;
 
-/**
- * Created by pujin on 2017/5/31.
- */
-
 public class ProtoBufUtil {
 
     private String Tag = "ProtoBufUtil";

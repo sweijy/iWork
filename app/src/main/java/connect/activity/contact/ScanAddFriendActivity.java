@@ -1,6 +1,5 @@
 package connect.activity.contact;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,8 +46,6 @@ public class ScanAddFriendActivity extends BaseScanActivity {
     ImageView rightImg;
     @Bind(R.id.content_rela)
     RelativeLayout contentRela;
-    /*@Bind(R.id.bottom_capture_img)
-    TextView bottomCaptureImg;*/
     @Bind(R.id.photos_tv)
     TextView photosTv;
 
@@ -75,11 +72,6 @@ public class ScanAddFriendActivity extends BaseScanActivity {
     void goBack(View view) {
         ActivityUtil.goBackBottom(mActivity);
     }
-
-    /*@OnClick(R.id.bottom_capture_img)
-    void switchScan(View view) {
-        ActivityUtil.next(mActivity, UserConnectIdActivity.class);
-    }*/
 
     @OnClick(R.id.photos_tv)
     void goSelectAlbm(View view){

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -68,7 +67,6 @@ public class UserInfoActivity extends BaseActivity {
         GlideUtil.loadAvatarRound(avatarIv, userBean.getAvatar());
 
         nameTv.setText(userBean.getName());
-        //idTv.setText(userBean.getConnectId());
         employeeNumberTv.setText(userBean.getEmp_no());
     }
 
@@ -81,19 +79,5 @@ public class UserInfoActivity extends BaseActivity {
     void goAvatar(View view) {
         UserInfoAvatarActivity.startActivity(mActivity);
     }
-
-    /*@OnClick(R.id.name_ll)
-    void goName(View view) {
-        UserInfoNameActivity.startActivity(mActivity);
-    }*/
-
-    /*@OnClick(R.id.id_ll)
-    void goNumber(View view) {
-        if (!userBean.isUpdateConnectId()) {
-            UserInfoConnectIdActivity.startActivity(mActivity);
-        } else {
-            ToastEUtil.makeText(mActivity, R.string.Set_CONNECT_ID_can_only_be_set_once, ToastEUtil.TOAST_STATUS_FAILE).show();
-        }
-    }*/
 
 }

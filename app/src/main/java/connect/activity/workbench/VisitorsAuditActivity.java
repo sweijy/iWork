@@ -32,10 +32,6 @@ import connect.widget.imagewatcher.ImageWatcher;
 import connect.widget.imagewatcher.ImageWatcherUtil;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/1/16 0016.
- */
-
 public class VisitorsAuditActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -103,9 +99,6 @@ public class VisitorsAuditActivity extends BaseActivity {
         GlideUtil.loadImage(leftFaceImage, visitorRecord.getFaceLeft());
         GlideUtil.loadImage(isFaceImage, visitorRecord.getFace());
         GlideUtil.loadImage(rightFaceImage, visitorRecord.getFaceRight());
-        /*leftFaceImage.setImageBitmap(BitmapUtil.getInstance().base64ToBitmap(visitorRecord.getFaceLeft()));
-        isFaceImage.setImageBitmap(BitmapUtil.getInstance().base64ToBitmap(visitorRecord.getFace()));
-        rightFaceImage.setImageBitmap(BitmapUtil.getInstance().base64ToBitmap(visitorRecord.getFaceRight()));*/
 
         int status = getIntent().getExtras().getInt("status",0);
         if(status == 1){

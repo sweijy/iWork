@@ -16,10 +16,6 @@ import butterknife.Bind;
 import connect.ui.activity.R;
 import connect.utils.data.RateBean;
 
-/**
- * Created by Administrator on 2017/1/12.
- */
-
 public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHolder> {
 
     private Activity activity;

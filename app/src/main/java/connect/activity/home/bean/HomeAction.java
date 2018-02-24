@@ -6,9 +6,6 @@ import java.io.Serializable;
 
 import connect.activity.base.bean.BaseEvent;
 
-/**
- * Created by pujin on 2017/2/10.
- */
 public class HomeAction extends BaseEvent {
 
     public static HomeAction homeAction;

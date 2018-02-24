@@ -1,9 +1,8 @@
 package connect.activity.workbench.bean;
 
 /**
- * Created by Administrator on 2018/2/7 0007.
+ * 工作台界面更新通知
  */
-
 public class UpdateState {
 
     public enum StatusEnum{

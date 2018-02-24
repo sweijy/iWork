@@ -28,10 +28,6 @@ import connect.utils.system.SystemUtil;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/1/17 0017.
- */
-
 public class ApprovedFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
@@ -57,12 +53,6 @@ public class ApprovedFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_audit, container, false);
         ButterKnife.bind(this, view);
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //initView();
     }
 
     @Override

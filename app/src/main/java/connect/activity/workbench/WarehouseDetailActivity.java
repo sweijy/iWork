@@ -23,15 +23,10 @@ import connect.utils.BitmapUtil;
 import connect.utils.TimeUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
-import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
 import connect.widget.TopToolBar;
 import protos.Connect;
-
-/**
- * Created by Administrator on 2018/2/5 0005.
- */
 
 public class WarehouseDetailActivity extends BaseActivity {
 

@@ -2,10 +2,6 @@ package connect.activity.contact.bean;
 
 import java.io.Serializable;
 
-/**
- * Created by Administrator on 2018/1/4 0004.
- */
-
 public class DepartmentBean implements Serializable{
 
     private String name;

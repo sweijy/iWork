@@ -1,9 +1,5 @@
 package connect.activity.home.bean;
 
-/**
- * Created by Administrator on 2017/5/25 0025.
- */
-
 public class ContactBean {
 
     private String uid;

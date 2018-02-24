@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import connect.activity.contact.bean.PhoneContactBean;
-import connect.activity.contact.presenter.AddFriendPhonePresenter;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.FriendRequestEntity;
@@ -20,6 +19,8 @@ import protos.Connect;
  * Add local contacts and friends
  */
 public class ConvertUtil {
+
+    public static final int UPDATE_CODE = 151;
 
     public FriendRequestEntity convertFriendRequestEntity(Connect.ReceiveFriendRequest receiver) {
         if (receiver == null)
@@ -99,7 +100,7 @@ public class ConvertUtil {
             protected void onPostExecute(HashMap<String,List<PhoneContactBean>> map) {
                 super.onPostExecute(map);
                 Message message = new Message();
-                message.what = AddFriendPhonePresenter.UPDATE_CODE;
+                message.what = UPDATE_CODE;
                 message.obj = map;
                 handler.sendMessage(message);
             }

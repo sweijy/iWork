@@ -60,7 +60,7 @@ public class GeneralLanguageActivity extends BaseActivity {
     }
 
     @OnClick(R.id.left_img)
-    void goback(View view) {
+    void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }
 

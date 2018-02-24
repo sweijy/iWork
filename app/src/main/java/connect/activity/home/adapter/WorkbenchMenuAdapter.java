@@ -15,14 +15,11 @@ import connect.activity.workbench.data.MenuBean;
 import connect.ui.activity.R;
 import connect.utils.system.SystemDataUtil;
 
-/**
- * Created by Administrator on 2016/12/10.
- */
 public class WorkbenchMenuAdapter extends RecyclerView.Adapter {
 
     private ArrayList<MenuBean> mDates = new ArrayList<>();
     private Activity mActivity;
-    private OnItemMenuClickListener onItemClickListence;
+    private OnItemMenuClickListener onItemMenuClickListener;
 
     public WorkbenchMenuAdapter(Activity mActivity) {
         this.mActivity = mActivity;
@@ -51,7 +48,7 @@ public class WorkbenchMenuAdapter extends RecyclerView.Adapter {
         viewHolder.contentLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListence.itemClick(position, menuBean);
+                onItemMenuClickListener.itemClick(position, menuBean);
             }
         });
     }
@@ -82,8 +79,8 @@ public class WorkbenchMenuAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListence(OnItemMenuClickListener onItemClickListence){
-        this.onItemClickListence = onItemClickListence;
+    public void setOnItemClickListener(OnItemMenuClickListener onItemMenuClickListener){
+        this.onItemMenuClickListener = onItemMenuClickListener;
     }
 
     public interface OnItemMenuClickListener{

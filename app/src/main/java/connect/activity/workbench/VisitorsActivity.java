@@ -1,52 +1,25 @@
 package connect.activity.workbench;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragmentActivity;
-import connect.activity.login.bean.UserBean;
 import connect.activity.workbench.fragment.ApprovedFragment;
 import connect.activity.workbench.fragment.AuditFragment;
-import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
-import connect.utils.FileUtil;
-import connect.utils.ProgressUtil;
-import connect.utils.ToastUtil;
-import connect.utils.UriUtil;
-import connect.utils.okhttp.OkHttpUtil;
-import connect.utils.okhttp.ResultCall;
-import connect.utils.permission.PermissionUtil;
-import connect.utils.system.SystemDataUtil;
-import connect.utils.system.SystemUtil;
 import connect.widget.TopToolBar;
-import connect.widget.zxing.utils.CreateScan;
-import protos.Connect;
 
 public class VisitorsActivity extends BaseFragmentActivity {
 

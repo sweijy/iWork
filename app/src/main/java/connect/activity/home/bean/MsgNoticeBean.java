@@ -4,10 +4,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
-/**
- *
- * Created by pujin on 2017/1/22.
- */
 public class MsgNoticeBean implements Serializable{
     public enum NtEnum {
         MSG_SEND_SUCCESS,//SOCKET message send success

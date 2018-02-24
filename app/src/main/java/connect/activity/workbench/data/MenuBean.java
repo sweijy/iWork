@@ -1,9 +1,5 @@
 package connect.activity.workbench.data;
 
-/**
- * Created by Administrator on 2018/1/16 0016.
- */
-
 public class MenuBean {
 
     private int textId;

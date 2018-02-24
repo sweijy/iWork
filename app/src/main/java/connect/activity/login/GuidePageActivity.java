@@ -7,18 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import connect.database.SharedPreferenceUtil;
-import connect.ui.activity.R;
-import connect.widget.ViewPagerAdapter;
-import connect.activity.base.BaseActivity;
-import connect.utils.ActivityUtil;
-import connect.widget.GuidePointView;
-
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import connect.activity.base.BaseActivity;
+import connect.database.SharedPreferenceUtil;
+import connect.ui.activity.R;
+import connect.widget.GuidePointView;
+import connect.widget.ViewPagerAdapter;
 
 /**
  * App guide page.

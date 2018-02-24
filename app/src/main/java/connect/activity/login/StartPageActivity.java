@@ -1,7 +1,6 @@
 package connect.activity.login;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -47,11 +46,6 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
     }
 
     @Override
-    public void goIntoGuide() {
-        //ActivityUtil.next(mActivity, GuidePageActivity.class);
-    }
-
-    @Override
     public void goIntoLoginForPhone() {
         LoginUserActivity.startActivity(mActivity);
     }
@@ -65,17 +59,5 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
     public Activity getActivity() {
         return mActivity;
     }
-
-    protected PermissionUtil.ResultCallBack permissomCallBack = new PermissionUtil.ResultCallBack() {
-        @Override
-        public void granted(String[] permissions) {
-
-        }
-
-        @Override
-        public void deny(String[] permissions) {
-            ActivityUtil.goBack(mActivity);
-        }
-    };
 
 }

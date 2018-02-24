@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import connect.activity.base.BaseApplication;
@@ -22,7 +21,6 @@ import connect.activity.home.bean.ContactBean;
 import connect.ui.activity.R;
 import connect.utils.PinyinUtil;
 import connect.utils.glide.GlideUtil;
-import connect.widget.DepartmentAvatar;
 
 /**
  * Contact adapter.

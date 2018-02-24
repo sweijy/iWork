@@ -1,14 +1,10 @@
 package connect.activity.login.presenter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 
 import connect.activity.login.contract.StartContract;
 import connect.database.SharedPreferenceUtil;
 import connect.utils.FileUtil;
-import connect.utils.RegularUtil;
-import connect.utils.scan.ResolveUrlUtil;
 import connect.utils.system.SystemDataUtil;
 
 public class StartPagePresenter implements StartContract.Presenter {
@@ -60,16 +56,4 @@ public class StartPagePresenter implements StartContract.Presenter {
         }).start();
     }
 
-    /**
-     * Save url with open the App.
-     * @param activity The activity reference
-     */
-    /*private void openFromWeb(Activity activity) {
-        Intent intent = activity.getIntent();
-        String action = intent.getAction();
-        Uri uri = intent.getData();
-        if (Intent.ACTION_VIEW.equals(action) && RegularUtil.matches(uri.toString(), ResolveUrlUtil.Web_Url)) {
-            SharedPreferenceUtil.getInstance().putValue(SharedPreferenceUtil.WEB_OPEN_APP,uri.toString());
-        }
-    }*/
 }

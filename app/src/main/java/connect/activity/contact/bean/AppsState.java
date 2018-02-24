@@ -1,9 +1,5 @@
 package connect.activity.contact.bean;
 
-/**
- * Created by PuJin on 2018/1/17.
- */
-
 public class AppsState {
 
     public enum AppsEnum{

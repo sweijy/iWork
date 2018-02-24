@@ -89,13 +89,6 @@
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
-    <!--<TextView
-        style="@style/BaseTextStyle"
-        android:textColor="@color/color_858998"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_2"
-        android:text="@string/Set_Enable_or_disable_Connect_Notification_via"/>
--->
     <TextView
         android:id="@+id/clear_chat_tv"
         android:layout_width="match_parent"

@@ -4,48 +4,20 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import connect.activity.base.BaseApplication;
-import connect.database.green.DaoHelper.ContactHelper;
-import connect.database.green.bean.ContactEntity;
-import connect.database.green.bean.FriendRequestEntity;
-import connect.database.green.bean.GroupEntity;
 import connect.activity.base.compare.FriendCompara;
 import connect.activity.home.bean.ContactBean;
+import connect.database.green.DaoHelper.ContactHelper;
+import connect.database.green.bean.ContactEntity;
+import connect.database.green.bean.GroupEntity;
 import connect.ui.activity.R;
 import connect.utils.PinyinUtil;
 
-/**
- * Created by Administrator on 2017/1/10.
- */
 public class ContactListManage {
 
-    private FriendCompara friendCompara = new FriendCompara();
-
-    /**
-     * friend request list
-     * @return
-     */
-    public List<ContactBean> getContactRequest(){
-        ArrayList<ContactBean> listRequest = new ArrayList<>();
-        List<FriendRequestEntity> requestList = ContactHelper.getInstance().loadFriendRequestNew();
-        if(requestList != null && requestList.size() > 0){
-            ContactBean contactBean = new ContactBean();
-            contactBean.setAvatar(requestList.get(requestList.size()-1).getAvatar());
-            contactBean.setName(requestList.get(requestList.size()-1).getUsername());
-            contactBean.setTips(requestList.get(requestList.size()-1).getTips());
-            contactBean.setCount(requestList.size());
-            contactBean.setStatus(1);
-            listRequest.add(contactBean);
-        }else{
-            ContactBean contactBean = new ContactBean();
-            contactBean.setStatus(1);
-            listRequest.add(contactBean);
-        }
-        return listRequest;
-    }
+    private FriendCompara friendCompare = new FriendCompara();
 
     /**
      * group list
@@ -81,7 +53,7 @@ public class ContactListManage {
 
     private ArrayList<ContactBean> sortContactFriend(String pubKeyExc ,List<ContactEntity> loacalFriend){
         String sysName = BaseApplication.getInstance().getString(R.string.app_name);
-        Collections.sort(loacalFriend, friendCompara);
+        Collections.sort(loacalFriend, friendCompare);
         ArrayList<ContactBean> friendList = new ArrayList<>();
         for(ContactEntity friendEntity : loacalFriend){
             if(friendEntity.getUid().equals(pubKeyExc))

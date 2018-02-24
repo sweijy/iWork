@@ -14,19 +14,16 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.chat.ChatActivity;
 import connect.activity.contact.ContactInfoActivity;
 import connect.activity.contact.DepartmentActivity;
 import connect.activity.contact.bean.ContactNotice;
-import connect.activity.home.HomeActivity;
 import connect.activity.home.adapter.ContactAdapter;
 import connect.activity.home.bean.ContactBean;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.ContactEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.widget.SideBar;
 import connect.widget.TopToolBar;
 import protos.Connect;
@@ -81,16 +78,6 @@ public class ContactFragment extends BaseFragment {
 
         adapter.setOnSideMenuListener(onSideMenuListener);
         adapter.updateContact(adapter.updateTypeContact);
-    }
-
-    /*@OnClick(R.id.left_img)
-    void search(View view) {
-        ActivityUtil.next(mActivity, SearchFriendActivity.class, android.R.anim.fade_in, android.R.anim.fade_out);
-    }*/
-
-    @OnClick(R.id.right_lin)
-    void goAddFriend(View view) {
-        //ActivityUtil.nextBottomToTop(mActivity, ScanAddFriendActivity.class, null, -1);
     }
 
     SideBar.OnTouchingLetterChangedListener changedListener = new SideBar.OnTouchingLetterChangedListener(){

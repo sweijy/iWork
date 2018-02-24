@@ -29,10 +29,6 @@ import connect.widget.TopToolBar;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/2/5 0005.
- */
-
 public class WarehouseActivity extends BaseActivity {
 
     @Bind(R.id.no_data_lin)

@@ -6,12 +6,9 @@ import android.graphics.drawable.Drawable;
 import org.junit.Test;
 
 import java.io.InputStream;
-import java.util.List;
 
 import connect.activity.base.BaseApplication;
-import connect.activity.login.bean.CountryBean;
 import connect.ui.activity.R;
-import connect.utils.data.PhoneDataUtil;
 import connect.utils.data.ResourceUtil;
 
 import static org.junit.Assert.assertTrue;
@@ -21,26 +18,6 @@ import static org.junit.Assert.assertTrue;
  */
 
 public class DataUtilTest {
-
-    @Test
-    public void getCountryData() {
-        List<CountryBean> listCountry =  PhoneDataUtil.getInstance().getCountryData();
-        if(listCountry == null || listCountry.size() == 0){
-            assertTrue(false);
-        }else{
-            assertTrue(true);
-        }
-    }
-
-    @Test
-    public void getCurrentCountryCode() {
-        CountryBean countryBean =  PhoneDataUtil.getInstance().getCurrentCountryCode();
-        if(countryBean == null){
-            assertTrue(false);
-        }else{
-            assertTrue(true);
-        }
-    }
 
     @Test
     public void getRateData() {

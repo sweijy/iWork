@@ -24,13 +24,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
-import connect.activity.base.BaseApplication;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.FileUtil;
-import connect.utils.ProgressUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
@@ -41,10 +39,6 @@ import connect.utils.system.SystemUtil;
 import connect.widget.TopToolBar;
 import connect.widget.zxing.utils.CreateScan;
 import protos.Connect;
-
-/**
- * Created by Administrator on 2018/2/11 0011.
- */
 
 public class ShareVisitorActivity extends BaseActivity {
 

@@ -2,10 +2,6 @@ package connect.activity.home.bean;
 
 import java.io.Serializable;
 
-/**
- *
- * Created by gtq on 2016/12/8.
- */
 public class RoomAttrBean implements Serializable {
 
     private String roomid;
