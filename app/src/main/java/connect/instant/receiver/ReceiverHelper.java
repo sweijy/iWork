@@ -28,16 +28,15 @@ public class ReceiverHelper {
         Context context = BaseApplication.getInstance().getBaseContext();
 
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-        long count = ContactHelper.getInstance().contactsCount();
         int userLogin = SharedPreferenceUtil.getInstance().getUserLogin();
-        InstantSdk.getInstance().registerUserInfo(context,
+        InstantSdk.getInstance().registerUserInfo(
+                context,
                 userBean.getUid(),
                 userBean.getPriKey(),
                 userBean.getPubKey(),
                 userBean.getToken(),
                 userBean.getName(),
                 userBean.getAvatar(),
-                count,
                 userLogin);
 
         SharedPreferenceUtil.getInstance().setUserLogin(1);

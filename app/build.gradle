@@ -116,7 +116,7 @@ def releaseTime() {
  * 0.0.5  ==> 6
  */
 greendao {
-    schemaVersion 6
+    schemaVersion 7
     daoPackage 'connect.database.green.dao'
     targetGenDir 'src/main/java'
 }
