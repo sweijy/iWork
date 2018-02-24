@@ -123,6 +123,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
                 }
             }
         }
+
         //commit :IllegalStateException: Can not perform this action after onSaveInstanceState
         fragmentTransaction.commitAllowingStateLoss();
     }
@@ -137,6 +138,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         } else {
             fragmentTransaction.show(fragment);
         }
+
         //commit :IllegalStateException: Can not perform this action after onSaveInstanceState
         fragmentTransaction.commitAllowingStateLoss();
     }

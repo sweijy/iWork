@@ -49,7 +49,6 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
     private GroupSetActivity activity;
     private static String TAG = "_GroupSetActivity";
-    private static String GROUP_IDENTIFY = "GROUP_IDENTIFY";
     private String groupKey;
     private GroupSetContract.Presenter presenter;
 
@@ -63,7 +62,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
     public static void startActivity(Activity activity, String groupkey) {
         Bundle bundle = new Bundle();
-        bundle.putString(GROUP_IDENTIFY, groupkey);
+        bundle.putString("GROUP_IDENTIFY", groupkey);
         ActivityUtil.next(activity, GroupSetActivity.class, bundle);
     }
 
@@ -79,7 +78,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
             }
         });
 
-        groupKey = getIntent().getStringExtra(GROUP_IDENTIFY);
+        groupKey = getIntent().getStringExtra("GROUP_IDENTIFY");
         new GroupSetPresenter(this).start();
         presenter.syncGroupInfo();
     }
@@ -115,7 +114,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
     @Override
     public void countMember(int members) {
-        toolbar.setTitle(getResources().getString(R.string.Chat_Group_Setting,members));
+        toolbar.setTitle(getResources().getString(R.string.Chat_Group_Setting, members));
     }
 
     @Override
