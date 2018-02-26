@@ -6,9 +6,13 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +32,7 @@ import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
+import connect.utils.BitmapUtil;
 import connect.utils.FileUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
@@ -54,6 +59,7 @@ public class ShareVisitorActivity extends BaseActivity {
     private ShareVisitorActivity mActivity;
     private UserBean userBean;
     private Connect.Staff staff1 = null;
+    private SpannableString spanString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +78,12 @@ public class ShareVisitorActivity extends BaseActivity {
 
         userBean = SharedPreferenceUtil.getInstance().getUser();
 
-        String hint = userBean.getName() + "邀请你访问公司，通过小程序录入基本信息和肖像，以便通过公司门禁AI人像识别设备\n二维码3小时内有效，并且只能使用一次";
-        hintText.setText(hint);
+        String hint = userBean.getName() + " 邀请你访问公司，通过小程序录入基本信息和肖像，以便通过公司门禁AI人像识别设备";
+        spanString = new SpannableString(hint);
+        ForegroundColorSpan span = new ForegroundColorSpan(mActivity.getResources().getColor(R.color.color_007aff));
+        spanString.setSpan(span, 0, userBean.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        hintText.setText(spanString);
 
         requestToken();
     }
@@ -102,8 +112,7 @@ public class ShareVisitorActivity extends BaseActivity {
                     staff1 = Connect.Staff.parseFrom(structData.getPlainData());
 
                     CreateScan createScan = new CreateScan();
-                    Bitmap bitmap = createScan.generateQRCode("https://wx-kq.bitmain.com/guest/info?token=" + staff1.getToken(),
-                            mActivity.getResources().getColor(R.color.color_f1f1f1));
+                    Bitmap bitmap = createScan.generateQRCode("https://wx-kq.bitmain.com/guest/info?token=" + staff1.getToken());
                     scanImage.setImageBitmap(bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -122,7 +131,6 @@ public class ShareVisitorActivity extends BaseActivity {
         public void granted(String[] permissions) {
             CreateScan createScan = new CreateScan();
             Bitmap bitmap = createScan.generateQRCode("https://wx-kq.bitmain.com/guest/info?token=" + staff1.getToken());
-            //File file = saveBitmap(bitmap);
             shareMsg(getResources().getString(R.string.Work_Visitors_share), "", "", drawShareScan(bitmap));
         }
 
@@ -131,12 +139,29 @@ public class ShareVisitorActivity extends BaseActivity {
         }
     };
 
+    /**
+     * View转换成Bitmap
+     * @param valueBitmap
+     * @return
+     */
+    private File drawShareScan(Bitmap valueBitmap){
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_visitor_share_scan,null);
+        ImageView scanImage = (ImageView)view.findViewById(R.id.scan_image);
+        scanImage.setImageBitmap(valueBitmap);
+        TextView visitorText = (TextView) view.findViewById(R.id.visitor_text);
+        visitorText.setText(spanString);
+
+        Bitmap bitmap = BitmapUtil.getInstance().convertViewToBitmap(view);
+
+        File file = BitmapUtil.getInstance().saveBitmap(bitmap);
+        return file;
+    }
+
     public void shareMsg(String activityTitle, String msgTitle, String msgText, File file) {
         try {
             //通知图库更新
             //String filepath = file.getAbsolutePath();
             //String imageUri = MediaStore.Images.Media.insertImage(mActivity.getContentResolver(), filepath, msgTitle, msgText);
-
             Intent intent = new Intent(Intent.ACTION_SEND);
             if (file == null) {
                 intent.setType("text/plain");
@@ -156,66 +181,22 @@ public class ShareVisitorActivity extends BaseActivity {
         }
     }
 
-    private File drawShareScan(Bitmap valueBitmap){
+    /*private File textPicture(Bitmap bitmapTemp){
         View view = LayoutInflater.from(mActivity).inflate(R.layout.item_visitor_share_scan,null);
         ImageView scanImage = (ImageView)view.findViewById(R.id.scan_image);
-        scanImage.setImageBitmap(valueBitmap);
-        view.measure(View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY));
-        view.layout(0, 0, SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight());
-        view.setBackgroundColor(getResources().getColor(R.color.color_ffffff));
+        scanImage.setImageBitmap(bitmapTemp);
+        TextView visitorText = (TextView) view.findViewById(R.id.visitor_text);
+        visitorText.setText(spanString);
 
-        Bitmap bitmap = Bitmap.createBitmap(SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
-
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        int mScreenWidth = dm.widthPixels;
-        int mScreenHeight = dm.heightPixels;
-
-        //以分辨率为720*1080准，计算宽高比值
-        //解决不同屏幕字体大小不一样
-        float ratioWidth = (float) mScreenWidth / 720;
-        float ratioHeight = (float) mScreenHeight / 1080;
-        float ratioMetrics = Math.min(ratioWidth, ratioHeight);
-        int textSize = Math.round(30 * ratioMetrics);
-
-        TextPaint textPaint = new TextPaint();
-        textPaint.setColor(getResources().getColor(R.color.color_161A21));
-        textPaint.setTextSize(textSize);
-        //textPaint.setTypeface(Typeface.BOLD);
-        textPaint.setAntiAlias(true);
-        canvas.drawText("BITMAIN 访客系统", SystemUtil.dipToPx(90), SystemUtil.dipToPx(65), textPaint);
-
-        String hint = userBean.getName() + "邀请你访问公司，通过小程序录入基本信息\n和肖像，以便通过公司门禁AI人像识别设备\n二维码3小时内有效，并且只能使用一次";
-        StaticLayout myStaticLayout = new StaticLayout(hint, textPaint, canvas.getWidth(), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-        canvas.translate(SystemUtil.dipToPx(20), SystemDataUtil.getScreenHeight() - SystemUtil.dipToPx(200));
-        myStaticLayout.draw(canvas);
+        view.setDrawingCacheEnabled(true);
+        view.measure(View.MeasureSpec.makeMeasureSpec(SystemDataUtil.getScreenWidth(), View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(SystemDataUtil.getScreenHeight(), View.MeasureSpec.EXACTLY));
+        view.layout(0 ,0, SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight());
+        view.buildDrawingCache();
+        Bitmap bitmap = view.getDrawingCache();
 
         File file = saveBitmap(bitmap);
         return file;
-    }
-
-    private File saveBitmap(Bitmap bm) {
-        String path = FileUtil.newSdcardTempFile(FileUtil.FileType.IMG).getAbsolutePath();
-        File f = new File(path);
-        try {
-            if (!f.exists()) {
-                f.getParentFile().mkdirs();
-                f.createNewFile();
-            }
-
-            FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.flush();
-            out.close();
-            return f;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    }*/
 
 }

@@ -2,18 +2,26 @@ package connect.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.MediaMetadataRetriever;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import connect.ui.activity.R;
+import connect.utils.system.SystemDataUtil;
 
 public class BitmapUtil {
 
@@ -317,6 +325,50 @@ public class BitmapUtil {
     public static Bitmap base64ToBitmap(String base64Data) {
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * Bitmap保存成图片
+     * @param bm
+     * @return
+     */
+    public File saveBitmap(Bitmap bm) {
+        String path = FileUtil.newSdcardTempFile(FileUtil.FileType.IMG).getAbsolutePath();
+        File f = new File(path);
+        try {
+            if (!f.exists()) {
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+            }
+
+            FileOutputStream out = new FileOutputStream(f);
+            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+            return f;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * View转换成Bitmap
+     * @param view
+     * @return
+     */
+    public Bitmap convertViewToBitmap(View view){
+        view.measure(View.MeasureSpec.makeMeasureSpec(SystemDataUtil.getScreenWidth(), View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(SystemDataUtil.getScreenHeight(), View.MeasureSpec.EXACTLY));
+        view.layout(0, 0, SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight());
+
+        Bitmap bitmap = Bitmap.createBitmap(SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
     }
 
 }

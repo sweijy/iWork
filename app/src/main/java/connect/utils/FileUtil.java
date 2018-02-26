@@ -1,6 +1,7 @@
 package connect.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
 
