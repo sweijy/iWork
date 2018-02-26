@@ -15,6 +15,7 @@ import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -203,5 +204,21 @@ public class SystemUtil {
             statusBarHeight1 = dipToPx(50);
         }
         return statusBarHeight1;
+    }
+
+    public static int getScreenWidth() {
+        Context context = BaseApplication.getInstance().getBaseContext();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        Context context = BaseApplication.getInstance().getBaseContext();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
     }
 }
