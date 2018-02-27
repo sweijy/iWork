@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 import connect.activity.base.BaseListener;
 import connect.activity.chat.bean.GroupMemberUtil;
 import connect.activity.chat.bean.RecExtBean;
@@ -24,8 +26,7 @@ import connect.ui.activity.R;
 import connect.utils.ToastEUtil;
 import connect.utils.glide.GlideUtil;
 import connect.widget.ChatHeadImg;
-import connect.widget.prompt.ChatPromptViewManager;
-import connect.widget.prompt.PromptViewHelper;
+import connect.widget.popuprecycler.RecyclerPopupHelper;
 import instant.bean.ChatMsgEntity;
 import instant.bean.MsgDirect;
 import protos.Connect;
@@ -40,8 +41,8 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
     protected MsgStateView msgStateView;
     protected RelativeLayout contentLayout;
 
-    private PromptViewHelper pvHelper = null;
-    protected PromptViewHelper.OnPromptClickListener promptClickListener = null;
+    private String[] strings = null;
+    private RecyclerPopupHelper popupHelper;
 
     @TargetApi(Build.VERSION_CODES.M)
     public MsgChatHolder(View itemView) {
@@ -50,24 +51,6 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
         memberTxt = (TextView) itemView.findViewById(R.id.usernameText);
         msgStateView = (MsgStateView) itemView.findViewById(R.id.msgstateview);
         contentLayout = (RelativeLayout) itemView.findViewById(R.id.content_layout);
-
-        promptClickListener = new PromptViewHelper.OnPromptClickListener() {
-            @Override
-            public void onPromptClick(String string) {
-                String[] strings = context.getResources().getStringArray(R.array.prompt_all);
-                if (string.equals(strings[0])) {//forwarding
-                    transPondTo();
-                } else if (string.equals(strings[1])) {//save in phone
-                    saveInPhone();
-                } else if (string.equals(strings[2])) {//delete
-                    deleteChatMsg();
-                } else if (string.equals(strings[3])) {//copy
-                    ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                    cm.setText(getCopyTxt());
-                    ToastEUtil.makeText(context, R.string.Set_Copied).show();
-                }
-            }
-        };
     }
 
     @Override
@@ -83,11 +66,26 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
             e.printStackTrace();
         }
 
-        final String[] strings = longPressPrompt();
-        pvHelper = new PromptViewHelper(context);
-        pvHelper.setPromptViewManager(new ChatPromptViewManager(context, strings));
-        pvHelper.addPrompt(longClickView());
-        pvHelper.setOnItemClickListener(promptClickListener);
+        strings = longPressPrompt();
+        popupHelper = new RecyclerPopupHelper(context);
+        popupHelper.popupWindow(longClickView(), Arrays.asList(strings), new RecyclerPopupHelper.PopupListener() {
+            @Override
+            public void onPopupListClick(int position) {
+                String string = strings[position];
+                String[] strings = context.getResources().getStringArray(R.array.prompt_all);
+                if (string.equals(strings[0])) {//forwarding
+                    transPondTo();
+                } else if (string.equals(strings[1])) {//save in phone
+                    saveInPhone();
+                } else if (string.equals(strings[2])) {//delete
+                    deleteChatMsg();
+                } else if (string.equals(strings[3])) {//copy
+                    ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText(getCopyTxt());
+                    ToastEUtil.makeText(context, R.string.Set_Copied).show();
+                }
+            }
+        });
 
         Connect.ChatType chatType = Connect.ChatType.forNumber(msgExtEntity.getChatType());
         switch (chatType) {
@@ -147,7 +145,7 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
                             headImg.setUserUid(memberKey);
 
                             String memberName = "";
-                            if (ts != null && !TextUtils.isEmpty(ts.getUsername())) {
+                            if (!TextUtils.isEmpty(ts.getUsername())) {
                                 memberName = ts.getUsername();
                             }
                             memberTxt.setText(memberName);

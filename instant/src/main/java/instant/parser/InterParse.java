@@ -201,9 +201,6 @@ public abstract class InterParse {
         if (TextUtils.isEmpty(version)) {
             version = "0";
         }
-        if (InstantSdk.getContactsCount() == 0) {
-            version = "0";
-        }
 
         Connect.SyncRelationship syncRelationship = Connect.SyncRelationship.newBuilder()
                 .setVersion(version).build();

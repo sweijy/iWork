@@ -11,8 +11,6 @@ import connect.activity.home.HomeActivity;
 import connect.activity.login.contract.StartContract;
 import connect.activity.login.presenter.StartPagePresenter;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
-import connect.utils.permission.PermissionUtil;
 
 /**
  * The App start page.
@@ -37,7 +35,7 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
     public void initView() {
         mActivity = this;
         startImg.setImageResource(R.mipmap.bg_start_man);
-        new StartPagePresenter(this).start();
+        new StartPagePresenter(mActivity).start();
     }
 
     @Override
@@ -59,5 +57,4 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
     public Activity getActivity() {
         return mActivity;
     }
-
 }
