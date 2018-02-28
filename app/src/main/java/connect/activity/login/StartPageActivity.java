@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.huawei.android.hms.agent.HuaweiRegister;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
@@ -20,6 +22,7 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
     @Bind(R.id.start_img)
     ImageView startImg;
 
+    private static String TAG = "_StartPageActivity";
     private StartPageActivity mActivity;
     private StartContract.Presenter presenter;
 

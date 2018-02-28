@@ -80,7 +80,7 @@ public class MessageReceiver implements MessageListener {
         friendChat.updateRoomMsg(null, content, messageTime, -1, 1, false);
 
         RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MESSAGE_RECEIVE, chatMsgEntity.getMessage_from(), chatMsgEntity);
-        NotificationBar.notificationBar.noticeBarMsg(friendUid, Connect.ChatType.PRIVATE_VALUE, senderName, content);
+        NotificationBar.getInstance().noticeBarMsg(friendUid, Connect.ChatType.PRIVATE_VALUE, senderName, content);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class MessageReceiver implements MessageListener {
             RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MESSAGE_RECEIVE, identify, msgEntity);
 
 
-            NotificationBar.notificationBar.noticeBarMsg(identify, Connect.ChatType.GROUPCHAT_VALUE, groupEntity.getName(), content);
+            NotificationBar.getInstance().noticeBarMsg(identify, Connect.ChatType.GROUPCHAT_VALUE, groupEntity.getName(), content);
         }
     }
 }

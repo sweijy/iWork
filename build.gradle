@@ -14,9 +14,7 @@ buildscript {
 
 allprojects {
     repositories {
-        URL HMSMaven = new URL('http://developer.huawei.com/repo')
-        maven { url HMSMaven }
-
+        mavenCentral()
         jcenter()
     }
 }

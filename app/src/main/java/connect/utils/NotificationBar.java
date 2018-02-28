@@ -29,12 +29,12 @@ import protos.Connect;
  */
 public class NotificationBar {
 
-    public static NotificationBar notificationBar = getInstance();
+    private static NotificationBar notificationBar;
     private static final int MSG_NOTICE = 120;
     private static final long MSG_DELAYMILLIS = 2000;
     private long TIME_SENDNOTIFY = 0;
 
-    private synchronized static NotificationBar getInstance() {
+    public synchronized static NotificationBar getInstance() {
         if (notificationBar == null) {
             notificationBar = new NotificationBar();
         }
@@ -108,6 +108,58 @@ public class NotificationBar {
     }
 
     /**
+     * 推送通知栏消息
+     * @param title
+     * @param content
+     */
+    public void notiticationPushBar(String title ,String content) {
+        String runAcy = ActivityUtil.getRunningActivityName();
+        String chatname = ChatActivity.class.getName();
+
+        Context context = BaseApplication.getInstance();
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        Intent intent = new Intent();
+
+        SystemSetBean systemSetBean = ParamManager.getInstance().getSystemSet();
+        if (systemSetBean.isRing()) {
+            HttpRecBean.sendHttpRecMsg(HttpRecBean.HttpRecType.SOUNDPOOL, chatname.equals(runAcy) ? 1 : 0);
+        }
+        if (systemSetBean.isVibrate()) {
+            HttpRecBean.sendHttpRecMsg(HttpRecBean.HttpRecType.SYSTEM_VIBRATION);
+        }
+
+        String tickerTitle = title;
+        String titcketContent = content;
+        intent.setClass(context, NotificationBroadcastReceiver.class);
+        intent.setAction("com.notification");
+        intent.putExtra("NOTIFY_TYPE", 0);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setContentTitle(tickerTitle);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBuilder.setContentText(titcketContent);
+            // mBuilder..setFullScreenIntent(pendingIntent, true);//
+            mBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE);
+            mBuilder.setSmallIcon(R.mipmap.connect_logo);
+        } else {
+            mBuilder.setSmallIcon(R.mipmap.connect_logo);
+            mBuilder.setContentText(titcketContent);
+        }
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.connect_logo));
+        mBuilder.setTicker(tickerTitle);
+        mBuilder.setWhen(System.currentTimeMillis());
+        mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
+        mBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setOngoing(false);
+        mBuilder.setDefaults(NotificationCompat.DEFAULT_LIGHTS);
+        android.app.NotificationManager mNotificationManager = (android.app.NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = mBuilder.build();//API 16
+        mNotificationManager.notify(1001, notification);
+    }
+
+    /**
      * Notification bar display
      *
      * @param roomid
@@ -140,6 +192,7 @@ public class NotificationBar {
 
         intent.setClass(context, NotificationBroadcastReceiver.class);
         intent.setAction("com.notification");
+        intent.putExtra("NOTIFY_TYPE", 1);
         intent.putExtra("ROOM_TYPE", chatType.getNumber());
         intent.putExtra("ROOM_IDENTIFY",roomid);
 
