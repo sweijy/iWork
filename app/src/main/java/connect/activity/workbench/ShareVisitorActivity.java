@@ -2,27 +2,18 @@ package connect.activity.workbench;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,14 +24,11 @@ import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.BitmapUtil;
-import connect.utils.FileUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
 import connect.utils.permission.PermissionUtil;
-import connect.utils.system.SystemDataUtil;
-import connect.utils.system.SystemUtil;
 import connect.widget.TopToolBar;
 import connect.widget.zxing.utils.CreateScan;
 import protos.Connect;
@@ -180,23 +168,5 @@ public class ShareVisitorActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
-    /*private File textPicture(Bitmap bitmapTemp){
-        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_visitor_share_scan,null);
-        ImageView scanImage = (ImageView)view.findViewById(R.id.scan_image);
-        scanImage.setImageBitmap(bitmapTemp);
-        TextView visitorText = (TextView) view.findViewById(R.id.visitor_text);
-        visitorText.setText(spanString);
-
-        view.setDrawingCacheEnabled(true);
-        view.measure(View.MeasureSpec.makeMeasureSpec(SystemDataUtil.getScreenWidth(), View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(SystemDataUtil.getScreenHeight(), View.MeasureSpec.EXACTLY));
-        view.layout(0 ,0, SystemDataUtil.getScreenWidth(), SystemDataUtil.getScreenHeight());
-        view.buildDrawingCache();
-        Bitmap bitmap = view.getDrawingCache();
-
-        File file = saveBitmap(bitmap);
-        return file;
-    }*/
 
 }

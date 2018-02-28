@@ -45,8 +45,6 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int STATUS_FRIEND_TITLE = 104;
     /** Update all contact */
     public final String updateTypeContact = "contact";
-    /** Update friend request */
-    public final String updateTypeRequest = "request";
     /** Update group */
     public final String updateTypeGroup = "group";
     /** Update friend */
@@ -93,63 +91,50 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ContactBean currBean = mData.get(position);
         switch (type) {
             case STATUS_FRIEND:
-                if(currBean.getStatus() == 7){
-                    // 组织架构
+                String currLetter = contactManage.checkShowFriendTop(currBean, mData.get(position - 1));
+                if (TextUtils.isEmpty(currLetter)) {
                     ((FriendHolder) holder).topTv.setVisibility(View.GONE);
+                    ((FriendHolder) holder).lineView.setVisibility(View.GONE);
+                } else {
+                    ((FriendHolder) holder).topTv.setVisibility(View.VISIBLE);
                     ((FriendHolder) holder).lineView.setVisibility(View.VISIBLE);
-
-                    ((FriendHolder) holder).avatar.setImageResource(R.mipmap.department);
-                    ((FriendHolder) holder).name.setText(R.string.Chat_Organizational_structure);
-                    ((FriendHolder) holder).ouTv.setVisibility(View.GONE);
-                }else{
-                    String currLetter = contactManage.checkShowFriendTop(currBean, mData.get(position - 1));
-                    if (TextUtils.isEmpty(currLetter)) {
-                        ((FriendHolder) holder).topTv.setVisibility(View.GONE);
-                        ((FriendHolder) holder).lineView.setVisibility(View.GONE);
-                    } else {
-                        ((FriendHolder) holder).topTv.setVisibility(View.VISIBLE);
-                        ((FriendHolder) holder).lineView.setVisibility(View.VISIBLE);
-                        ((FriendHolder) holder).topTv.setCompoundDrawables(null, null, null, null);
-                        switch (currBean.getStatus()) {
-                            case 2: // group
-                                Drawable draGroup = activity.getResources().getDrawable(R.mipmap.contract_group_chat3x);
-                                draGroup.setBounds(0, 0, draGroup.getMinimumWidth(), draGroup.getMinimumHeight());
-                                ((FriendHolder) holder).topTv.setCompoundDrawables(draGroup, null, null, null);
-                                ((FriendHolder) holder).topTv.setText(R.string.Link_Group);
-                                break;
-                            case 4:
-                                ((FriendHolder) holder).topTv.setText(currLetter);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    if(currBean.getStatus() == 3 || currBean.getStatus() == 4){
-                        ((FriendHolder) holder).ouTv.setVisibility(View.VISIBLE);
-                        ((FriendHolder) holder).lineTv.setVisibility(View.VISIBLE);
-                        ((FriendHolder) holder).ouTv.setText(currBean.getOu());
-                    }else{
-                        ((FriendHolder) holder).ouTv.setVisibility(View.GONE);
-                        ((FriendHolder) holder).lineTv.setVisibility(View.GONE);
-                    }
-
-                    GlideUtil.loadAvatarRound(((FriendHolder) holder).avatar, currBean.getAvatar());
-                    ((FriendHolder) holder).name.setText(currBean.getName());
+                    ((FriendHolder) holder).topTv.setText(currLetter);
                 }
+                ((FriendHolder) holder).ouTv.setText(currBean.getOu());
+                GlideUtil.loadAvatarRound(((FriendHolder) holder).avatar, currBean.getAvatar());
+                ((FriendHolder) holder).name.setText(currBean.getName());
                 break;
-            case STATUS_FRIEND_CONNECT:
-                // 机器人
-                String connectLetter = contactManage.checkShowFriendTop(currBean, mData.get(position - 1));
+            case STATUS_FRIEND_CONNECT:// 机器人 组织架构 群组
+                String connectLetter = "";
+                if(position != 0){
+                    connectLetter = contactManage.checkShowFriendTop(currBean, mData.get(position - 1));
+                }
                 if (TextUtils.isEmpty(connectLetter)) {
                     ((ConnectHolder) holder).topTv.setVisibility(View.GONE);
                     ((ConnectHolder) holder).lineView.setVisibility(View.GONE);
                 } else {
                     ((ConnectHolder) holder).topTv.setVisibility(View.VISIBLE);
                     ((ConnectHolder) holder).lineView.setVisibility(View.VISIBLE);
-                    ((ConnectHolder) holder).topTv.setCompoundDrawables(null, null, null, null);
-                    ((ConnectHolder) holder).topTv.setText(connectLetter);
+                    if(currBean.getStatus() == 2){
+                        Drawable draGroup = activity.getResources().getDrawable(R.mipmap.contract_group_chat3x);
+                        draGroup.setBounds(0, 0, draGroup.getMinimumWidth(), draGroup.getMinimumHeight());
+                        ((ConnectHolder) holder).topTv.setCompoundDrawables(draGroup, null, null, null);
+                        ((ConnectHolder) holder).topTv.setText(R.string.Link_Group);
+                    }else{
+                        ((ConnectHolder) holder).topTv.setCompoundDrawables(null, null, null, null);
+                        ((ConnectHolder) holder).topTv.setText(connectLetter);
+                    }
                 }
-                GlideUtil.loadAvatarRound(((ConnectHolder) holder).avatarImg, R.mipmap.connect_logo);
+                if(currBean.getStatus() == 7){
+                    ((ConnectHolder) holder).avatarImg.setImageResource(R.mipmap.department);
+                    ((ConnectHolder) holder).nameTv.setText(R.string.Chat_Organizational_structure);
+                }else if(currBean.getStatus() == 6){
+                    GlideUtil.loadAvatarRound(((ConnectHolder) holder).avatarImg, R.mipmap.connect_logo);
+                    ((ConnectHolder) holder).nameTv.setText(R.string.app_name);
+                }else{
+                    GlideUtil.loadAvatarRound(((ConnectHolder) holder).avatarImg, currBean.getAvatar());
+                    ((ConnectHolder) holder).nameTv.setText(currBean.getName());
+                }
                 break;
             case STATUS_FRIEND_COUNT:
                 ((CountHolder) holder).bottomCount.setText(currBean.getName());
@@ -174,9 +159,9 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemViewType(int position) {
         int status = mData.get(position).getStatus();
-        if (status == 2 || status == 3 || status == 4 || status == 7) {
+        if (status == 1) {
             return STATUS_FRIEND;
-        } else if(status == 6){
+        } else if(status == 2 || status == 6 || status == 7){
             return STATUS_FRIEND_CONNECT;
         } else if(status == 8){
             return STATUS_FRIEND_TITLE;
@@ -242,7 +227,6 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-
     /**
      * Update the friends list.
      */
@@ -252,12 +236,8 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             protected Void doInBackground(Void... params) {
                 switch (updateType){
                     case updateTypeContact:
-                        //listRequest = contactManage.getContactRequest();
                         groupList = contactManage.getGroupData();
                         friendList = contactManage.getFriendList();
-                        break;
-                    case updateTypeRequest:
-                        //listRequest = contactManage.getContactRequest();
                         break;
                     case updateTypeGroup:
                         groupList = contactManage.getGroupData();
@@ -277,14 +257,13 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ArrayList<ContactBean> finalList = new ArrayList<>();
                 final int friendSize = friendList.size();
                 final int groupSize = groupList.size();
-                //finalList.addAll(listRequest);
-                ContactBean contactBean = new ContactBean();
-                contactBean.setStatus(7);
-                finalList.add(contactBean);
+                ContactBean contactBeanOri = new ContactBean();
+                contactBeanOri.setStatus(7);
+                finalList.add(contactBeanOri);
                 if(friendSize > 0){
-                    ContactBean contactBean1 = new ContactBean();
-                    contactBean1.setStatus(8);
-                    finalList.add(contactBean1);
+                    ContactBean contactBeanTitle = new ContactBean();
+                    contactBeanTitle.setStatus(8);
+                    finalList.add(contactBeanTitle);
                 }
                 finalList.addAll(groupList);
                 finalList.addAll(friendList);

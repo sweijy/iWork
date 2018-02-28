@@ -24,8 +24,8 @@ public class FileUtil {
     /** Root path for local file */
     public static String DIR_ROOT = getExternalStorePath();
     /** Temporary folder */
-    public static String tempPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-            File.separator + APP_ROOT_NAME + File.separator + "temp";
+    public static String tempPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
+            + BaseApplication.getInstance().getString(R.string.app_name) + File.separator + "tempFile";
 
     /**
      * Get the private file path

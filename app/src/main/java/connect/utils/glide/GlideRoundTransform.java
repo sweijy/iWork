@@ -28,23 +28,33 @@ public class GlideRoundTransform extends BitmapTransformation {
     }
 
     private Bitmap roundCrop(BitmapPool pool, Bitmap source) {
-        if (source == null) return null;
-
-        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        if (result == null) {
+        if (source == null)
+            return null;
+        // 从缓存池获取一个Bitmap进行复用
+        Bitmap toReuse = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap result;
+        if (toReuse != null) {
+            result = toReuse;
+        }else{
             result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
         }
+
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
         paint.setAntiAlias(true);
         RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
         canvas.drawRoundRect(rectF, radius, radius, paint);
+
+        // 将复用的Bitmap重新放回缓存池
+        if(toReuse != null && !pool.put(toReuse)){
+            toReuse.recycle();
+        }
         return result;
     }
 
     @Override
     public String getId() {
-        return getClass().getName() + Math.round(radius);
+        return getClass().getName();
     }
 }

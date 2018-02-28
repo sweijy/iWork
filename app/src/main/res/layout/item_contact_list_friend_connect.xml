@@ -44,7 +44,9 @@
             android:id="@+id/name_tv"
             style="@style/BaseTextStyle.14"
             android:layout_toRightOf="@+id/avatar_rela"
-            android:text="@string/app_name"
+            android:layout_marginRight="@dimen/dp_20"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_centerVertical="true"/>
     </RelativeLayout>

@@ -98,6 +98,9 @@
             android:name="connect.activity.contact.ContactInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="connect.activity.contact.ContactInfoShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="connect.activity.login.LoginUserActivity"
             android:screenOrientation="portrait" />
         <activity

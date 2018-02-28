@@ -17,6 +17,7 @@ import connect.activity.base.BaseActivity;
 import connect.activity.chat.ChatActivity;
 import connect.activity.chat.bean.GroupMemberUtil;
 import connect.activity.contact.bean.ContactNotice;
+import connect.activity.contact.model.ContactListManage;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.bean.ContactEntity;
@@ -61,18 +62,11 @@ public class ContactInfoActivity extends BaseActivity {
     TextView numberText;
 
     private ContactInfoActivity mActivity;
-    private ContactEntity contactEntity;
     private String uid;
+    private Connect.Workmate workmate;
 
     public static void lunchActivity(Activity activity, String uid) {
         Bundle bundle = new Bundle();
-        bundle.putString("uid", uid);
-        ActivityUtil.next(activity, ContactInfoActivity.class, bundle);
-    }
-
-    public static void lunchActivity(Activity activity, ContactEntity contactEntity, String uid) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", contactEntity);
         bundle.putString("uid", uid);
         ActivityUtil.next(activity, ContactInfoActivity.class, bundle);
     }
@@ -93,46 +87,33 @@ public class ContactInfoActivity extends BaseActivity {
         toolbar.setTitle(null, R.string.Chat_Contact_details);
 
         uid = getIntent().getExtras().getString("uid");
-        contactEntity = (ContactEntity) getIntent().getExtras().getSerializable("bean");
-        if (contactEntity != null) {
-            uid = contactEntity.getUid();
-            showView();
-        }
         numberText.setText(mActivity.getString(R.string.Link_Employee_number) + ":");
         searchUser(uid);
     }
 
     private void showView() {
-        nameText.setText(contactEntity.getName());
-        if (contactEntity.getGender() == 1) {
+        nameText.setText(workmate.getName());
+        if (workmate.getGender() == 1) {
             genderImage.setImageResource(R.mipmap.man);
         } else {
             genderImage.setImageResource(R.mipmap.woman);
         }
-        numberTv.setText(contactEntity.getEmpNo());
-        departmentTv.setText(contactEntity.getOu());
-        phoneTv.setText(contactEntity.getMobile());
-        if (contactEntity.getRegisted()) {
-            if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
-                if (contactEntity.getGender() == 1) {
-                    toolbar.setRightText(R.string.Work_Pay_attention_to_him);
-                } else {
-                    toolbar.setRightText(R.string.Work_Pay_attention_to_her);
-                }
-            } else {
-                toolbar.setRightText(R.string.Work_Cancel_the_attention);
-            }
-            avatarImageview.setVisibility(View.VISIBLE);
-            avatarImage.setVisibility(View.GONE);
-            GlideUtil.loadAvatarRound(avatarImageview, contactEntity.getAvatar(), 8);
-        } else {
-            chatBtn.setVisibility(View.GONE);
-            toolbar.setRightTextEnable(false);
+        numberTv.setText(workmate.getEmpNo());
+        departmentTv.setText(workmate.getOU());
+        phoneTv.setText(workmate.getMobile());
 
-            avatarImageview.setVisibility(View.GONE);
-            avatarImage.setVisibility(View.VISIBLE);
-            avatarImage.setAvatarName(contactEntity.getName(), true, contactEntity.getGender());
+        if (ContactHelper.getInstance().loadFriendByUid(workmate.getUid()) == null) {
+            if (workmate.getGender() == 1) {
+                toolbar.setRightText(R.string.Work_Pay_attention_to_him);
+            } else {
+                toolbar.setRightText(R.string.Work_Pay_attention_to_her);
+            }
+        } else {
+            toolbar.setRightText(R.string.Work_Cancel_the_attention);
         }
+        avatarImageview.setVisibility(View.VISIBLE);
+        avatarImage.setVisibility(View.GONE);
+        GlideUtil.loadAvatarRound(avatarImageview, workmate.getAvatar(), 8);
     }
 
     @OnClick(R.id.left_img)
@@ -142,7 +123,7 @@ public class ContactInfoActivity extends BaseActivity {
 
     @OnClick(R.id.right_lin)
     void attention(View view) {
-        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
+        if (ContactHelper.getInstance().loadFriendByUid(workmate.getUid()) == null) {
             addFollow(true);
         } else {
             addFollow(false);
@@ -151,13 +132,13 @@ public class ContactInfoActivity extends BaseActivity {
 
     @OnClick(R.id.cell_image)
     void call(View view) {
-        SystemUtil.callPhone(mActivity, contactEntity.getMobile());
+        SystemUtil.callPhone(mActivity, workmate.getMobile());
     }
 
     @OnClick(R.id.chat_btn)
     void chat(View view) {
-        if (contactEntity != null && !TextUtils.isEmpty(contactEntity.getUid())) {
-            ChatActivity.startActivity(mActivity, Connect.ChatType.PRIVATE, contactEntity.getUid());
+        if (workmate != null && !TextUtils.isEmpty(workmate.getUid())) {
+            ChatActivity.startActivity(mActivity, Connect.ChatType.PRIVATE, workmate.getUid());
         }
     }
 
@@ -172,39 +153,26 @@ public class ContactInfoActivity extends BaseActivity {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
-                    Connect.Workmate workmate = workmates.getList(0);
-                    if (contactEntity == null) {
-                        contactEntity = new ContactEntity();
-                        contactEntity.setName(workmate.getName());
-                        contactEntity.setAvatar(workmate.getAvatar());
-                        contactEntity.setPublicKey(workmate.getPubKey());
-                        contactEntity.setEmpNo(workmate.getEmpNo());
-                        contactEntity.setMobile(workmate.getMobile());
-                        contactEntity.setGender(workmate.getGender());
-                        contactEntity.setTips(workmate.getTips());
-                        contactEntity.setRegisted(workmate.getRegisted());
-                        contactEntity.setUid(workmate.getUid());
-                        contactEntity.setOu(workmate.getOU());
-                        showView();
-                    } else {
-                        final ContactEntity contactEntityLocal = ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid());
-                        if (contactEntityLocal != null) {
-                            if (!workmate.getAvatar().equals(contactEntityLocal.getAvatar())) {
-                                contactEntity.setAvatar(workmate.getAvatar());
-                                showView();
-                                ContactHelper.getInstance().insertContact(contactEntity);
-                                ContactNotice.receiverContact();
-                            }
+                    workmate = workmates.getList(0);
+                    showView();
+                    // 更新通信录好友头像
+                    final ContactEntity contactEntityLocal = ContactHelper.getInstance().loadFriendByUid(workmate.getUid());
+                    if (contactEntityLocal != null) {
+                        if (!workmate.getAvatar().equals(contactEntityLocal.getAvatar())) {
+                            contactEntityLocal.setAvatar(workmate.getAvatar());
+                            showView();
+                            ContactHelper.getInstance().insertContact(contactEntityLocal);
+                            ContactNotice.receiverContact();
                         }
                     }
-
+                    // 更新聊天列表头像
                     ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
                     if (conversionEntity != null) {
                         conversionEntity.setAvatar(workmate.getAvatar());
                         conversionEntity.setName(workmate.getName());
                         ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
                     }
-
+                    // 更新群成员列表头像
                     List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMembersByUid(uid);
                     if (memberEntities != null && memberEntities.size() > 0) {
                         GroupMemberUtil.getIntance().clearMembersMap();
@@ -228,7 +196,7 @@ public class ContactInfoActivity extends BaseActivity {
     private void addFollow(final boolean isAdd) {
         Connect.UserFollow userFollow = Connect.UserFollow.newBuilder()
                 .setFollow(isAdd)
-                .setUid(contactEntity.getUid())
+                .setUid(workmate.getUid())
                 .build();
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_USERS_FOLLOW, userFollow, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
@@ -241,22 +209,20 @@ public class ContactInfoActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 if (isAdd) {
-                    contactEntity.setRegisted(true);
-                    ContactHelper.getInstance().insertContact(contactEntity);
+                    ContactHelper.getInstance().insertContact(new ContactListManage().convertContactEntity(workmate));
                     ToastEUtil.makeText(mActivity, R.string.Link_Focus_successful).show();
                     ContactNotice.receiverContact();
                     toolbar.setRightText(R.string.Work_Cancel_the_attention);
                 } else {
-                    ContactHelper.getInstance().deleteEntity(contactEntity.getUid());
+                    ContactHelper.getInstance().deleteEntity(workmate.getUid());
                     ToastEUtil.makeText(mActivity, R.string.Link_Focus_cancle_successful).show();
                     ContactNotice.receiverContact();
-                    if (contactEntity.getGender() == 1) {
+                    if (workmate.getGender() == 1) {
                         toolbar.setRightText(R.string.Work_Pay_attention_to_him);
                     } else {
                         toolbar.setRightText(R.string.Work_Pay_attention_to_her);
                     }
                 }
-
             }
 
             @Override

@@ -27,7 +27,6 @@ import connect.activity.login.bean.UserBean;
 import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.OrganizerHelper;
-import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
@@ -183,20 +182,22 @@ public class DepartmentActivity extends BaseActivity {
             } else {
                 if(userBean.getUid().equals(departmentBean.getUid())){
                     UserInfoActivity.startActivity(mActivity);
+                }else if(departmentBean.getRegisted()){
+                    ContactInfoActivity.lunchActivity(mActivity, departmentBean.getUid());
                 }else{
                     String department = TextUtils.isEmpty(departmentBean.getO_u()) ? nameList.get(nameList.size()-1).getName() : departmentBean.getO_u();
-                    ContactEntity contactEntity = new ContactEntity();
-                    contactEntity.setName(departmentBean.getName());
-                    contactEntity.setAvatar(departmentBean.getAvatar());
-                    contactEntity.setPublicKey(departmentBean.getPub_key());
-                    contactEntity.setEmpNo(departmentBean.getEmpNo());
-                    contactEntity.setMobile(departmentBean.getMobile());
-                    contactEntity.setGender(departmentBean.getGender());
-                    contactEntity.setTips(departmentBean.getTips());
-                    contactEntity.setRegisted(departmentBean.getRegisted());
-                    contactEntity.setUid(departmentBean.getUid());
-                    contactEntity.setOu(department);
-                    ContactInfoActivity.lunchActivity(mActivity, contactEntity, "");
+                    Connect.Workmate.Builder builder = Connect.Workmate.newBuilder();
+                    builder.setName(departmentBean.getName());
+                    builder.setAvatar(departmentBean.getAvatar());
+                    builder.setPubKey(departmentBean.getPub_key());
+                    builder.setEmpNo(departmentBean.getEmpNo());
+                    builder.setMobile(departmentBean.getMobile());
+                    builder.setGender(departmentBean.getGender());
+                    builder.setTips(departmentBean.getTips());
+                    builder.setRegisted(departmentBean.getRegisted());
+                    builder.setUid(departmentBean.getUid());
+                    builder.setOU(department);
+                    ContactInfoShowActivity.lunchActivity(mActivity, builder.build());
                 }
             }
         }
