@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -133,6 +134,16 @@ public class VisitorsActivity extends BaseFragmentActivity {
 
         //commit :IllegalStateException: Can not perform this action after onSaveInstanceState
         fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                ActivityUtil.goBack(mActivity);
+                break;
+        }
+        return true;
     }
 
 }

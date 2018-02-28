@@ -22,6 +22,10 @@ import connect.activity.chat.ChatActivity;
 import connect.activity.chat.adapter.SearchAdapter;
 import connect.activity.chat.fragment.bean.SearchBean;
 import connect.activity.contact.ContactInfoActivity;
+import connect.activity.contact.ContactInfoShowActivity;
+import connect.activity.login.bean.UserBean;
+import connect.activity.set.UserInfoActivity;
+import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ParamManager;
 import connect.database.green.bean.ContactEntity;
@@ -48,6 +52,7 @@ public class SearchContentFragment extends BaseFragment {
     private FragmentActivity mActivity;
     private SearchAdapter adapter;
     private Connect.Workmates workmates;
+    private UserBean userBean;
 
     public static SearchContentFragment startFragment() {
         SearchContentFragment searchContentFragment = new SearchContentFragment();
@@ -71,6 +76,7 @@ public class SearchContentFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        userBean = SharedPreferenceUtil.getInstance().getUser();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         recyclerview.setLayoutManager(linearLayoutManager);
         adapter = new SearchAdapter(mActivity);
@@ -95,20 +101,14 @@ public class SearchContentFragment extends BaseFragment {
             if (searchBean.getStyle() == 1) {
                 if(workmates.getListList().size() > position){
                     Connect.Workmate workmate = workmates.getListList().get(position);
-                    ContactEntity contactEntity = new ContactEntity();
-                    contactEntity.setName(workmate.getName());
-                    contactEntity.setAvatar(workmate.getAvatar());
-                    contactEntity.setPublicKey(workmate.getPubKey());
-                    contactEntity.setEmpNo(workmate.getEmpNo());
-                    contactEntity.setMobile(workmate.getMobile());
-                    contactEntity.setGender(workmate.getGender());
-                    contactEntity.setTips(workmate.getTips());
-                    contactEntity.setRegisted(workmate.getRegisted());
-                    contactEntity.setUid(workmate.getUid());
-                    contactEntity.setOu(workmate.getOU());
-                    ContactInfoActivity.lunchActivity(mActivity, contactEntity, "");
+                    if(userBean.getUid().equals(workmate.getUid())){
+                        UserInfoActivity.startActivity(mActivity);
+                    }else if(workmate.getRegisted()){
+                        ContactInfoActivity.lunchActivity(mActivity, workmate.getUid());
+                    }else{
+                        ContactInfoShowActivity.lunchActivity(mActivity, workmate);
+                    }
                 }
-
             } else if (searchBean.getStyle() == 2) {
                 ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, searchBean.getUid());
             } else if (searchBean.getStyle() == 3) {

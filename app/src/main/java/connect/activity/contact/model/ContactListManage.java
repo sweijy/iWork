@@ -14,6 +14,7 @@ import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.GroupEntity;
 import connect.ui.activity.R;
 import connect.utils.PinyinUtil;
+import protos.Connect;
 
 public class ContactListManage {
 
@@ -69,13 +70,22 @@ public class ContactListManage {
                 contactBean.setStatus(6);
                 friendList.add(contactBean);
             }else{
-                contactBean.setStatus(4);
+                contactBean.setStatus(1);
                 friendList.add(contactBean);
             }
         }
         return friendList;
     }
 
+    /**
+     * 通信录item顶部字母逻辑
+     * 2（群组）、3（常用好友） --------- “show”
+     * 4（好友）、6（机器人） ----------- “首字母”
+     * 其他 ------------ ""
+     * @param currBean
+     * @param lastBean
+     * @return
+     */
     public String checkShowFriendTop(ContactBean currBean,ContactBean lastBean){
         char curFirstChar = TextUtils.isEmpty(currBean.getName()) ? '#' : currBean.getName().charAt(0);
         if(lastBean == null){
@@ -108,6 +118,23 @@ public class ContactListManage {
                 }
             }
         }
+    }
+
+    public ContactEntity convertContactEntity(Connect.Workmate workmate) {
+        if (workmate == null)
+            return null;
+        ContactEntity contactEntity = new ContactEntity();
+        contactEntity.setName(workmate.getName());
+        contactEntity.setAvatar(workmate.getAvatar());
+        contactEntity.setPublicKey(workmate.getPubKey());
+        contactEntity.setEmpNo(workmate.getEmpNo());
+        contactEntity.setMobile(workmate.getMobile());
+        contactEntity.setGender(workmate.getGender());
+        contactEntity.setTips(workmate.getTips());
+        contactEntity.setRegisted(workmate.getRegisted());
+        contactEntity.setUid(workmate.getUid());
+        contactEntity.setOu(workmate.getOU());
+        return contactEntity;
     }
 
 }

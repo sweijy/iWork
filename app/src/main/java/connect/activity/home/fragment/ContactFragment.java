@@ -94,18 +94,15 @@ public class ContactFragment extends BaseFragment {
         @Override
         public void itemClick(int position, ContactBean entity) {
             switch (entity.getStatus()) {
-                case 1:
-                    break;
                 case 6:
                     ChatActivity.startActivity(mActivity, Connect.ChatType.CONNECT_SYSTEM, "Connect");
                     break;
                 case 2:
                     ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, entity.getUid());
                     break;
-                case 3:
-                case 4:
+                case 1:
                     ContactEntity contactEntity = ContactHelper.getInstance().loadFriendByUid(entity.getUid());
-                    ContactInfoActivity.lunchActivity(mActivity, contactEntity, "");
+                    ContactInfoActivity.lunchActivity(mActivity, contactEntity.getUid());
                     break;
                 case 7:
                     DepartmentActivity.lunchActivity(mActivity);
@@ -120,8 +117,6 @@ public class ContactFragment extends BaseFragment {
     public void onEventMainThread(ContactNotice notice) {
         if (notice.getNotice() == ContactNotice.ConNotice.RecContact) {
             adapter.updateContact(adapter.updateTypeContact);
-        } else if (notice.getNotice() == ContactNotice.ConNotice.RecAddFriend) {
-            adapter.updateContact(adapter.updateTypeRequest);
         } else if (notice.getNotice() == ContactNotice.ConNotice.RecGroup) {
             adapter.updateContact(adapter.updateTypeGroup);
         } else if (notice.getNotice() == ContactNotice.ConNotice.RecFriend) {
