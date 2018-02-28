@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.common.PushSDK;
+import com.huawei.android.hms.agent.HuaweiRegister;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -134,6 +137,7 @@ public class HomeActivity extends BaseFragmentActivity {
     public void initView() {
         activity = this;
         setDefaultFragment();
+        PushSDK.getInstance().connect(activity);
 
         DaoManager.getInstance().testDaoMaster(new BaseListener<String>() {
             @Override
@@ -216,6 +220,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
                 NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancel(1001);
+                PushSDK.getInstance().deleteToken();
 
                 mHandler.removeMessages(TIMEOUT_DELAYEXIT);
                 BaseApplication.getInstance().exitRegisterAccount();
