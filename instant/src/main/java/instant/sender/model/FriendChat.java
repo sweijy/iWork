@@ -1,5 +1,7 @@
 package instant.sender.model;
 
+import com.google.protobuf.ByteString;
+
 import instant.bean.ChatMsgEntity;
 import instant.bean.MessageType;
 import instant.bean.Session;
@@ -55,11 +57,17 @@ public class FriendChat extends NormalChat {
                     .setUid(userCookie.getUid());
             chatMessageBuilder.setSender(userInfo);
 
+
             String userPrivate = userCookie.getPrivateKey();
             String userPublicKey = userCookie.getPublicKey();
-            EncryptionUtil.ExtendedECDH ecdhExts = EncryptionUtil.ExtendedECDH.EMPTY;
-            Connect.GcmData gcmData = EncryptionUtil.encodeAESGCM(ecdhExts, userPrivate, friendPublicKey, msgExtEntity.getContents());
-            chatMessageBuilder.setCipherData(gcmData);
+            if (isEncryption()) {
+                EncryptionUtil.ExtendedECDH ecdhExts = EncryptionUtil.ExtendedECDH.EMPTY;
+                Connect.GcmData gcmData = EncryptionUtil.encodeAESGCM(ecdhExts, userPrivate, friendPublicKey, msgExtEntity.getContents());
+                chatMessageBuilder.setCipherData(gcmData);
+            } else {
+                chatMessageBuilder.setBody(ByteString.copyFrom(msgExtEntity.getContents()));
+            }
+
 
             Connect.ChatSession chatSession = Connect.ChatSession.newBuilder()
                     .setPubKey(userPublicKey)
@@ -76,6 +84,10 @@ public class FriendChat extends NormalChat {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isEncryption(){
+        return false;
     }
 
     @Override
@@ -96,18 +108,6 @@ public class FriendChat extends NormalChat {
     @Override
     public int chatType() {
         return Connect.ChatType.PRIVATE_VALUE;
-    }
-
-    public ChatMsgEntity inviteJoinGroupMsg(String avatar, String name, String id, String token) {
-        ChatMsgEntity msgExtEntity = createBaseChat(MessageType.INVITE_GROUP);
-        Connect.JoinGroupMessage.Builder builder = Connect.JoinGroupMessage.newBuilder()
-                .setAvatar(avatar)
-                .setGroupName(name)
-                .setGroupId(id)
-                .setToken(token);
-
-        msgExtEntity.setContents(builder.build().toByteArray());
-        return msgExtEntity;
     }
 
     @Override
