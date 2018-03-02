@@ -85,8 +85,7 @@ public abstract class BaseChatActvity extends BaseActivity {
                 });
                 normalChat = cFriendChat;
                 break;
-            case GROUPCHAT:
-            case GROUP_DISCUSSION:
+            case GROUP:
                 normalChat = new CGroupChat(chatIdentify);
                 updateTitleName();
                 break;

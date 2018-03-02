@@ -113,8 +113,7 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
                     memberTxt.setVisibility(View.GONE);
                 }
                 break;
-            case GROUPCHAT:
-            case GROUP_DISCUSSION:
+            case GROUP:
                 headImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

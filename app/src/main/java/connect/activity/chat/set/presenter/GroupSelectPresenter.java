@@ -66,7 +66,7 @@ public class GroupSelectPresenter implements GroupSelectContract.Presenter {
                 ToastEUtil.makeText(activity, showHint, 1, new ToastEUtil.OnToastListener() {
                     @Override
                     public void animFinish() {
-                        ChatActivity.startActivity(activity, Connect.ChatType.GROUPCHAT, groupIdentify);
+                        ChatActivity.startActivity(activity, Connect.ChatType.GROUP, groupIdentify);
                     }
                 }).show();
             }

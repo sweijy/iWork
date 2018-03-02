@@ -24,9 +24,9 @@ public class RobotReceiver implements RobotListener {
 
     private static String TAG = "_RobotReceiver";
 
-    public static RobotReceiver receiver = getInstance();
+    private static RobotReceiver receiver = getInstance();
 
-    private synchronized static RobotReceiver getInstance() {
+    public synchronized static RobotReceiver getInstance() {
         if (receiver == null) {
             receiver = new RobotReceiver();
         }

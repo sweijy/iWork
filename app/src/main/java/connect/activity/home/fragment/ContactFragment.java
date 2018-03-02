@@ -98,7 +98,7 @@ public class ContactFragment extends BaseFragment {
                     ChatActivity.startActivity(mActivity, Connect.ChatType.CONNECT_SYSTEM, "Connect");
                     break;
                 case 2:
-                    ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, entity.getUid());
+                    ChatActivity.startActivity(mActivity, Connect.ChatType.GROUP, entity.getUid());
                     break;
                 case 1:
                     ContactEntity contactEntity = ContactHelper.getInstance().loadFriendByUid(entity.getUid());

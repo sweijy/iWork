@@ -135,7 +135,7 @@ public class ContactHelper extends BaseDao {
             if (!TextUtils.isEmpty(friendUid)) {
                 chatType = Connect.ChatType.PRIVATE;
             } else if (!TextUtils.isEmpty(groupIdentify)) {
-                chatType = Connect.ChatType.GROUPCHAT;
+                chatType = Connect.ChatType.GROUP;
             } else if (BaseApplication.getInstance().getBaseContext().getResources().getString(R.string.app_name).equals(uid)) {
                 chatType = Connect.ChatType.CONNECT_SYSTEM;
             } else {
@@ -173,7 +173,7 @@ public class ContactHelper extends BaseDao {
 
         String sql = "SELECT G.NAME AS GNAME, G.AVATAR AS GAVATAR, C.NAME AS CNAME, C.AVATAR AS CAVATAR FROM GROUP_ENTITY G LEFT OUTER JOIN CONVERSION_ENTITY C WHERE G.IDENTIFIER = ? AND G.IDENTIFIER = C.IDENTIFIER LIMIT 1;";
 
-        Talker talker = new Talker(Connect.ChatType.GROUPCHAT, identify);
+        Talker talker = new Talker(Connect.ChatType.GROUP, identify);
         Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{identify});
         while (cursor.moveToNext()) {
             String groupName = cursorGetString(cursor, "GNAME");

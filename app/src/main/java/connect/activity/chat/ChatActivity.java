@@ -33,6 +33,7 @@ import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.bean.RoomSession;
 import connect.activity.chat.set.GroupSetActivity;
 import connect.activity.chat.set.PrivateSetActivity;
+import connect.activity.chat.set.RobotSetActivity;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.MessageHelper;
@@ -132,13 +133,11 @@ public class ChatActivity extends BaseChatSendActivity {
         chatType = (Connect.ChatType) getIntent().getSerializableExtra("CHAT_TYPE");
         chatIdentify = getIntent().getStringExtra("CHAT_IDENTIFY");
         searchTxt = getIntent().getStringExtra("CHAT_SEARCH_TXT");
-        if (!(chatType == Connect.ChatType.CONNECT_SYSTEM)) {
-            toolbar.setRightImg(R.mipmap.menu_white);
-        }
 
         super.initView();
         toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
+        toolbar.setRightImg(R.mipmap.menu_white);
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,11 +148,13 @@ public class ChatActivity extends BaseChatSendActivity {
             @Override
             public void onClick(View v) {
                 switch (chatType) {
+                    case CONNECT_SYSTEM:
+                        RobotSetActivity.startActivity(activity);
+                        break;
                     case PRIVATE:
                         PrivateSetActivity.startActivity(activity, normalChat.chatKey(), normalChat.headImg(), normalChat.nickName());
                         break;
-                    case GROUPCHAT:
-                    case GROUP_DISCUSSION:
+                    case GROUP:
                         GroupSetActivity.startActivity(activity, chatIdentify);
                         break;
                 }
@@ -282,8 +283,7 @@ public class ChatActivity extends BaseChatSendActivity {
                         RoomSession.roomSession.setFriendAvatar(normalChat.headImg());
                         toolbar.setTitle(settingEntity.getDisturb() == 0 ? null : R.mipmap.icon_close_notify, titleName);
                         break;
-                    case GROUPCHAT:
-                    case GROUP_DISCUSSION:
+                    case GROUP:
                         GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(chatIdentify);
                         titleName = TextUtils.isEmpty(groupEntity.getName()) ? "" : groupEntity.getName();
                         if (titleName.length() > 15) {
@@ -371,8 +371,7 @@ public class ChatActivity extends BaseChatSendActivity {
             case PRIVATE:
                 normalChat = new CFriendChat(roomkey);
                 break;
-            case GROUPCHAT:
-            case GROUP_DISCUSSION:
+            case GROUP:
                 GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(roomkey);
                 normalChat = new CGroupChat(groupEntity);
                 break;
@@ -458,8 +457,7 @@ public class ChatActivity extends BaseChatSendActivity {
             case PRIVATE:
                 ((CFriendChat) normalChat).updateRoomMsg(draft, showtxt, sendtime);
                 break;
-            case GROUPCHAT:
-            case GROUP_DISCUSSION:
+            case GROUP:
                 if (lastExtEntity != null) {
                     GroupMemberEntity memberEntity = ContactHelper.getInstance().loadGroupMemberEntity(chatIdentify, lastExtEntity.getMessage_from());
                     if (memberEntity != null) {

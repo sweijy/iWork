@@ -104,7 +104,7 @@ public class GroupCreatePresenter implements GroupCreateContract.Presenter {
         String groupName = groupInfo.getGroup().getName();
 
         ConversionEntity roomEntity = new ConversionEntity();
-        roomEntity.setType(Connect.ChatType.GROUP_DISCUSSION_VALUE);
+        roomEntity.setType(Connect.ChatType.GROUP_VALUE);
         roomEntity.setIdentifier(groupKey);
         roomEntity.setName(groupName);
         roomEntity.setAvatar(groupInfo.getGroup().getAvatar());
@@ -149,7 +149,7 @@ public class GroupCreatePresenter implements GroupCreateContract.Presenter {
         ToastEUtil.makeText(activity, activity.getString(R.string.Chat_Create_Group_Success), 1, new ToastEUtil.OnToastListener() {
             @Override
             public void animFinish() {
-                HomeActivity.startActivity(activity, 100, Connect.ChatType.GROUPCHAT.getNumber(), groupKey);
+                HomeActivity.startActivity(activity, 100, Connect.ChatType.GROUP.getNumber(), groupKey);
             }
         }).show();
     }

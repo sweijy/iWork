@@ -247,13 +247,15 @@
         <activity
             android:name="connect.activity.workbench.WorkSeachActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="connect.activity.chat.set.DepartSelectShowAcitivty"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.set.GroupSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.chat.set.RobotSetActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

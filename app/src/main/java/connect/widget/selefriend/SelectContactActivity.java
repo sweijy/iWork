@@ -110,7 +110,7 @@ public class SelectContactActivity extends BaseActivity {
                     "", "", false, new DialogUtil.OnItemClickListener() {
                         @Override
                         public void confirm(String value) {
-                            backActivity(contactBean.getStatus() == 2 ? Connect.ChatType.GROUP_DISCUSSION_VALUE : Connect.ChatType.PRIVATE_VALUE, contactBean.getUid());
+                            backActivity(contactBean.getStatus() == 2 ? Connect.ChatType.GROUP_VALUE : Connect.ChatType.PRIVATE_VALUE, contactBean.getUid());
                         }
 
                         @Override

@@ -110,12 +110,12 @@ public class SearchContentFragment extends BaseFragment {
                     }
                 }
             } else if (searchBean.getStyle() == 2) {
-                ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, searchBean.getUid());
+                ChatActivity.startActivity(mActivity, Connect.ChatType.GROUP, searchBean.getUid());
             } else if (searchBean.getStyle() == 3) {
                 if(searchBean.getStatus() == 1){
                     ChatActivity.startActivity(mActivity, Connect.ChatType.PRIVATE, searchBean.getUid(), searchBean.getSearchStr());
                 }else{
-                    ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, searchBean.getUid(), searchBean.getSearchStr());
+                    ChatActivity.startActivity(mActivity, Connect.ChatType.GROUP, searchBean.getUid(), searchBean.getSearchStr());
                 }
             }
         }

@@ -202,7 +202,7 @@ public class MessageReceiver implements MessageListener {
             RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MESSAGE_RECEIVE, identify, msgEntity);
 
 
-            NotificationBar.getInstance().noticeBarMsg(identify, Connect.ChatType.GROUPCHAT_VALUE, groupEntity.getName(), content);
+            NotificationBar.getInstance().noticeBarMsg(identify, Connect.ChatType.GROUP_VALUE, groupEntity.getName(), content);
         }
     }
 }

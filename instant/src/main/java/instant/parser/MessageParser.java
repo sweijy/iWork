@@ -50,12 +50,6 @@ public class MessageParser extends InterParse {
             case 0x05://unavailable message
                 unavailableMsg();
                 break;
-            case 0x06://subscribe messgae
-                //subscribePull();
-                break;
-            case 0x09://notice message
-                noticeMsg();
-                break;
             case 0x19://repeat apply group
                 break;
             default:
@@ -186,21 +180,6 @@ public class MessageParser extends InterParse {
                 break;
         }
         // receiptMsg(msgid, 2);
-    }
-
-    /**
-     * notice message
-     */
-    private void noticeMsg() throws Exception {
-        Connect.NoticeMessage noticeMessage = Connect.NoticeMessage.parseFrom(byteBuffer.array());
-        if (ext == 0) {
-            backOffLineAck(5, noticeMessage.getMsgId());
-        } else {
-            backOnLineAck(5, noticeMessage.getMsgId());
-        }
-
-        TransactionParser parseBean = new TransactionParser(noticeMessage);
-        parseBean.msgParse();
     }
 
     /**

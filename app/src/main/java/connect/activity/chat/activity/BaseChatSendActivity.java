@@ -64,7 +64,7 @@ public abstract class BaseChatSendActivity extends BaseChatReceiveActivity {
         switch (msgSend.getMsgType()) {
             case Text:
                 String txt = (String) objects[0];
-                if (normalChat.chatType() == Connect.ChatType.GROUPCHAT_VALUE) {
+                if (normalChat.chatType() == Connect.ChatType.GROUP_VALUE) {
                     List<String> atList = (List<String>) objects[1];
                     chatMsgEntity = ((GroupChat) normalChat).groupTxtMsg(txt, atList);
                 } else {
@@ -140,37 +140,6 @@ public abstract class BaseChatSendActivity extends BaseChatReceiveActivity {
                 chatMsgEntity = normalChat.cardMsg((String) objects[0], (String) objects[1], (String) objects[2]);
                 sendNormalMsg(true, chatMsgEntity);
                 break;
-            case BURNREAD_RECEIPT:
-                String messageId = (String) objects[0];
-
-                uid = SharedPreferenceUtil.getInstance().getUser().getUid();
-                userOrderBean = new UserOrderBean();
-                userOrderBean.burnReadReceipt(uid, chatIdentify, messageId);
-                break;
-            case Request_Payment:
-                int payType = (int) objects[0];
-                String payHashId = (String) objects[1];
-                long payAmount = (long) objects[2];
-                int payMembers = (int) objects[3];
-                String payTips = (String) objects[4];
-
-                chatMsgEntity = normalChat.paymentMsg(payType, payHashId, payAmount, payMembers, payTips);
-                sendNormalMsg(true, chatMsgEntity);
-                //add payment information
-                TransactionHelper.getInstance().updateTransEntity(payHashId, chatMsgEntity.getMessage_id(), 0, payMembers);
-                break;
-            case Transfer:
-                int transferType = (int) objects[0];
-                String transferHashId = (String) objects[1];
-                long transferAmount = (long) objects[2];
-                String transferTips = (String) objects[3];
-
-                chatMsgEntity = normalChat.transferMsg(transferType, transferHashId, transferAmount, transferTips);
-                sendNormalMsg(true, chatMsgEntity);
-
-                //add payment information
-                TransactionHelper.getInstance().updateTransEntity((String) objects[0], chatMsgEntity.getMessage_id(), 1);
-                break;
             case Location:
                 GeoAddressBean geoAddress = (GeoAddressBean) objects[0];
 
@@ -189,15 +158,6 @@ public abstract class BaseChatSendActivity extends BaseChatReceiveActivity {
                     }
                 });
                 upLoad.startUpload();
-                break;
-            case Lucky_Packet:
-                int luckyType = (int) objects[0];
-                String luckyHashId = (String) objects[1];
-                String luckyTips = (String) objects[2];
-                long luckyAmount = (long) objects[3];
-
-                chatMsgEntity = normalChat.luckPacketMsg(luckyType, luckyHashId, luckyAmount,luckyTips);
-                sendNormalMsg(true, chatMsgEntity);
                 break;
             case OUTER_WEBSITE:
                 String webUrl = (String) objects[0];

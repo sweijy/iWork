@@ -136,13 +136,6 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
             case GROUP_UPDATEMYNAME://update my nick in group
                 ((GroupChat) normalChat).updateMyNickName();
                 break;
-            case MAP_LOCATION:
-                GoogleMapActivity.startActivity(activity);
-                break;
-            case LUCKPACKET_RECEIVE://receive a lucky packet
-                msgExtEntity = normalChat.noticeMsg(3, (String) objects[0], (String) objects[1]);
-                sendNormalMsg(false, msgExtEntity);
-                break;
             case GROUP_REMOVE://dissolute group
                 if (normalChat.chatKey().equals(objects[0])) {
                     ActivityUtil.backActivityWithClearTop(activity, HomeActivity.class);
@@ -152,8 +145,6 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                 if (normalChat.chatKey().equals(objects[0])) {
                     // ((FriendChat) normalChat).setFriendCookie(null);
                 }
-                break;
-            case UNARRIVE_HALF:
                 break;
             case GROUPAT_TO:
                 GroupAtActivity.startActivity(activity, normalChat.chatKey());

@@ -1169,11 +1169,9 @@ message MessageUserInfo{
 //聊天类型
 enum ChatType {
 	PRIVATE= 0; // 个人聊天
-	GROUPCHAT  = 1;  //群组聊天(加密)
+	GROUP  = 1;  //群组聊天
 	CONNECT_SYSTEM = 2; // Connect
-	GROUP_DISCUSSION= 3;//讨论组
-	SUBSCRIBER = 4; //订阅号
-        UNKNOW = 5; //未知，陌生人/群
+    UNKNOW = 3; //未知，陌生人/群
 }
 //临时协同密钥
 message ChatSession {

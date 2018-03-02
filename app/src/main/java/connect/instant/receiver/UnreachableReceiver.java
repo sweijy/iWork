@@ -21,9 +21,9 @@ public class UnreachableReceiver implements UnreachableListener {
 
     private static String TAG = "_UnreachableReceiver";
 
-    public static UnreachableReceiver receiver = getInstance();
+    private static UnreachableReceiver receiver;
 
-    private synchronized static UnreachableReceiver getInstance() {
+    public synchronized static UnreachableReceiver getInstance() {
         if (receiver == null) {
             receiver = new UnreachableReceiver();
         }
