@@ -9,23 +9,23 @@ import protos.Connect;
 
 public class MessageLocalReceiver implements MessageListener {
 
-    public static MessageLocalReceiver localReceiver=getInstance();
+    public static MessageLocalReceiver localReceiver = getInstance();
 
-    private synchronized static MessageLocalReceiver getInstance(){
-        if(localReceiver==null){
-            localReceiver=new MessageLocalReceiver();
+    private synchronized static MessageLocalReceiver getInstance() {
+        if (localReceiver == null) {
+            localReceiver = new MessageLocalReceiver();
         }
         return localReceiver;
     }
 
-    private MessageListener messageListener=null;
+    private MessageListener messageListener = null;
 
-    public void registerMessageListener(MessageListener listener){
-        this.messageListener=listener;
+    public void registerMessageListener(MessageListener listener) {
+        this.messageListener = listener;
     }
 
-    public MessageListener getMessageListener(){
-        if(messageListener==null){
+    public MessageListener getMessageListener() {
+        if (messageListener == null) {
             throw new RuntimeException("messageListener don't registe");
         }
         return messageListener;

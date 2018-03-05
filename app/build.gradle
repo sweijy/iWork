@@ -71,7 +71,7 @@ android {
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
 
         release {
@@ -79,7 +79,7 @@ android {
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 
@@ -126,6 +126,8 @@ dependencies {
     compile project(path: ':ffmpeg4android_lib')
     compile project(':instant')
     compile project(':encrypt')
+    compile project(':push')
+
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'

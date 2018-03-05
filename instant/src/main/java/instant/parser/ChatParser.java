@@ -1,14 +1,8 @@
 package instant.parser;
 
-import com.google.protobuf.ByteString;
-
 import java.nio.ByteBuffer;
 
-import instant.bean.Session;
-import instant.bean.UserCookie;
 import instant.parser.localreceiver.MessageLocalReceiver;
-import instant.utils.cryption.DecryptionUtil;
-import instant.utils.cryption.EncryptionUtil;
 import protos.Connect;
 
 /**
@@ -36,7 +30,6 @@ public class ChatParser extends InterParse {
                 singleChat(messagePost);
                 break;
             case 0x03://invite to join in group
-                inviteJoinGroup(messagePost);
                 break;
             case 0x04://group chat
                 groupChat(messagePost);
@@ -58,25 +51,5 @@ public class ChatParser extends InterParse {
         Connect.MessageData messageData = msgpost.getMsgData();
         Connect.ChatMessage chatMessage = messageData.getChatMsg();
         MessageLocalReceiver.localReceiver.groupChat(chatMessage);
-    }
-
-    /**
-     * invite to join group
-     *
-     * @param msgpost
-     * @throws Exception
-     */
-    protected void inviteJoinGroup(Connect.MessagePost msgpost) throws Exception {
-//        String publicKey = msgpost.getPubKey();
-//        String privateKey = Session.getInstance().getConnectCookie().getPriKey();
-//
-//        Connect.MessageData messageData = msgpost.getMsgData();
-//        Connect.ChatMessage chatMessage = messageData.getChatMsg();
-//        Connect.GcmData gcmData = chatMessage.getCipherData();
-//
-//        byte[] contents = DecryptionUtil.decodeAESGCM(EncryptionUtil.ExtendedECDH.EMPTY, privateKey, publicKey, gcmData);
-//
-//        Connect.CreateGroupMessage groupMessage = Connect.CreateGroupMessage.parseFrom(contents);
-//        MessageLocalReceiver.localReceiver.inviteJoinGroup(groupMessage);
     }
 }

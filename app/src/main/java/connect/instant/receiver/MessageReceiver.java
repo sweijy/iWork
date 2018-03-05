@@ -35,9 +35,9 @@ public class MessageReceiver implements MessageListener {
 
     private static String TAG = "_MessageReceiver";
 
-    public static MessageReceiver receiver = getInstance();
+    private static MessageReceiver receiver;
 
-    private synchronized static MessageReceiver getInstance() {
+    public synchronized static MessageReceiver getInstance() {
         if (receiver == null) {
             receiver = new MessageReceiver();
         }
@@ -53,9 +53,16 @@ public class MessageReceiver implements MessageListener {
 
         UserCookie userCookie = Session.getInstance().getConnectCookie();
         String myPrivateKey = userCookie.getPrivateKey();
-        EncryptionUtil.ExtendedECDH ecdhExts = EncryptionUtil.ExtendedECDH.EMPTY;
-        Connect.GcmData gcmData = chatMessage.getCipherData();
-        byte[] contents = DecryptionUtil.decodeAESGCM(ecdhExts, myPrivateKey, friendPublicKey, gcmData);
+
+        byte[] contents = null;
+        if (chatMessage.getBody().isEmpty()) {
+            EncryptionUtil.ExtendedECDH ecdhExts = EncryptionUtil.ExtendedECDH.EMPTY;
+            Connect.GcmData gcmData = chatMessage.getCipherData();
+            contents = DecryptionUtil.decodeAESGCM(ecdhExts, myPrivateKey, friendPublicKey, gcmData);
+        } else {
+            contents = chatMessage.getBody().toByteArray();
+        }
+
         if (contents.length <= 2) {
             return;
         }
@@ -80,7 +87,7 @@ public class MessageReceiver implements MessageListener {
         friendChat.updateRoomMsg(null, content, messageTime, -1, 1, false);
 
         RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MESSAGE_RECEIVE, chatMsgEntity.getMessage_from(), chatMsgEntity);
-        NotificationBar.notificationBar.noticeBarMsg(friendUid, Connect.ChatType.PRIVATE_VALUE, senderName, content);
+        NotificationBar.getInstance().noticeBarMsg(friendUid, Connect.ChatType.PRIVATE_VALUE, senderName, content);
     }
 
     @Override
@@ -195,7 +202,7 @@ public class MessageReceiver implements MessageListener {
             RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MESSAGE_RECEIVE, identify, msgEntity);
 
 
-            NotificationBar.notificationBar.noticeBarMsg(identify, Connect.ChatType.GROUPCHAT_VALUE, groupEntity.getName(), content);
+            NotificationBar.getInstance().noticeBarMsg(identify, Connect.ChatType.GROUPCHAT_VALUE, groupEntity.getName(), content);
         }
     }
 }

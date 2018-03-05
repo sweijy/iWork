@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Vibrator;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -220,5 +221,11 @@ public class SystemUtil {
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
+    }
+
+    public static String getPhoneIMEI() {
+        Context context = BaseApplication.getInstance().getBaseContext();
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
     }
 }

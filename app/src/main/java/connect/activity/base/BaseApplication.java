@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.common.PushSDK;
+import com.common.inter.PushListener;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import connect.service.GroupService;
 import connect.service.UpdateInfoService;
 import connect.utils.ConfigUtil;
 import connect.utils.FileUtil;
+import connect.utils.NotificationBar;
 import connect.utils.ProgressUtil;
 import connect.widget.bottominput.EmoManager;
 import instant.ui.InstantSdk;
@@ -28,6 +31,7 @@ import instant.ui.InstantSdk;
  */
 public class BaseApplication extends Application implements InterAccount {
 
+    private static String TAG = "_BaseApplication";
     private static BaseApplication mApplication = null;
     private static List<Activity> activityList = new ArrayList<>();
 
@@ -43,6 +47,19 @@ public class BaseApplication extends Application implements InterAccount {
 
         String appId = ConfigUtil.getInstance().getCrashAPPID();
         CrashReport.initCrashReport(this, appId, true);
+
+        PushSDK.getInstance().setPushListener(new PushListener() {
+
+            @Override
+            public void registerToken(int deviceplatform, String registerid) {
+
+            }
+
+            @Override
+            public void receiveMessage(String title, String content) {
+                NotificationBar.getInstance().notiticationPushBar(title, content);
+            }
+        }).register(this);
     }
 
     @Override
@@ -92,10 +109,9 @@ public class BaseApplication extends Application implements InterAccount {
 
         ProgressUtil.getInstance().dismissProgress();
 
-        //Remove the local login information
-//        UserBean userBean = SharedPreferenceUtil.getInstance().getUserCheckExist();
-//        userBean.setUid("");
-//        userBean.setToken("");
-//        SharedPreferenceUtil.getInstance().putUser(userBean);
+        UserBean userBean = SharedPreferenceUtil.getInstance().getUserCheckExist();
+        userBean.setUid("");
+        userBean.setToken("");
+        SharedPreferenceUtil.getInstance().putUser(userBean);
     }
 }
