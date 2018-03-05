@@ -12,8 +12,6 @@ public class UpdateState {
 
     private UpdateState.StatusEnum statusEnum;
 
-    public UpdateState() {}
-
     public UpdateState(StatusEnum statusEnum) {
         this.statusEnum = statusEnum;
     }

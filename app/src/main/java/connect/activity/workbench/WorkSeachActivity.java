@@ -106,7 +106,6 @@ public class WorkSeachActivity extends BaseActivity {
                 updateAppsAddState(isAdd, code);
             }
         });
-
         searchAppsWorks("");
     }
 
@@ -146,8 +145,7 @@ public class WorkSeachActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Connect.HttpNotSignResponse response) {
-            }
+            public void onError(Connect.HttpNotSignResponse response) {}
         });
     }
 
@@ -162,7 +160,7 @@ public class WorkSeachActivity extends BaseActivity {
                 .setCode(code)
                 .build();
 
-        String uid = isAdd?UriUtil.CONNECT_V3_API_APPLICATIONS_ADD:UriUtil.CONNECT_V3_API_APPLICATIONS_DEL;
+        String uid = isAdd ? UriUtil.CONNECT_V3_API_APPLICATIONS_ADD : UriUtil.CONNECT_V3_API_APPLICATIONS_DEL;
         OkHttpUtil.getInstance().postEncrySelf(uid, application, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {

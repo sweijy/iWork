@@ -156,8 +156,7 @@ public class VisitorsAuditActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void cancel() {
-                    }
+                    public void cancel() {}
                 });
     }
 
