@@ -1,33 +1,25 @@
 package connect.utils.okhttp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.google.android.gms.common.server.response.FastJsonResponse;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessageV3;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
-import connect.activity.home.bean.HomeAction;
-import connect.activity.login.LoginUserActivity;
-import connect.ui.activity.R;
-import connect.activity.home.bean.HttpRecBean;
 import connect.activity.base.BaseApplication;
-import connect.utils.ConfigUtil;
+import connect.activity.home.bean.HttpRecBean;
+import connect.ui.activity.R;
 import connect.utils.ProgressUtil;
 import connect.utils.ToastUtil;
-import connect.utils.UriUtil;
 import connect.utils.log.LogManager;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -35,7 +27,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import retrofit2.Retrofit;
 
 /**
  * Http Request
@@ -82,15 +73,6 @@ public class HttpRequest {
      * @param callBack
      */
     public void get(String url, final okhttp3.Callback callBack) {
-        getAbsolute(ConfigUtil.getInstance().serverAddress() + url, callBack);
-    }
-
-    /**
-     * get Request (return to the original data)
-     * @param url
-     * @param callBack
-     */
-    public void getAbsolute(String url, final okhttp3.Callback callBack) {
         if (!HttpRequest.isConnectNet()) {
             ToastUtil.getInstance().showToast(R.string.Chat_Network_connection_failed_please_check_network);
             return;
@@ -149,23 +131,10 @@ public class HttpRequest {
             ToastUtil.getInstance().showToast(R.string.Chat_Network_connection_failed_please_check_network);
             return;
         }
-        String address;
-        if(url.equals(UriUtil.CONNECT_V3_PROXY_VISITOR_RECORDS) ||
-                url.equals(UriUtil.CONNECT_V3_PROXY_RECORDS_HISTORY) ||
-                url.equals(UriUtil.CONNECT_V3_PROXY_EXAMINE_VERIFY) ||
-                url.equals(UriUtil.CONNECT_V3_PROXY_TOKEN)){
-            address = ConfigUtil.getInstance().visitorAddress() + url;
-        }else if(url.equals(UriUtil.STORES_V1_IWORK_LOGS) ||
-                url.equals(UriUtil.STORES_V1_IWORK_LOG_COMFIRM) ||
-                url.equals(UriUtil.STORES_V1_IWORK_LOGS_DETAIL)){
-            address = ConfigUtil.getInstance().warehouseAddress() + url;
-        }else{
-            address = ConfigUtil.getInstance().serverAddress() + url;
-        }
 
         RequestBody requestBody = RequestBody.create(MEDIA_TYPE_DEFAULT, content);
         Request request = new Request.Builder()
-                .url(address)
+                .url(url)
                 .post(requestBody)
                 .build();
 
@@ -179,33 +148,6 @@ public class HttpRequest {
                                        resultCall.onError();
                                    }
                                });
-                dealOnFailure(call);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) {
-                try {
-                    Integer code = resultCall.parseNetworkResponse(response);
-                    sendResultCallback(code, resultCall);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void postUploadFile(String url, byte[] content, final ResultCall resultCall) {
-        RequestBody requestBody = RequestBody.create(MEDIA_TYPE_DEFAULT, content);
-        Request request = new Request.Builder()
-                .url("http://192.168.40.4:10086" + url)
-                .post(requestBody)
-                .build();
-
-        mOkHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                ProgressUtil.getInstance().dismissProgress();
-                resultCall.onError();
                 dealOnFailure(call);
             }
 

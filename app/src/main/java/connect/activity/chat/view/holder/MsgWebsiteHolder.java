@@ -103,7 +103,7 @@ public class MsgWebsiteHolder extends MsgChatHolder {
      * @param token
      */
     private void avaliableOuterRedPacket(final String token) {
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.WALLET_PACKAGE_INFO + "/" + token, ByteString.copyFrom(new byte[]{}),
+        /*OkHttpUtil.getInstance().postEncrySelf(UriUtil.WALLET_PACKAGE_INFO + "/" + token, ByteString.copyFrom(new byte[]{}),
                 new ResultCall<Connect.HttpResponse>() {
                     @Override
                     public void onResponse(Connect.HttpResponse response) {
@@ -130,6 +130,6 @@ public class MsgWebsiteHolder extends MsgChatHolder {
                     public void onError(Connect.HttpResponse response) {
 
                     }
-                });
+                });*/
     }
 }
