@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -34,6 +36,7 @@ import connect.widget.TopToolBar;
  * private chat setting
  * Created by gtq on 2016/11/22.
  */
+@Route(path = "/chat/set/PrivateSetActivity")
 public class PrivateSetActivity extends BaseActivity implements PrivateSetContract.BView {
 
     @Bind(R.id.toolbar)

@@ -18,6 +18,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -44,6 +46,7 @@ import connect.widget.selefriend.SelectRecentlyChatActivity;
 import instant.bean.ChatMsgEntity;
 import instant.sender.model.NormalChat;
 
+@Route(path = "/chat/exts/OuterWebsiteActivity")
 public class OuterWebsiteActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)

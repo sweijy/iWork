@@ -41,8 +41,10 @@ public abstract class BaseFileUp implements InterFileUp {
 
     public synchronized byte[] encodeAESGCMStructData(String filePath) {
         byte[] fileBytes = FileUtil.filePathToByteArray(filePath);
-        Connect.GcmData gcmData = EncryptionUtil.encodeAESGCM(EncryptionUtil.ExtendedECDH.NONE, randomNumber, fileBytes);
-        fileBytes = gcmData.toByteArray();
+
+        // // TODO: 2018/3/5 暂时未加密
+//        Connect.GcmData gcmData = EncryptionUtil.encodeAESGCM(EncryptionUtil.ExtendedECDH.NONE, randomNumber, fileBytes);
+//        fileBytes = gcmData.toByteArray();
         return fileBytes;
     }
 

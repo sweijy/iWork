@@ -33,6 +33,7 @@
     <application
         android:name="connect.activity.base.BaseApplication"
         android:allowBackup="true"
+        tools:replace="android:icon,android:theme"
         android:icon="@mipmap/connect_logo"
         android:label="@string/app_name"
         android:persistent="true"

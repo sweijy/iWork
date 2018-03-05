@@ -14,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
@@ -70,7 +72,13 @@ import protos.Connect;
 /**
  * chat message
  * Created by gtq on 2016/11/22.
+ *
+ * 传递参数：
+ * CHAT_TYPE
+ * CHAT_IDENTIFY
+ * CHAT_SEARCH_TXT
  */
+@Route(path = "/chat/ChatActivity")
 public class ChatActivity extends BaseChatSendActivity {
 
     @Bind(R.id.toolbar)

@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -19,6 +21,7 @@ import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
+@Route(path = "/chat/set/DepartSelectShowAcitivty")
 public class DepartSelectShowAcitivty extends BaseActivity implements DepartSelectShowContract.BView {
 
     @Bind(R.id.toolbar)

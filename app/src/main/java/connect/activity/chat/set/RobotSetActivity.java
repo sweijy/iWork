@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
@@ -14,6 +16,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
+@Route(path = "/chat/set/RobotSetActivity")
 public class RobotSetActivity extends BaseActivity implements RobotSetContract.BView {
 
     @Bind(R.id.toolbar)

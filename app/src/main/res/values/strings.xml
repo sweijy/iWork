@@ -349,4 +349,5 @@
     <string name="title_activity_robot">RobotActivity</string>
     <string name="Chat_System_Set">System Set</string>
     <string name="IWork">iWork</string>
+    <string name="compress_progress">progress: %1$s</string>
 </resources>

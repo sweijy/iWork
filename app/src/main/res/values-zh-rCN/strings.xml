@@ -314,5 +314,6 @@
     <string name="Chat_Voice_Record_Short">录音时间太短</string>
     <string name="Chat_System_Set">系统消息</string>
     <string name="IWork">iWork</string>
+    <string name="compress_progress">进度: %1$s</string>
 
 </resources>

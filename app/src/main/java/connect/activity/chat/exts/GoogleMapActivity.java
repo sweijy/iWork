@@ -18,6 +18,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,6 +40,7 @@ import connect.widget.TopToolBar;
 /**
  * google map
  */
+@Route(path = "/chat/exts/GoogleMapActivity")
 public class GoogleMapActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)

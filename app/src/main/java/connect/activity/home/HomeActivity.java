@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.common.PushSDK;
 import com.huawei.android.hms.agent.HuaweiRegister;
 
@@ -64,6 +65,7 @@ import protos.Connect;
 /**
  * Created by gtq on 2016/11/19.
  */
+@Route(path = "/activity/HomeActivity")
 public class HomeActivity extends BaseFragmentActivity {
 
     @Bind(R.id.msg)

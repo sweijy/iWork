@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import protos.Connect;
 
+@Route(path = "/chat/set/GroupSelectActivity")
 public class GroupSelectActivity extends BaseFragmentActivity implements GroupSelectContract.BView {
 
     @Bind(R.id.group_select_content)

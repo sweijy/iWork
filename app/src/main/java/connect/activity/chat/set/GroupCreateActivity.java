@@ -11,6 +11,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
+@Route(path = "/chat/set/GroupCreateActivity")
 public class GroupCreateActivity extends BaseActivity implements GroupCreateContract.BView {
 
     @Bind(R.id.toolbar)

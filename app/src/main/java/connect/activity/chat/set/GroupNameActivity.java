@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
@@ -17,6 +19,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
+@Route(path = "/chat/set/GroupNameActivity")
 public class GroupNameActivity extends BaseActivity implements GroupNameContract.BView{
 
     @Bind(R.id.toolbar)

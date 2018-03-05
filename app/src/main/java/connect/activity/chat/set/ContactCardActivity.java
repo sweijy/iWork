@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import connect.widget.TopToolBar;
 /**
  * Created by gtq on 2016/12/13.
  */
+@Route(path = "/chat/set/ContactCardActivity")
 public class ContactCardActivity extends BaseActivity implements ContactCardContract.BView {
 
     @Bind(R.id.recyclerview)

@@ -371,4 +371,5 @@
     <string name="Chat_Voice_Record_Short">запись времени слишком мало</string>
     <string name="Chat_System_Set">система</string>
     <string name="IWork">iWork</string>
+    <string name="compress_progress">прогресс: %1$s</string>
 </resources>

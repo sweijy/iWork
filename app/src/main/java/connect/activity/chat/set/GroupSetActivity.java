@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -38,6 +40,7 @@ import connect.widget.TopToolBar;
  * group setting
  * Created by gtq on 2016/12/15.
  */
+@Route(path = "/chat/set/GroupSetActivity")
 public class GroupSetActivity extends BaseActivity implements GroupSetContract.BView {
 
     @Bind(R.id.toolbar)

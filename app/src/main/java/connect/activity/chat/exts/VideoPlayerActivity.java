@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,6 +32,7 @@ import instant.bean.ChatMsgEntity;
 /**
  * play Local video files
  */
+@Route(path = "/chat/exts/VideoPlayerActivity")
 public class VideoPlayerActivity extends BaseActivity implements VideoPlayContract.BView {
 
     @Bind(R.id.toolbar)

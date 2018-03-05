@@ -9,6 +9,8 @@ import android.os.Message;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.login.StartPageActivity;
@@ -18,6 +20,7 @@ import connect.activity.base.BaseApplication;
 import connect.widget.DBUpgradeView;
 import connect.widget.TopToolBar;
 
+@Route(path = "/activity/DBUpdateActivity")
 public class DBUpdateActivity extends BaseActivity {
 
     private String Tag = "DBUpdateActivity";
