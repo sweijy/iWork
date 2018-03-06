@@ -137,7 +137,6 @@ public class ChatActivity extends BaseChatSendActivity {
         }
 
         super.initView();
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override

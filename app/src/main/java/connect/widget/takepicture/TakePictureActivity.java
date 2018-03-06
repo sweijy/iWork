@@ -76,7 +76,6 @@ public class TakePictureActivity extends BaseActivity implements TakePictureCont
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Login_Take_Photo);
 

@@ -82,7 +82,6 @@ public class ContactInfoActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(null, R.string.Chat_Contact_details);
 
@@ -116,7 +115,7 @@ public class ContactInfoActivity extends BaseActivity {
         GlideUtil.loadAvatarRound(avatarImageview, workmate.getAvatar(), 8);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

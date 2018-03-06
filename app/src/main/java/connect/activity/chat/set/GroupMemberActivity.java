@@ -68,7 +68,6 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
     @Override
     public void initView() {
         activity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setRightText(R.string.Link_Invite);
         toolbarTop.setLeftListener(new View.OnClickListener() {

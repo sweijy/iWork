@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_45"
-    android:background="@color/color_161A21">
+    android:background="@color/color_457DE3">
 
     <ImageView
         android:id="@+id/search_image1"

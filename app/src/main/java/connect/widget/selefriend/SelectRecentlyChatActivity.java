@@ -69,7 +69,6 @@ public class SelectRecentlyChatActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbar.setBlackStyle();
         toolbar.setTitle(null, R.string.Chat_Choose_contact);
         toolbar.setLeftImg(R.mipmap.back_white);
 

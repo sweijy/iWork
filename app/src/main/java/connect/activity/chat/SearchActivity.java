@@ -11,20 +11,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import connect.activity.base.BaseActivity;
 import connect.activity.base.BaseFragmentActivity;
 import connect.activity.chat.fragment.SearchContentFragment;
 import connect.activity.chat.fragment.SearchMainFragment;
-import connect.database.green.DaoHelper.ContactHelper;
-import connect.database.green.bean.ContactEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 
@@ -34,16 +30,16 @@ import connect.utils.ActivityUtil;
 
 public class SearchActivity extends BaseFragmentActivity {
 
-    @Bind(R.id.left_img)
-    ImageView leftImg;
     @Bind(R.id.search_edit)
     EditText searchEdit;
     @Bind(R.id.del_tv)
     ImageView delTv;
-    @Bind(R.id.search_tv)
-    TextView searchTv;
     @Bind(R.id.content_fragment)
     FrameLayout contentFragment;
+    @Bind(R.id.left_rela)
+    RelativeLayout leftRela;
+    @Bind(R.id.search_rela)
+    RelativeLayout searchRela;
 
     private SearchActivity mActivity;
     private SearchContentFragment searchContentFragment;
@@ -70,7 +66,7 @@ public class SearchActivity extends BaseFragmentActivity {
         switchFragment(0);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }
@@ -80,20 +76,24 @@ public class SearchActivity extends BaseFragmentActivity {
         searchEdit.setText("");
     }
 
-    @OnClick(R.id.search_tv)
+    @OnClick(R.id.search_rela)
     void search(View view) {
         String value = searchEdit.getText().toString().trim();
-        if(!TextUtils.isEmpty(value)){
+        if (!TextUtils.isEmpty(value)) {
             switchFragment(1);
             searchContentFragment.updateView(value, 0);
         }
     }
 
-    TextWatcher textWatcher = new TextWatcher(){
+    TextWatcher textWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
         @Override
         public void afterTextChanged(Editable s) {
             if (TextUtils.isEmpty(s.toString())) {
@@ -106,7 +106,7 @@ public class SearchActivity extends BaseFragmentActivity {
         }
     };
 
-    public void commonltGoSearch(String value){
+    public void commonltGoSearch(String value) {
         searchEdit.setText(value);
         switchFragment(1);
         searchContentFragment.updateView(value, 0);

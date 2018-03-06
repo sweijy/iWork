@@ -67,7 +67,6 @@ public class ContactFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        toolbarTop.setBlackStyle();
         toolbarTop.setTitle(null, R.string.Link_Contacts);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);

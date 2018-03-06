@@ -54,7 +54,6 @@ public class RandomVoiceActivity extends BaseActivity implements RandomVoiceCont
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Login_creat_account);
 

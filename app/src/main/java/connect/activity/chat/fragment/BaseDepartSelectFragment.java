@@ -77,7 +77,6 @@ public class BaseDepartSelectFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override

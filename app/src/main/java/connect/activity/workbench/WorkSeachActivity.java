@@ -67,7 +67,6 @@ public class WorkSeachActivity extends BaseActivity {
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override

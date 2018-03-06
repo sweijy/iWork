@@ -51,7 +51,6 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getResources().getString(R.string.Link_Group));
         toolbar.setLeftListener(new View.OnClickListener() {

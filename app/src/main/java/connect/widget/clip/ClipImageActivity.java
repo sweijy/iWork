@@ -52,7 +52,6 @@ public class ClipImageActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setRightText(R.string.Set_Save);
         toolbarTop.setRightTextEnable(true);

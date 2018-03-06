@@ -68,7 +68,6 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getResources().getString(R.string.Chat_Choose_Members));
         toolbar.setLeftListener(new View.OnClickListener() {

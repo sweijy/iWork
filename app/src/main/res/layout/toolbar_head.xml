@@ -5,9 +5,12 @@
 
     <RelativeLayout
         android:id="@+id/left_rela"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_28"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/selector_top_title_btn"
+        android:visibility="invisible">
         <ImageView
             android:id="@id/left_img"
             android:layout_width="wrap_content"
@@ -15,8 +18,17 @@
             android:layout_centerVertical="true"
             android:clickable="false"
             android:contentDescription="@string/app_name"
-            android:paddingLeft="@dimen/dp_17"
-            android:paddingRight="@dimen/dp_20" />
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/sp_12"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxWidth="@dimen/dp_40"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -53,7 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone">
-
         <EditText
             android:id="@+id/title_edittext"
             android:layout_width="match_parent"
@@ -73,30 +84,33 @@
             android:src="@mipmap/icon_search_small3x" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@id/right_lin"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_28"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
         android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_17">
-
+        android:background="@drawable/selector_top_title_btn"
+        android:visibility="invisible">
+        <ImageView
+            android:id="@id/right_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:contentDescription="@string/app_name"
+            android:layout_centerInParent="true"/>
         <TextView
             android:id="@id/right_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/sp_12"
+            android:ellipsize="end"
             android:lines="1"
-            android:maxWidth="@dimen/dp_70"
-            android:textColor="@color/color_161A21"
-            android:textSize="@dimen/sp_14" />
+            android:maxWidth="@dimen/dp_40"/>
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@id/right_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/app_name" />
-    </LinearLayout>
 </RelativeLayout>

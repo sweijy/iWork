@@ -79,7 +79,6 @@ public class DepartmentActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Chat_Organizational_structure);
         userBean = SharedPreferenceUtil.getInstance().getUser();
@@ -112,7 +111,7 @@ public class DepartmentActivity extends BaseActivity {
         requestDepartment(2L);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         if(nameList.size() == 1){
             ActivityUtil.goBack(mActivity);

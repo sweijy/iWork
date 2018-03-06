@@ -102,7 +102,6 @@ public class OuterWebsiteActivity extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
         activity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setRightImg(R.mipmap.wallet_share_payment2x);
         toolbarTop.setLeftListener(new View.OnClickListener() {

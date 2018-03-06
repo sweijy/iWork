@@ -51,7 +51,6 @@ public class GroupMyNameActivity extends BaseActivity implements GroupMyAliasCon
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getResources().getString(R.string.Link_Group));
         toolbar.setRightText(R.string.Chat_Complete);

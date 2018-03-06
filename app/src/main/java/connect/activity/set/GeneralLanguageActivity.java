@@ -50,7 +50,6 @@ public class GeneralLanguageActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Set_Language);
         toolbarTop.setRightText(R.string.Set_Save);
@@ -59,7 +58,7 @@ public class GeneralLanguageActivity extends BaseActivity {
         bindingAdapter();
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

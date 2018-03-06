@@ -56,7 +56,6 @@ public class UserInfoAvatarActivity extends BaseActivity implements UserInfoAvat
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Chat_Photo);
         toolbarTop.setRightImg(R.mipmap.menu_white);
@@ -70,7 +69,7 @@ public class UserInfoAvatarActivity extends BaseActivity implements UserInfoAvat
         presenter.start();
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

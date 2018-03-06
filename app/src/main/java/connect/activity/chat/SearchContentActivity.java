@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragmentActivity;
 import connect.activity.chat.fragment.SearchContentFragment;
-import connect.activity.contact.ContactInfoActivity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 
@@ -32,16 +31,16 @@ import connect.utils.ActivityUtil;
 
 public class SearchContentActivity extends BaseFragmentActivity {
 
-    @Bind(R.id.left_img)
-    ImageView leftImg;
     @Bind(R.id.search_edit)
     EditText searchEdit;
     @Bind(R.id.del_tv)
     ImageView delTv;
-    @Bind(R.id.search_tv)
-    TextView searchTv;
     @Bind(R.id.content_fragment)
     FrameLayout contentFragment;
+    @Bind(R.id.left_rela)
+    RelativeLayout leftRela;
+    @Bind(R.id.search_rela)
+    RelativeLayout searchRela;
 
     private SearchContentActivity mActivity;
     private SearchContentFragment searchContentFragment;
@@ -66,11 +65,11 @@ public class SearchContentActivity extends BaseFragmentActivity {
         mActivity = this;
         style = getIntent().getExtras().getInt("style");
 
-        if(style == 1){
+        if (style == 1) {
             searchEdit.setHint(" " + getString(R.string.Link_Search_contacts));
-        }else if(style == 2){
+        } else if (style == 2) {
             searchEdit.setHint(" " + getString(R.string.Link_Search_group));
-        }else if(style == 3){
+        } else if (style == 3) {
             searchEdit.setHint(" " + getString(R.string.Link_Search_chat_log));
         }
         searchEdit.addTextChangedListener(textWatcher);
@@ -78,7 +77,7 @@ public class SearchContentActivity extends BaseFragmentActivity {
         switchFragment(1);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }
@@ -88,20 +87,24 @@ public class SearchContentActivity extends BaseFragmentActivity {
         searchEdit.setText("");
     }
 
-    @OnClick(R.id.search_tv)
+    @OnClick(R.id.search_rela)
     void search(View view) {
         String value = searchEdit.getText().toString().trim();
-        if(!TextUtils.isEmpty(value)){
+        if (!TextUtils.isEmpty(value)) {
             switchFragment(1);
             searchContentFragment.updateView(value, style);
         }
     }
 
-    TextWatcher textWatcher = new TextWatcher(){
+    TextWatcher textWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
         @Override
         public void afterTextChanged(Editable s) {
             if (TextUtils.isEmpty(s.toString())) {

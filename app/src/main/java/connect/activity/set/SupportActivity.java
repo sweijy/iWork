@@ -41,7 +41,6 @@ public class SupportActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Set_Help_and_feedback);
         toolbarTop.setRightText(R.string.Set_FeedBack);
@@ -59,7 +58,7 @@ public class SupportActivity extends BaseActivity {
         updateProgress();
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

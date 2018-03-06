@@ -71,7 +71,6 @@ public class ContactInfoShowActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(null, R.string.Chat_Contact_details);
         toolbar.setRightTextEnable(false);
@@ -82,7 +81,7 @@ public class ContactInfoShowActivity extends BaseActivity {
         showView();
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

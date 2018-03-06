@@ -53,7 +53,6 @@ public class GeneralActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Set_General);
 
@@ -81,7 +80,7 @@ public class GeneralActivity extends BaseActivity {
         SystemSetBean.putVibrate(!isSelector);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

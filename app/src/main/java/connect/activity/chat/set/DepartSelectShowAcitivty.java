@@ -51,7 +51,6 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
     @Override
     public void initView() {
         acitivty = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setRightText(getString(R.string.Common_OK));
         toolbar.setLeftListener(new View.OnClickListener() {

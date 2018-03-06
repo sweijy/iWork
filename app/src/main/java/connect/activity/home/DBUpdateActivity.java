@@ -62,7 +62,6 @@ public class DBUpdateActivity extends BaseActivity {
     @Override
     public void initView() {
         activity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setTitle(getString(R.string.Chat_Update_Database));
 
         ValueAnimator animator = ValueAnimator.ofInt(0, 100);
