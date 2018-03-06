@@ -35,7 +35,7 @@ public class MessageReceiver implements MessageListener {
 
     private static String TAG = "_MessageReceiver";
 
-    private static MessageReceiver receiver;
+    public static MessageReceiver receiver;
 
     public synchronized static MessageReceiver getInstance() {
         if (receiver == null) {

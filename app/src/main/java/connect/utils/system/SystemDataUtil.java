@@ -241,8 +241,7 @@ public class SystemDataUtil {
             while (cursor.moveToNext()) {
                 contacts = new PhoneContactBean();
                 contacts.setName(cursor.getString(cursor.getColumnIndex("name")));
-                contacts.setPhone(cursor.getString(cursor
-                        .getColumnIndex("number")));
+                contacts.setPhone(cursor.getString(cursor.getColumnIndex("number")));
                 if (!tempList.contains(contacts.getPhone())) {
                     loacList.add(contacts);
                 }

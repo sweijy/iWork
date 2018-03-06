@@ -51,7 +51,7 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
             holder.departmentLinear.setVisibility(View.GONE);
             holder.contentLin.setVisibility(View.VISIBLE);
 
-            //GlideUtil.loadAvatarRound(holder.avater, departmentBean.getAvatar());
+            //GlideUtil.loadAvatarRound(holder.avatar, departmentBean.getAvatar());
             holder.nameTvS.setText(departmentBean.getName());
             if(TextUtils.isEmpty(departmentBean.getO_u())){
                 holder.nicName.setVisibility(View.GONE);
@@ -60,12 +60,12 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
                 holder.nicName.setText(departmentBean.getO_u());
             }
             if(departmentBean.getRegisted()){
-                holder.avater.setVisibility(View.GONE);
+                holder.avatar.setVisibility(View.GONE);
                 holder.avatarImage.setVisibility(View.VISIBLE);
                 GlideUtil.loadAvatarRound(holder.avatarImage, departmentBean.getAvatar(), 8);
             }else{
-                holder.avater.setVisibility(View.VISIBLE);
-                holder.avater.setAvatarName(departmentBean.getName(), true, departmentBean.getGender());
+                holder.avatar.setVisibility(View.VISIBLE);
+                holder.avatar.setAvatarName(departmentBean.getName(), true, departmentBean.getGender());
                 holder.avatarImage.setVisibility(View.GONE);
             }
         }
@@ -92,7 +92,7 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
 
         ImageView avatarImage;
         RelativeLayout contentLin;
-        DepartmentAvatar avater;
+        DepartmentAvatar avatar;
         TextView nameTvS;
         TextView nicName;
         Button addBtn;
@@ -104,7 +104,7 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             contentLin = (RelativeLayout)itemView.findViewById(R.id.content_layout);
-            avater = (DepartmentAvatar)itemView.findViewById(R.id.avatar_rimg);
+            avatar = (DepartmentAvatar)itemView.findViewById(R.id.avatar_rimg);
             nameTvS = (TextView)itemView.findViewById(R.id.nickname_tv);
             nicName = (TextView)itemView.findViewById(R.id.hint_tv);
             addBtn = (Button) itemView.findViewById(R.id.status_btn);

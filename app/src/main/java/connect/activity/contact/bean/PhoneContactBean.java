@@ -7,7 +7,7 @@ public class PhoneContactBean{
     private String id;
     private String phone;
     private String nickName;
-    private String avater;
+    private String avatar;
     private String name;
     private String address;
     private String pubKey;
@@ -37,12 +37,12 @@ public class PhoneContactBean{
         this.phone = phone;
     }
 
-    public String getAvater() {
-        return avater;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setAvater(String avater) {
-        this.avater = avater;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getName() {
