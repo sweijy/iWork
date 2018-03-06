@@ -33,6 +33,7 @@
     <application
         android:name="connect.activity.base.BaseApplication"
         android:allowBackup="true"
+        tools:replace="android:icon,android:theme"
         android:icon="@mipmap/connect_logo"
         android:label="@string/app_name"
         android:persistent="true"
@@ -247,13 +248,15 @@
         <activity
             android:name="connect.activity.workbench.WorkSeachActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="connect.activity.chat.set.DepartSelectShowAcitivty"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.set.GroupSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.chat.set.RobotSetActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

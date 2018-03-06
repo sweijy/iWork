@@ -1,6 +1,5 @@
 package connect.activity.contact;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +13,9 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,6 @@ import connect.activity.base.BaseActivity;
 import connect.activity.contact.adapter.DepartmentAdapter;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.OrganizerEntity;
@@ -41,6 +42,7 @@ import protos.Connect;
 /**
  *  组织架构
  */
+@Route(path = "/iwork/contact/ContactInfoShowActivity")
 public class DepartmentActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -62,11 +64,6 @@ public class DepartmentActivity extends BaseActivity {
     private DepartmentAdapter adapter;
     private ArrayList<Connect.Department> nameList = new ArrayList<>();
     private UserBean userBean;
-
-    public static void lunchActivity(Activity activity) {
-        Bundle bundle = new Bundle();
-        ActivityUtil.next(activity, DepartmentActivity.class, bundle);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,9 +177,12 @@ public class DepartmentActivity extends BaseActivity {
                 requestDepartment(departmentBean.getId());
             } else {
                 if(userBean.getUid().equals(departmentBean.getUid())){
-                    UserInfoActivity.startActivity(mActivity);
+                    ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                            navigation();
                 }else if(departmentBean.getRegisted()){
-                    ContactInfoActivity.lunchActivity(mActivity, departmentBean.getUid());
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                            .withString("uid",departmentBean.getUid())
+                            .navigation();
                 }else{
                     String department = TextUtils.isEmpty(departmentBean.getO_u()) ? nameList.get(nameList.size()-1).getName() : departmentBean.getO_u();
                     Connect.Workmate.Builder builder = Connect.Workmate.newBuilder();
@@ -196,7 +196,10 @@ public class DepartmentActivity extends BaseActivity {
                     builder.setRegisted(departmentBean.getRegisted());
                     builder.setUid(departmentBean.getUid());
                     builder.setOU(department);
-                    ContactInfoShowActivity.lunchActivity(mActivity, builder.build());
+
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                            .withSerializable("workmate",builder.build())
+                            .navigation();
                 }
             }
         }

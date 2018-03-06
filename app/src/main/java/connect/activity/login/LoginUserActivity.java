@@ -1,6 +1,5 @@
 package connect.activity.login;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,18 +13,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.ByteString;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
-import connect.activity.home.HomeActivity;
 import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.utils.StringUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
@@ -38,6 +38,7 @@ import protos.Connect;
 /**
  * Login
  */
+@Route(path = "/iwork/login/LoginUserActivity")
 public class LoginUserActivity extends BaseActivity {
 
     @Bind(R.id.name_et)
@@ -57,11 +58,10 @@ public class LoginUserActivity extends BaseActivity {
     @Bind(R.id.password_clear_image)
     ImageView passwordClearImage;
 
-    private LoginUserActivity mActivity;
+    @Autowired
+    String value;
 
-    public static void startActivity(Activity activity) {
-        ActivityUtil.next(activity, LoginUserActivity.class);
-    }
+    private LoginUserActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +165,8 @@ public class LoginUserActivity extends BaseActivity {
                         userBean1.setTips(userLoginInfo.getTips());
                         SharedPreferenceUtil.getInstance().putUser(userBean1);
 
-                        HomeActivity.startActivity(mActivity);
+                        ARouter.getInstance().build("/iwork/HomeActivity")
+                                .navigation();
                         mActivity.finish();
                     }
                 } catch (Exception e) {
@@ -214,7 +215,9 @@ public class LoginUserActivity extends BaseActivity {
                 userBean1.setMobile(userLoginInfo.getMobile());
                 userBean1.setTips(userLoginInfo.getTips());
                 SharedPreferenceUtil.getInstance().putUser(userBean1);
-                HomeActivity.startActivity(mActivity);
+
+                ARouter.getInstance().build("/iwork/HomeActivity")
+                        .navigation();
                 mActivity.finish();
             }
 

@@ -1,12 +1,14 @@
 package connect.activity.workbench;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,6 +31,7 @@ import connect.widget.TopToolBar;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
 
+@Route(path = "/iwork/workbench/WarehouseActivity")
 public class WarehouseActivity extends BaseActivity {
 
     @Bind(R.id.no_data_lin)
@@ -52,10 +55,6 @@ public class WarehouseActivity extends BaseActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();
-    }
-
-    public static void lunchActivity(Activity activity) {
-        ActivityUtil.next(activity, WarehouseActivity.class);
     }
 
     @Override
@@ -117,7 +116,10 @@ public class WarehouseActivity extends BaseActivity {
     WarehouseAdapter.OnItemClickListener onItemClickListener = new WarehouseAdapter.OnItemClickListener(){
         @Override
         public void itemClick(Connect.StaffLog visitorRecord) {
-            WarehouseDetailActivity.lunchActivity(mActivity, visitorRecord.getId());
+            long id= visitorRecord.getId();
+            ARouter.getInstance().build("/iwork/workbench/WarehouseDetailActivity")
+                    .withLong("id", id)
+                    .navigation();
         }
     };
 

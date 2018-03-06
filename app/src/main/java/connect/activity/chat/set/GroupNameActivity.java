@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
@@ -17,6 +20,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
+@Route(path = "/iwork/chat/set/GroupNameActivity")
 public class GroupNameActivity extends BaseActivity implements GroupNameContract.BView{
 
     @Bind(R.id.toolbar)
@@ -25,6 +29,9 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
     TextView txt1;
     @Bind(R.id.edittxt1)
     EditText edittxt1;
+
+    @Autowired
+    String groupIdentify;
 
     private GroupNameActivity activity;
     private static String TAG = "_GroupNameActivity";
@@ -40,12 +47,6 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
         setContentView(R.layout.activity_group_name);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String groupkey) {
-        Bundle bundle = new Bundle();
-        bundle.putString(GROUP_IDENTIFY, groupkey);
-        ActivityUtil.next(activity, GroupNameActivity.class, bundle);
     }
 
     @Override

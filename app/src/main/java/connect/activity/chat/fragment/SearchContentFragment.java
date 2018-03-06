@@ -11,28 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
-import connect.activity.chat.ChatActivity;
 import connect.activity.chat.adapter.SearchAdapter;
 import connect.activity.chat.fragment.bean.SearchBean;
-import connect.activity.contact.ContactInfoActivity;
-import connect.activity.contact.ContactInfoShowActivity;
 import connect.activity.login.bean.UserBean;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ParamManager;
 import connect.database.green.bean.ContactEntity;
-import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
 import connect.utils.ProgressUtil;
-import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
@@ -84,60 +79,70 @@ public class SearchContentFragment extends BaseFragment {
         recyclerview.setAdapter(adapter);
     }
 
-    private void updateView(ArrayList<SearchBean> list){
-        if(list.size() > 0){
+    private void updateView(ArrayList<SearchBean> list) {
+        if (list.size() > 0) {
             noDataLin.setVisibility(View.GONE);
             recyclerview.setVisibility(View.VISIBLE);
             adapter.setDataNotify(list);
-        }else{
+        } else {
             noDataLin.setVisibility(View.VISIBLE);
             recyclerview.setVisibility(View.GONE);
         }
     }
 
-    SearchAdapter.OnItemChildClickListener onItemChildClickListener = new SearchAdapter.OnItemChildClickListener(){
+    SearchAdapter.OnItemChildClickListener onItemChildClickListener = new SearchAdapter.OnItemChildClickListener() {
         @Override
         public void itemClick(int position, SearchBean searchBean) {
             if (searchBean.getStyle() == 1) {
-                if(workmates.getListList().size() > position){
+                if (workmates.getListList().size() > position) {
                     Connect.Workmate workmate = workmates.getListList().get(position);
-                    if(userBean.getUid().equals(workmate.getUid())){
-                        UserInfoActivity.startActivity(mActivity);
-                    }else if(workmate.getRegisted()){
-                        ContactInfoActivity.lunchActivity(mActivity, workmate.getUid());
-                    }else{
-                        ContactInfoShowActivity.lunchActivity(mActivity, workmate);
+                    if (userBean.getUid().equals(workmate.getUid())) {
+                        ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                                navigation();
+                    } else if (workmate.getRegisted()) {
+                        ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                .withString("uid",workmate.getUid())
+                                .navigation();
+                    } else {
+                        ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                                .withSerializable("workmate",workmate)
+                                .navigation();
                     }
                 }
             } else if (searchBean.getStyle() == 2) {
-                ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, searchBean.getUid());
+                ARouter.getInstance().build("/chat/ChatActivity")
+                        .withSerializable("CHAT_TYPE", Connect.ChatType.GROUP)
+                        .withString("CHAT_IDENTIFY", searchBean.getUid())
+                        .navigation();
             } else if (searchBean.getStyle() == 3) {
-                if(searchBean.getStatus() == 1){
-                    ChatActivity.startActivity(mActivity, Connect.ChatType.PRIVATE, searchBean.getUid(), searchBean.getSearchStr());
-                }else{
-                    ChatActivity.startActivity(mActivity, Connect.ChatType.GROUPCHAT, searchBean.getUid(), searchBean.getSearchStr());
-                }
+                ARouter.getInstance().build("/chat/ChatActivity")
+                        .withSerializable("CHAT_TYPE", searchBean.getStatus() == 1 ?
+                                Connect.ChatType.PRIVATE :
+                                Connect.ChatType.GROUP)
+                        .withString("CHAT_IDENTIFY", searchBean.getUid())
+                        .withString("CHAT_SEARCH_TXT", searchBean.getSearchStr())
+                        .navigation();
             }
         }
     };
 
-    public void updateView(String value, int status){
+    public void updateView(String value, int status) {
         ParamManager.getInstance().putCommonlyString(value);
         ArrayList<SearchBean> list = new ArrayList<>();
-        if(status == 0 || status == 1){
+        if (status == 0 || status == 1) {
             requestSearch(value, status);
             return;
-        }else if(status == 2){
+        } else if (status == 2) {
             list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
             updateView(list);
-        } else if(status == 3){
+        } else if (status == 3) {
             list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
             list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
             updateView(list);
         }
     }
 
-    private void requestSearch(final String value, final int status){
+    private void requestSearch(final String value, final int status) {
         ProgressUtil.getInstance().showProgress(mActivity);
         Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
                 .setCriteria(value)
@@ -158,13 +163,13 @@ public class SearchContentFragment extends BaseFragment {
                         searchBean.setAvatar(workmate.getAvatar());
                         list.add(searchBean);
                     }
-                    if(status == 0){
+                    if (status == 0) {
                         list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
                         list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
                         list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
                     }
                     updateView(list);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -173,7 +178,7 @@ public class SearchContentFragment extends BaseFragment {
             public void onError(Connect.HttpNotSignResponse response) {
                 ProgressUtil.getInstance().dismissProgress();
                 ArrayList<SearchBean> list = new ArrayList<>();
-                if(status == 0){
+                if (status == 0) {
                     list.addAll(ContactHelper.getInstance().loadGroupByMemberName(value));
                     list.addAll(ContactHelper.getInstance().loadGroupByMessages(value));
                     list.addAll(ContactHelper.getInstance().loadChatByMessages(value));
@@ -184,11 +189,11 @@ public class SearchContentFragment extends BaseFragment {
     }
 
 
-    private ArrayList<SearchBean> getFriendData(String value){
+    private ArrayList<SearchBean> getFriendData(String value) {
         ArrayList<SearchBean> list = new ArrayList<>();
         List<ContactEntity> listFriend = ContactHelper.getInstance().loadFriendEntityFromText(value);
-        for(ContactEntity contactEntity : listFriend){
-            if(!TextUtils.isEmpty(contactEntity.getPublicKey())){
+        for (ContactEntity contactEntity : listFriend) {
+            if (!TextUtils.isEmpty(contactEntity.getPublicKey())) {
                 SearchBean searchBean = new SearchBean();
                 searchBean.setStyle(1);
                 searchBean.setUid(contactEntity.getUid());

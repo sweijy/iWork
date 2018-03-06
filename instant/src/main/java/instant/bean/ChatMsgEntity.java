@@ -306,7 +306,7 @@ public final class ChatMsgEntity implements Serializable, Cloneable {
         switch (chatType) {
             case PRIVATE:
                 break;
-            case GROUPCHAT://show group member nickname
+            case GROUP://show group member nickname
 //                GroupMemberEntity memberEntity = ContactHelper.getInstance().loadGroupMemberEntity(getMessage_ower(), getMessage_from());
 //                if (memberEntity != null) {
 //                    String memberName = TextUtils.isEmpty(memberEntity.getNick()) ? memberEntity.getUsername() : memberEntity.getNick();

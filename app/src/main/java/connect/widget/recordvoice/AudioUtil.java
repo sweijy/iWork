@@ -76,10 +76,10 @@ public class AudioUtil {
     private void releaseRecorder() {
         if (mediaRecorder != null) {
             //// TODO: 2017/3/23   The following three parameters must be added, if not, it will collapse，mediarecorder.stop();
-           //// TODO: 2017/3/23     RuntimeException:stop failed
+            //// TODO: 2017/3/23     RuntimeException:stop failed
             mediaRecorder.setOnErrorListener(null);
             mediaRecorder.setOnInfoListener(null);
-            mediaRecorder.setPreviewDisplay(null);
+            // mediaRecorder.setPreviewDisplay(null); //会弹出申请摄像头的权限对话框
 
             try {
                 mediaRecorder.stop();
@@ -110,7 +110,7 @@ public class AudioUtil {
      */
     public void finishRecorder() {
         recordTimer.cancel();
-        releaseRecorder();
+         releaseRecorder();
         if (recordListener != null && !TextUtils.isEmpty(recordPath)) {
             recordListener.recordFinish(recordPath);
             recordPath = null;

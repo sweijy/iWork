@@ -2,6 +2,8 @@ package connect.activity.chat.activity;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -9,9 +11,6 @@ import java.util.ArrayList;
 
 import connect.activity.base.BaseListener;
 import connect.activity.chat.bean.RecExtBean;
-import connect.activity.chat.bean.RoomSession;
-import connect.activity.chat.exts.GoogleMapActivity;
-import connect.activity.chat.exts.GroupAtActivity;
 import connect.activity.chat.set.ContactCardActivity;
 import connect.activity.home.HomeActivity;
 import connect.database.green.DaoHelper.MessageHelper;
@@ -81,7 +80,9 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                 }
                 break;
             case NAMECARD:
-                ContactCardActivity.startActivity(activity,chatIdentify);
+                ARouter.getInstance().build("/iwork/chat/set/ContactCardActivity")
+                        .withString("UID",chatIdentify)
+                        .navigation();
                 break;
             case MSGSTATE://message send state 0:sending 1:send success 2:send fail 3:send refuse
                 if (chatIdentify.equals(objects[0])) {
@@ -136,13 +137,6 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
             case GROUP_UPDATEMYNAME://update my nick in group
                 ((GroupChat) normalChat).updateMyNickName();
                 break;
-            case MAP_LOCATION:
-                GoogleMapActivity.startActivity(activity);
-                break;
-            case LUCKPACKET_RECEIVE://receive a lucky packet
-                msgExtEntity = normalChat.noticeMsg(3, (String) objects[0], (String) objects[1]);
-                sendNormalMsg(false, msgExtEntity);
-                break;
             case GROUP_REMOVE://dissolute group
                 if (normalChat.chatKey().equals(objects[0])) {
                     ActivityUtil.backActivityWithClearTop(activity, HomeActivity.class);
@@ -153,10 +147,10 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                     // ((FriendChat) normalChat).setFriendCookie(null);
                 }
                 break;
-            case UNARRIVE_HALF:
-                break;
             case GROUPAT_TO:
-                GroupAtActivity.startActivity(activity, normalChat.chatKey());
+                ARouter.getInstance().build("/iwork/chat/exts/GroupAtActivity")
+                        .withString("GROUP_IDENTIFY",normalChat.chatKey())
+                        .navigation();
                 break;
             case MESSAGE_RECEIVE:
                 if (objects[0].equals(chatIdentify)) {

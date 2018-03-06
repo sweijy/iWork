@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import connect.widget.TopToolBar;
 /**
  * Created by gtq on 2016/12/13.
  */
+@Route(path = "/iwork/chat/set/ContactCardActivity")
 public class ContactCardActivity extends BaseActivity implements ContactCardContract.BView {
 
     @Bind(R.id.recyclerview)
@@ -55,12 +58,6 @@ public class ContactCardActivity extends BaseActivity implements ContactCardCont
         setContentView(R.layout.activity_contactcard);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String uid) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(UID, uid);
-        ActivityUtil.next(activity, ContactCardActivity.class, bundle);
     }
 
     @Override

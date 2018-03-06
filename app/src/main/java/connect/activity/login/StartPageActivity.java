@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.huawei.android.hms.agent.HuaweiRegister;
 
 import butterknife.Bind;
@@ -17,6 +19,7 @@ import connect.ui.activity.R;
 /**
  * The App start page.
  */
+@Route(path = "/iwork/login/StartPageActivity")
 public class StartPageActivity extends BaseActivity implements StartContract.View {
 
     @Bind(R.id.start_img)
@@ -48,12 +51,14 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
 
     @Override
     public void goIntoLoginForPhone() {
-        LoginUserActivity.startActivity(mActivity);
+        ARouter.getInstance().build("/iwork/login/LoginUserActivity")
+                .navigation();
     }
 
     @Override
     public void goIntoHome() {
-        HomeActivity.startActivity(mActivity);
+        ARouter.getInstance().build("/iwork/HomeActivity")
+                .navigation();
     }
 
     @Override

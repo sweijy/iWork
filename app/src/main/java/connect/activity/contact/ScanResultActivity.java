@@ -1,9 +1,11 @@
 package connect.activity.contact;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -13,6 +15,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
+@Route(path = "/iwork/contact/ContactInfoShowActivity")
 public class ScanResultActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -20,13 +23,10 @@ public class ScanResultActivity extends BaseActivity {
     @Bind(R.id.result_text)
     TextView resultText;
 
-    private ScanResultActivity mActivity;
+    @Autowired
+    String value;
 
-    public static void lunchActivity(Activity activity, String value) {
-        Bundle bundle = new Bundle();
-        bundle.putString("value", value);
-        ActivityUtil.next(activity, ScanResultActivity.class, bundle);
-    }
+    private ScanResultActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

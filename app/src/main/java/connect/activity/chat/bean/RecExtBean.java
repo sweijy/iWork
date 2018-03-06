@@ -35,9 +35,6 @@ public class RecExtBean extends BaseEvent {
         CLEAR_HISTORY,//clear message
         NOTICE,//notice
         NOTICE_NOTFRIEND,//notice not friend
-        PAYMENT,//gather
-        TRANSFER,//transaction
-        REDPACKET,//lucky packet
         NAMECARD,//name card
         MSGSTATE,//message send state 0:seding 1:send success 2:send fail 3:send refuse
         MSGSTATEVIEW,//Update message status
@@ -48,19 +45,13 @@ public class RecExtBean extends BaseEvent {
         VOICE_UNREAD,//Voice did not read, read the next unread voice message
         VOICE_COMPLETE,//Audio message natural finish
         VOICE_RELEASE,//Audio message forced to stop
-        BURNSTATE,//burn message update state
         UPDATENAME,//update group name
         GROUP_UPDATEMYNAME,//update nick in group
-        MAP_LOCATION,
-        LUCKPACKET_RECEIVE,//receive a lucky packet
         GROUP_AT,//group at
         GROUP_REMOVE,//dissolution group
         UNARRIVE_UPDATE,//update friend Cookie
-        UNARRIVE_HALF,//half random
         MESSAGE_RECEIVE,//receive push message
         GROUPAT_TO,//to groupat activity
-        BURNREAD_SET,//Burn after reading setting
-        BURNREAD_RECEIPT,//Burning receipt after reading
     }
 
     private ExtType extType;

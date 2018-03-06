@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,7 +30,7 @@ import connect.utils.ActivityUtil;
 /**
  * Created by Administrator on 2018/2/1 0001.
  */
-
+@Route(path = "/chat/SearchContentActivity")
 public class SearchContentActivity extends BaseFragmentActivity {
 
     @Bind(R.id.search_edit)

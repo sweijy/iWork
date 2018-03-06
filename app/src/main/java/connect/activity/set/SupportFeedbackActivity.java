@@ -14,6 +14,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,6 +29,7 @@ import connect.widget.TopToolBar;
 /**
  * Through the web page to submit feedback.
  */
+@Route(path = "/iwork/set/SupportFeedbackActivity")
 public class SupportFeedbackActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)

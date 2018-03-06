@@ -177,11 +177,7 @@ public class NotificationBar {
         Connect.ChatType chatType = Connect.ChatType.forNumber(type);
         switch (chatType) {
             case PRIVATE:
-            case GROUPCHAT:
-                tickerTitle = title;
-                titcketContent = content;
-                break;
-            case GROUP_DISCUSSION:
+            case GROUP:
                 tickerTitle = title;
                 titcketContent = content;
                 break;

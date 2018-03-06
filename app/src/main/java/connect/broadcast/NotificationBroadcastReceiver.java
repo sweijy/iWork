@@ -4,10 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.activity.base.BaseApplication;
 import connect.activity.chat.ChatActivity;
 import connect.activity.home.HomeActivity;
-import connect.activity.login.StartPageActivity;
 import connect.utils.log.LogManager;
 import protos.Connect;
 
@@ -30,9 +31,8 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         } else {
             if (BaseApplication.getInstance().isEmptyActivity()) {
                 LogManager.getLogger().d(TAG, "TO START ACTIVITY");
-                intent = new Intent(context, StartPageActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                ARouter.getInstance().build("/iwork/login/StartPageActivity")
+                        .navigation();
             } else {
                 LogManager.getLogger().d(TAG, "TO CHAT ACTIVITY");
                 int chattype = intent.getIntExtra("ROOM_TYPE", 0);

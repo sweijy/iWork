@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.ByteString;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,25 +27,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
-import connect.activity.chat.exts.OuterWebsiteActivity;
 import connect.activity.contact.bean.AppsState;
 import connect.activity.home.adapter.WorkbenchMenuAdapter;
-import connect.activity.workbench.VisitorsActivity;
-import connect.activity.workbench.WarehouseActivity;
-import connect.activity.workbench.WorkSeachActivity;
 import connect.activity.workbench.data.MenuBean;
 import connect.activity.workbench.data.MenuData;
 import connect.database.green.DaoHelper.ApplicationHelper;
 import connect.database.green.bean.ApplicationEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
-import connect.utils.dialog.DialogUtil;
 import connect.utils.UriUtil;
+import connect.utils.dialog.DialogUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
 import connect.widget.cyclepager.CycleViewPager;
 import protos.Connect;
 
+@Route(path = "/iwork/home/fragment/WorkbenchFragment")
 public class WorkbenchFragment extends BaseFragment {
 
     @Bind(R.id.search_relative)
@@ -94,8 +92,10 @@ public class WorkbenchFragment extends BaseFragment {
         cycleViewPager.setOnItemClickListener(new CycleViewPager.ItemSyscleClickListener() {
             @Override
             public void itemClickL(Connect.Banner banner, int position) {
-                if(!TextUtils.isEmpty(banner.getHref())){
-                    OuterWebsiteActivity.startActivity(activity, banner.getHref());
+                if (!TextUtils.isEmpty(banner.getHref())) {
+                    ARouter.getInstance().build("/iwork/chat/exts/OuterWebsiteActivity")
+                            .withString("URL", banner.getHref())
+                            .navigation();
                 }
             }
         });
@@ -137,7 +137,9 @@ public class WorkbenchFragment extends BaseFragment {
 
     @OnClick(R.id.manager_tv)
     void managerMyApp(View view) {
-        WorkSeachActivity.startActivity(activity, 1);
+        ARouter.getInstance().build("/iwork/workbench/WorkSeachActivity")
+                .withInt("category", 1)
+                .navigation();
     }
 
     WorkbenchMenuAdapter.OnItemMenuClickListener onItemMenuClickListener = new WorkbenchMenuAdapter.OnItemMenuClickListener() {
@@ -159,12 +161,16 @@ public class WorkbenchFragment extends BaseFragment {
         @Override
         public void itemClick(int position, MenuBean item) {
             if (item.getCode().equals("visitors")) {
-                VisitorsActivity.lunchActivity(activity);
-            }else if (item.getCode().equals("add")){
-                WorkSeachActivity.startActivity(activity,2);
-            }else if(item.getCode().equals("warehouse")){
-                ActivityUtil.next(activity, WarehouseActivity.class);
-            }else {
+                ARouter.getInstance().build("/iwork/workbench/VisitorsActivity").
+                        navigation();
+            } else if (item.getCode().equals("add")) {
+                ARouter.getInstance().build("/iwork/workbench/WorkSeachActivity")
+                        .withInt("category", 2)
+                        .navigation();
+            } else if (item.getCode().equals("warehouse")) {
+                ARouter.getInstance().build("/iwork/workbench/WarehouseActivity")
+                        .navigation();
+            } else {
                 DialogUtil.showAlertTextView(activity, getString(R.string.Set_tip_title),
                         getString(R.string.Link_Function_Under_Development),
                         "", "", true, new DialogUtil.OnItemClickListener() {
@@ -235,7 +241,9 @@ public class WorkbenchFragment extends BaseFragment {
     void onClickListener(View view) {
         switch (view.getId()) {
             case R.id.search_relative:
-                WorkSeachActivity.startActivity(activity,0);
+                ARouter.getInstance().build("/iwork/workbench/WorkSeachActivity")
+                        .withInt("category", 0)
+                        .navigation();
                 break;
         }
     }

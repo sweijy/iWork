@@ -3,13 +3,9 @@ package connect.utils.scan;
 import android.app.Activity;
 import android.net.Uri;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.net.URL;
-
-import connect.activity.chat.exts.OuterWebsiteActivity;
-import connect.activity.contact.ContactInfoActivity;
-import connect.activity.contact.ScanResultActivity;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.ContactEntity;
 import connect.ui.activity.R;
@@ -53,7 +49,9 @@ public class ResolveScanUtil {
             dealScanTransfer(value);
         }*/else {
             //dealScanValue(value);
-            ScanResultActivity.lunchActivity(activity, value);
+            ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                    .withString("value", value)
+                    .navigation();
             activity.finish();
         }
     }
@@ -63,7 +61,9 @@ public class ResolveScanUtil {
      */
     private void dealScanUrl(String value){
         try {
-            OuterWebsiteActivity.startActivity(activity,value);
+            ARouter.getInstance().build("/iwork/chat/exts/OuterWebsiteActivity")
+                    .withString("URL", value)
+                    .navigation();
             ActivityUtil.goBack(activity);
             /*URL url = new URL(value);
             if(RegularUtil.matches(value,Url_Packet_Transfer_Group)){
@@ -111,11 +111,15 @@ public class ResolveScanUtil {
             public void call(int status, String uid) {
                 switch (status){
                     case 1:
-                        ContactInfoActivity.lunchActivity(activity, uid);
+                        ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                .withString("uid",uid)
+                                .navigation();
                         ActivityUtil.goBack(activity);
                         break;
                     case 2:
-                        ContactInfoActivity.lunchActivity(activity, uid);
+                        ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                .withString("uid",uid)
+                                .navigation();
                         ActivityUtil.goBack(activity);
                         break;
                     case 3:

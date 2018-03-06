@@ -76,20 +76,8 @@ public class MorePagerAdapter extends PagerAdapter {
                     case R.string.Chat_Sight:
                         RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.TAKE_PHOTO);
                         break;
-                    case R.string.Wallet_Transfer:
-                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.TRANSFER);
-                        break;
-                    case R.string.Wallet_Packet:
-                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.REDPACKET);
-                        break;
-                    case R.string.Wallet_Receipt:
-                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.PAYMENT);
-                        break;
                     case R.string.Chat_Name_Card:
                         RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.NAMECARD);
-                        break;
-                    case R.string.Chat_Loc:
-                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MAP_LOCATION);
                         break;
                 }
             }

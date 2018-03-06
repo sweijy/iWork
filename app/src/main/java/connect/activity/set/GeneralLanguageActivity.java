@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -15,13 +18,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
 import connect.activity.base.BaseApplication;
-import connect.activity.home.HomeActivity;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.set.adapter.CurrencyAdapter;
-import connect.utils.data.LanguageData;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
+import connect.utils.data.LanguageData;
 import connect.utils.data.RateBean;
 import connect.utils.system.SystemDataUtil;
 import connect.widget.TopToolBar;
@@ -29,6 +31,7 @@ import connect.widget.TopToolBar;
 /**
  * Within the application language switching
  */
+@Route(path = "/iwork/set/GeneralLanguageActivity")
 public class GeneralLanguageActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -110,7 +113,8 @@ public class GeneralLanguageActivity extends BaseActivity {
                 activity.finish();
             }
         }
-        HomeActivity.startActivity(mActivity);
+        ARouter.getInstance().build("/iwork/HomeActivity")
+                .navigation();
         mActivity.finish();
     }
 

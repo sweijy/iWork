@@ -11,6 +11,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +23,17 @@ import connect.activity.base.BaseActivity;
 import connect.activity.chat.adapter.GroupCreateAdapter;
 import connect.activity.chat.set.contract.GroupCreateContract;
 import connect.activity.chat.set.presenter.GroupCreatePresenter;
-import connect.activity.home.HomeActivity;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
+/**
+ * GroupCreateActivity
+ */
+@Route(path = "/iwork/chat/set/GroupCreateActivity")
 public class GroupCreateActivity extends BaseActivity implements GroupCreateContract.BView {
 
     @Bind(R.id.toolbar)
@@ -38,10 +43,11 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
 
-    private static String CONTACT_LIST = "CONTACT_LIST";
+    @Autowired
+    ArrayList<Connect.Workmate> workmates;
+
     private GroupCreateActivity activity;
     boolean isCreate = true;
-    private List<Connect.Workmate> workmates;
     private GroupCreateContract.Presenter presenter;
 
     @Override
@@ -50,12 +56,6 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         setContentView(R.layout.activity_group_create);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, ArrayList<Connect.Workmate> workmates) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(CONTACT_LIST, workmates);
-        ActivityUtil.next(activity, GroupCreateActivity.class, bundle);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
                 if (TextUtils.isEmpty(groupName)) {
                     groupName = edittxt1.getHint().toString();
                 }
-                if(isCreate){
+                if (isCreate) {
                     presenter.createGroup(groupName);
                 }
 
@@ -93,7 +93,6 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
         edittxt1.setHint(String.format(activity.getString(R.string.Link_user_friends), userBean.getName()));
 
-        workmates = (List<Connect.Workmate>) getIntent().getSerializableExtra(CONTACT_LIST);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new LineDecoration(activity));

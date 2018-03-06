@@ -8,6 +8,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -17,9 +21,7 @@ import connect.activity.chat.SearchContentActivity;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.set.contract.PrivateSetContract;
 import connect.activity.chat.set.presenter.PrivateSetPresenter;
-import connect.activity.contact.ContactInfoActivity;
 import connect.activity.home.bean.ConversationAction;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
@@ -34,6 +36,7 @@ import connect.widget.TopToolBar;
  * private chat setting
  * Created by gtq on 2016/11/22.
  */
+@Route(path = "/iwork/chat/set/PrivateSetActivity")
 public class PrivateSetActivity extends BaseActivity implements PrivateSetContract.BView {
 
     @Bind(R.id.toolbar)
@@ -41,12 +44,15 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
     @Bind(R.id.linearlayout)
     LinearLayout linearlayout;
 
+    @Autowired
+    String uid;
+    @Autowired
+    String avatar;
+    @Autowired
+    String userName;
+
     private PrivateSetActivity activity;
     private static String TAG = "_PrivateSetActivity";
-
-    private String roomKey = "";
-    private String avatar = "";
-    private String name = "";
 
     private PrivateSetContract.Presenter presenter;
 
@@ -56,14 +62,6 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
         setContentView(R.layout.activity_singleset);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String uid, String avatar, String name) {
-        Bundle bundle = new Bundle();
-        bundle.putString("Uid", uid);
-        bundle.putString("Avatar", avatar);
-        bundle.putString("Name", name);
-        ActivityUtil.next(activity, PrivateSetActivity.class, bundle);
     }
 
     @Override
@@ -78,9 +76,6 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
             }
         });
 
-        roomKey = getIntent().getStringExtra("Uid");
-        avatar = getIntent().getStringExtra("Avatar");
-        name = getIntent().getStringExtra("Name");
         new PrivateSetPresenter(this).start();
     }
 
@@ -96,7 +91,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
 
     @Override
     public String getRoomKey() {
-        return roomKey;
+        return uid;
     }
 
     @Override
@@ -106,7 +101,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
 
     @Override
     public String getName() {
-        return name;
+        return userName;
     }
 
     @Override
@@ -141,10 +136,10 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                 v.setSelected(!v.isSelected());
                 int top = v.isSelected() ? 1 : 0;
 
-                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(roomKey);
+                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
                 if (conversionEntity == null) {
                     conversionEntity = new ConversionEntity();
-                    conversionEntity.setIdentifier(roomKey);
+                    conversionEntity.setIdentifier(uid);
                 }
                 conversionEntity.setTop(top);
                 ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
@@ -169,10 +164,10 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                 v.setSelected(!v.isSelected());
                 int disturb = v.isSelected() ? 1 : 0;
 
-                ConversionSettingEntity settingEntity = ConversionSettingHelper.getInstance().loadSetEntity(roomKey);
+                ConversionSettingEntity settingEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
                 if (settingEntity == null) {
                     settingEntity = new ConversionSettingEntity();
-                    settingEntity.setIdentifier(roomKey);
+                    settingEntity.setIdentifier(uid);
                 }
                 settingEntity.setDisturb(disturb);
                 ConversionSettingHelper.getInstance().insertSetEntity(settingEntity);
@@ -197,8 +192,8 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                 DialogUtil.showBottomView(activity, strings, new DialogUtil.DialogListItemClickListener() {
                     @Override
                     public void confirm(int position) {
-                        ConversionHelper.getInstance().deleteRoom(roomKey);
-                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.CLEAR_HISTORY, roomKey);
+                        ConversionHelper.getInstance().deleteRoom(uid);
+                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.CLEAR_HISTORY, uid);
                     }
                 });
             }
@@ -214,11 +209,17 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
             public void onClick(View v) {
                 String uid = (String) v.getTag();
                 if (TextUtils.isEmpty(uid)) {
-                    GroupSelectActivity.startActivity(activity, true, roomKey);
+                    ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                            .withBoolean("isCreate", true)
+                            .withSerializable("groupIdentify", uid)
+                            .navigation();
                 } else if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(uid)) {
-                    UserInfoActivity.startActivity(activity);
+                    ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                            navigation();
                 } else {
-                    ContactInfoActivity.lunchActivity(activity, uid);
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                            .withString("uid",uid)
+                            .navigation();
                 }
             }
         });

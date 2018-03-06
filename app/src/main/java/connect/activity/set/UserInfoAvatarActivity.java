@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import connect.widget.takepicture.TakePictureActivity;
 /**
  * Modify the user's head.
  */
+@Route(path = "/iwork/set/UserInfoAvatarActivity")
 public class UserInfoAvatarActivity extends BaseActivity implements UserInfoAvatarContract.View {
 
     @Bind(R.id.toolbar_top)

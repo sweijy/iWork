@@ -1,10 +1,10 @@
 package connect.activity.chat.view.holder;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import connect.activity.chat.exts.GoogleMapActivity;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.activity.chat.view.BubbleImg;
 import connect.ui.activity.R;
 import connect.utils.StringUtil;
@@ -37,7 +37,10 @@ public class MsgLocationHolder extends MsgChatHolder {
         contentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoogleMapActivity.startActivity((Activity) context, locationMessage.getLatitude(), locationMessage.getLongitude());
+                ARouter.getInstance().build("/iwork/chat/exts/GoogleMapActivity")
+                        .withDouble("LATITUDE",locationMessage.getLatitude())
+                        .withDouble("LONGITUDE",locationMessage.getLongitude())
+                        .navigation();
             }
         });
     }

@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,6 +28,7 @@ import connect.widget.TopToolBar;
 /**
  * The user general Settings
  */
+@Route(path = "/iwork/set/GeneralActivity")
 public class GeneralActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -87,7 +91,8 @@ public class GeneralActivity extends BaseActivity {
 
     @OnClick(R.id.language_ll)
     void goLanguage(View view) {
-        ActivityUtil.next(mActivity, GeneralLanguageActivity.class);
+        ARouter.getInstance().build("/iwork/set/GeneralLanguageActivity").
+                navigation();
     }
 
     @OnClick(R.id.clear_chat_tv)

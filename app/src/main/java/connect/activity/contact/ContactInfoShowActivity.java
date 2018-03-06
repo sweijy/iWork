@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,7 +24,7 @@ import protos.Connect;
 /**
  * Created by Administrator on 2018/2/28 0028.
  */
-
+@Route(path = "/iwork/contact/ContactInfoShowActivity")
 public class ContactInfoShowActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
@@ -51,14 +54,10 @@ public class ContactInfoShowActivity extends BaseActivity {
     @Bind(R.id.chat_btn)
     Button chatBtn;
 
-    private ContactInfoShowActivity mActivity;
-    private Connect.Workmate workmate;
+    @Autowired
+    Connect.Workmate workmate;
 
-    public static void lunchActivity(Activity activity, Connect.Workmate workmate) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", workmate);
-        ActivityUtil.next(activity, ContactInfoShowActivity.class, bundle);
-    }
+    private ContactInfoShowActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

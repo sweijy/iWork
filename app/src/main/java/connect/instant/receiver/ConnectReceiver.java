@@ -20,9 +20,9 @@ public class ConnectReceiver implements ConnectListener {
 
     private static String TAG = "_ConnectReceiver";
 
-    public static ConnectReceiver receiver = getInstance();
+    private static ConnectReceiver receiver;
 
-    private synchronized static ConnectReceiver getInstance() {
+    public synchronized static ConnectReceiver getInstance() {
         if (receiver == null) {
             receiver = new ConnectReceiver();
         }

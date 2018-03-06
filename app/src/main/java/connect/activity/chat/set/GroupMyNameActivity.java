@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
@@ -17,6 +20,10 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
+/**
+ * GroupMyNameActivity
+ */
+@Route(path = "/iwork/chat/set/GroupMyNameActivity")
 public class GroupMyNameActivity extends BaseActivity implements GroupMyAliasContract.BView {
 
     @Bind(R.id.toolbar)
@@ -25,6 +32,9 @@ public class GroupMyNameActivity extends BaseActivity implements GroupMyAliasCon
     EditText edittxt2;
     @Bind(R.id.txt1)
     TextView txt1;
+
+    @Autowired
+    String groupIdentify;
 
     private GroupMyNameActivity activity;
     private static String TAG = "_GroupMyNameActivity";
@@ -40,12 +50,6 @@ public class GroupMyNameActivity extends BaseActivity implements GroupMyAliasCon
         setContentView(R.layout.activity_group_my_name);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String groupkey) {
-        Bundle bundle = new Bundle();
-        bundle.putString(GROUP_IDENTIFY, groupkey);
-        ActivityUtil.next(activity, GroupMyNameActivity.class, bundle);
     }
 
     @Override

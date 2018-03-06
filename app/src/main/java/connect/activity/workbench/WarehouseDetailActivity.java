@@ -1,12 +1,13 @@
 package connect.activity.workbench;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,6 +29,7 @@ import connect.utils.okhttp.ResultCall;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
+@Route(path = "/iwork/workbench/WarehouseDetailActivity")
 public class WarehouseDetailActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -47,12 +49,6 @@ public class WarehouseDetailActivity extends BaseActivity {
     private long staffId;
     private Connect.StaffLog staffLog;
     private UserBean userBean;
-
-    public static void lunchActivity(Activity activity, Long id) {
-        Bundle bundle = new Bundle();
-        bundle.putLong("id", id);
-        ActivityUtil.next(activity, WarehouseDetailActivity.class, bundle);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

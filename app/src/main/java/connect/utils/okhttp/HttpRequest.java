@@ -69,6 +69,7 @@ public class HttpRequest {
 
     /**
      * get Request (with the prefix names)
+     *
      * @param url
      * @param callBack
      */
@@ -108,6 +109,7 @@ public class HttpRequest {
 
     /**
      * Post Request(ProtoBuff param)
+     *
      * @param url
      * @param body
      * @param resultCall
@@ -122,6 +124,7 @@ public class HttpRequest {
 
     /**
      * Post Request(byte[] param)
+     *
      * @param url
      * @param content
      * @param resultCall
@@ -143,11 +146,11 @@ public class HttpRequest {
             public void onFailure(Call call, IOException e) {
                 ProgressUtil.getInstance().dismissProgress();
                 mDelivery.post(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       resultCall.onError();
-                                   }
-                               });
+                    @Override
+                    public void run() {
+                        resultCall.onError();
+                    }
+                });
                 dealOnFailure(call);
             }
 
@@ -173,16 +176,16 @@ public class HttpRequest {
                 } else if (code == 2001) {
                     //salt timeout
                     HttpRecBean.sendHttpRecMsg(HttpRecBean.HttpRecType.SALTEXPIRE);
-                } else if(code == 2401){
+                } else if (code == 2401) {
                     // sign error
                     ToastUtil.getInstance().showToast(R.string.Set_Load_failed_please_try_again_later);
-                } else if(code == 2420){
+                } else if (code == 2420) {
                     // uid/pubKey error
                     ToastUtil.getInstance().showToast(R.string.Set_Load_failed_please_try_again_later);
-                } else if(code == 2700){
+                } else if (code == 2700) {
                     //HomeAction.getInstance().sendEvent(HomeAction.HomeType.DELAY_EXIT);
                     ToastUtil.getInstance().showToast(R.string.Set_Load_failed_please_try_again_later);
-                } else{
+                } else {
                     resultCall.onError(resultCall.getData());
                 }
             }
@@ -191,11 +194,12 @@ public class HttpRequest {
 
     /**
      * Network access failure
+     *
      * @param call
      */
-    private void dealOnFailure(Call call){
+    private void dealOnFailure(Call call) {
         try {
-            switch (call.execute().code()){
+            switch (call.execute().code()) {
                 case 404:
                     ToastUtil.getInstance().showToast(R.string.Set_Load_failed_please_try_again_later);
                     break;
@@ -203,13 +207,14 @@ public class HttpRequest {
                     ToastUtil.getInstance().showToast(R.string.Chat_Network_connection_failed_please_check_network);
                     break;
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
     /**
      * network environment
+     *
      * @return
      */
     public static boolean isConnectNet() {

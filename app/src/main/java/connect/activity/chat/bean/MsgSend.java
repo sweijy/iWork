@@ -25,17 +25,10 @@ public class MsgSend implements Serializable {
         Photo,
         Video,
         Emotion,
-        Request_Payment,
-        Transfer,
-        Lucky_Packet,
         Location,
         Name_Card,
-        INVITE_GROUP,
         OUTER_WEBSITE,
-        GROUP_REVIEW,
         SYSTEM_AD,
-        BURNREAD_SETTING,
-        BURNREAD_RECEIPT,
     }
 
     public static void sendOuterMsg(MsgSendType type, Object... objs) {

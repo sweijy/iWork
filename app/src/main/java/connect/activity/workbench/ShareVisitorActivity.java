@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.io.File;
 
 import butterknife.Bind;
@@ -33,6 +35,7 @@ import connect.widget.TopToolBar;
 import connect.widget.zxing.utils.CreateScan;
 import protos.Connect;
 
+@Route(path = "/iwork/workbench/ShareVisitorActivity")
 public class ShareVisitorActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)

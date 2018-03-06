@@ -42,9 +42,9 @@ public class CommandReceiver implements CommandListener {
 
     private static String TAG = "_CommandReceiver";
 
-    public static CommandReceiver receiver = getInstance();
+    private static CommandReceiver receiver;
 
-    private synchronized static CommandReceiver getInstance() {
+    public synchronized static CommandReceiver getInstance() {
         if (receiver == null) {
             receiver = new CommandReceiver();
         }

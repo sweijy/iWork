@@ -29,8 +29,6 @@ public class ChatParser extends InterParse {
             case 0x02://burn chat
                 singleChat(messagePost);
                 break;
-            case 0x03://invite to join in group
-                break;
             case 0x04://group chat
                 groupChat(messagePost);
                 break;

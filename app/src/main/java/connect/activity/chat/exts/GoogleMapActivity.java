@@ -18,6 +18,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,7 +39,11 @@ import connect.widget.TopToolBar;
 
 /**
  * google map
+ *
+ * @ LATITUDE
+ * @ LONGITUDE
  */
+@Route(path = "/iwork/chat/exts/GoogleMapActivity")
 public class GoogleMapActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -58,17 +64,6 @@ public class GoogleMapActivity extends BaseActivity {
         setContentView(R.layout.activity_google_map);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity) {
-        startActivity(activity, 0, 0);
-    }
-
-    public static void startActivity(Activity activity, double lat, double lon) {
-        Bundle bundle = new Bundle();
-        bundle.putDouble(LATITUDE, lat);
-        bundle.putDouble(LONGITUDE, lon);
-        ActivityUtil.next(activity, GoogleMapActivity.class, bundle);
     }
 
     @Override

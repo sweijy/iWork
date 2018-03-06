@@ -11,9 +11,9 @@ public class ExceptionReceiver implements ExceptionListener{
 
     private static String TAG = "_ExceptionReceiver";
 
-    public static ExceptionReceiver receiver = getInstance();
+    private static ExceptionReceiver receiver;
 
-    private synchronized static ExceptionReceiver getInstance() {
+    public synchronized static ExceptionReceiver getInstance() {
         if (receiver == null) {
             receiver = new ExceptionReceiver();
         }

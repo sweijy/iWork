@@ -1,18 +1,22 @@
 package connect.utils.chatfile.upload;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.protobuf.ByteString;
-import com.netcompss.ffmpeg4android.CommandValidationException;
-import com.netcompss.ffmpeg4android.GeneralUtils;
-import com.netcompss.loader.LoadJNI;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import connect.ui.activity.R;
 import connect.utils.FileUtil;
 import connect.utils.chatfile.inter.BaseFileUp;
 import connect.utils.chatfile.inter.FileUploadListener;
+import connect.utils.log.LogManager;
 import instant.bean.ChatMsgEntity;
 import instant.bean.Session;
 import instant.sender.model.BaseChat;
@@ -24,6 +28,7 @@ import protos.Connect;
 public class VideoUpload extends BaseFileUp {
 
     private static String TAG = "_VideoUpload";
+    private Compressor compressor;
 
     public VideoUpload(Context context, BaseChat baseChat, ChatMsgEntity entity, FileUploadListener listener) {
         super();
@@ -37,38 +42,26 @@ public class VideoUpload extends BaseFileUp {
     @Override
     public void startUpload() {
         super.startUpload();
-        fileCompress();
-    }
+        compressor = new Compressor((Activity) context);
+        compressor.loadBinary(new InitListener() {
+            @Override
+            public void onLoadSuccess() {
+                Log.v(TAG, "load library succeed");
+                fileCompress();
+            }
 
-    public String videoCompress(String filepath) {
-        LoadJNI vk = new LoadJNI();
-        try {
-            // complex command
-            //vk.run(complexCommand, workFolder, getApplicationContext());
-            File tempFile = FileUtil.newTempFile(FileUtil.FileType.VIDEO);
-            String commandStr = "ffmpeg -y -i " + filepath + " -strict experimental -s 160x120 -r 25 -vcodec mpeg4 -b 150k -ab 48000 -ac 2 -ar 22050 " + tempFile.getAbsolutePath();
-
-            vk.run(GeneralUtils.utilConvertToComplex(commandStr), tempFile.getParent(), context);
-
-            // running without command validation
-            //vk.run(complexCommand, workFolder, getApplicationContext(), false);
-
-            // copying vk.log (internal native log) to the videokit folder
-            //GeneralUtils.copyFileToFolder(vkLogPath, demoVideoFolder);
-            return tempFile.getAbsolutePath();
-        } catch (CommandValidationException e) {
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return filepath;
+            @Override
+            public void onLoadFail(String reason) {
+                Log.i(TAG, "load library fail:" + reason);
+                fileNormal();
+            }
+        });
     }
 
     private String thumbCompressFile;
     private String sourceCompressFile;
 
-    @Override
-    public void fileCompress() {
-        super.fileCompress();
+    public void fileNormal() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -78,9 +71,6 @@ public class VideoUpload extends BaseFileUp {
                     sourceCompressFile = videoMessage.getUrl();
 
                     fileEncrypt();
-//            sourceCompressFile = videoCompress(filePath);
-//            thumbCompressFile.delete();
-//            sourceCompressFile.delete();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -93,6 +83,67 @@ public class VideoUpload extends BaseFileUp {
                 fileUpload();
             }
         }.execute();
+    }
+
+    @Override
+    public void fileCompress() {
+        super.fileCompress();
+        try {
+            final Connect.VideoMessage videoMessage = Connect.VideoMessage.parseFrom(msgExtEntity.getContents());
+            thumbCompressFile = videoMessage.getCover();
+            sourceCompressFile = videoMessage.getUrl();
+
+            String sourcepath = videoMessage.getUrl();
+            File file = FileUtil.newContactFile(FileUtil.FileType.VIDEO);
+            final String fileOutPath = file.getAbsolutePath();
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("-y -i ");
+            stringBuffer.append(sourcepath);
+            stringBuffer.append(" -strict -2 -vcodec libx264 -preset ultrafast -crf 24 -acodec aac -ar 44100 -ac 2 -b:a 96k -s 640x480 -aspect 16:9 ");
+            stringBuffer.append(fileOutPath);
+
+            compressor.execCommand(stringBuffer.toString(), new CompressListener() {
+                @Override
+                public void onExecSuccess(String message) {
+                    Log.i(TAG, "success " + message);
+                    sourceCompressFile = fileOutPath;
+
+                    fileEncrypt();
+                }
+
+                @Override
+                public void onExecFail(String reason) {
+                    Log.i(TAG, "fail " + reason);
+                    fileEncrypt();
+                }
+
+                @Override
+                public void onExecProgress(String message) {
+                    Log.i(TAG, "progress " + message);
+                    LogManager.getLogger().d(TAG, context.getString(R.string.compress_progress, getProgress(message, videoMessage.getTimeLength())));
+                }
+            });
+        } catch (InvalidProtocolBufferException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getProgress(String source, int videolength) {
+        //progress frame=   28 fps=0.0 q=24.0 size= 107kB time=00:00:00.91 bitrate= 956.4kbits/s
+        Pattern p = Pattern.compile("00:\\d{2}:\\d{2}");
+        Matcher m = p.matcher(source);
+        if (m.find()) {
+            //00:00:00
+            String result = m.group(0);
+            String temp[] = result.split(":");
+            Double seconds = Double.parseDouble(temp[1]) * 60 + Double.parseDouble(temp[2]);
+            Log.v(TAG, "current second = " + seconds);
+            if (0 != videolength) {
+                return seconds / videolength + "";
+            }
+            return "0";
+        }
+        return "";
     }
 
     @Override

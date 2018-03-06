@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +31,7 @@ import connect.widget.TopToolBar;
 /**
  * group At ,select group member
  */
+@Route(path = "/iwork/chat/exts/GroupAtActivity")
 public class GroupAtActivity extends BaseActivity implements GroupAtContract.BView {
 
     @Bind(R.id.toolbar)

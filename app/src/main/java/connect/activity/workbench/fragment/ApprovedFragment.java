@@ -11,23 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.view.LineDecoration;
-import connect.activity.workbench.VisitorsAuditActivity;
 import connect.activity.workbench.adapter.VisitorAdapter;
 import connect.ui.activity.R;
 import connect.utils.UriUtil;
-import connect.utils.data.ResourceUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
 import connect.utils.system.SystemUtil;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
 
+@Route(path = "/iwork/workbench/fragment/ApprovedFragment")
 public class ApprovedFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
@@ -79,7 +81,7 @@ public class ApprovedFragment extends BaseFragment {
         initData();
     }
 
-    public void initData(){
+    public void initData() {
         page = 1;
         requestVisitorData();
     }
@@ -103,7 +105,10 @@ public class ApprovedFragment extends BaseFragment {
     VisitorAdapter.OnItemClickListener onItemClickListener = new VisitorAdapter.OnItemClickListener() {
         @Override
         public void itemClick(Connect.VisitorRecord visitorRecord) {
-            VisitorsAuditActivity.lunchActivity(mActivity, visitorRecord, 1);
+            ARouter.getInstance().build("/iwork/workbench/VisitorsAuditActivity")
+                    .withSerializable("visitorRecord", visitorRecord)
+                    .withInt("status", 1)
+                    .navigation();
         }
 
         @Override
@@ -125,10 +130,10 @@ public class ApprovedFragment extends BaseFragment {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.VisitorRecords visitorRecords = Connect.VisitorRecords.parseFrom(structData.getPlainData());
                     List<Connect.VisitorRecord> list = visitorRecords.getListList();
-                    if(page == 1 && list.size() == 0){
+                    if (page == 1 && list.size() == 0) {
                         noDataLin.setVisibility(View.VISIBLE);
                         refreshview.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         noDataLin.setVisibility(View.GONE);
                         refreshview.setVisibility(View.VISIBLE);
                     }

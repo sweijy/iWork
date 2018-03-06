@@ -8,6 +8,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,6 +23,7 @@ import connect.widget.TopToolBar;
 /**
  * Help and feedback
  */
+@Route(path = "/iwork/set/SupportActivity")
 public class SupportActivity extends BaseActivity {
     @Bind(R.id.toolbar_top)
     TopToolBar toolbarTop;
@@ -65,7 +69,8 @@ public class SupportActivity extends BaseActivity {
 
     @OnClick(R.id.right_lin)
     void goFeedBack(View view) {
-        ActivityUtil.next(mActivity,SupportFeedbackActivity.class);
+        ARouter.getInstance().build("/iwork/set/SupportFeedbackActivity").
+                navigation();
     }
 
     /**

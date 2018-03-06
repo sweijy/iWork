@@ -1,23 +1,23 @@
 package connect.activity.home;
 
 import android.animation.ValueAnimator;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import connect.activity.login.StartPageActivity;
-import connect.ui.activity.R;
 import connect.activity.base.BaseActivity;
-import connect.activity.base.BaseApplication;
+import connect.ui.activity.R;
 import connect.widget.DBUpgradeView;
 import connect.widget.TopToolBar;
 
+@Route(path = "/iwork/DBUpdateActivity")
 public class DBUpdateActivity extends BaseActivity {
 
     private String Tag = "DBUpdateActivity";
@@ -38,22 +38,14 @@ public class DBUpdateActivity extends BaseActivity {
         initView();
     }
 
-    public static void startActivity() {
-        Context context = BaseApplication.getInstance().getBaseContext();
-        Intent intent = new Intent();
-        intent.setClass(context, DBUpdateActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 50:
-                    Intent intent = new Intent(activity, StartPageActivity.class);
-                    activity.startActivity(intent);
+                    ARouter.getInstance().build("/iwork/login/StartPageActivity")
+                            .navigation();
                     break;
             }
         }

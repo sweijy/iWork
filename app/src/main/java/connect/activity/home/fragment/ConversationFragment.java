@@ -13,6 +13,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -42,6 +45,7 @@ import protos.Connect;
 /**
  * Created by gtq on 2016/11/21.
  */
+@Route(path = "/iwork/home/fragment/ConversationFragment")
 public class ConversationFragment extends BaseFragment {
 
     @Bind(R.id.recycler_fragment_chat)
@@ -225,7 +229,10 @@ public class ConversationFragment extends BaseFragment {
 
         @Override
         public void itemClick(Connect.ChatType chatType, String identify) {
-             ChatActivity.startActivity(activity, chatType, identify);
+            ARouter.getInstance().build("/chat/ChatActivity")
+                    .withSerializable("CHAT_TYPE", chatType)
+                    .withString("CHAT_IDENTIFY", identify)
+                    .navigation();
         }
     }
 

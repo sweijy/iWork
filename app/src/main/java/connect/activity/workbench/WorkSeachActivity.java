@@ -1,12 +1,13 @@
 package connect.activity.workbench;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.protobuf.ByteString;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,7 +33,12 @@ import protos.Connect;
 
 /**
  * 工作台搜索应用
+ *
+ * 0: 搜索
+ * 1: 管理
+ * 2: 添加
  */
+@Route(path = "/iwork/workbench/WorkSeachActivity")
 public class WorkSeachActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
@@ -40,9 +46,11 @@ public class WorkSeachActivity extends BaseActivity {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
 
+    @Autowired
+    int category = 0;
+
     private WorkSeachActivity activity;
     private WorkSearchAdapter workSearchAdapter;
-    private int fromCategory = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +58,6 @@ public class WorkSeachActivity extends BaseActivity {
         setContentView(R.layout.activity_work_seach);
         ButterKnife.bind(this);
         initView();
-    }
-
-    /**
-     * @param activity
-     * @param category  0: 搜索
-     *                  1: 管理
-     *                  2: 添加
-     */
-    public static void startActivity(Activity activity, int category) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("Category", category);
-        ActivityUtil.next(activity, WorkSeachActivity.class, bundle);
     }
 
     @Override
@@ -76,8 +72,8 @@ public class WorkSeachActivity extends BaseActivity {
         });
 
 
-        fromCategory = getIntent().getIntExtra("Category", 0);
-        if (fromCategory == 1) {
+        category = getIntent().getIntExtra("Category", 0);
+        if (category == 1) {
             toolbar.setTitle(getResources().getString(R.string.Link_Function_Manager));
         } else {
             toolbar.setRightText(getResources().getString(R.string.Work_Search));
@@ -128,7 +124,7 @@ public class WorkSeachActivity extends BaseActivity {
                     Connect.Applications applications = Connect.Applications.parseFrom(structData.getPlainData());
                     List<Connect.Application> applications1 = applications.getListList();
 
-                    if (fromCategory == 1 || fromCategory == 2) {
+                    if (category == 1 || category == 2) {
                         List<Connect.Application> filterApplications = new ArrayList<Connect.Application>();
                         for (Connect.Application application : applications1) {
                             if (application.getCategory() == 2) {

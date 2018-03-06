@@ -1,7 +1,6 @@
 package connect.activity.chat.view.holder;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
@@ -10,6 +9,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.Arrays;
 
 import connect.activity.base.BaseListener;
@@ -17,8 +18,6 @@ import connect.activity.chat.bean.GroupMemberUtil;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.bean.RoomSession;
 import connect.activity.chat.view.MsgStateView;
-import connect.activity.contact.ContactInfoActivity;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.MessageHelper;
 import connect.database.green.bean.GroupMemberEntity;
@@ -102,10 +101,13 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
                     @Override
                     public void onClick(View v) {
                         if (direct == MsgDirect.To) {
-                            UserInfoActivity.startActivity((Activity) context);
+                            ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                                    navigation();
                         } else if (direct == MsgDirect.From) {
                             String uid = RoomSession.getInstance().getRoomKey();
-                            ContactInfoActivity.lunchActivity((Activity) context, uid);
+                            ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                    .withString("uid",uid)
+                                    .navigation();
                         }
                     }
                 });
@@ -113,16 +115,18 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
                     memberTxt.setVisibility(View.GONE);
                 }
                 break;
-            case GROUPCHAT:
-            case GROUP_DISCUSSION:
+            case GROUP:
                 headImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (direct == MsgDirect.To) {
-                            UserInfoActivity.startActivity((Activity) context);
+                            ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                                    navigation();
                         } else if (direct == MsgDirect.From) {
                             String memberKey = msgExtEntity.getMessage_from();
-                            ContactInfoActivity.lunchActivity((Activity) context, memberKey);
+                            ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                    .withString("uid",memberKey)
+                                    .navigation();
                         }
                     }
                 });

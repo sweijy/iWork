@@ -313,5 +313,8 @@
     <string name="Chat_Finger_Slippery_Cancel_The_Sending">手指上滑，取消发送</string>
     <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">松开手指，取消发送</string>
     <string name="Chat_Voice_Record_Short">录音时间太短</string>
+    <string name="Chat_System_Set">系统消息</string>
+    <string name="IWork">iWork</string>
+    <string name="compress_progress">进度: %1$s</string>
 
 </resources>

@@ -12,6 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +36,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import protos.Connect;
 
+@Route(path = "/iwork/chat/set/GroupSelectActivity")
 public class GroupSelectActivity extends BaseFragmentActivity implements GroupSelectContract.BView {
 
     @Bind(R.id.group_select_content)
@@ -58,18 +62,6 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         setContentView(R.layout.activity_group_select);
         ButterKnife.bind(this);
         initView();
-    }
-
-    /**
-     * @param activity
-     * @param iscreate true: 创建群组   false:邀请入群
-     * @param uid
-     */
-    public static void startActivity(Activity activity, boolean iscreate, String uid) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("Is_Create", iscreate);
-        bundle.putString("Uid", uid);
-        ActivityUtil.next(activity, GroupSelectActivity.class, bundle);
     }
 
     @Override
@@ -111,20 +103,25 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         }
 
         if (isCreateGroup) {
-            GroupCreateActivity.startActivity(activity, workmates);
+            ARouter.getInstance().build("/iwork/chat/set/GroupCreateActivity")
+                    .withSerializable("workmates", workmates)
+                    .navigation();
         } else {
             presenter.inviteJoinGroup(uid, workmates);
         }
     }
 
-    private void showSelectList(){
+    private void showSelectList() {
         ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
         for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
             Connect.Workmate workmate = (Connect.Workmate) it.getValue();
             workmates.add(workmate);
         }
-
-        DepartSelectShowAcitivty.startActivity(activity,isCreateGroup(),getUid(),workmates);
+        ARouter.getInstance().build("/iwork/chat/set/DepartSelectShowAcitivty")
+                .withBoolean("Is_Create", isCreateGroup())
+                .withString("Uid", getUid())
+                .withSerializable("List_Workmate", workmates)
+                .navigation();
     }
 
     private void hideFragments() {
@@ -149,7 +146,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         switchFragment(baseFragment);
     }
 
-    public void switchFragment(BaseFragment fragment){
+    public void switchFragment(BaseFragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (!fragment.isAdded()) {

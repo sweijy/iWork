@@ -211,7 +211,7 @@ public class InputBottomLayout extends LinearLayout {
             checkSendState();
 
             String string = s.toString();
-            boolean isGroupChat = RoomSession.getInstance().getRoomType() == Connect.ChatType.GROUPCHAT || RoomSession.getInstance().getRoomType() == Connect.ChatType.GROUP_DISCUSSION;
+            boolean isGroupChat = RoomSession.getInstance().getRoomType() == Connect.ChatType.GROUP;
             if (isGroupChat && count == 1 && "@".equals(string.substring(start))) {
                 RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.GROUPAT_TO);
             }

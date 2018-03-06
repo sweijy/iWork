@@ -370,4 +370,7 @@
     <string name="Chat_Finger_Slippery_Cancel_The_Sending">пальцы на скользкой,отменить передачи</string>
     <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">ослабить палец,отменить передачи</string>
     <string name="Chat_Voice_Record_Short">запись времени слишком мало</string>
+    <string name="Chat_System_Set">система</string>
+    <string name="IWork">iWork</string>
+    <string name="compress_progress">прогресс: %1$s</string>
 </resources>

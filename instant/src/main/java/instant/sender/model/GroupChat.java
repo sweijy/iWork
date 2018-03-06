@@ -37,7 +37,7 @@ public class GroupChat extends NormalChat {
     public ChatMsgEntity createBaseChat(MessageType type) {
         ChatMsgEntity msgExtEntity = new ChatMsgEntity();
         msgExtEntity.setMessage_id(TimeUtil.timestampToMsgid());
-        msgExtEntity.setChatType(Connect.ChatType.GROUPCHAT.getNumber());
+        msgExtEntity.setChatType(Connect.ChatType.GROUP.getNumber());
         msgExtEntity.setMessage_ower(chatKey());
         msgExtEntity.setMessage_from(myUid);
         msgExtEntity.setMessage_to(chatKey());
@@ -86,7 +86,7 @@ public class GroupChat extends NormalChat {
 
     @Override
     public int chatType() {
-        return Connect.ChatType.GROUPCHAT_VALUE;
+        return Connect.ChatType.GROUP_VALUE;
     }
 
     public void updateMyNickName() {

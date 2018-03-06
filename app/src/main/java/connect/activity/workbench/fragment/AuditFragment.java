@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -20,7 +23,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.view.LineDecoration;
-import connect.activity.workbench.VisitorsAuditActivity;
 import connect.activity.workbench.adapter.VisitorAdapter;
 import connect.activity.workbench.bean.UpdateState;
 import connect.ui.activity.R;
@@ -31,6 +33,7 @@ import connect.utils.system.SystemUtil;
 import connect.widget.pullTorefresh.EndlessScrollListener;
 import protos.Connect;
 
+@Route(path = "/iwork/workbench/fragment/AuditFragment")
 public class AuditFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
@@ -122,7 +125,10 @@ public class AuditFragment extends BaseFragment {
     VisitorAdapter.OnItemClickListener onItemClickListener = new VisitorAdapter.OnItemClickListener() {
         @Override
         public void itemClick(Connect.VisitorRecord visitorRecord) {
-            VisitorsAuditActivity.lunchActivity(mActivity, visitorRecord, 0);
+            ARouter.getInstance().build("/iwork/workbench/VisitorsAuditActivity")
+                    .withSerializable("visitorRecord",visitorRecord)
+                    .withInt("status",0)
+                    .navigation();
         }
 
         @Override
