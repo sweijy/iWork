@@ -1,6 +1,5 @@
 package connect.activity.workbench;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +8,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
+@Route(path = "/iwork/workbench/VisitorsActivity")
 public class VisitorsActivity extends BaseFragmentActivity {
 
     @Bind(R.id.toolbar_top)
@@ -41,10 +44,6 @@ public class VisitorsActivity extends BaseFragmentActivity {
 
     private AuditFragment auditFragment;
     private ApprovedFragment approvedFragment;
-
-    public static void lunchActivity(Activity activity) {
-        ActivityUtil.next(activity, VisitorsActivity.class);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,8 @@ public class VisitorsActivity extends BaseFragmentActivity {
 
     @OnClick(R.id.right_lin)
     void shareInvite(View view) {
-        ActivityUtil.next(mActivity, ShareVisitorActivity.class);
+        ARouter.getInstance().build("/iwork/workbench/ShareVisitorActivity")
+                .navigation();
     }
 
     @OnClick({R.id.to_audit_text, R.id.the_approved_text})

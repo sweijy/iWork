@@ -2,12 +2,12 @@ package connect.activity.chat.set.presenter;
 
 import android.app.Activity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import connect.activity.chat.set.contract.GroupCreateContract;
-import connect.activity.home.HomeActivity;
-import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
@@ -149,7 +149,10 @@ public class GroupCreatePresenter implements GroupCreateContract.Presenter {
         ToastEUtil.makeText(activity, activity.getString(R.string.Chat_Create_Group_Success), 1, new ToastEUtil.OnToastListener() {
             @Override
             public void animFinish() {
-                HomeActivity.startActivity(activity, 100, Connect.ChatType.GROUP.getNumber(), groupKey);
+                ARouter.getInstance().build("/iwork/HomeActivity")
+                        .withInt("category", 100)
+                        .withSerializable("objects", new Object[]{Connect.ChatType.GROUP.getNumber(), groupKey})
+                        .navigation();
             }
         }).show();
     }

@@ -1,11 +1,12 @@
 package connect.activity.set;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +22,7 @@ import connect.widget.TopToolBar;
 /**
  * The user basic information.
  */
+@Route(path = "/iwork/set/UserInfoActivity")
 public class UserInfoActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -44,10 +46,6 @@ public class UserInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_userinfo);
         ButterKnife.bind(this);
-    }
-
-    public static void startActivity(Activity activity) {
-        ActivityUtil.next(activity, UserInfoActivity.class);
     }
 
     @Override

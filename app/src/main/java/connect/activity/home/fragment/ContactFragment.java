@@ -9,15 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseFragment;
-import connect.activity.chat.ChatActivity;
-import connect.activity.contact.ContactInfoActivity;
-import connect.activity.contact.DepartmentActivity;
 import connect.activity.contact.bean.ContactNotice;
 import connect.activity.home.adapter.ContactAdapter;
 import connect.activity.home.bean.ContactBean;
@@ -31,6 +31,7 @@ import protos.Connect;
 /**
  * The address book contacts
  */
+@Route(path = "/iwork/home/fragment/ContactFragment")
 public class ContactFragment extends BaseFragment {
 
     @Bind(R.id.toolbar_top)
@@ -95,17 +96,27 @@ public class ContactFragment extends BaseFragment {
         public void itemClick(int position, ContactBean entity) {
             switch (entity.getStatus()) {
                 case 6:
-                    ChatActivity.startActivity(mActivity, Connect.ChatType.CONNECT_SYSTEM, "Connect");
+                    ARouter.getInstance().build("/chat/ChatActivity")
+                            .withSerializable("CHAT_TYPE", Connect.ChatType.CONNECT_SYSTEM)
+                            .withString("CHAT_IDENTIFY", "Connect")
+                            .navigation();
                     break;
                 case 2:
-                    ChatActivity.startActivity(mActivity, Connect.ChatType.GROUP, entity.getUid());
+                    ARouter.getInstance().build("/chat/ChatActivity")
+                            .withSerializable("CHAT_TYPE", Connect.ChatType.GROUP)
+                            .withString("CHAT_IDENTIFY", entity.getUid())
+                            .navigation();
                     break;
                 case 1:
                     ContactEntity contactEntity = ContactHelper.getInstance().loadFriendByUid(entity.getUid());
-                    ContactInfoActivity.lunchActivity(mActivity, contactEntity.getUid());
+
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                            .withString("uid",contactEntity.getUid())
+                            .navigation();
                     break;
                 case 7:
-                    DepartmentActivity.lunchActivity(mActivity);
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                            .navigation();
                     break;
                 default:
                     break;

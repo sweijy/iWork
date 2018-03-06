@@ -31,8 +31,12 @@ import instant.bean.ChatMsgEntity;
 
 /**
  * play Local video files
+ *
+ * @ FILE_PATH
+ * @ VIDEO_LENGTH
+ * @ MESSAGE_ID
  */
-@Route(path = "/chat/exts/VideoPlayerActivity")
+@Route(path = "/iwork/chat/exts/VideoPlayerActivity")
 public class VideoPlayerActivity extends BaseActivity implements VideoPlayContract.BView {
 
     @Bind(R.id.toolbar)

@@ -1,6 +1,5 @@
 package connect.activity.set;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import butterknife.Bind;
@@ -17,10 +17,10 @@ import connect.activity.base.BaseActivity;
 import connect.service.UpdateAppService;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
-import connect.utils.ToastUtil;
-import connect.utils.dialog.DialogUtil;
 import connect.utils.StringUtil;
+import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
+import connect.utils.dialog.DialogUtil;
 import connect.utils.okhttp.HttpRequest;
 import connect.utils.okhttp.ResultCall;
 import connect.utils.permission.PermissionUtil;
@@ -31,6 +31,7 @@ import protos.Connect;
 /**
  * About the App
  */
+@Route(path = "/iwork/set/AboutActivity")
 public class AboutActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -52,10 +53,6 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_set_about);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity) {
-        ActivityUtil.next(activity, AboutActivity.class);
     }
 
     @Override

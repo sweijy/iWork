@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragmentActivity;
 import connect.activity.chat.fragment.SearchContentFragment;
-import connect.activity.contact.ContactInfoActivity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 

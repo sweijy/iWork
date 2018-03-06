@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -34,6 +36,7 @@ import connect.widget.album.model.AlbumFile;
 /**
  * scan it
  */
+@Route(path = "/iwork/contact/ContactInfoShowActivity")
 public class ScanAddFriendActivity extends BaseScanActivity {
 
     @Bind(R.id.capture_preview)

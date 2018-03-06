@@ -1,29 +1,23 @@
 package connect.utils.okhttp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.google.android.gms.common.server.response.FastJsonResponse;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.GeneratedMessageV3;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
-import connect.activity.home.bean.HomeAction;
-import connect.activity.login.LoginUserActivity;
-import connect.ui.activity.R;
-import connect.activity.home.bean.HttpRecBean;
 import connect.activity.base.BaseApplication;
+import connect.activity.home.bean.HttpRecBean;
+import connect.ui.activity.R;
 import connect.utils.ConfigUtil;
 import connect.utils.ProgressUtil;
 import connect.utils.ToastUtil;
@@ -35,7 +29,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import retrofit2.Retrofit;
 
 /**
  * Http Request

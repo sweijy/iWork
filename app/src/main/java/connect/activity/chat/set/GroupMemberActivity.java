@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +33,7 @@ import connect.widget.TopToolBar;
  * Group member list(remove member)
  * Created by gtq on 2016/12/15.
  */
-@Route(path = "/chat/set/GroupMemberActivity")
+@Route(path = "/iwork/chat/set/GroupMemberActivity")
 public class GroupMemberActivity extends BaseActivity implements GroupMemberContract.BView {
 
     @Bind(R.id.toolbar_top)
@@ -83,7 +84,10 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
         toolbarTop.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GroupSelectActivity.startActivity(activity, false, groupKey);
+                ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                        .withBoolean("isCreate", false)
+                        .withSerializable("groupIdentify", groupKey)
+                        .navigation();
             }
         });
 

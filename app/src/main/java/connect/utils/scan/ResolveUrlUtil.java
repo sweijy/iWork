@@ -3,7 +3,8 @@ package connect.utils.scan;
 import android.app.Activity;
 import android.net.Uri;
 
-import connect.activity.contact.ContactInfoActivity;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.activity.contact.bean.MsgSendBean;
 import connect.activity.home.bean.MsgNoticeBean;
 import connect.database.SharedPreferenceUtil;
@@ -81,7 +82,9 @@ public class ResolveUrlUtil {
      */
     private void dealFriend(ScanResultBean resultBean, boolean isCloseScan){
         if (!resultBean.getAddress().equals(SharedPreferenceUtil.getInstance().getUser().getUid())) {
-            ContactInfoActivity.lunchActivity(activity, resultBean.getAddress());
+            ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                    .withString("uid",resultBean.getAddress())
+                    .navigation();
             if(isCloseScan){
                 ActivityUtil.goBack(activity);
             }

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import java.util.ArrayList;
@@ -21,13 +22,24 @@ import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
-@Route(path = "/chat/set/DepartSelectShowAcitivty")
+/**
+ * DepartSelectShowAcitivty
+ *
+ */
+@Route(path = "/iwork/chat/set/DepartSelectShowAcitivty")
 public class DepartSelectShowAcitivty extends BaseActivity implements DepartSelectShowContract.BView {
 
     @Bind(R.id.toolbar)
     TopToolBar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+
+    @Autowired
+    boolean Is_Create;
+    @Autowired
+    String Uid;
+    @Autowired
+    ArrayList<Connect.Workmate> List_Workmate;
 
     private DepartSelectShowAcitivty acitivty;
     private boolean isCreateGroup = true;
@@ -41,14 +53,6 @@ public class DepartSelectShowAcitivty extends BaseActivity implements DepartSele
         setContentView(R.layout.activity_depart_selectshow);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, boolean iscreate, String uid, ArrayList<Connect.Workmate> workmates) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("Is_Create", iscreate);
-        bundle.putString("Uid", uid);
-        bundle.putSerializable("List_Workmate", workmates);
-        ActivityUtil.next(activity, DepartSelectShowAcitivty.class, bundle, 100);
     }
 
     @Override

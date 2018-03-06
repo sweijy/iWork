@@ -46,7 +46,12 @@ import connect.widget.selefriend.SelectRecentlyChatActivity;
 import instant.bean.ChatMsgEntity;
 import instant.sender.model.NormalChat;
 
-@Route(path = "/chat/exts/OuterWebsiteActivity")
+/**
+ * OuterWebsiteActivity
+ *
+ * @ URL
+ */
+@Route(path = "/iwork/chat/exts/OuterWebsiteActivity")
 public class OuterWebsiteActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -75,12 +80,6 @@ public class OuterWebsiteActivity extends BaseActivity {
             inUrl = "http://" + inUrl;
         }
         initView();
-    }
-
-    public static void startActivity(Activity activity, String url) {
-        Bundle bundle = new Bundle();
-        bundle.putString(URL, url);
-        ActivityUtil.next(activity, OuterWebsiteActivity.class, bundle);
     }
 
     @Override

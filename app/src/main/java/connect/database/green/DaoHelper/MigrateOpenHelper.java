@@ -3,12 +3,13 @@ package connect.database.green.DaoHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.greendao.database.Database;
 
 import java.io.File;
 
 import connect.activity.base.BaseApplication;
-import connect.activity.home.DBUpdateActivity;
 import connect.database.green.DaoHelper.mergin.MigrationHelper;
 import connect.database.green.dao.ApplicationEntityDao;
 import connect.database.green.dao.ContactEntityDao;
@@ -69,7 +70,8 @@ public class MigrateOpenHelper extends DaoMaster.OpenHelper {
 
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
-        DBUpdateActivity.startActivity();
+        ARouter.getInstance().build("/iwork/DBUpdateActivity").
+                navigation();
 
         MigrationHelper.migrate(db,
                 ApplicationEntityDao.class,

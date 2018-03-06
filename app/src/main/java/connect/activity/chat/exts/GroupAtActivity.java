@@ -31,7 +31,7 @@ import connect.widget.TopToolBar;
 /**
  * group At ,select group member
  */
-@Route(path = "/chat/exts/GroupAtActivity")
+@Route(path = "/iwork/chat/exts/GroupAtActivity")
 public class GroupAtActivity extends BaseActivity implements GroupAtContract.BView {
 
     @Bind(R.id.toolbar)

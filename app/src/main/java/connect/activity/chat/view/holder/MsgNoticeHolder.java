@@ -12,9 +12,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import connect.activity.contact.ContactInfoActivity;
-import connect.activity.workbench.VisitorsActivity;
-import connect.activity.workbench.WarehouseDetailActivity;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.ui.activity.R;
 import instant.bean.ChatMsgEntity;
 import protos.Connect;
@@ -67,7 +66,9 @@ public class MsgNoticeHolder extends MsgBaseHolder {
                         public void onClick(View v) {
                             try {
                                 String friendUid = notifyMessage.getExtion();
-                                ContactInfoActivity.lunchActivity((Activity) context, friendUid);
+                                ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                        .withString("uid",friendUid)
+                                        .navigation();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -85,8 +86,8 @@ public class MsgNoticeHolder extends MsgBaseHolder {
                     noticeLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Activity activity = (Activity) context;
-                            VisitorsActivity.lunchActivity(activity);
+                            ARouter.getInstance().build("/iwork/workbench/VisitorsActivity").
+                                    navigation();
                         }
                     });
                     break;
@@ -103,7 +104,10 @@ public class MsgNoticeHolder extends MsgBaseHolder {
                         public void onClick(View v) {
                             Activity activity = (Activity) context;
                             long id = Long.parseLong(notifyMessage.getExtion());
-                            WarehouseDetailActivity.lunchActivity(activity,id);
+
+                            ARouter.getInstance().build("/iwork/workbench/WarehouseDetailActivity")
+                                    .withLong("id", id)
+                                    .navigation();
                         }
                     });
                     break;

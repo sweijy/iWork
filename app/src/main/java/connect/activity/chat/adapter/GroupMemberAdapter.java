@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import connect.activity.contact.ContactInfoActivity;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
@@ -113,9 +113,12 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
                     closeMenu();
                     GroupMemberEntity indexEntity = groupMemEntities.get(position);
                     if (indexEntity.getUid().equals(SharedPreferenceUtil.getInstance().getUser().getUid())) {
-                        UserInfoActivity.startActivity(activity);
+                        ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                                navigation();
                     } else {
-                        ContactInfoActivity.lunchActivity(activity, indexEntity.getUid());
+                        ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                .withString("uid",indexEntity.getUid())
+                                .navigation();
                     }
                 }
             }

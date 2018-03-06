@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import connect.activity.workbench.VisitorsActivity;
-import connect.activity.workbench.WarehouseDetailActivity;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.ui.activity.R;
 import connect.utils.TimeUtil;
 import instant.bean.ChatMsgEntity;
@@ -82,11 +82,14 @@ public class MsgWarehouseHolder extends MsgBaseHolder {
                 Activity activity = (Activity) context;
                 switch (wareType) {
                     case 20:
-                        VisitorsActivity.lunchActivity(activity);
+                        ARouter.getInstance().build("/iwork/workbench/VisitorsActivity").
+                                navigation();
                         break;
                     case 21:
                         long id = unRegisterNotify.getId();
-                        WarehouseDetailActivity.lunchActivity(activity, id);
+                        ARouter.getInstance().build("/iwork/workbench/WarehouseDetailActivity")
+                                .withLong("id", id)
+                                .navigation();
                         break;
                 }
             }

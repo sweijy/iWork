@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -21,6 +24,7 @@ import connect.widget.ViewPagerAdapter;
 /**
  * App guide page.
  */
+@Route(path = "/iwork/login/GuidePageActivity")
 public class GuidePageActivity extends BaseActivity {
 
     @Bind(R.id.viewpager)
@@ -70,7 +74,8 @@ public class GuidePageActivity extends BaseActivity {
     @OnClick(R.id.start_message_tv)
     void startChat(){
         SharedPreferenceUtil.getInstance().putValue(SharedPreferenceUtil.FIRST_INTO_APP, 1);
-        LoginUserActivity.startActivity(mActivity);
+        ARouter.getInstance().build("/iwork/login/LoginUserActivity")
+                .navigation();
         finish();
     }
 }

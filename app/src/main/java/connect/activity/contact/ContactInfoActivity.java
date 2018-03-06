@@ -8,13 +8,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
-import connect.activity.chat.ChatActivity;
 import connect.activity.chat.bean.GroupMemberUtil;
 import connect.activity.contact.bean.ContactNotice;
 import connect.activity.contact.model.ContactListManage;
@@ -36,6 +39,7 @@ import connect.widget.TopToolBar;
 import instant.utils.SharedUtil;
 import protos.Connect;
 
+@Route(path = "/iwork/contact/ContactInfoActivity")
 public class ContactInfoActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
@@ -61,15 +65,11 @@ public class ContactInfoActivity extends BaseActivity {
     @Bind(R.id.number_text)
     TextView numberText;
 
-    private ContactInfoActivity mActivity;
-    private String uid;
-    private Connect.Workmate workmate;
+    @Autowired
+    String uid;
 
-    public static void lunchActivity(Activity activity, String uid) {
-        Bundle bundle = new Bundle();
-        bundle.putString("uid", uid);
-        ActivityUtil.next(activity, ContactInfoActivity.class, bundle);
-    }
+    private ContactInfoActivity mActivity;
+    private Connect.Workmate workmate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +138,10 @@ public class ContactInfoActivity extends BaseActivity {
     @OnClick(R.id.chat_btn)
     void chat(View view) {
         if (workmate != null && !TextUtils.isEmpty(workmate.getUid())) {
-            ChatActivity.startActivity(mActivity, Connect.ChatType.PRIVATE, workmate.getUid());
+            ARouter.getInstance().build("/chat/ChatActivity")
+                    .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
+                    .withString("CHAT_IDENTIFY", workmate.getUid())
+                    .navigation();
         }
     }
 

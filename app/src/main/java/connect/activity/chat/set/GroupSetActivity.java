@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,9 +26,7 @@ import connect.activity.chat.SearchContentActivity;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.set.contract.GroupSetContract;
 import connect.activity.chat.set.presenter.GroupSetPresenter;
-import connect.activity.contact.ContactInfoActivity;
 import connect.activity.contact.bean.ContactNotice;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.bean.ConversionEntity;
@@ -40,7 +39,7 @@ import connect.widget.TopToolBar;
  * group setting
  * Created by gtq on 2016/12/15.
  */
-@Route(path = "/chat/set/GroupSetActivity")
+@Route(path = "/iwork/chat/set/GroupSetActivity")
 public class GroupSetActivity extends BaseActivity implements GroupSetContract.BView {
 
     @Bind(R.id.toolbar)
@@ -129,12 +128,18 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
             public void onClick(View v) {
                 String uid = (String) v.getTag();
                 if ("GROUP_ADD".equals(uid)) {
-                    GroupSelectActivity.startActivity(activity, false, groupKey);
+                    ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                            .withBoolean("isCreate", false)
+                            .withSerializable("groupIdentify", groupKey)
+                            .navigation();
                 } else {
                     if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(uid)) {
-                        UserInfoActivity.startActivity(activity);
+                        ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                                navigation();
                     } else {
-                        ContactInfoActivity.lunchActivity(activity, uid);
+                        ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                                .withString("uid",uid)
+                                .navigation();
                     }
                 }
             }
@@ -175,7 +180,9 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GroupNameActivity.startActivity(activity, groupKey);
+                ARouter.getInstance().build("/iwork/chat/set/GroupNameActivity")
+                        .withSerializable("groupIdentify", groupKey)
+                        .navigation();
             }
         });
     }

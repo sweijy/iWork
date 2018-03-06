@@ -29,7 +29,7 @@ import connect.widget.TopToolBar;
 /**
  * Created by gtq on 2016/12/13.
  */
-@Route(path = "/chat/set/ContactCardActivity")
+@Route(path = "/iwork/chat/set/ContactCardActivity")
 public class ContactCardActivity extends BaseActivity implements ContactCardContract.BView {
 
     @Bind(R.id.recyclerview)
@@ -58,12 +58,6 @@ public class ContactCardActivity extends BaseActivity implements ContactCardCont
         setContentView(R.layout.activity_contactcard);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String uid) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(UID, uid);
-        ActivityUtil.next(activity, ContactCardActivity.class, bundle);
     }
 
     @Override

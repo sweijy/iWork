@@ -16,7 +16,10 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
-@Route(path = "/chat/set/RobotSetActivity")
+/**
+ * RobotSetActivity
+ */
+@Route(path = "/iwork/chat/set/RobotSetActivity")
 public class RobotSetActivity extends BaseActivity implements RobotSetContract.BView {
 
     @Bind(R.id.toolbar)
@@ -33,10 +36,6 @@ public class RobotSetActivity extends BaseActivity implements RobotSetContract.B
         setContentView(R.layout.activity_robotset);
         ButterKnife.bind(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity) {
-        ActivityUtil.next(activity, RobotSetActivity.class);
     }
 
     @Override

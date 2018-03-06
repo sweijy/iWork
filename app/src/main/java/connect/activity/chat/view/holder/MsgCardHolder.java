@@ -1,13 +1,12 @@
 package connect.activity.chat.view.holder;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import connect.activity.contact.ContactInfoActivity;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.activity.login.bean.UserBean;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
@@ -41,9 +40,12 @@ public class MsgCardHolder extends MsgChatHolder {
                 String uid = cardMessage.getUid();
                 UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
                 if (uid.equals(userBean.getUid())) {
-                    UserInfoActivity.startActivity((Activity) context);
+                    ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                            navigation();
                 } else {
-                    ContactInfoActivity.lunchActivity((Activity) context, uid);
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                            .withString("uid", uid)
+                            .navigation();
                 }
             }
         });

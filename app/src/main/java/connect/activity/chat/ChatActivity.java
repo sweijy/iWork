@@ -1,6 +1,5 @@
 package connect.activity.chat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -34,8 +34,6 @@ import connect.activity.chat.bean.MsgSend;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.bean.RoomSession;
 import connect.activity.chat.set.GroupSetActivity;
-import connect.activity.chat.set.PrivateSetActivity;
-import connect.activity.chat.set.RobotSetActivity;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.MessageHelper;
@@ -72,13 +70,14 @@ import protos.Connect;
 /**
  * chat message
  * Created by gtq on 2016/11/22.
- *
+ * <p>
  * 传递参数：
- * CHAT_TYPE
- * CHAT_IDENTIFY
- * CHAT_SEARCH_TXT
+ *
+ * @ CHAT_TYPE
+ * @ CHAT_IDENTIFY
+ * @ CHAT_SEARCH_TXT
  */
-@Route(path = "/chat/ChatActivity")
+@Route(path = "/iwork/chat/ChatActivity")
 public class ChatActivity extends BaseChatSendActivity {
 
     @Bind(R.id.toolbar)
@@ -103,44 +102,15 @@ public class ChatActivity extends BaseChatSendActivity {
         initView();
     }
 
-    /**
-     * @param activity
-     * @param chattype
-     * @param identify
-     */
-    public static void startActivity(Activity activity, Connect.ChatType chattype, String identify) {
-        RoomSession.getInstance().setRoomType(chattype);
-        RoomSession.getInstance().setRoomKey(identify);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("CHAT_TYPE", chattype);
-        bundle.putSerializable("CHAT_IDENTIFY", identify);
-        ActivityUtil.next(activity, ChatActivity.class, bundle);
-    }
-
-    /**
-     * @param activity
-     * @param chattype
-     * @param identify
-     * @param searchTxt
-     */
-    public static void startActivity(Activity activity, Connect.ChatType chattype, String identify, String searchTxt) {
-        RoomSession.getInstance().setRoomType(chattype);
-        RoomSession.getInstance().setRoomKey(identify);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("CHAT_TYPE", chattype);
-        bundle.putSerializable("CHAT_IDENTIFY", identify);
-        bundle.putString("CHAT_SEARCH_TXT", searchTxt);
-        ActivityUtil.next(activity, ChatActivity.class, bundle);
-    }
-
     @Override
     public void initView() {
         activity = this;
         chatType = (Connect.ChatType) getIntent().getSerializableExtra("CHAT_TYPE");
         chatIdentify = getIntent().getStringExtra("CHAT_IDENTIFY");
         searchTxt = getIntent().getStringExtra("CHAT_SEARCH_TXT");
+
+        RoomSession.getInstance().setRoomType(chatType);
+        RoomSession.getInstance().setRoomKey(chatIdentify);
 
         super.initView();
         toolbar.setBlackStyle();
@@ -157,10 +127,15 @@ public class ChatActivity extends BaseChatSendActivity {
             public void onClick(View v) {
                 switch (chatType) {
                     case CONNECT_SYSTEM:
-                        RobotSetActivity.startActivity(activity);
+                        ARouter.getInstance().build("/iwork/chat/set/RobotSetActivity")
+                                .navigation();
                         break;
                     case PRIVATE:
-                        PrivateSetActivity.startActivity(activity, normalChat.chatKey(), normalChat.headImg(), normalChat.nickName());
+                        ARouter.getInstance().build("/iwork/chat/set/PrivateSetActivity")
+                                .withString("uid", normalChat.chatKey())
+                                .withString("avatar", normalChat.headImg())
+                                .withString("userName", normalChat.nickName())
+                                .navigation();
                         break;
                     case GROUP:
                         GroupSetActivity.startActivity(activity, chatIdentify);

@@ -1,15 +1,14 @@
 package connect.activity.chat.view.holder;
 
-import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import connect.activity.chat.exts.OuterWebsiteActivity;
 import connect.ui.activity.R;
 import connect.utils.ProtoBufUtil;
 import connect.utils.RegularUtil;
@@ -91,7 +90,9 @@ public class MsgWebsiteHolder extends MsgChatHolder {
                     String packetToken = content.substring(packetStart, packetEnd);
                     avaliableOuterRedPacket(packetToken);
                 }else {//outer link
-                    OuterWebsiteActivity.startActivity((Activity) context, content);
+                    ARouter.getInstance().build("/iwork/chat/exts/OuterWebsiteActivity")
+                            .withString("URL", content)
+                            .navigation();
                 }
             }
         });

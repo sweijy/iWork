@@ -1,6 +1,5 @@
 package connect.activity.workbench;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,6 +33,7 @@ import connect.widget.imagewatcher.ImageWatcher;
 import connect.widget.imagewatcher.ImageWatcherUtil;
 import protos.Connect;
 
+@Route(path = "/iwork/workbench/VisitorsAuditActivity")
 public class VisitorsAuditActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -62,13 +64,6 @@ public class VisitorsAuditActivity extends BaseActivity {
     private VisitorsAuditActivity mActivity;
     private Connect.VisitorRecord visitorRecord;
     private ImageWatcher vImageWatcher;
-
-    public static void lunchActivity(Activity activity, Connect.VisitorRecord visitorRecord, int status) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", visitorRecord);
-        bundle.putInt("status", status);
-        ActivityUtil.next(activity, VisitorsAuditActivity.class, bundle);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

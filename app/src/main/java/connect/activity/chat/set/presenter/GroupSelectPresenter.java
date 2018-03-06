@@ -3,6 +3,8 @@ package connect.activity.chat.set.presenter;
 import android.app.Activity;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,9 @@ public class GroupSelectPresenter implements GroupSelectContract.Presenter {
 
     @Override
     public void createGroup(ArrayList<Connect.Workmate> workmates) {
-        GroupCreateActivity.startActivity(activity, workmates);
+        ARouter.getInstance().build("/iwork/chat/set/GroupCreateActivity")
+                .withSerializable("workmates", workmates)
+                .navigation();
     }
 
     @Override
@@ -66,7 +70,10 @@ public class GroupSelectPresenter implements GroupSelectContract.Presenter {
                 ToastEUtil.makeText(activity, showHint, 1, new ToastEUtil.OnToastListener() {
                     @Override
                     public void animFinish() {
-                        ChatActivity.startActivity(activity, Connect.ChatType.GROUP, groupIdentify);
+                        ARouter.getInstance().build("/chat/ChatActivity")
+                                .withSerializable("CHAT_TYPE", Connect.ChatType.GROUP)
+                                .withString("CHAT_IDENTIFY", groupIdentify)
+                                .navigation();
                     }
                 }).show();
             }

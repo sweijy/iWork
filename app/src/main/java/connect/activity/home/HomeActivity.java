@@ -17,9 +17,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.PushSDK;
-import com.huawei.android.hms.agent.HuaweiRegister;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,9 +34,6 @@ import butterknife.OnClick;
 import connect.activity.base.BaseApplication;
 import connect.activity.base.BaseFragmentActivity;
 import connect.activity.base.BaseListener;
-import connect.activity.chat.ChatActivity;
-import connect.activity.chat.set.GroupSelectActivity;
-import connect.activity.contact.ScanAddFriendActivity;
 import connect.activity.contact.bean.MsgSendBean;
 import connect.activity.home.bean.HomeAction;
 import connect.activity.home.bean.MsgNoticeBean;
@@ -44,8 +42,6 @@ import connect.activity.home.fragment.ConversationFragment;
 import connect.activity.home.fragment.SetFragment;
 import connect.activity.home.fragment.WorkbenchFragment;
 import connect.activity.home.view.CheckUpdate;
-import connect.activity.login.LoginUserActivity;
-import connect.activity.set.SupportFeedbackActivity;
 import connect.activity.set.bean.SystemSetBean;
 import connect.database.green.DaoHelper.ParamManager;
 import connect.database.green.DaoManager;
@@ -53,7 +49,6 @@ import connect.instant.bean.ConnectState;
 import connect.service.GroupService;
 import connect.service.UpdateInfoService;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.utils.log.LogManager;
 import connect.utils.permission.PermissionUtil;
 import connect.utils.scan.ResolveUrlUtil;
@@ -65,7 +60,7 @@ import protos.Connect;
 /**
  * Created by gtq on 2016/11/19.
  */
-@Route(path = "/activity/HomeActivity")
+@Route(path = "/iwork/HomeActivity")
 public class HomeActivity extends BaseFragmentActivity {
 
     @Bind(R.id.msg)
@@ -99,6 +94,11 @@ public class HomeActivity extends BaseFragmentActivity {
     @Bind(R.id.set_text)
     TextView setText;
 
+    @Autowired
+    int category;
+    @Autowired
+    Object[] objects;
+
     private HomeActivity activity;
 
     private ConversationFragment chatListFragment;
@@ -107,24 +107,6 @@ public class HomeActivity extends BaseFragmentActivity {
     private SetFragment setFragment;
     private ResolveUrlUtil resolveUrlUtil;
     private CheckUpdate checkUpdata;
-
-    public static void startActivity(Activity activity) {
-        ActivityUtil.next(activity, HomeActivity.class);
-    }
-
-    public static void startActivity(Activity activity, int category, Object... objs) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("CATEGORY", category);
-        if (objs.length > 0) {
-            bundle.putSerializable("SERIALIZE", objs);
-        }
-
-        Intent intent = new Intent(activity, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtras(bundle);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.activity_in_from_right, R.anim.activity_0_to_0);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +164,10 @@ public class HomeActivity extends BaseFragmentActivity {
             if (category == 100) {
                 int talType = (int) objs[0];
                 String talkKey = (String) objs[1];
-                ChatActivity.startActivity(activity, Connect.ChatType.forNumber(talType), talkKey);
+                ARouter.getInstance().build("/chat/ChatActivity")
+                        .withSerializable("CHAT_TYPE",  Connect.ChatType.forNumber(talType))
+                        .withString("CHAT_IDENTIFY", talkKey)
+                        .navigation();
             }
         }
     }
@@ -232,8 +217,8 @@ public class HomeActivity extends BaseFragmentActivity {
                         activity1.finish();
                     }
                 }
-                Intent intent = new Intent(activity, LoginUserActivity.class);
-                activity.startActivity(intent);
+                ARouter.getInstance().build("/iwork/login/LoginUserActivity")
+                        .navigation();
                 finish();
                 break;
             case SWITCHFRAGMENT:
@@ -243,9 +228,13 @@ public class HomeActivity extends BaseFragmentActivity {
             case GROUP_NEWCHAT:
                 int position = (int) (objects[0]);
                 if(position == 1){
-                    GroupSelectActivity.startActivity(activity, true, "");
+                    ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                            .withBoolean("isCreate", true)
+                            .withSerializable("groupIdentify", "")
+                            .navigation();
                 }else if(position == 2){
-                    ActivityUtil.next(activity, ScanAddFriendActivity.class);
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                            .navigation();
                 }else if(position == 3){
                     SystemSetBean systemSetBean = ParamManager.getInstance().getSystemSet();
                     boolean isVibrate = systemSetBean.isVibrate();
@@ -259,7 +248,8 @@ public class HomeActivity extends BaseFragmentActivity {
                     }
                     ParamManager.getInstance().putSystemSet(systemSetBean);
                 }else if(position == 4){
-                    ActivityUtil.next(activity, SupportFeedbackActivity.class);
+                    ARouter.getInstance().build("/iwork/set/SupportFeedbackActivity").
+                            navigation();
                 }
                 break;
             case REMOTE_LOGIN:
@@ -278,15 +268,19 @@ public class HomeActivity extends BaseFragmentActivity {
                         activity1.finish();
                     }
                 }
-                intent = new Intent(activity, LoginUserActivity.class);
-                intent.putExtra("VALUE",deviceName);
-                activity.startActivity(intent);
+
+                ARouter.getInstance().build("/iwork/login/LoginUserActivity")
+                        .withString("value",deviceName)
+                        .navigation();
                 finish();
                 break;
             case TO_CHAT:
                 Connect.ChatType chatType = (Connect.ChatType) objects[0];
                 String groupKey = (String) objects[1];
-                ChatActivity.startActivity(activity, chatType, groupKey);
+                ARouter.getInstance().build("/chat/ChatActivity")
+                        .withSerializable("CHAT_TYPE", chatType)
+                        .withString("CHAT_IDENTIFY", groupKey)
+                        .navigation();
                 break;
         }
     }

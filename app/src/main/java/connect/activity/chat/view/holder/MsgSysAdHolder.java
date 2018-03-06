@@ -1,14 +1,13 @@
 package connect.activity.chat.view.holder;
 
-import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import connect.activity.chat.exts.OuterWebsiteActivity;
-import connect.activity.set.AboutActivity;
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.ui.activity.R;
 import connect.utils.TimeUtil;
 import connect.utils.glide.GlideUtil;
@@ -71,11 +70,14 @@ public class MsgSysAdHolder extends MsgBaseHolder {
                     case 0://link
                         String url = announcement.getUrl();
                         if (!TextUtils.isEmpty(url)) {
-                            OuterWebsiteActivity.startActivity((Activity) context, announcement.getUrl());
+                            ARouter.getInstance().build("/iwork/chat/exts/OuterWebsiteActivity")
+                                    .withString("URL", url)
+                                    .navigation();
                         }
                         break;
                     case 1://update
-                        AboutActivity.startActivity((Activity) context);
+                        ARouter.getInstance().build("/iwork/set/AboutActivity")
+                                .navigation();
                         break;
                 }
             }

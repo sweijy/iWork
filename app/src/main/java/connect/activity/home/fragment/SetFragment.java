@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import butterknife.Bind;
@@ -20,13 +22,8 @@ import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
-import connect.activity.set.AboutActivity;
-import connect.activity.set.GeneralActivity;
-import connect.activity.set.SupportFeedbackActivity;
-import connect.activity.set.UserInfoActivity;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.utils.ProgressUtil;
 import connect.utils.StringUtil;
 import connect.utils.UriUtil;
@@ -41,6 +38,7 @@ import protos.Connect;
 /**
  * Set the main interface.
  */
+@Route(path = "/iwork/home/fragment/SetFragment")
 public class SetFragment extends BaseFragment {
 
     @Bind(R.id.ivAvatar)
@@ -107,23 +105,26 @@ public class SetFragment extends BaseFragment {
     @OnClick(R.id.llUserMsg)
     void intoUserInfo(View view) {
         if (mActivity != null && isAdded()) {
-            ActivityUtil.next(mActivity, UserInfoActivity.class);
+            ARouter.getInstance().build("/iwork/set/UserInfoActivity").
+                    navigation();
         }
     }
 
     @OnClick(R.id.llChatSetting)
     void intoChatSetting(View view) {
-        ActivityUtil.next(mActivity, GeneralActivity.class);
+        ARouter.getInstance().build("/iwork/set/GeneralActivity")
+                .navigation();
     }
 
     @OnClick(R.id.llProblem)
     void intoProblem(View view) {
-        ActivityUtil.next(mActivity, SupportFeedbackActivity.class);
+        ARouter.getInstance().build("/iwork/set/SupportFeedbackActivity").navigation();
     }
 
     @OnClick(R.id.llAbout)
     void intoAbout(View view) {
-        AboutActivity.startActivity(mActivity);
+        ARouter.getInstance().build("/iwork/set/AboutActivity")
+                .navigation();
     }
 
     @OnClick(R.id.log_out_tv)
@@ -159,17 +160,18 @@ public class SetFragment extends BaseFragment {
                     Connect.VersionResponse versionResponse = Connect.VersionResponse.parseFrom(structData.getPlainData());
                     if (!TextUtils.isEmpty(versionResponse.getVersion())) {
                         int compareInt = StringUtil.VersionComparison(versionResponse.getVersion(), SystemDataUtil.getVersionName(mActivity));
-                        if(versionText!=null){
-                        switch (compareInt) {
-                            case 1:
-                                versionText.setText(mActivity.getString(R.string.Set_new_version, versionResponse.getVersion()));
-                                break;
-                            case 0:
-                                versionText.setText(R.string.Set_This_is_the_newest_version);
-                            case -1:
-                                versionText.setText(R.string.Set_This_is_the_newest_version);
-                                break;
-                        }}
+                        if (versionText != null) {
+                            switch (compareInt) {
+                                case 1:
+                                    versionText.setText(mActivity.getString(R.string.Set_new_version, versionResponse.getVersion()));
+                                    break;
+                                case 0:
+                                    versionText.setText(R.string.Set_This_is_the_newest_version);
+                                case -1:
+                                    versionText.setText(R.string.Set_This_is_the_newest_version);
+                                    break;
+                            }
+                        }
                     }
                 } catch (InvalidProtocolBufferException e) {
                     e.printStackTrace();
