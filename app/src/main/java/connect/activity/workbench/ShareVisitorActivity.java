@@ -89,6 +89,8 @@ public class ShareVisitorActivity extends BaseActivity {
             PermissionUtil.getInstance().requestPermission(mActivity,
                     new String[]{PermissionUtil.PERMISSION_STORAGE},
                     permissionCallBack);
+        }else{
+            ToastUtil.getInstance().showToast(R.string.ErrorCode_Request_Error);
         }
     }
 
@@ -125,8 +127,7 @@ public class ShareVisitorActivity extends BaseActivity {
         }
 
         @Override
-        public void deny(String[] permissions) {
-        }
+        public void deny(String[] permissions) {}
     };
 
     /**

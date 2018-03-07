@@ -10,12 +10,14 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/login_edit_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_100"
-            android:background="@drawable/shape_login_grident"
+            android:background="@drawable/shape_8px_ffffff"
+            android:elevation="@dimen/dp_3"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"

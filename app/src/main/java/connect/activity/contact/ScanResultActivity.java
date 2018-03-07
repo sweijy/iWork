@@ -15,7 +15,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
-@Route(path = "/iwork/contact/ContactInfoShowActivity")
+@Route(path = "/iwork/contact/ScanResultActivity")
 public class ScanResultActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)

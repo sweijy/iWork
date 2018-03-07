@@ -1,20 +1,27 @@
 package connect.activity.login;
 
+import android.annotation.TargetApi;
+import android.graphics.Outline;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.ByteString;
 
@@ -60,6 +67,8 @@ public class LoginUserActivity extends BaseActivity {
 
     @Autowired
     String value;
+    @Bind(R.id.login_edit_linear)
+    LinearLayout loginEditLinear;
 
     private LoginUserActivity mActivity;
 
@@ -83,6 +92,16 @@ public class LoginUserActivity extends BaseActivity {
         if (!TextUtils.isEmpty(deveiceName)) {
             popRomteLoginDialog(deveiceName);
         }
+
+        /*ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                int size = getResources().getDimensionPixelSize(10);
+                outline.setOval(0, 0, size, size);
+            }
+        };
+        loginEditLinear.setOutlineProvider(viewOutlineProvider);*/
+
     }
 
     public void popRomteLoginDialog(String deveiceName) {
@@ -120,12 +139,10 @@ public class LoginUserActivity extends BaseActivity {
                 "", "", false, new DialogUtil.OnItemClickListener() {
                     @Override
                     public void confirm(String value) {
-
                     }
 
                     @Override
                     public void cancel() {
-
                     }
                 });
     }
@@ -166,8 +183,12 @@ public class LoginUserActivity extends BaseActivity {
                         SharedPreferenceUtil.getInstance().putUser(userBean1);
 
                         ARouter.getInstance().build("/iwork/HomeActivity")
-                                .navigation();
-                        mActivity.finish();
+                                .navigation(mActivity, new NavCallback() {
+                                    @Override
+                                    public void onArrival(Postcard postcard) {
+                                        mActivity.finish();
+                                    }
+                                });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -240,15 +261,15 @@ public class LoginUserActivity extends BaseActivity {
         public void afterTextChanged(Editable s) {
             String name = nameEt.getText().toString();
             String password = passwordEt.getText().toString();
-            if(TextUtils.isEmpty(name)){
+            if (TextUtils.isEmpty(name)) {
                 nameClearImage.setVisibility(View.GONE);
-            }else{
+            } else {
                 nameClearImage.setVisibility(View.VISIBLE);
             }
 
-            if(TextUtils.isEmpty(password)){
+            if (TextUtils.isEmpty(password)) {
                 passwordClearImage.setVisibility(View.GONE);
-            }else{
+            } else {
                 passwordClearImage.setVisibility(View.VISIBLE);
             }
 

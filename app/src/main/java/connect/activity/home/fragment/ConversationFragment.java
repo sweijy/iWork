@@ -220,7 +220,7 @@ public class ConversationFragment extends BaseFragment {
                 popWindow.showAsDropDown(connectStateView.findViewById(R.id.txt1), offsetX, offsetY);
                 break;
             case R.id.search_image1:
-                ActivityUtil.next(activity, SearchActivity.class);
+                ARouter.getInstance().build("/chat/SearchActivity").navigation();
                 break;
         }
     }

@@ -1,6 +1,5 @@
 package connect.activity.contact;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -74,7 +73,7 @@ public class ContactInfoShowActivity extends BaseActivity {
         toolbar.setTitle(null, R.string.Chat_Contact_details);
         toolbar.setRightTextEnable(false);
 
-        workmate = (Connect.Workmate) getIntent().getExtras().getSerializable("bean");
+        workmate = (Connect.Workmate) getIntent().getExtras().getSerializable("workmate");
         numberText.setText(mActivity.getString(R.string.Link_Employee_number) + ":");
 
         showView();

@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/shape_8px_ffffff"
+        android:elevation="@dimen/dp_3"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20">

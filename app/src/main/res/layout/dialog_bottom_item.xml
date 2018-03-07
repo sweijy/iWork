@@ -7,8 +7,9 @@
         android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/selector_list_item_bg"
         android:gravity="center"
-        android:textColor="@color/color_007aff"
+        android:textColor="@color/color_535353"
         android:textSize="@dimen/sp_14"/>
 
 </LinearLayout>

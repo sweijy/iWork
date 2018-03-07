@@ -42,7 +42,7 @@ import protos.Connect;
 /**
  *  组织架构
  */
-@Route(path = "/iwork/contact/ContactInfoShowActivity")
+@Route(path = "/iwork/contact/DepartmentActivity")
 public class DepartmentActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)

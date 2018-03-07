@@ -86,8 +86,11 @@
 
     <RelativeLayout
         android:id="@id/right_lin"
-        android:layout_width="@dimen/dp_45"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_28"
+        android:minWidth="@dimen/dp_45"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingRight="@dimen/dp_5"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_alignParentRight="true"
@@ -108,9 +111,9 @@
             android:layout_centerInParent="true"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/sp_12"
+            android:maxWidth="@dimen/dp_60"
             android:ellipsize="end"
-            android:lines="1"
-            android:maxWidth="@dimen/dp_40"/>
+            android:lines="1" />
     </RelativeLayout>
 
 </RelativeLayout>
