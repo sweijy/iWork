@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,22 +23,17 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
-import connect.activity.chat.ChatActivity;
-import connect.activity.chat.SearchActivity;
 import connect.activity.home.HomeActivity;
 import connect.activity.home.adapter.ConversationAdapter;
 import connect.activity.home.bean.ConversationAction;
 import connect.activity.home.bean.RoomAttrBean;
-import connect.activity.home.fragment.view.ChatAddPopWindow;
 import connect.activity.home.view.ConnectStateView;
 import connect.activity.home.view.LineDecoration;
+import connect.activity.home.view.ToolbarSearch;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import connect.utils.log.LogManager;
-import connect.utils.system.SystemUtil;
 import protos.Connect;
 
 /**
@@ -60,6 +54,8 @@ public class ConversationFragment extends BaseFragment {
     TextView txtCountAttention;
     @Bind(R.id.relative_attention)
     RelativeLayout relativeAttention;
+    @Bind(R.id.toolbar_search)
+    ToolbarSearch toolbarSearch;
 
     private String Tag = "_ConversationFragment";
     private Activity activity;
@@ -116,6 +112,12 @@ public class ConversationFragment extends BaseFragment {
                 @Override
                 protected void onPostExecute(List<RoomAttrBean> entities) {
                     super.onPostExecute(entities);
+
+                    // // TODO: 2018/3/6 测试代码 
+                    for (int i = 0; i < 10; i++) {
+                        entities.add(entities.get(0));
+                    }
+
                     chatFragmentAdapter.setData(entities);
                     countUnread();
                     isThreadRun = false;
@@ -171,7 +173,7 @@ public class ConversationFragment extends BaseFragment {
 
             @Override
             protected void onPostExecute(Integer integer) {
-                if(relativeAttention!=null){
+                if (relativeAttention != null) {
                     if (integer == 0) {
                         relativeAttention.setVisibility(View.GONE);
                     } else {
@@ -200,6 +202,9 @@ public class ConversationFragment extends BaseFragment {
     @Override
     public void initView() {
         if (chatFragmentAdapter == null) {
+//            toolbar.setBlackStyle();
+//            toolbar.setTitle(getResources().getString(R.string.Chat_Chats));
+
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
             recyclerFragmentChat.setLayoutManager(linearLayoutManager);
             chatFragmentAdapter = new ConversationAdapter();
@@ -210,20 +215,17 @@ public class ConversationFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.relativelayout_1, R.id.search_image1})
-    void onClickListener(View view) {
-        switch (view.getId()) {
-            case R.id.relativelayout_1:
-                PopupWindow popWindow = new ChatAddPopWindow(getActivity());
-                int offsetX = SystemUtil.dipToPx(30);
-                int offsetY = SystemUtil.dipToPx(0);
-                popWindow.showAsDropDown(connectStateView.findViewById(R.id.txt1), offsetX, offsetY);
-                break;
-            case R.id.search_image1:
-                ActivityUtil.next(activity, SearchActivity.class);
-                break;
-        }
-    }
+//    @OnClick({R.id.relativelayout_1})
+//    void onClickListener(View view) {
+//        switch (view.getId()) {
+//            case R.id.relativelayout_1:
+//                PopupWindow popWindow = new ChatAddPopWindow(getActivity());
+//                int offsetX = SystemUtil.dipToPx(30);
+//                int offsetY = SystemUtil.dipToPx(0);
+//                popWindow.showAsDropDown(connectStateView.findViewById(R.id.txt1), offsetX, offsetY);
+//                break;
+//        }
+//    }
 
     private class ConversationListener implements ConversationAdapter.ItemListener {
 

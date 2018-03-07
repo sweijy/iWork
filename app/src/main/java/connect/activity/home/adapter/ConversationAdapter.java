@@ -26,6 +26,8 @@ import connect.utils.TimeUtil;
 import connect.utils.dialog.DialogUtil;
 import connect.utils.glide.GlideUtil;
 import connect.widget.badge.BadgeView;
+import connect.widget.popuprecycler.RecyclerPopupHelper;
+import connect.widget.popuprecycler.RecyclerPopupWindow;
 import protos.Connect;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ConversationHolder> {
@@ -33,6 +35,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     private Context context;
     private ItemListener itemListener;
     private List<RoomAttrBean> roomAttrBeanList = new ArrayList<>();
+
+    private RecyclerPopupWindow recyclerPopupWindow;
 
     private ItemClickListener itemClickListener = new ItemClickListener();
     private ItemLongClickListener longClickListener = new ItemLongClickListener();
@@ -92,7 +96,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
         if (roomAttr.getTop() == 1) {
             holder.topImg.setVisibility(View.VISIBLE);
-            holder.itemRelative.setBackgroundResource(R.color.color_f1f1f1);
+            holder.itemRelative.setBackgroundResource(R.color.color_F5F5F5);
         } else {
             holder.topImg.setVisibility(View.GONE);
             holder.itemRelative.setBackgroundResource(R.color.color_white);
@@ -103,7 +107,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         holder.itemRelative.setTag(R.id.roomtype, roomAttr.getRoomtype());
         holder.itemRelative.setTag(R.id.roomtop, roomAttr.getTop());
         holder.itemRelative.setOnClickListener(itemClickListener);
-        holder.itemRelative.setOnLongClickListener(longClickListener);
+
+        String[] strings = new String[]{"dsdsd", "sdsdsd", "dsdsd"};
+        recyclerPopupWindow = new RecyclerPopupWindow(context);
+        recyclerPopupWindow.popupWindow(holder.itemRelative, Arrays.asList(strings), new RecyclerPopupHelper.PopupListener() {
+            @Override
+            public void onPopupListClick(int position) {
+
+            }
+        });
     }
 
     private class ItemClickListener implements View.OnClickListener {
@@ -202,7 +214,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         private TextView nameTxt;
         private ShowTextView directTxt;
 
-        private ImageView topImg;
+        private View topImg;
         private ImageView notifyImg;
         private TextView timeTxt;
 
@@ -214,8 +226,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             directTxt = (ShowTextView) itemView.findViewById(R.id.directTxtView);
 
             timeTxt = (TextView) itemView.findViewById(R.id.txt1);
-            topImg = (ImageView) itemView.findViewById(R.id.top);
-            notifyImg = (ImageView) itemView.findViewById(R.id.notify);
+            topImg = itemView.findViewById(R.id.top);
+            notifyImg = (ImageView) itemView.findViewById(R.id.image_notify);
 
             badgeTxt = (BadgeView) itemView.findViewById(R.id.badgetv);
         }

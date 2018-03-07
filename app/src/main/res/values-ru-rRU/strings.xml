@@ -60,7 +60,7 @@
         сети, пожалуйста проверьте сеть
     </string>
     <string name="Chat_Not_Group_Master">Ты не являешься администратором этой группы</string>
-    <string name="Chat_Not_connected">Чат (не подсоединено)</string>
+    <string name="Chat_Not_connected">Интернет-соединение недоступно</string>
     <string name="Chat_Photo">Фотография</string>
     <string name="Chat_Picture">[Изображение]</string>
     <string name="Chat_Preview">Предварительный просмотр</string>

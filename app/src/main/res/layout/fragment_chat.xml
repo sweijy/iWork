@@ -2,12 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F6F6F6"
+    android:background="@color/color_FAFBFC"
     android:orientation="vertical">
+
+    <connect.activity.home.view.ToolbarSearch
+        android:id="@id/toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <connect.activity.home.view.ConnectStateView
         android:id="@id/connectstate"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content" />
 
     <LinearLayout

@@ -57,7 +57,7 @@
         please check network
     </string>
     <string name="Chat_Not_Group_Master">You are not the group adminer</string>
-    <string name="Chat_Not_connected">Not connected</string>
+    <string name="Chat_Not_connected">Internet connection is not available</string>
     <string name="Chat_Photo">Photo</string>
     <string name="Chat_Picture">[Picture]</string>
     <string name="Chat_Preview">Preview</string>
