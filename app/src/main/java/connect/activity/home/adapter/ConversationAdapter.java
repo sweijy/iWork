@@ -23,10 +23,9 @@ import connect.database.green.bean.ConversionEntity;
 import connect.ui.activity.R;
 import connect.utils.FileUtil;
 import connect.utils.TimeUtil;
-import connect.utils.dialog.DialogUtil;
 import connect.utils.glide.GlideUtil;
+import connect.widget.RightTrangleView;
 import connect.widget.badge.BadgeView;
-import connect.widget.popuprecycler.RecyclerPopupHelper;
 import connect.widget.popuprecycler.RecyclerPopupWindow;
 import protos.Connect;
 
@@ -37,9 +36,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     private List<RoomAttrBean> roomAttrBeanList = new ArrayList<>();
 
     private RecyclerPopupWindow recyclerPopupWindow;
-
     private ItemClickListener itemClickListener = new ItemClickListener();
-    private ItemLongClickListener longClickListener = new ItemLongClickListener();
 
     public void setData(List<RoomAttrBean> entities) {
         this.roomAttrBeanList.clear();
@@ -99,7 +96,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.itemRelative.setBackgroundResource(R.color.color_F5F5F5);
         } else {
             holder.topImg.setVisibility(View.GONE);
-            holder.itemRelative.setBackgroundResource(R.color.color_white);
+            holder.itemRelative.setBackgroundResource(R.color.color_WHITE);
         }
 
         holder.itemRelative.setTag(R.id.position, position);
@@ -108,12 +105,78 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         holder.itemRelative.setTag(R.id.roomtop, roomAttr.getTop());
         holder.itemRelative.setOnClickListener(itemClickListener);
 
-        String[] strings = new String[]{"dsdsd", "sdsdsd", "dsdsd"};
+        String[] strings = new String[]{
+                (roomAttr.getTop() <= 0 ? context.getResources().getString(R.string.Chat_Message_Top) :
+                        context.getResources().getString(R.string.Chat_Message_Top_Remove)),
+                context.getResources().getString(R.string.Chat_Conversation_Del)
+        };
         recyclerPopupWindow = new RecyclerPopupWindow(context);
-        recyclerPopupWindow.popupWindow(holder.itemRelative, Arrays.asList(strings), new RecyclerPopupHelper.PopupListener() {
-            @Override
-            public void onPopupListClick(int position) {
+        recyclerPopupWindow.popupWindow(holder.itemRelative, Arrays.asList(strings), new RecyclerPopupWindow.RecyclerPopupListener() {
 
+            boolean isDeleteAble = true;
+
+            @Override
+            public void longPress(View view) {
+                view.setBackgroundColor(context.getResources().getColor(R.color.color_F5F5F5));
+            }
+
+            @Override
+            public void pressCancle(View view) {
+                if (roomAttr.getTop() == 1) {
+
+                } else {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.color_WHITE));
+                }
+            }
+
+            @Override
+            public void onItemClick(int position) {
+                String roomid = roomAttr.getRoomid();
+                switch (position) {
+                    case 0:
+                        topMessage(roomid);
+                        break;
+                    case 1:
+                        deleteMessage(roomid);
+                        break;
+                }
+            }
+
+            protected void topMessage(String roomId) {
+                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(roomId);
+                if (conversionEntity == null) {
+                    conversionEntity = new ConversionEntity();
+                    conversionEntity.setIdentifier(roomId);
+                }
+                int top = (null == conversionEntity.getTop() || conversionEntity.getTop() == 0) ? 1 : 0;
+                conversionEntity.setTop(top);
+                ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+                ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
+            }
+
+            protected void deleteMessage(String roomId) {
+                ConversionHelper.getInstance().deleteRoom(roomId);
+                MessageHelper.getInstance().deleteRoomMsg(roomId);
+                FileUtil.deleteContactFile(roomId);
+                ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_UNREAD);
+
+                if (isDeleteAble) {
+                    isDeleteAble = false;
+                    roomAttrBeanList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, getItemCount());
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(500);
+                                isDeleteAble = true;//可点击按钮
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
             }
         });
     }
@@ -124,83 +187,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         public void onClick(View view) {
             String roomIdentify = (String) view.getTag(R.id.roomid);
             int roomType = (int) view.getTag(R.id.roomtype);
-
             itemListener.itemClick(Connect.ChatType.forNumber(roomType), roomIdentify);
-        }
-    }
-
-    private class ItemLongClickListener implements View.OnLongClickListener {
-
-        boolean isDeleteAble = true;
-        private int position;
-        private String roomId;
-        private int top;
-
-        @Override
-        public boolean onLongClick(View view) {
-            position = (int) view.getTag(R.id.position);
-            roomId = (String) view.getTag(R.id.roomid);
-            top = (int) view.getTag(R.id.roomtop);
-
-            String[] strings = new String[]{
-                    (top <= 0 ? context.getResources().getString(R.string.Chat_Message_Top) :
-                            context.getResources().getString(R.string.Chat_Message_Top_Remove)
-                    ),
-                    context.getResources().getString(R.string.Chat_Conversation_Del)
-            };
-            DialogUtil.showItemListView(context, Arrays.asList(strings), new DialogUtil.DialogListItemClickListener() {
-
-                @Override
-                public void confirm(int position) {
-                    switch (position) {
-                        case 0:
-                            topMessage();
-                            break;
-                        case 1:
-                            deleteMessage();
-                            break;
-                    }
-                }
-            });
-            return false;
-        }
-
-        protected void topMessage() {
-            ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(roomId);
-            if (conversionEntity == null) {
-                conversionEntity = new ConversionEntity();
-                conversionEntity.setIdentifier(roomId);
-            }
-            int top = (null == conversionEntity.getTop() || conversionEntity.getTop() == 0) ? 1 : 0;
-            conversionEntity.setTop(top);
-            ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
-
-            ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
-        }
-
-        protected void deleteMessage() {
-            ConversionHelper.getInstance().deleteRoom(roomId);
-            MessageHelper.getInstance().deleteRoomMsg(roomId);
-            FileUtil.deleteContactFile(roomId);
-            ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_UNREAD);
-
-            if (isDeleteAble) {
-                isDeleteAble = false;
-                roomAttrBeanList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, getItemCount());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(500);
-                            isDeleteAble = true;//可点击按钮
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
         }
     }
 
@@ -214,7 +201,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         private TextView nameTxt;
         private ShowTextView directTxt;
 
-        private View topImg;
+        private RightTrangleView topImg;
         private ImageView notifyImg;
         private TextView timeTxt;
 
@@ -226,7 +213,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             directTxt = (ShowTextView) itemView.findViewById(R.id.directTxtView);
 
             timeTxt = (TextView) itemView.findViewById(R.id.txt1);
-            topImg = itemView.findViewById(R.id.top);
+            topImg = (RightTrangleView) itemView.findViewById(R.id.right_trangle);
             notifyImg = (ImageView) itemView.findViewById(R.id.image_notify);
 
             badgeTxt = (BadgeView) itemView.findViewById(R.id.badgetv);

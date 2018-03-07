@@ -291,4 +291,5 @@
     <item name="img_connect_state" type="id" />
     <item name="image_notify" type="id" />
     <item name="recycler_popup" type="id" />
+    <item name="right_trangle" type="id"/>
 </resources>

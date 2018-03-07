@@ -13,7 +13,6 @@
     <connect.activity.home.view.ConnectStateView
         android:id="@id/connectstate"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content" />
 
     <LinearLayout

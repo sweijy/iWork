@@ -24,8 +24,6 @@ public class RecyclerPopupWindow {
     private Context context;
     private int mPopupWindowWidth;
     private int mPopupWindowHeight;
-    private int mScreenWidth;
-    private int mScreenHeight;
     private float mTextSize;
     private int mTextPaddingLeft;
     private int mTextPaddingTop;
@@ -34,13 +32,11 @@ public class RecyclerPopupWindow {
 
     public RecyclerPopupWindow(Context context) {
         this.context = context;
-        this.mTextSize = SystemUtil.spToPx(16);
+        this.mTextSize = SystemUtil.spToPx(12);
         this.mTextPaddingLeft = SystemUtil.dipToPx(12);
         this.mTextPaddingTop = SystemUtil.dipToPx(12);
         this.mTextPaddingRight = SystemUtil.dipToPx(12);
         this.mTextPaddingBottom = SystemUtil.dipToPx(12);
-        this.mScreenWidth = SystemUtil.getScreenWidth();
-        this.mScreenHeight = SystemUtil.getScreenHeight();
     }
 
     private float mRawX;
@@ -48,9 +44,9 @@ public class RecyclerPopupWindow {
     private PopupWindow popupWindow;
     private View view;
     private List<String> stringList;
-    private RecyclerPopupHelper.PopupListener popupListener;
+    private RecyclerPopupListener popupListener;
 
-    public void popupWindow(View view, List<String> strings, RecyclerPopupHelper.PopupListener listener) {
+    public void popupWindow(final View view, List<String> strings, RecyclerPopupListener listener) {
         this.view = view;
         this.stringList = strings;
         this.popupListener = listener;
@@ -68,6 +64,7 @@ public class RecyclerPopupWindow {
             @Override
             public boolean onLongClick(View v) {
                 if (popupListener != null) {
+                    popupListener.longPress(view);
                     showPopupWindow();
                 }
                 return true;
@@ -84,7 +81,7 @@ public class RecyclerPopupWindow {
             LinearLayout contentView = new LinearLayout(context);
             contentView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             contentView.setOrientation(LinearLayout.VERTICAL);
-            contentView.setBackgroundResource(R.color.color_FFFFFF);
+            contentView.setBackgroundResource(R.drawable.shape_stroke_gray);
 
             for (int i = 0; i < stringList.size(); i++) {
                 TextView textView = new TextView(context);
@@ -99,7 +96,7 @@ public class RecyclerPopupWindow {
                     @Override
                     public void onClick(View v) {
                         if (popupListener != null) {
-                            popupListener.onPopupListClick(index);
+                            popupListener.onItemClick(index);
                             hidePopupWindow();
                         }
                     }
@@ -119,25 +116,39 @@ public class RecyclerPopupWindow {
         }
 
         if (!popupWindow.isShowing()) {
-            int[] location = new int[2];
-            view.getLocationOnScreen(location);
-            int stateBarHeight = SystemUtil.getStateBarHeight();
-            int titleBarHeight = SystemUtil.dipToPx(45);
-            // 弹出框的位置是否超出了屏幕底部
-            boolean isHandstand = location[1] + mPopupWindowHeight > mScreenHeight;
-            // 弹出框的位置
-            boolean isOverRight = location[1] + mPopupWindowWidth > mScreenWidth;
+            int screenWidth = SystemUtil.getScreenWidth();
+            int screenHeight = SystemUtil.getScreenHeight();
 
-            int showLocationY = isHandstand ?
-                    (int) mRawY - mPopupWindowHeight :
-                    (int) mRawY - mScreenHeight/2 +mPopupWindowHeight/2;
+            // 弹出框的位置是否超出了屏幕右半部(默认: 是当前手指位置右边)
+            int showX = 0;
+            boolean isOverScreenRight = mRawX + mPopupWindowWidth > screenWidth;
+            if (isOverScreenRight) {
+                showX = (int) mRawX - mPopupWindowHeight;
+            } else {
+                showX = (int) mRawX;
+            }
+
+            // 弹出框的位置是否超出了屏幕底部
+            boolean isOverScreenBottom = mRawY + mPopupWindowHeight + SystemUtil.dipToPx(30) > screenHeight;
+            int showY = 0;
+            if (isOverScreenBottom) {
+                showY = (int) (mRawY - mPopupWindowHeight - SystemUtil.dipToPx(5));
+            } else {
+                showY = (int) mRawY + SystemUtil.dipToPx(5);
+            }
 
             popupWindow.showAtLocation(
                     view,
-                    Gravity.CENTER,
-                    (int) mRawX - mScreenWidth / 2,
-                    showLocationY
+                    Gravity.LEFT | Gravity.TOP,
+                    showX,
+                    showY
             );
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    popupListener.pressCancle(view);
+                }
+            });
         }
     }
 
@@ -160,8 +171,12 @@ public class RecyclerPopupWindow {
         return view.getMeasuredHeight();
     }
 
-    public interface PopupListener {
+    public interface RecyclerPopupListener {
 
-        void onPopupListClick(int position);
+        void longPress(View view);
+
+        void onItemClick(int position);
+
+        void pressCancle(View view);
     }
 }

@@ -70,7 +70,7 @@ import protos.Connect;
 /**
  * chat message
  * Created by gtq on 2016/11/22.
- * <p>
+ *
  * 传递参数：
  *
  * @ CHAT_TYPE

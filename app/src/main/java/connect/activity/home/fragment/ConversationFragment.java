@@ -112,12 +112,6 @@ public class ConversationFragment extends BaseFragment {
                 @Override
                 protected void onPostExecute(List<RoomAttrBean> entities) {
                     super.onPostExecute(entities);
-
-                    // // TODO: 2018/3/6 测试代码 
-                    for (int i = 0; i < 10; i++) {
-                        entities.add(entities.get(0));
-                    }
-
                     chatFragmentAdapter.setData(entities);
                     countUnread();
                     isThreadRun = false;
@@ -202,9 +196,6 @@ public class ConversationFragment extends BaseFragment {
     @Override
     public void initView() {
         if (chatFragmentAdapter == null) {
-//            toolbar.setBlackStyle();
-//            toolbar.setTitle(getResources().getString(R.string.Chat_Chats));
-
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
             recyclerFragmentChat.setLayoutManager(linearLayoutManager);
             chatFragmentAdapter = new ConversationAdapter();
@@ -231,7 +222,7 @@ public class ConversationFragment extends BaseFragment {
 
         @Override
         public void itemClick(Connect.ChatType chatType, String identify) {
-            ARouter.getInstance().build("/chat/ChatActivity")
+            ARouter.getInstance().build("/iwork/chat/ChatActivity")
                     .withSerializable("CHAT_TYPE", chatType)
                     .withString("CHAT_IDENTIFY", identify)
                     .navigation();

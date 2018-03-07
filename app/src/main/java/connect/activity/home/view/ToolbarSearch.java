@@ -18,15 +18,19 @@ public class ToolbarSearch extends RelativeLayout {
 
     public ToolbarSearch(Context context) {
         super(context);
+        initView();
     }
 
     public ToolbarSearch(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initView();
     }
 
     public ToolbarSearch(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView();
     }
+
     public void initView() {
         view = View.inflate(getContext(), R.layout.view_toolbar_search, this);
     }
