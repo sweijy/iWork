@@ -226,7 +226,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="connect.activity.chat.exts.GroupAtActivity"
+            android:name="connect.activity.chat.set.GroupAtActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.exts.GoogleMapActivity"

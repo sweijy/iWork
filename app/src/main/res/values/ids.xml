@@ -4,6 +4,7 @@
     <item name="status_key" type="id"/>
     <item name="position_key" type="id"/>
     <item name="toolbar" type="id"/>
+    <item name="toolbar_search" type="id"/>
     <item name="image_view" type="id"/>
     <item name="text_view" type="id"/>
     <item name="back" type="id"/>
@@ -286,4 +287,12 @@
     <item name="view_voicerecord_state" type="id"/>
     <item name="img_voicerecord_state" type="id"/>
     <item name="txt_voicerecord_tips" type="id"/>
+
+    <item name="img_connect_state" type="id" />
+    <item name="image_notify" type="id" />
+    <item name="recycler_popup" type="id" />
+    <item name="right_trangle" type="id"/>
+    <item name="linearlayout_groupmember" type="id"/>
+    <item name="groupset_membercount" type="id"/>
+    <item name="groupset_add_newmember" type="id"/>
 </resources>

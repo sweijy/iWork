@@ -60,7 +60,7 @@
         сети, пожалуйста проверьте сеть
     </string>
     <string name="Chat_Not_Group_Master">Ты не являешься администратором этой группы</string>
-    <string name="Chat_Not_connected">Чат (не подсоединено)</string>
+    <string name="Chat_Not_connected">Интернет-соединение недоступно</string>
     <string name="Chat_Photo">Фотография</string>
     <string name="Chat_Picture">[Изображение]</string>
     <string name="Chat_Preview">Предварительный просмотр</string>
@@ -372,4 +372,7 @@
     <string name="Chat_System_Set">система</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">прогресс: %1$s</string>
+    <string name="Chat_GroupMember_Count">%1$dчлен</string>
+    <string name="Chat_Group_Member">Участники группы</string>
+    <string name="Chat_GroupMember_Add">Добавить участника</string>
 </resources>

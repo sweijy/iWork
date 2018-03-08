@@ -33,7 +33,6 @@ import connect.activity.chat.bean.LinkMessageRow;
 import connect.activity.chat.bean.MsgSend;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.bean.RoomSession;
-import connect.activity.chat.set.GroupSetActivity;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.MessageHelper;
@@ -70,7 +69,7 @@ import protos.Connect;
 /**
  * chat message
  * Created by gtq on 2016/11/22.
- * <p>
+ *
  * 传递参数：
  *
  * @ CHAT_TYPE
@@ -138,7 +137,9 @@ public class ChatActivity extends BaseChatSendActivity {
                                 .navigation();
                         break;
                     case GROUP:
-                        GroupSetActivity.startActivity(activity, chatIdentify);
+                        ARouter.getInstance().build("/iwork/chat/set/GroupSetActivity")
+                                .withString("groupIdentify", chatIdentify)
+                                .navigation();
                         break;
                 }
             }

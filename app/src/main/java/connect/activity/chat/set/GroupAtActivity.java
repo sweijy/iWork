@@ -1,4 +1,4 @@
-package connect.activity.chat.exts;
+package connect.activity.chat.set;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
 import connect.activity.chat.adapter.GroupAtAdapter;
 import connect.activity.chat.bean.RecExtBean;
-import connect.activity.chat.exts.contract.GroupAtContract;
-import connect.activity.chat.exts.presenter.GroupAtPresenter;
+import connect.activity.chat.set.contract.GroupAtContract;
+import connect.activity.chat.set.presenter.GroupAtPresenter;
 import connect.activity.base.compare.GroupMemberCompara;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;

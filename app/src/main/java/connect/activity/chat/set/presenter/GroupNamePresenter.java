@@ -3,6 +3,8 @@ package connect.activity.chat.set.presenter;
 import android.app.Activity;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.set.GroupSetActivity;
 import connect.activity.chat.set.contract.GroupNameContract;
@@ -63,7 +65,9 @@ public class GroupNamePresenter implements GroupNameContract.Presenter{
                     ContactNotice.receiverGroup();
                     RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.UPDATENAME, groupKey,groupName);
                 }
-                GroupSetActivity.startActivity(activity,groupKey);
+                ARouter.getInstance().build("/iwork/chat/set/GroupSetActivity")
+                        .withString("groupIdentify",groupKey)
+                        .navigation();
             }
 
             @Override

@@ -13,19 +13,15 @@ public interface PrivateSetContract {
 
     interface BView extends BaseView<PrivateSetContract.Presenter> {
 
-        String getRoomKey();
+        String getUid();
 
         String getAvatar();
 
         String getName();
 
-        void searchHistoryTxt();
-
         void switchTop(String name, boolean state);
 
         void switchDisturb(String name, boolean state);
-
-        void clearMessage();
 
         void showContactInfo(View view);
     }

@@ -160,7 +160,7 @@ public class ConversionHelper extends BaseDao {
 
     public ConversionEntity loadRoomEnitity(String roomid) {
         QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
-        queryBuilder.where(ConversionEntityDao.Properties.Identifier.eq(roomid)).limit(1).build();
+        queryBuilder.where(ConversionEntityDao.Properties.Identifier.eq(roomid)).build();
         List<ConversionEntity> roomEntities = queryBuilder.list();
         return (roomEntities == null || roomEntities.size() == 0) ? null : roomEntities.get(0);
     }

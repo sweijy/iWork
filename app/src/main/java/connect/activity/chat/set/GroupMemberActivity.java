@@ -113,7 +113,9 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
             @Override
             public void itemRemove(GroupMemberEntity entity) {
                 memEntities.remove(entity);
-                GroupSetActivity.startActivity(activity, groupKey);
+                ARouter.getInstance().build("/iwork/chat/set/GroupSetActivity")
+                        .withString("groupIdentify",groupKey)
+                        .navigation();
             }
         });
 

@@ -1,4 +1,4 @@
-package connect.activity.chat.exts.contract;
+package connect.activity.chat.set.contract;
 
 import connect.activity.base.contract.BasePresenter;
 import connect.activity.base.contract.BaseView;

@@ -59,7 +59,7 @@ public class BadgeView extends View {
         numberPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         numberPaint.setColor(defaultTextColor);
         numberPaint.setStyle(Paint.Style.FILL);
-        numberPaint.setTextSize(SystemUtil.spToPx(8));
+        numberPaint.setTextSize(SystemUtil.spToPx(6));
         numberPaint.setTextAlign(Paint.Align.CENTER);
         backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         backgroundPaint.setColor(getResources().getColor(R.color.color_red));
