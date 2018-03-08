@@ -11,7 +11,13 @@ public interface GroupAtContract {
 
     interface BView extends BaseView<GroupAtContract.Presenter> {
 
-        String getGroupKey();
+        String groupIndentify();
+
+        void searchTxtListener();
+
+        void atAll();
+
+        void atGroupManager(String avatar,String name);
     }
 
     interface Presenter extends BasePresenter {

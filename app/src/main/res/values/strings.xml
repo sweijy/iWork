@@ -353,4 +353,5 @@
     <string name="Chat_Group_Member">group member</string>
     <string name="Chat_GroupMember_Count">%1$dMember</string>
     <string name="Chat_GroupMember_Add">add new member</string>
+    <string name="Chat_Choose_AT_Member">choose @ member</string>
 </resources>

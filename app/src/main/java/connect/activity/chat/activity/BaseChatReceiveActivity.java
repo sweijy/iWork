@@ -149,7 +149,7 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                 break;
             case GROUPAT_TO:
                 ARouter.getInstance().build("/iwork/chat/exts/GroupAtActivity")
-                        .withString("GROUP_IDENTIFY",normalChat.chatKey())
+                        .withString("groupIdentify",normalChat.chatKey())
                         .navigation();
                 break;
             case MESSAGE_RECEIVE:

@@ -373,6 +373,52 @@ public class ContactHelper extends BaseDao {
         return groupMemEntities;
     }
 
+    public List<GroupMemberEntity> loadGroupManagerMemEntities(String identify) {
+        String sql = "SELECT M.* FROM GROUP_MEMBER_ENTITY M LEFT OUTER JOIN CONTACT_ENTITY F ON M.UID = F.UID " +
+                "WHERE M.IDENTIFIER = ? AND M.ROLE == 1 GROUP BY M.UID ORDER BY M.ROLE DESC;";
+        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{identify});
+
+        GroupMemberEntity groupMemEntity = null;
+        List<GroupMemberEntity> groupMemEntities = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            groupMemEntity = new GroupMemberEntity();
+            groupMemEntity.set_id(cursorGetLong(cursor, "_ID"));
+            groupMemEntity.setIdentifier(cursorGetString(cursor, "IDENTIFIER"));
+            groupMemEntity.setUid(cursorGetString(cursor, "UID"));
+            groupMemEntity.setUsername(cursorGetString(cursor, "USERNAME"));
+            groupMemEntity.setRole(cursorGetInt(cursor, "ROLE"));
+            groupMemEntity.setAvatar(cursorGetString(cursor, "AVATAR"));
+            groupMemEntities.add(groupMemEntity);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return groupMemEntities;
+    }
+
+    public List<GroupMemberEntity> loadGroupMemEntitiesLikeKey(String identify, String memberkey) {
+        String sql = "SELECT M.* FROM GROUP_MEMBER_ENTITY M LEFT OUTER JOIN CONTACT_ENTITY F ON M.UID = F.UID " +
+                "WHERE M.IDENTIFIER = ? AND M.USERNAME LIKE '%?%' GROUP BY M.UID ORDER BY M.ROLE DESC;";
+        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{identify, memberkey});
+
+        GroupMemberEntity groupMemEntity = null;
+        List<GroupMemberEntity> groupMemEntities = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            groupMemEntity = new GroupMemberEntity();
+            groupMemEntity.set_id(cursorGetLong(cursor, "_ID"));
+            groupMemEntity.setIdentifier(cursorGetString(cursor, "IDENTIFIER"));
+            groupMemEntity.setUid(cursorGetString(cursor, "UID"));
+            groupMemEntity.setUsername(cursorGetString(cursor, "USERNAME"));
+            groupMemEntity.setRole(cursorGetInt(cursor, "ROLE"));
+            groupMemEntity.setAvatar(cursorGetString(cursor, "AVATAR"));
+            groupMemEntities.add(groupMemEntity);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return groupMemEntities;
+    }
+
     public List<GroupMemberEntity> loadGroupMembersByUid(String uid) {
         QueryBuilder<GroupMemberEntity> queryBuilder = groupMemberEntityDao.queryBuilder();
         queryBuilder.where(GroupMemberEntityDao.Properties.Uid.eq(uid)).build();

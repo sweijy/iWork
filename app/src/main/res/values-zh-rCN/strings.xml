@@ -318,4 +318,5 @@
     <string name="Chat_Group_Member">群成员</string>
     <string name="Chat_GroupMember_Count">%1$d人</string>
     <string name="Chat_GroupMember_Add">添加新成员</string>
+    <string name="Chat_Choose_AT_Member">选择要@的人</string>
 </resources>
