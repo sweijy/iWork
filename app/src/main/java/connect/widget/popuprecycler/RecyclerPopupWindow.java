@@ -1,8 +1,10 @@
 package connect.widget.popuprecycler;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -33,10 +35,10 @@ public class RecyclerPopupWindow {
     public RecyclerPopupWindow(Context context) {
         this.context = context;
         this.mTextSize = SystemUtil.spToPx(12);
-        this.mTextPaddingLeft = SystemUtil.dipToPx(12);
-        this.mTextPaddingTop = SystemUtil.dipToPx(12);
-        this.mTextPaddingRight = SystemUtil.dipToPx(12);
-        this.mTextPaddingBottom = SystemUtil.dipToPx(12);
+        this.mTextPaddingLeft = SystemUtil.dipToPx(16);
+        this.mTextPaddingTop = SystemUtil.dipToPx(16);
+        this.mTextPaddingRight = SystemUtil.dipToPx(16);
+        this.mTextPaddingBottom = SystemUtil.dipToPx(16);
     }
 
     private float mRawX;
@@ -72,6 +74,7 @@ public class RecyclerPopupWindow {
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void showPopupWindow() {
         if (context instanceof Activity && ((Activity) context).isFinishing()) {
             return;
@@ -81,7 +84,7 @@ public class RecyclerPopupWindow {
             LinearLayout contentView = new LinearLayout(context);
             contentView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             contentView.setOrientation(LinearLayout.VERTICAL);
-            contentView.setBackgroundResource(R.drawable.shape_stroke_gray);
+            contentView.setBackgroundResource(R.drawable.shape_8px_ffffff);
 
             for (int i = 0; i < stringList.size(); i++) {
                 TextView textView = new TextView(context);
@@ -112,6 +115,7 @@ public class RecyclerPopupWindow {
             }
             popupWindow = new PopupWindow(contentView, mPopupWindowWidth, mPopupWindowHeight, true);
             popupWindow.setTouchable(true);
+            popupWindow.setElevation(SystemUtil.dipToPx(10));
             popupWindow.setBackgroundDrawable(new BitmapDrawable());
         }
 

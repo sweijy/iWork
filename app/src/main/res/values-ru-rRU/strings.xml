@@ -372,4 +372,6 @@
     <string name="Chat_System_Set">система</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">прогресс: %1$s</string>
+    <string name="Chat_Group_Name">Члены группы</string>
+    <string name="Chat_GroupMember_Count">%1$dчлен</string>
 </resources>

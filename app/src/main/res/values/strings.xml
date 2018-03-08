@@ -350,4 +350,6 @@
     <string name="Chat_System_Set">System Set</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">progress: %1$s</string>
+    <string name="Chat_Group_Name">group name</string>
+    <string name="Chat_GroupMember_Count">%1$dMember</string>
 </resources>

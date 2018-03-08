@@ -33,7 +33,6 @@ import connect.activity.chat.bean.LinkMessageRow;
 import connect.activity.chat.bean.MsgSend;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.bean.RoomSession;
-import connect.activity.chat.set.GroupSetActivity;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.MessageHelper;
@@ -138,7 +137,9 @@ public class ChatActivity extends BaseChatSendActivity {
                                 .navigation();
                         break;
                     case GROUP:
-                        GroupSetActivity.startActivity(activity, chatIdentify);
+                        ARouter.getInstance().build("/iwork/chat/set/GroupSetActivity")
+                                .withString("groupIdentify", chatIdentify)
+                                .navigation();
                         break;
                 }
             }

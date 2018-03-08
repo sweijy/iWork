@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -48,11 +49,14 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     @Bind(R.id.layout_selected)
     RelativeLayout layoutSelected;
 
+    @Autowired
+    boolean isCreateGroup = true;
+    @Autowired
+    String uid;
+
     private GroupSelectActivity activity;
     private GroupSelectContract.Presenter presenter;
     private UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-    private boolean isCreateGroup = true;
-    private String uid = "";
     private Map<String, Object> groupMemebers = new HashMap<>();
     private Map<String, Object> selectMembers = new HashMap<>();
 

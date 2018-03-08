@@ -19,7 +19,7 @@ public interface GroupSetContract {
 
         void memberList(View view);
 
-        void searchGroupHistoryTxt();
+        void addNewMember();
 
         void groupNameClickable(boolean clickable);
 
@@ -30,8 +30,6 @@ public interface GroupSetContract {
         void noticeSwitch(boolean notice);
 
         void commonSwtich(boolean common);
-
-        void clearHistory();
 
         void exitGroup();
     }

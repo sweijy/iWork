@@ -26,7 +26,7 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
 
     private PrivateSetContract.BView view;
 
-    private String roomKey;
+    private String uid;
     private Activity activity;
 
     public PrivateSetPresenter(PrivateSetContract.BView view) {
@@ -36,16 +36,14 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
 
     @Override
     public void start() {
-        roomKey = view.getRoomKey();
+        uid = view.getUid();
         activity = view.getActivity();
 
-        view.searchHistoryTxt();
-
         boolean istop = false;
-        ConversionEntity roomEntity = ConversionHelper.getInstance().loadRoomEnitity(roomKey);
+        ConversionEntity roomEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
         if (roomEntity == null) {
             roomEntity = new ConversionEntity();
-            roomEntity.setIdentifier(roomKey);
+            roomEntity.setIdentifier(uid);
             roomEntity.setTop(0);
         }
         if (Integer.valueOf(1).equals(roomEntity.getTop())) {
@@ -54,10 +52,10 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
         view.switchTop(activity.getResources().getString(R.string.Chat_Sticky_on_Top_chat), istop);
 
         boolean isDisturb = false;
-        ConversionSettingEntity chatSetEntity = ConversionSettingHelper.getInstance().loadSetEntity(roomKey);
+        ConversionSettingEntity chatSetEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
         if (chatSetEntity == null) {
             chatSetEntity = new ConversionSettingEntity();
-            chatSetEntity.setIdentifier(roomKey);
+            chatSetEntity.setIdentifier(uid);
             chatSetEntity.setDisturb(0);
         }
         if (Integer.valueOf(1).equals(chatSetEntity.getDisturb())) {
@@ -65,12 +63,9 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
         }
         view.switchDisturb(activity.getResources().getString(R.string.Chat_Mute_Notification), isDisturb);
 
-        view.clearMessage();
-        view.searchHistoryTxt();
-
         ContactEntity friendEntity = new ContactEntity();
         friendEntity.setAvatar(view.getAvatar());
-        friendEntity.setUid(view.getRoomKey());
+        friendEntity.setUid(uid);
         friendEntity.setName(view.getName());
         List<ContactEntity> entities = new ArrayList<>();
         entities.add(friendEntity);
@@ -78,10 +73,8 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
         for (ContactEntity entity : entities) {
             View headerview = LayoutInflater.from(activity).inflate(R.layout.linear_contact, null);
             ImageView headimg = (ImageView) headerview.findViewById(R.id.roundimg);
-            ImageView adminImg = (ImageView) headerview.findViewById(R.id.img1);
             TextView name = (TextView) headerview.findViewById(R.id.name);
 
-            adminImg.setVisibility(View.GONE);
             if (TextUtils.isEmpty(entity.getName())) {
                 name.setVisibility(View.GONE);
             } else {

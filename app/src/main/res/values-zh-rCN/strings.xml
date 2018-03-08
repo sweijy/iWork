@@ -63,7 +63,7 @@
     <string name="Chat_Slide_left_to_cancel">向左滑动取消发送</string>
     <string name="Chat_Snapchat">[阅后即焚]</string>
     <string name="Chat_Someone_note_me">[有人@我]</string>
-    <string name="Chat_Sticky_on_Top_chat">置顶聊天</string>
+    <string name="Chat_Sticky_on_Top_chat">聊天置顶</string>
     <string name="Chat_Tips">[提示信息]</string>
     <string name="Chat_Transfer">[转账]</string>
     <string name="Chat_Unpaid">未支付</string>
@@ -315,5 +315,6 @@
     <string name="Chat_System_Set">系统消息</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">进度: %1$s</string>
-
+    <string name="Chat_Group_Name">群成员</string>
+    <string name="Chat_GroupMember_Count">%1$d人</string>
 </resources>

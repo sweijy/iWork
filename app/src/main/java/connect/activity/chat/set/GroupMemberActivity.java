@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -42,7 +43,9 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
     RecyclerView recordview;
     @Bind(R.id.siderbar)
     SideBar siderbar;
-    private String groupKey;
+
+    @Autowired
+    private String groupIdentify;
 
     private GroupMemberActivity activity;
     private static String TAG = "_GroupMemberActivity";
@@ -86,16 +89,16 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
             public void onClick(View v) {
                 ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
                         .withBoolean("isCreate", false)
-                        .withSerializable("groupIdentify", groupKey)
+                        .withSerializable("groupIdentify", groupIdentify)
                         .navigation();
             }
         });
 
-        groupKey = getIntent().getStringExtra(GROUP_IDENTIFY);
+        groupIdentify = getIntent().getStringExtra(GROUP_IDENTIFY);
         String myUid = SharedPreferenceUtil.getInstance().getUser().getUid();
-        GroupMemberEntity myMember = ContactHelper.getInstance().loadGroupMemberEntity(groupKey, myUid);
+        GroupMemberEntity myMember = ContactHelper.getInstance().loadGroupMemberEntity(groupIdentify, myUid);
 
-        memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupKey);
+        memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
         Collections.sort(memEntities, new GroupComPara());
         toolbarTop.setTitle(getString(R.string.Chat_Group_Members, memEntities.size()));
 
@@ -113,7 +116,9 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
             @Override
             public void itemRemove(GroupMemberEntity entity) {
                 memEntities.remove(entity);
-                GroupSetActivity.startActivity(activity, groupKey);
+                ARouter.getInstance().build("/iwork/chat/set/GroupSetActivity")
+                        .withString("groupIdentify", groupIdentify)
+                        .navigation();
             }
         });
 
@@ -151,7 +156,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
 
     @Override
     public String getRoomKey() {
-        return groupKey;
+        return groupIdentify;
     }
 
     @Override
