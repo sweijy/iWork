@@ -50,7 +50,7 @@
     <string name="Chat_Name_Card">名片</string>
     <string name="Chat_Network_connection_failed_please_check_network">网络连接失败，请检查网络</string>
     <string name="Chat_Not_Group_Master">你不是该群的群主</string>
-    <string name="Chat_Not_connected">聊天(未连接)</string>
+    <string name="Chat_Not_connected">网络连接不可用</string>
     <string name="Chat_Photo">照片</string>
     <string name="Chat_Picture">[图片]</string>
     <string name="Chat_Preview">预览</string>
@@ -315,5 +315,7 @@
     <string name="Chat_System_Set">系统消息</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">进度: %1$s</string>
-
+    <string name="Chat_Group_Member">群成员</string>
+    <string name="Chat_GroupMember_Count">%1$d人</string>
+    <string name="Chat_GroupMember_Add">添加新成员</string>
 </resources>

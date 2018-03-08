@@ -1,6 +1,6 @@
-package connect.activity.chat.exts.presenter;
+package connect.activity.chat.set.presenter;
 
-import connect.activity.chat.exts.contract.GroupAtContract;
+import connect.activity.chat.set.contract.GroupAtContract;
 
 /**
  * Created by Administrator on 2017/8/11.

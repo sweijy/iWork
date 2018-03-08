@@ -57,7 +57,7 @@
         please check network
     </string>
     <string name="Chat_Not_Group_Master">You are not the group adminer</string>
-    <string name="Chat_Not_connected">Not connected</string>
+    <string name="Chat_Not_connected">Internet connection is not available</string>
     <string name="Chat_Photo">Photo</string>
     <string name="Chat_Picture">[Picture]</string>
     <string name="Chat_Preview">Preview</string>
@@ -350,4 +350,7 @@
     <string name="Chat_System_Set">System Set</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">progress: %1$s</string>
+    <string name="Chat_Group_Member">group member</string>
+    <string name="Chat_GroupMember_Count">%1$dMember</string>
+    <string name="Chat_GroupMember_Add">add new member</string>
 </resources>

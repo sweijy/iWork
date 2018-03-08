@@ -1,6 +1,5 @@
 package connect.activity.contact;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -138,7 +137,7 @@ public class ContactInfoActivity extends BaseActivity {
     @OnClick(R.id.chat_btn)
     void chat(View view) {
         if (workmate != null && !TextUtils.isEmpty(workmate.getUid())) {
-            ARouter.getInstance().build("/chat/ChatActivity")
+            ARouter.getInstance().build("/iwork/chat/ChatActivity")
                     .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
                     .withString("CHAT_IDENTIFY", workmate.getUid())
                     .navigation();

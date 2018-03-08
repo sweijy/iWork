@@ -96,13 +96,13 @@ public class ContactFragment extends BaseFragment {
         public void itemClick(int position, ContactBean entity) {
             switch (entity.getStatus()) {
                 case 6:
-                    ARouter.getInstance().build("/chat/ChatActivity")
+                    ARouter.getInstance().build("/iwork/chat/ChatActivity")
                             .withSerializable("CHAT_TYPE", Connect.ChatType.CONNECT_SYSTEM)
                             .withString("CHAT_IDENTIFY", "Connect")
                             .navigation();
                     break;
                 case 2:
-                    ARouter.getInstance().build("/chat/ChatActivity")
+                    ARouter.getInstance().build("/iwork/chat/ChatActivity")
                             .withSerializable("CHAT_TYPE", Connect.ChatType.GROUP)
                             .withString("CHAT_IDENTIFY", entity.getUid())
                             .navigation();

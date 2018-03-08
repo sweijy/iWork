@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -33,7 +34,6 @@ import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import protos.Connect;
 
 @Route(path = "/iwork/chat/set/GroupSelectActivity")
@@ -48,11 +48,14 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     @Bind(R.id.layout_selected)
     RelativeLayout layoutSelected;
 
+    @Autowired
+    boolean isCreateGroup = true;
+    @Autowired
+    String uid = "";
+
     private GroupSelectActivity activity;
     private GroupSelectContract.Presenter presenter;
     private UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-    private boolean isCreateGroup = true;
-    private String uid = "";
     private Map<String, Object> groupMemebers = new HashMap<>();
     private Map<String, Object> selectMembers = new HashMap<>();
 
@@ -61,6 +64,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_select);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
     }
 
