@@ -117,6 +117,10 @@ public class ContactFragment extends BaseFragment {
                     ARouter.getInstance().build("/iwork/contact/DepartmentActivity")
                             .navigation();
                     break;
+                case 9:
+                    ARouter.getInstance().build("/iwork/contact/ContactGroupActivity")
+                            .navigation();
+                    break;
                 default:
                     break;
             }

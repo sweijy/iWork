@@ -109,7 +109,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if(position != 0){
                     connectLetter = contactManage.checkShowFriendTop(currBean, mData.get(position - 1));
                 }
-                if (TextUtils.isEmpty(connectLetter)) {
+                if (TextUtils.isEmpty(connectLetter) || currBean.getStatus() == 7 || currBean.getStatus() == 9) {
                     ((ConnectHolder) holder).topTv.setVisibility(View.GONE);
                     ((ConnectHolder) holder).lineView.setVisibility(View.GONE);
                 } else {
@@ -128,6 +128,9 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if(currBean.getStatus() == 7){
                     ((ConnectHolder) holder).avatarImg.setImageResource(R.mipmap.department);
                     ((ConnectHolder) holder).nameTv.setText(R.string.Chat_Organizational_structure);
+                }else if(currBean.getStatus() == 9){
+                    ((ConnectHolder) holder).avatarImg.setImageResource(R.mipmap.department);
+                    ((ConnectHolder) holder).nameTv.setText(R.string.Chat_Group_chat);
                 }else if(currBean.getStatus() == 6){
                     GlideUtil.loadAvatarRound(((ConnectHolder) holder).avatarImg, R.mipmap.connect_logo);
                     ((ConnectHolder) holder).nameTv.setText(R.string.app_name);
@@ -161,7 +164,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int status = mData.get(position).getStatus();
         if (status == 1) {
             return STATUS_FRIEND;
-        } else if(status == 2 || status == 6 || status == 7){
+        } else if(status == 2 || status == 6 || status == 7 || status == 9){
             return STATUS_FRIEND_CONNECT;
         } else if(status == 8){
             return STATUS_FRIEND_TITLE;
@@ -257,9 +260,8 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ArrayList<ContactBean> finalList = new ArrayList<>();
                 final int friendSize = friendList.size();
                 final int groupSize = groupList.size();
-                ContactBean contactBeanOri = new ContactBean();
-                contactBeanOri.setStatus(7);
-                finalList.add(contactBeanOri);
+                finalList.add(new ContactBean(7, "department"));
+                finalList.add(new ContactBean(9, "group"));
                 if(friendSize > 0){
                     ContactBean contactBeanTitle = new ContactBean();
                     contactBeanTitle.setStatus(8);
