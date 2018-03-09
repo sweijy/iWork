@@ -16,28 +16,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        android:id="@id/include_all"
-        layout="@layout/include_img_txt_manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px_1" />
-
-    <include
-        android:id="@id/include_manager"
-        layout="@layout/include_img_txt_manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px_1" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@id/recyclerview"
+            android:id="@id/recordview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_selected" />
+
+        <include
+            android:id="@id/layout_selected"
+            layout="@layout/include_selectcout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:layout_alignParentBottom="true" />
 
         <connect.widget.SideBar
             android:id="@id/siderbar"

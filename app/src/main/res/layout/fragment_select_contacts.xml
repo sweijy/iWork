@@ -16,23 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        android:id="@id/include_all"
-        layout="@layout/include_img_txt_manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px_1" />
-
-    <include
-        android:id="@id/include_manager"
-        layout="@layout/include_img_txt_manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px_1" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@id/recyclerview"

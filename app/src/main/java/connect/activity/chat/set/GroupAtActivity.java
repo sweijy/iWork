@@ -151,8 +151,12 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
     @Override
     public void atAll() {
         View view = findViewById(R.id.include_all);
+        ImageView imageView = (ImageView) view.findViewById(R.id.roundimg);
+        TextView username = (TextView) view.findViewById(R.id.name);
         TextView manager = (TextView) view.findViewById(R.id.groupat_manager);
 
+        GlideUtil.loadImage(imageView, R.mipmap.default_user_avatar);
+        username.setText(getResources().getString(R.string.Chat_All_Members));
         manager.setVisibility(View.GONE);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

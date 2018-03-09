@@ -113,8 +113,8 @@ public class ContactHelper extends BaseDao {
         queryBuilder.where(ContactEntityDao.Properties.Uid.eq(uid)).build();
         List<ContactEntity> friendEntities = queryBuilder.list();
         ContactEntity contactEntity = null;
-        if(friendEntities!=null&&friendEntities.size()>0){
-            contactEntity=friendEntities.get(0);
+        if (friendEntities != null && friendEntities.size() > 0) {
+            contactEntity = friendEntities.get(0);
         }
         return contactEntity;
     }
@@ -396,32 +396,17 @@ public class ContactHelper extends BaseDao {
         return groupMemEntities;
     }
 
-    public List<GroupMemberEntity> loadGroupMemEntitiesLikeKey(String identify, String memberkey) {
-        String sql = "SELECT M.* FROM GROUP_MEMBER_ENTITY M LEFT OUTER JOIN CONTACT_ENTITY F ON M.UID = F.UID " +
-                "WHERE M.IDENTIFIER = ? AND M.USERNAME LIKE '%?%' GROUP BY M.UID ORDER BY M.ROLE DESC;";
-        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{identify, memberkey});
-
-        GroupMemberEntity groupMemEntity = null;
-        List<GroupMemberEntity> groupMemEntities = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            groupMemEntity = new GroupMemberEntity();
-            groupMemEntity.set_id(cursorGetLong(cursor, "_ID"));
-            groupMemEntity.setIdentifier(cursorGetString(cursor, "IDENTIFIER"));
-            groupMemEntity.setUid(cursorGetString(cursor, "UID"));
-            groupMemEntity.setUsername(cursorGetString(cursor, "USERNAME"));
-            groupMemEntity.setRole(cursorGetInt(cursor, "ROLE"));
-            groupMemEntity.setAvatar(cursorGetString(cursor, "AVATAR"));
-            groupMemEntities.add(groupMemEntity);
-        }
-        if (cursor != null) {
-            cursor.close();
-        }
-        return groupMemEntities;
-    }
-
     public List<GroupMemberEntity> loadGroupMembersByUid(String uid) {
         QueryBuilder<GroupMemberEntity> queryBuilder = groupMemberEntityDao.queryBuilder();
         queryBuilder.where(GroupMemberEntityDao.Properties.Uid.eq(uid)).build();
+        List<GroupMemberEntity> memberEntities = queryBuilder.list();
+        return (memberEntities == null || memberEntities.size() == 0) ? null : memberEntities;
+    }
+
+    public List<GroupMemberEntity> loadGroupMemEntitiesLikeKey(String identify, String memberkey) {
+        QueryBuilder<GroupMemberEntity> queryBuilder = groupMemberEntityDao.queryBuilder();
+        queryBuilder.where(GroupMemberEntityDao.Properties.Identifier.eq(identify),
+                GroupMemberEntityDao.Properties.Username.like("%" + memberkey + "%")).build();
         List<GroupMemberEntity> memberEntities = queryBuilder.list();
         return (memberEntities == null || memberEntities.size() == 0) ? null : memberEntities;
     }
@@ -485,7 +470,7 @@ public class ContactHelper extends BaseDao {
 
     public List<SearchBean> loadGroupByMessages(String message) {
         String sql = "SELECT * FROM GROUP_ENTITY G,(SELECT M.MESSAGE_OWER ,COUNT() AS COUNTS FROM MESSAGE_ENTITY M WHERE M.TXT_CONTENT LIKE ? GROUP BY M.MESSAGE_OWER) AS MSG WHERE G.IDENTIFIER = MSG.MESSAGE_OWER";
-        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{"%"+message+"%"});
+        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{"%" + message + "%"});
 
         List<SearchBean> groupEntities = new ArrayList<>();
         while (cursor.moveToNext()) {
@@ -507,7 +492,7 @@ public class ContactHelper extends BaseDao {
 
     public List<SearchBean> loadChatByMessages(String message) {
         String sql = "SELECT * FROM CONTACT_ENTITY G,(SELECT M.MESSAGE_OWER ,COUNT() AS COUNTS FROM MESSAGE_ENTITY M WHERE M.TXT_CONTENT LIKE ? GROUP BY M.MESSAGE_OWER) AS MSG WHERE G.UID = MSG.MESSAGE_OWER";
-        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{"%"+message+"%"});
+        Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{"%" + message + "%"});
 
         List<SearchBean> groupEntities = new ArrayList<>();
         while (cursor.moveToNext()) {

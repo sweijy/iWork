@@ -26,10 +26,4 @@ public class ConversionHelperTest {
         return attrBeanList;
     }
 
-    @Test
-    public List<RoomAttrBean> loadRecentRoomEntities() {
-        List<RoomAttrBean> attrBeanList=ConversionHelper.getInstance().loadRecentRoomEntities();
-        return attrBeanList;
-    }
-
 }

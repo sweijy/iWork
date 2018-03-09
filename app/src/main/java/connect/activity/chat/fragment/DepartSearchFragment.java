@@ -34,7 +34,6 @@ import protos.Connect;
 /**
  * Created by PuJin on 2018/2/22.
  */
-
 public class DepartSearchFragment extends BaseFragment {
 
     @Bind(R.id.toolbar)
@@ -87,6 +86,7 @@ public class DepartSearchFragment extends BaseFragment {
         edittextSearchUser.setFocusableInTouchMode(true);
         edittextSearchUser.requestFocus();
         edittextSearchUser.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 

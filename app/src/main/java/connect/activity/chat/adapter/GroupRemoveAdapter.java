@@ -17,10 +17,9 @@ import connect.utils.PinyinUtil;
 import connect.utils.glide.GlideUtil;
 
 /**
- * Created by gtq on 2016/12/15.
+ * Created by PuJin on 2018/3/9.
  */
-public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.MemberReHolder> {
-
+public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.RemoveHolder> {
     private List<GroupMemberEntity> groupMemEntities = new ArrayList<>();
 
     public void setData(List<GroupMemberEntity> entities) {
@@ -34,19 +33,34 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
     }
 
     @Override
-    public MemberReHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
+    public RemoveHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
         LayoutInflater inflater = LayoutInflater.from(arg0.getContext());
-        View view = inflater.inflate(R.layout.item_group_member, arg0, false);
-        MemberReHolder holder = new MemberReHolder(view);
+        View view = inflater.inflate(R.layout.item_group_remove, arg0, false);
+        RemoveHolder holder = new RemoveHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final MemberReHolder holder, final int position) {
+    public void onBindViewHolder(final RemoveHolder holder, final int position) {
         GroupMemberEntity memEntity = groupMemEntities.get(position);
+        final String uid = memEntity.getUid();
         String name = TextUtils.isEmpty(memEntity.getUsername()) ? "" : memEntity.getUsername();
         holder.nameTxt.setText(name);
         GlideUtil.loadAvatarRound(holder.headImg, memEntity.getAvatar());
+
+        holder.checkImg.setSelected(removeListener.isCheckOn(uid));
+        holder.checkImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isremove = removeListener.isCheckOn(uid);
+                holder.checkImg.setSelected(!isremove);
+                if (isremove) {
+                    removeListener.remove(uid);
+                } else {
+                    removeListener.addRemove(uid);
+                }
+            }
+        });
 
         if (TextUtils.isEmpty(name)) name = "#";
         String curFirst = PinyinUtil.chatToPinyin(name.charAt(0));
@@ -84,19 +98,36 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         return -1;
     }
 
-    class MemberReHolder extends RecyclerView.ViewHolder {
+    class RemoveHolder extends RecyclerView.ViewHolder {
 
+        private ImageView checkImg;
         private ImageView headImg;
         private TextView txt;
         private TextView nameTxt;
         private TextView departmentTxt;
 
-        public MemberReHolder(View itemView) {
+        public RemoveHolder(View itemView) {
             super(itemView);
+            checkImg = (ImageView) itemView.findViewById(R.id.checkstate);
             txt = (TextView) itemView.findViewById(R.id.txt);
             headImg = (ImageView) itemView.findViewById(R.id.roundimg);
             nameTxt = (TextView) itemView.findViewById(R.id.name);
             departmentTxt = (TextView) itemView.findViewById(R.id.department);
         }
+    }
+
+    private RemoveListener removeListener;
+
+    public interface RemoveListener {
+
+        void addRemove(String uid);
+
+        boolean isCheckOn(String uid);
+
+        void remove(String uid);
+    }
+
+    public void setRemoveListener(RemoveListener removeListener) {
+        this.removeListener = removeListener;
     }
 }

@@ -354,4 +354,15 @@
     <string name="Chat_GroupMember_Count">%1$dMember</string>
     <string name="Chat_GroupMember_Add">add new member</string>
     <string name="Chat_Choose_AT_Member">choose @ member</string>
+    <string name="Chat_All_Members">all</string>
+    <string name="Chat_Group_Manager">Manager</string>
+    <string name="Chat_Member_All">All members</string>
+    <string name="Chat_Member_Add">add member</string>
+    <string name="Chat_Member_Remove">remove member</string>
+    <string name="Chat_Member_Cancel">cancle</string>
+    <string name="Chat_Recent_Contacts">recent contacts</string>
+    <string name="Chat_Organization_Choose">choose from Organization</string>
+    <string name="Chat_Contacts_Choose">choose from Contacts</string>
+    <string name="Chat_Contacts_Select">select contacts</string>
+    <string name="Chat_Contacts_To_Select">select contacts</string>
 </resources>

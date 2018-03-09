@@ -376,4 +376,15 @@
     <string name="Chat_Group_Member">Участники группы</string>
     <string name="Chat_GroupMember_Add">Добавить участника</string>
     <string name="Chat_Choose_AT_Member">выберите @ член</string>
+    <string name="Chat_All_Members">все</string>
+    <string name="Chat_Group_Manager">Менеджер</string>
+    <string name="Chat_Member_All">все члены</string>
+    <string name="Chat_Member_Add">добавить -</string>
+    <string name="Chat_Member_Remove">удалить -</string>
+    <string name="Chat_Member_Cancel">отменить</string>
+    <string name="Chat_Recent_Contacts">в последнее время контакты</string>
+    <string name="Chat_Organization_Choose">выбор из организационной структуры</string>
+    <string name="Chat_Contacts_Choose">выбрать из адресной книги</string>
+    <string name="Chat_Contacts_Select">выберите контакты</string>
+    <string name="Chat_Contacts_To_Select">выберите контакты</string>
 </resources>

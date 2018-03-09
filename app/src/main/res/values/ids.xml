@@ -186,6 +186,8 @@
     <item name="include_search" type="id"/>
     <item name="include_all" type="id"/>
     <item name="include_manager" type="id"/>
+    <item name="include_organization" type="id"/>
+    <item name="include_contacts" type="id"/>
 
     <item name="toggle" type="id"/>
     <item name="top" type="id"/>
@@ -300,4 +302,6 @@
     <item name="groupat_all" type="id"/>
     <item name="groupat_manager" type="id"/>
     <item name="name" type="id"/>
+    <item name="department" type="id"/>
+    <item name="checkstate" type="id"/>
 </resources>

@@ -11,42 +11,43 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import connect.database.green.bean.GroupMemberEntity;
+import connect.database.green.bean.ContactEntity;
 import connect.ui.activity.R;
 import connect.utils.PinyinUtil;
 import connect.utils.glide.GlideUtil;
 
 /**
- * Created by gtq on 2016/12/15.
+ * Created by PuJin on 2018/3/9.
  */
-public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.MemberReHolder> {
 
-    private List<GroupMemberEntity> groupMemEntities = new ArrayList<>();
+public class SelectContactsAdapter extends RecyclerView.Adapter<SelectContactsAdapter.SelectHolder> {
 
-    public void setData(List<GroupMemberEntity> entities) {
-        this.groupMemEntities = entities;
+    private List<ContactEntity> contactEntities = new ArrayList<>();
+
+    public void setData(List<ContactEntity> entities) {
+        this.contactEntities = entities;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return groupMemEntities.size();
+        return contactEntities.size();
     }
 
     @Override
-    public MemberReHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
+    public SelectHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
         LayoutInflater inflater = LayoutInflater.from(arg0.getContext());
-        View view = inflater.inflate(R.layout.item_group_member, arg0, false);
-        MemberReHolder holder = new MemberReHolder(view);
+        View view = inflater.inflate(R.layout.item_group_contactselect, arg0, false);
+        SelectHolder holder = new SelectHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final MemberReHolder holder, final int position) {
-        GroupMemberEntity memEntity = groupMemEntities.get(position);
-        String name = TextUtils.isEmpty(memEntity.getUsername()) ? "" : memEntity.getUsername();
+    public void onBindViewHolder(final SelectHolder holder, final int position) {
+        ContactEntity contactEntity = contactEntities.get(position);
+        String name = TextUtils.isEmpty(contactEntity.getName()) ? "" : contactEntity.getName();
         holder.nameTxt.setText(name);
-        GlideUtil.loadAvatarRound(holder.headImg, memEntity.getAvatar());
+        GlideUtil.loadAvatarRound(holder.headImg, contactEntity.getAvatar());
 
         if (TextUtils.isEmpty(name)) name = "#";
         String curFirst = PinyinUtil.chatToPinyin(name.charAt(0));
@@ -55,8 +56,8 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
             holder.txt.setVisibility(View.VISIBLE);
             holder.txt.setText(curFirst);
         } else {
-            GroupMemberEntity lastEntity = groupMemEntities.get(position - 1);
-            String lastName = TextUtils.isEmpty(lastEntity.getUsername()) ? "" : lastEntity.getUsername();
+            ContactEntity lastEntity = contactEntities.get(position - 1);
+            String lastName = TextUtils.isEmpty(lastEntity.getName()) ? "" : lastEntity.getName();
             if (TextUtils.isEmpty(lastName)) lastName = "#";
             String lastFirst = PinyinUtil.chatToPinyin(lastName.charAt(0));
 
@@ -70,9 +71,9 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
     }
 
     public int getPositionForSection(char selectchar) {
-        for (int i = 0; i < groupMemEntities.size(); i++) {
-            GroupMemberEntity entity = groupMemEntities.get(i);
-            String showName = entity.getUsername();
+        for (int i = 0; i < contactEntities.size(); i++) {
+            ContactEntity entity = contactEntities.get(i);
+            String showName = entity.getName();
             if (TextUtils.isEmpty(showName)) {
                 showName = "#";
             }
@@ -84,19 +85,31 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         return -1;
     }
 
-    class MemberReHolder extends RecyclerView.ViewHolder {
+    class SelectHolder extends RecyclerView.ViewHolder {
 
+        private View view;
         private ImageView headImg;
         private TextView txt;
         private TextView nameTxt;
         private TextView departmentTxt;
 
-        public MemberReHolder(View itemView) {
+        public SelectHolder(View itemView) {
             super(itemView);
+            view = itemView;
             txt = (TextView) itemView.findViewById(R.id.txt);
             headImg = (ImageView) itemView.findViewById(R.id.roundimg);
             nameTxt = (TextView) itemView.findViewById(R.id.name);
             departmentTxt = (TextView) itemView.findViewById(R.id.department);
         }
+    }
+
+    private ItemClick itemClick;
+
+    public interface ItemClick{
+        void itemClick(ContactEntity contactEntity);
+    }
+
+    public void setItemClick(ItemClick itemClick) {
+        this.itemClick = itemClick;
     }
 }

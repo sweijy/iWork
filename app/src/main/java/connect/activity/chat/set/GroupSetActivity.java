@@ -31,7 +31,7 @@ import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
 /**
- * group setting
+ * 群设置
  * Created by gtq on 2016/12/15.
  */
 @Route(path = "/iwork/chat/set/GroupSetActivity")
@@ -89,7 +89,9 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
     @OnClick(R.id.linearlayout_groupmember)
     public void memberLayoutClick() {
-        GroupMemberActivity.startActivity(activity, groupIdentify);
+        ARouter.getInstance().build("/iwork/chat/set/GroupMemberActivity")
+                .withString("groupIdentify", groupIdentify)
+                .navigation();
     }
 
     @Override

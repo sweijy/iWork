@@ -36,6 +36,9 @@ import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import protos.Connect;
 
+/**
+ * 添加新成员/创建群
+ */
 @Route(path = "/iwork/chat/set/GroupSelectActivity")
 public class GroupSelectActivity extends BaseFragmentActivity implements GroupSelectContract.BView {
 
@@ -71,9 +74,6 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     @Override
     public void initView() {
         activity = this;
-        isCreateGroup = getIntent().getBooleanExtra("Is_Create", true);
-        uid = getIntent().getStringExtra("Uid");
-
         if (!isCreateGroup) {
             List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(uid);
             for (GroupMemberEntity entity : memberEntities) {
@@ -93,9 +93,6 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
             case R.id.btn_selected:
                 selectFinish();
                 break;
-            case R.id.layout_selected:
-                showSelectList();
-                break;
         }
     }
 
@@ -113,19 +110,6 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         } else {
             presenter.inviteJoinGroup(uid, workmates);
         }
-    }
-
-    private void showSelectList() {
-        ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
-        for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
-            Connect.Workmate workmate = (Connect.Workmate) it.getValue();
-            workmates.add(workmate);
-        }
-        ARouter.getInstance().build("/iwork/chat/set/DepartSelectShowAcitivty")
-                .withBoolean("Is_Create", isCreateGroup())
-                .withString("Uid", getUid())
-                .withSerializable("List_Workmate", workmates)
-                .navigation();
     }
 
     private void hideFragments() {
@@ -166,7 +150,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     public void updateSelectMemeberCount(int count) {
         txtSelected.setText(getString(R.string.Chat_Selected_Member, count));
         btnSelected.setEnabled(isCreateGroup ? count >= 2 : count >= 1);
-        btnSelected.setText(getString(R.string.Chat_Determine_Count, count));
+        btnSelected.setText(getString(R.string.Common_OK));
     }
 
     public boolean isCreateGroup() {
