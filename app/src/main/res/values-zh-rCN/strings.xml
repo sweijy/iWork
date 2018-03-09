@@ -125,6 +125,7 @@
     <string name="Link_Scan_Result">扫描结果</string>
     <string name="Link_Send">发送</string>
     <string name="Link_Contacts">联系人</string>
+    <string name="Link_Account">账号：</string>
     <string name="Link_My_group">我的群组</string>
     <string name="Link_Chat_record">聊天记录</string>
     <string name="Link_Dialogue">对话</string>
@@ -146,8 +147,13 @@
     <string name="Link_group_count">%d个群组</string>
     <string name="Link_Employee_number">员工编号</string>
     <string name="Link_My_application">我的应用</string>
-    <string name="Link_Subordinate_departments">所属部门：</string>
+    <string name="Link_Subordinate_departments">部门：</string>
     <string name="Link_Contact_number">联系号码：</string>
+    <string name="Link_Add_contacts">添加联系人</string>
+    <string name="Link_Delete_contact">删除联系人</string>
+    <string name="Link_Added_to_contact">已添加到联系人</string>
+    <string name="Link_Deleted_contact">已删除联系人</string>
+
     <string name="Link_invited_to_the_group_chat">%1$s邀请了%2$s加入群聊</string>
     <string name="Link_update_Failed">修改失败</string>
     <string name="Link_user_friends">%s的群</string>
@@ -193,6 +199,7 @@
     <string name="Set_Logging_out">正在退出...</string>
     <string name="Set_Logout_delete_login_data_still_log">退出后不会删除任何历史数据,下次登录依然可以使用本帐号</string>
     <string name="Set_My_Profile">个人资料</string>
+    <string name="Set_Personal_information">个人信息</string>
     <string name="Set_Name">姓名</string>
     <string name="Set_Now_update_app">立即更新</string>
     <string name="Set_Please_connect_at_least_4_points">请至少连通4个点</string>
@@ -281,6 +288,7 @@
     <string name="Link_Group_Create">创建群组</string>
     <string name="Link_Group_Invite">邀请入群</string>
     <string name="Link_Group_Invite_Success">邀请成功</string>
+    <string name="Contact_Group_No_data">你还未保存任何群聊</string>
     <string name="Login_Forget_Password">忘记密码</string>
     <string name="Login_Connect_Change_Password">请联系管理人员修改密码</string>
     <string name="Link_Function_Under_Development">功能正在开发中...</string>

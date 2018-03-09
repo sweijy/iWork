@@ -100,6 +100,7 @@ public class CommandReceiver implements CommandListener {
             contactEntity.setMobile(friendInfo.getMobile());
             contactEntity.setGender(friendInfo.getGender());
             contactEntity.setTips(friendInfo.getTips());
+            contactEntity.setUsername(friendInfo.getUsername());
             contactEntityMap.put(friendUid, contactEntity);
         }
         Collection<ContactEntity> contactEntityCollection = contactEntityMap.values();
@@ -189,6 +190,7 @@ public class CommandReceiver implements CommandListener {
                     entity.setMobile(friendInfo.getMobile());
                     entity.setGender(friendInfo.getGender());
                     entity.setTips(friendInfo.getTips());
+                    entity.setUsername(friendInfo.getUsername());
                     ContactHelper.getInstance().insertContact(entity);
 
                     if (newFriend) { // Add a welcome message

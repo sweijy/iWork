@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
 import connect.activity.contact.adapter.DepartmentAdapter;
+import connect.activity.contact.model.ContactListManage;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -55,10 +56,6 @@ public class DepartmentActivity extends BaseActivity {
     HorizontalScrollView scrollview;
     @Bind(R.id.left_img)
     ImageView leftImg;
-    @Bind(R.id.search_edit)
-    EditText searchEdit;
-    @Bind(R.id.del_tv)
-    ImageView delTv;
 
     private DepartmentActivity mActivity;
     private DepartmentAdapter adapter;
@@ -89,9 +86,9 @@ public class DepartmentActivity extends BaseActivity {
         adapter.setItemClickListener(onItemListener);
         recyclerview.setAdapter(adapter);
 
-        searchEdit.setHint(" " + getString(R.string.Link_Search));
+        /*searchEdit.setHint(" " + getString(R.string.Link_Search));
         searchEdit.setOnKeyListener(keyListener);
-        searchEdit.addTextChangedListener(textWatcher);
+        searchEdit.addTextChangedListener(textWatcher);*/
 
         initData();
     }
@@ -119,12 +116,8 @@ public class DepartmentActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.del_tv)
-    void delEdit(View view) {
-        searchEdit.setText("");
-    }
 
-    private View.OnKeyListener keyListener = new View.OnKeyListener() {
+    /*private View.OnKeyListener keyListener = new View.OnKeyListener() {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -151,7 +144,7 @@ public class DepartmentActivity extends BaseActivity {
                 delTv.setVisibility(View.VISIBLE);
             }
         }
-    };
+    };*/
 
     NameLinear.OnItemClickListener onItemClickListener = new NameLinear.OnItemClickListener() {
         @Override
@@ -196,7 +189,7 @@ public class DepartmentActivity extends BaseActivity {
                     builder.setRegisted(departmentBean.getRegisted());
                     builder.setUid(departmentBean.getUid());
                     builder.setOU(department);
-
+                    builder.setUsername(departmentBean.getUsername());
                     ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
                             .withSerializable("workmate",builder.build())
                             .navigation();
@@ -295,6 +288,7 @@ public class DepartmentActivity extends BaseActivity {
         departmentBean.setMobile(workmate.getMobile());
         departmentBean.setGender(workmate.getGender());
         departmentBean.setTips(workmate.getTips());
+        departmentBean.setUsername(workmate.getUsername());
         return departmentBean;
     }
 

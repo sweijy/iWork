@@ -1,15 +1,11 @@
 package connect.activity.login;
 
-import android.annotation.TargetApi;
-import android.graphics.Outline;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -92,16 +88,6 @@ public class LoginUserActivity extends BaseActivity {
         if (!TextUtils.isEmpty(deveiceName)) {
             popRomteLoginDialog(deveiceName);
         }
-
-        /*ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                int size = getResources().getDimensionPixelSize(10);
-                outline.setOval(0, 0, size, size);
-            }
-        };
-        loginEditLinear.setOutlineProvider(viewOutlineProvider);*/
-
     }
 
     public void popRomteLoginDialog(String deveiceName) {
@@ -238,8 +224,12 @@ public class LoginUserActivity extends BaseActivity {
                 SharedPreferenceUtil.getInstance().putUser(userBean1);
 
                 ARouter.getInstance().build("/iwork/HomeActivity")
-                        .navigation();
-                mActivity.finish();
+                        .navigation(mActivity, new NavCallback() {
+                            @Override
+                            public void onArrival(Postcard postcard) {
+                                mActivity.finish();
+                            }
+                        });
             }
 
             @Override

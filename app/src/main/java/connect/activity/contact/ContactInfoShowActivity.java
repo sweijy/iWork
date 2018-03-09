@@ -20,12 +20,11 @@ import connect.widget.DepartmentAvatar;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
-/**
- * Created by Administrator on 2018/2/28 0028.
- */
 @Route(path = "/iwork/contact/ContactInfoShowActivity")
 public class ContactInfoShowActivity extends BaseActivity {
 
+    @Autowired
+    Connect.Workmate workmate;
     @Bind(R.id.toolbar)
     TopToolBar toolbar;
     @Bind(R.id.avatar_imageview)
@@ -38,23 +37,14 @@ public class ContactInfoShowActivity extends BaseActivity {
     TextView nameText;
     @Bind(R.id.gender_image)
     ImageView genderImage;
-    @Bind(R.id.sign_tv)
-    TextView signTv;
-    @Bind(R.id.number_text)
-    TextView numberText;
-    @Bind(R.id.number_tv)
-    TextView numberTv;
-    @Bind(R.id.department_tv)
-    TextView departmentTv;
-    @Bind(R.id.phone_tv)
-    TextView phoneTv;
-    @Bind(R.id.cell_image)
-    ImageView cellImage;
+    @Bind(R.id.account_text)
+    TextView accountText;
+    @Bind(R.id.department_text)
+    TextView departmentText;
     @Bind(R.id.chat_btn)
     Button chatBtn;
-
-    @Autowired
-    Connect.Workmate workmate;
+    @Bind(R.id.contact_btn)
+    Button contactBtn;
 
     private ContactInfoShowActivity mActivity;
 
@@ -70,12 +60,10 @@ public class ContactInfoShowActivity extends BaseActivity {
     public void initView() {
         mActivity = this;
         toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setTitle(null, R.string.Chat_Contact_details);
+        toolbar.setTitle(null, R.string.Set_Personal_information);
         toolbar.setRightTextEnable(false);
 
         workmate = (Connect.Workmate) getIntent().getExtras().getSerializable("workmate");
-        numberText.setText(mActivity.getString(R.string.Link_Employee_number) + ":");
-
         showView();
     }
 
@@ -86,18 +74,18 @@ public class ContactInfoShowActivity extends BaseActivity {
 
     private void showView() {
         chatBtn.setVisibility(View.GONE);
+        contactBtn.setVisibility(View.GONE);
         avatarImageview.setVisibility(View.GONE);
-        avatarImage.setVisibility(View.VISIBLE);
 
+        avatarImage.setVisibility(View.VISIBLE);
         nameText.setText(workmate.getName());
         if (workmate.getGender() == 1) {
             genderImage.setImageResource(R.mipmap.man);
         } else {
             genderImage.setImageResource(R.mipmap.woman);
         }
-        numberTv.setText(workmate.getEmpNo());
-        departmentTv.setText(workmate.getOU());
-        phoneTv.setText(workmate.getMobile());
+        departmentText.setText(workmate.getOU());
+        accountText.setText(workmate.getUsername());
         avatarImage.setAvatarName(workmate.getName(), true, workmate.getGender());
     }
 

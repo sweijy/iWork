@@ -6,16 +6,10 @@ public class ContactNotice {
 
     public enum ConNotice{
         RecContact,
-        RecAddFriend,
         RecGroup,
-        RecFriend,
-        RecAddFriendHome,
     }
 
     private ConNotice notice;
-
-    public ContactNotice() {
-    }
 
     public ContactNotice(ConNotice notice) {
         this.notice = notice;
@@ -23,11 +17,6 @@ public class ContactNotice {
 
     public ConNotice getNotice(){
         return this.notice;
-    }
-    
-    public static void receiverAddFriend() {
-        EventBus.getDefault().post(new ContactNotice(ConNotice.RecAddFriend));
-        EventBus.getDefault().post(new ContactNotice(ConNotice.RecAddFriendHome));
     }
 
     public static void receiverGroup() {
@@ -38,7 +27,4 @@ public class ContactNotice {
         EventBus.getDefault().post(new ContactNotice(ConNotice.RecContact));
     }
 
-    public static void receiverFriend() {
-        EventBus.getDefault().post(new ContactNotice(ConNotice.RecFriend));
-    }
 }

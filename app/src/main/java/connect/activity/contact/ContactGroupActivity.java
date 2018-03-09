@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -31,6 +32,8 @@ public class ContactGroupActivity extends BaseActivity {
     TopToolBar toolbarTop;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.no_data_lin)
+    LinearLayout noDataLin;
 
     private ContactGroupActivity mActivity;
     private ContactGroupAdapter adapter;
@@ -47,7 +50,7 @@ public class ContactGroupActivity extends BaseActivity {
     public void initView() {
         mActivity = this;
         toolbarTop.setLeftImg(R.mipmap.back_white);
-        toolbarTop.setTitle(null, R.string.Chat_Group_chat);
+        toolbarTop.setTitle(null, R.string.Link_Group);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         recyclerview.setLayoutManager(linearLayoutManager);
@@ -64,7 +67,7 @@ public class ContactGroupActivity extends BaseActivity {
         ActivityUtil.goBack(mActivity);
     }
 
-    ContactGroupAdapter.OnItemClickListener onItemListener = new ContactGroupAdapter.OnItemClickListener(){
+    ContactGroupAdapter.OnItemClickListener onItemListener = new ContactGroupAdapter.OnItemClickListener() {
         @Override
         public void itemClick(int position, GroupEntity groupEntity) {
             ARouter.getInstance().build("/chat/ChatActivity")
@@ -74,8 +77,8 @@ public class ContactGroupActivity extends BaseActivity {
         }
     };
 
-    private void updateView(){
-        new AsyncTask<Void, Void, List<GroupEntity>>(){
+    private void updateView() {
+        new AsyncTask<Void, Void, List<GroupEntity>>() {
             @Override
             protected List<GroupEntity> doInBackground(Void... params) {
                 List<GroupEntity> localGroup = ContactHelper.getInstance().loadGroupCommonAll();
@@ -85,7 +88,17 @@ public class ContactGroupActivity extends BaseActivity {
             @Override
             protected void onPostExecute(List<GroupEntity> groupEntities) {
                 super.onPostExecute(groupEntities);
-                adapter.setNotify(groupEntities);
+                int count;
+                if (groupEntities != null && groupEntities.size() > 0) {
+                    count = groupEntities.size();
+                    GroupEntity groupEntity = new GroupEntity();
+                    groupEntity.setIdentifier("count");
+                    groupEntities.add(groupEntity);
+                    adapter.setNotify(groupEntities, count);
+                }else{
+                    noDataLin.setVisibility(View.VISIBLE);
+                    recyclerview.setVisibility(View.GONE);
+                }
             }
         }.execute();
     }

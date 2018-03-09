@@ -35,6 +35,7 @@ public class ContactEntityDao extends AbstractDao<ContactEntity, Long> {
         public final static Property Gender = new Property(8, Integer.class, "gender", false, "GENDER");
         public final static Property Tips = new Property(9, String.class, "tips", false, "TIPS");
         public final static Property Registed = new Property(10, Boolean.class, "registed", false, "REGISTED");
+        public final static Property Username = new Property(11, String.class, "Username", false, "USERNAME");
     }
 
 
@@ -60,7 +61,8 @@ public class ContactEntityDao extends AbstractDao<ContactEntity, Long> {
                 "\"MOBILE\" TEXT," + // 7: mobile
                 "\"GENDER\" INTEGER," + // 8: gender
                 "\"TIPS\" TEXT," + // 9: tips
-                "\"REGISTED\" INTEGER);"); // 10: registed
+                "\"REGISTED\" INTEGER," + // 10: registed
+                "\"USERNAME\" TEXT);"); // 11: Username
     }
 
     /** Drops the underlying database table. */
@@ -123,6 +125,11 @@ public class ContactEntityDao extends AbstractDao<ContactEntity, Long> {
         if (registed != null) {
             stmt.bindLong(11, registed ? 1L: 0L);
         }
+ 
+        String Username = entity.getUsername();
+        if (Username != null) {
+            stmt.bindString(12, Username);
+        }
     }
 
     @Override
@@ -179,6 +186,11 @@ public class ContactEntityDao extends AbstractDao<ContactEntity, Long> {
         if (registed != null) {
             stmt.bindLong(11, registed ? 1L: 0L);
         }
+ 
+        String Username = entity.getUsername();
+        if (Username != null) {
+            stmt.bindString(12, Username);
+        }
     }
 
     @Override
@@ -199,7 +211,8 @@ public class ContactEntityDao extends AbstractDao<ContactEntity, Long> {
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // mobile
             cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // gender
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // tips
-            cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0 // registed
+            cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0, // registed
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // Username
         );
         return entity;
     }
@@ -217,6 +230,7 @@ public class ContactEntityDao extends AbstractDao<ContactEntity, Long> {
         entity.setGender(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
         entity.setTips(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setRegisted(cursor.isNull(offset + 10) ? null : cursor.getShort(offset + 10) != 0);
+        entity.setUsername(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
      }
     
     @Override
