@@ -7,14 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +30,7 @@ import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
+import connect.widget.AvatarSearchView;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
@@ -40,8 +42,8 @@ public class BaseDepartSelectFragment extends BaseFragment {
 
     @Bind(R.id.toolbar)
     TopToolBar toolbar;
-    @Bind(R.id.search_edit)
-    EditText searchEdit;
+    @Bind(R.id.view_avatar_search)
+    AvatarSearchView viewAvatarSearch;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
 
@@ -127,17 +129,42 @@ public class BaseDepartSelectFragment extends BaseFragment {
         recyclerview.setAdapter(selectAdapter);
         selectAdapter.setData(conversionEntities);
         selectAdapter.setGroupSelectListener(groupSelectListener);
+        viewAvatarSearch.setListener(new AvatarSearchView.AvatarListener() {
+
+            @Override
+            public void removeUid(String uid) {
+                activity.removeWorkMate(uid);
+            }
+
+            @Override
+            public void editClick() {
+                activity.switchFragment(LocalSearchFragment.startFragment());
+            }
+        });
+
+        updateSelect();
+    }
+
+    public void updateSelect() {
+        Map<String, Object> objectMap = activity.getSelectMembers();
+        Iterator iterator = objectMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            Connect.Workmate workmate = (Connect.Workmate) entry.getValue();
+            viewAvatarSearch.addAvatar(workmate.getAvatar(), workmate.getUid());
+        }
     }
 
     private class GroupSelectListener implements BaseGroupSelectAdapter.BaseGroupSelectListener {
         @Override
-        public boolean isContains(String selectKey) {
-            return activity.isContains(selectKey);
+        public boolean isContains(String avatar, String selectKey) {
+            boolean iscontains = activity.isContains(selectKey);
+            return iscontains;
         }
 
         @Override
         public boolean isMoveSelect(String selectKey) {
-            return activity.isRemoveSelect(selectKey);
+            return activity.isSelected(selectKey);
         }
 
         @Override
@@ -147,6 +174,7 @@ public class BaseDepartSelectFragment extends BaseFragment {
 
         @Override
         public void itemClick(boolean isSelect, ConversionEntity contactEntity) {
+            String avatar = contactEntity.getAvatar();
             String uid = contactEntity.getIdentifier();
             if (isSelect) {
                 Connect.Workmate workmate = Connect.Workmate.newBuilder()
@@ -157,8 +185,10 @@ public class BaseDepartSelectFragment extends BaseFragment {
                         .build();
 
                 activity.addWorkMate(workmate);
+                viewAvatarSearch.addAvatar(avatar, uid);
             } else {
                 activity.removeWorkMate(uid);
+                viewAvatarSearch.removeAvatar(uid);
             }
         }
     }

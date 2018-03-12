@@ -23,6 +23,7 @@ import connect.database.green.bean.ConversionEntity;
 import connect.ui.activity.R;
 import connect.utils.FileUtil;
 import connect.utils.TimeUtil;
+import connect.utils.dialog.DialogUtil;
 import connect.utils.glide.GlideUtil;
 import connect.widget.RightTrangleView;
 import connect.widget.badge.BadgeView;
@@ -154,29 +155,43 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
             }
 
-            protected void deleteMessage(String roomId) {
-                ConversionHelper.getInstance().deleteRoom(roomId);
-                MessageHelper.getInstance().deleteRoomMsg(roomId);
-                FileUtil.deleteContactFile(roomId);
-                ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_UNREAD);
+            protected void deleteMessage(final String roomId) {
+                String content = context.getString(R.string.Chat_Remove_Conversation);
+                String leftCancle = context.getString(R.string.Chat_Member_Cancel);
+                String rightConfirm = context.getString(R.string.Common_OK);
+                DialogUtil.showAlertTextView(context, "", content, leftCancle, rightConfirm, true, new DialogUtil.OnItemClickListener() {
 
-                if (isDeleteAble) {
-                    isDeleteAble = false;
-                    roomAttrBeanList.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(500);
-                                isDeleteAble = true;//可点击按钮
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                    @Override
+                    public void confirm(String value) {
+                        ConversionHelper.getInstance().deleteRoom(roomId);
+                        MessageHelper.getInstance().deleteRoomMsg(roomId);
+                        FileUtil.deleteContactFile(roomId);
+                        ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_UNREAD);
+
+                        if (isDeleteAble) {
+                            isDeleteAble = false;
+                            roomAttrBeanList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, getItemCount());
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(500);
+                                        isDeleteAble = true;//可点击按钮
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
                         }
-                    }).start();
-                }
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
             }
         });
     }

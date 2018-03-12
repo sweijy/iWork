@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_FFFFFF"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@id/relative_department_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@id/view_department_select"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/selector_checkstate" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_38"
+        android:layout_gravity="center_vertical"
+        android:scaleType="fitXY"
+        android:src="@mipmap/department_two" />
+
+    <TextView
+        android:id="@+id/department_tv"
+        style="@style/BaseTextStyle.12"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_22"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/count_tv"
+        style="@style/BaseTextStyle.12"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|right"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/color_a5a7ae" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/group_item_arrow" />
+</LinearLayout>

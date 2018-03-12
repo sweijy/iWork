@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,8 +61,9 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     private GroupSelectActivity activity;
     private GroupSelectContract.Presenter presenter;
     private UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-    private Map<String, Object> groupMemebers = new HashMap<>();
-    private Map<String, Object> selectMembers = new HashMap<>();
+
+    private Map<String, Object> groupMemebers = new LinkedHashMap<>();
+    private Map<String, Object> selectMembers = new LinkedHashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +175,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
                 (!isCreateGroup && groupMemebers.containsKey(selectKey));
     }
 
-    public boolean isRemoveSelect(String selectKey) {
+    public boolean isSelected(String selectKey) {
         return (isCreateGroup() && !idnetify.equals(selectKey)) ||
                 (!isCreateGroup() && !groupMemebers.containsKey(selectKey));
     }

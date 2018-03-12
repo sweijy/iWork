@@ -172,6 +172,14 @@ public class ConversionHelper extends BaseDao {
         return (roomEntities == null || roomEntities.size() == 0) ? null : roomEntities.get(0);
     }
 
+    public List<ConversionEntity> loadRoomEnitityLikeName(String name) {
+        QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
+        queryBuilder.where(ConversionEntityDao.Properties.Name.like("%" + name + "%"),
+                ConversionEntityDao.Properties.Type.eq(0)).build();
+        List<ConversionEntity> roomEntities = queryBuilder.list();
+        return (roomEntities == null || roomEntities.size() == 0) ? new ArrayList() : roomEntities;
+    }
+
     /************************ add *****************************************/
     public void insertRoomEntity(ConversionEntity entity) {
         conversionEntityDao.insertOrReplace(entity);

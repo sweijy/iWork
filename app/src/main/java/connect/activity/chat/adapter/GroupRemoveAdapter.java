@@ -42,7 +42,7 @@ public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.
 
     @Override
     public void onBindViewHolder(final RemoveHolder holder, final int position) {
-        GroupMemberEntity memEntity = groupMemEntities.get(position);
+        final GroupMemberEntity memEntity = groupMemEntities.get(position);
         final String uid = memEntity.getUid();
         String name = TextUtils.isEmpty(memEntity.getUsername()) ? "" : memEntity.getUsername();
         holder.nameTxt.setText(name);
@@ -57,7 +57,7 @@ public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.
                 if (isremove) {
                     removeListener.remove(uid);
                 } else {
-                    removeListener.addRemove(uid);
+                    removeListener.addRemove(memEntity);
                 }
             }
         });
@@ -120,7 +120,7 @@ public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.
 
     public interface RemoveListener {
 
-        void addRemove(String uid);
+        void addRemove(GroupMemberEntity entity);
 
         boolean isCheckOn(String uid);
 

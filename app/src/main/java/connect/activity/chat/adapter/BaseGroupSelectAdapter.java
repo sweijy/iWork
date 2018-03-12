@@ -60,9 +60,9 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
         holder.avatarImg.setVisibility(View.VISIBLE);
         holder.departmentAvatar.setVisibility(View.GONE);
 
-        holder.selectView.setSelected(groupSelectListener.isContains(entity.getIdentifier()));
+        holder.selectView.setSelected(groupSelectListener.isContains(entity.getAvatar(),entity.getIdentifier()));
         holder.nameTv.setText(name);
-        GlideUtil.loadImage(holder.avatarImg, avatar);
+        GlideUtil.loadAvatarRound(holder.avatarImg, avatar);
         holder.contentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +104,7 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
     public interface BaseGroupSelectListener {
 
-        boolean isContains(String selectKey);
+        boolean isContains(String avatar,String selectKey);
 
         boolean isMoveSelect(String selectKey);
 

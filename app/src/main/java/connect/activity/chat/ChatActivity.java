@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -91,7 +92,6 @@ public class ChatActivity extends BaseChatSendActivity {
     VoiceRecordView viewVoicerecordState;
 
     private static String TAG = "_ChatActivity";
-    private String searchTxt = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -388,4 +388,8 @@
     <string name="Chat_Contacts_Choose">выбрать из адресной книги</string>
     <string name="Chat_Contacts_Select">выберите контакты</string>
     <string name="Chat_Contacts_To_Select">выберите контакты</string>
+    <string name="Chat_All">все</string>
+    <string name="Chat_Contacts">контакты</string>
+    <string name="Chat_Set_Remove_Members">убрать членов группы?</string>
+    <string name="Chat_Remove_Conversation">удалить разговор?</string>
 </resources>
