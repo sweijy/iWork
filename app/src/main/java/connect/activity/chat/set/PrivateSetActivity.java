@@ -57,6 +57,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singleset);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
     }
 
@@ -72,8 +73,6 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                 ActivityUtil.goBack(activity);
             }
         });
-
-        ARouter.getInstance().inject(this);
         new PrivateSetPresenter(this).start();
     }
 
@@ -160,18 +159,18 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uid = (String) v.getTag();
-                if (TextUtils.isEmpty(uid)) {
+                String tag = (String) v.getTag();
+                if (TextUtils.isEmpty(tag)) {
                     ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
                             .withBoolean("isCreate", true)
-                            .withSerializable("groupIdentify", uid)
+                            .withSerializable("idnetify", uid)
                             .navigation();
-                } else if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(uid)) {
+                } else if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(tag)) {
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").
                             navigation();
                 } else {
                     ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                            .withString("uid",uid)
+                            .withString("uid",tag)
                             .navigation();
                 }
             }

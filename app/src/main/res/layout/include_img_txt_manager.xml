@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_FFFFFF">
+
+    <ImageView
+        android:id="@id/roundimg"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_margin="@dimen/dp_12"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_toRightOf="@id/roundimg"
+        android:textColor="@color/color_393939"
+        android:textSize="@dimen/sp_12" />
+
+    <TextView
+        android:id="@id/groupat_manager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/roundimg"
+        android:layout_marginRight="@dimen/dp_12"
+        android:background="@drawable/shape_8px_a8a8a8"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_4"
+        android:paddingRight="@dimen/dp_4"
+        android:paddingTop="@dimen/dp_2"
+        android:text="@string/Chat_Group_Manager"
+        android:textColor="@color/color_A8A8A8"
+        android:textSize="@dimen/sp_8"
+        android:visibility="gone" />
+</RelativeLayout>

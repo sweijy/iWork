@@ -21,14 +21,18 @@ import connect.utils.glide.GlideUtil;
  * Created by Administrator on 2017/10/26.
  */
 
-public class GroupAtAdapter extends RecyclerView.Adapter<GroupAtAdapter.ViewHolder>{
+public class GroupAtAdapter extends RecyclerView.Adapter<GroupAtAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private List<GroupMemberEntity> groupMemEntities = new ArrayList<>();
 
-    public GroupAtAdapter(Context context, List<GroupMemberEntity> entities) {
+    public GroupAtAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public void setData(List<GroupMemberEntity> entities) {
         this.groupMemEntities = entities;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -55,7 +59,7 @@ public class GroupAtAdapter extends RecyclerView.Adapter<GroupAtAdapter.ViewHold
             holder.txt.setText(curFirst);
         } else {
             GroupMemberEntity lastEntity = groupMemEntities.get(position - 1);
-            String lastName = lastEntity.getUsername() ;
+            String lastName = lastEntity.getUsername();
             String lastFirst = PinyinUtil.chatToPinyin(lastName.charAt(0));
             if (lastFirst.equals(curFirst)) {
                 holder.txt.setVisibility(View.GONE);
@@ -97,13 +101,13 @@ public class GroupAtAdapter extends RecyclerView.Adapter<GroupAtAdapter.ViewHold
 
     public GroupAtListener groupAtListener;
 
-    public interface GroupAtListener{
+    public interface GroupAtListener {
 
         void groupAt(GroupMemberEntity memEntity);
     }
 
     public void setGroupAtListener(GroupAtListener listener) {
-        groupAtListener=listener;
+        groupAtListener = listener;
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {

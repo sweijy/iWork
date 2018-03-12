@@ -1,26 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_FAFBFC"
+    android:orientation="vertical">
 
     <connect.widget.TopToolBar
         android:id="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@id/recyclerview"
+    <include
+        android:id="@id/include_search"
+        layout="@layout/include_search_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@id/include_all"
+        layout="@layout/include_img_txt_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"/>
+        android:layout_marginTop="@dimen/px_1" />
 
-    <connect.widget.SideBar
-        android:id="@id/siderbar"
-        android:layout_width="25dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right|center"
-        android:layout_marginBottom="@dimen/dp_100"
-        android:layout_marginTop="@dimen/dp_100"/>
-</RelativeLayout>
+    <include
+        android:id="@id/include_manager"
+        layout="@layout/include_img_txt_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <connect.widget.SideBar
+            android:id="@id/siderbar"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right|center"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30" />
+    </RelativeLayout>
+</LinearLayout>

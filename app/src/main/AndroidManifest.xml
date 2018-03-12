@@ -33,12 +33,12 @@
     <application
         android:name="connect.activity.base.BaseApplication"
         android:allowBackup="true"
-        tools:replace="android:icon,android:theme"
         android:icon="@mipmap/connect_logo"
         android:label="@string/app_name"
         android:persistent="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:theme">
         <activity
             android:name="connect.activity.login.StartPageActivity"
             android:screenOrientation="portrait"
@@ -226,7 +226,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="connect.activity.chat.exts.GroupAtActivity"
+            android:name="connect.activity.chat.set.GroupAtActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.exts.GoogleMapActivity"
@@ -249,13 +249,13 @@
             android:name="connect.activity.workbench.WorkSeachActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.chat.set.DepartSelectShowAcitivty"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.chat.set.GroupSelectActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.set.RobotSetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.chat.set.GroupRemoveActivity"
             android:screenOrientation="portrait" />
     </application>
 

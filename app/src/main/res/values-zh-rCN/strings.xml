@@ -316,5 +316,19 @@
     <string name="IWork">iWork</string>
     <string name="compress_progress">进度: %1$s</string>
     <string name="Chat_Group_Name">群成员</string>
+    <string name="Chat_Group_Member">群成员</string>
     <string name="Chat_GroupMember_Count">%1$d人</string>
+    <string name="Chat_GroupMember_Add">添加新成员</string>
+    <string name="Chat_Choose_AT_Member">选择要@的人</string>
+    <string name="Chat_All_Members">所有人</string>
+    <string name="Chat_Group_Manager">群主</string>
+    <string name="Chat_Member_All">全部成员</string>
+    <string name="Chat_Member_Add">添加成员</string>
+    <string name="Chat_Member_Remove">移除成员</string>
+    <string name="Chat_Member_Cancel">取消</string>
+    <string name="Chat_Recent_Contacts">最近联系人</string>
+    <string name="Chat_Organization_Choose">从组织架构选择</string>
+    <string name="Chat_Contacts_Choose">从通讯录中选择</string>
+    <string name="Chat_Contacts_Select">选中联系人</string>
+    <string name="Chat_Contacts_To_Select">选择联系人</string>
 </resources>

@@ -43,9 +43,9 @@ import connect.widget.TopToolBar;
 import protos.Connect;
 
 /**
+ * 从组织架构选择
  * Created by PuJin on 2018/2/22.
  */
-
 public class DetailDepartSelectFragment extends BaseFragment {
 
     @Bind(R.id.toolbar_top)
@@ -104,12 +104,7 @@ public class DetailDepartSelectFragment extends BaseFragment {
                 activity.popBackLastFragment();
             }
         });
-
-        if (activity.isCreateGroup()) {
-            toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Create));
-        } else {
-            toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Invite));
-        }
+        toolbarTop.setTitle(getResources().getString(R.string.Chat_Contacts_To_Select));
 
         nameLinear.setVisibility(View.VISIBLE);
         nameList.clear();

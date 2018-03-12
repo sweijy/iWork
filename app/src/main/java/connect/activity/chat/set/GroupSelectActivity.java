@@ -34,9 +34,11 @@ import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
 import protos.Connect;
 
+/**
+ * 添加新成员/创建群
+ */
 @Route(path = "/iwork/chat/set/GroupSelectActivity")
 public class GroupSelectActivity extends BaseFragmentActivity implements GroupSelectContract.BView {
 
@@ -51,8 +53,9 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
 
     @Autowired
     boolean isCreateGroup = true;
+
     @Autowired
-    String uid;
+    String idnetify;
 
     private GroupSelectActivity activity;
     private GroupSelectContract.Presenter presenter;
@@ -65,17 +68,15 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_select);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
     }
 
     @Override
     public void initView() {
         activity = this;
-        isCreateGroup = getIntent().getBooleanExtra("Is_Create", true);
-        uid = getIntent().getStringExtra("Uid");
-
         if (!isCreateGroup) {
-            List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(uid);
+            List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(idnetify);
             for (GroupMemberEntity entity : memberEntities) {
                 String memberUid = entity.getUid();
                 groupMemebers.put(memberUid, memberUid);
@@ -93,9 +94,6 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
             case R.id.btn_selected:
                 selectFinish();
                 break;
-            case R.id.layout_selected:
-                showSelectList();
-                break;
         }
     }
 
@@ -111,21 +109,8 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
                     .withSerializable("workmates", workmates)
                     .navigation();
         } else {
-            presenter.inviteJoinGroup(uid, workmates);
+            presenter.inviteJoinGroup(idnetify, workmates);
         }
-    }
-
-    private void showSelectList() {
-        ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
-        for (Map.Entry<String, Object> it : selectMembers.entrySet()) {
-            Connect.Workmate workmate = (Connect.Workmate) it.getValue();
-            workmates.add(workmate);
-        }
-        ARouter.getInstance().build("/iwork/chat/set/DepartSelectShowAcitivty")
-                .withBoolean("Is_Create", isCreateGroup())
-                .withString("Uid", getUid())
-                .withSerializable("List_Workmate", workmates)
-                .navigation();
     }
 
     private void hideFragments() {
@@ -166,7 +151,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     public void updateSelectMemeberCount(int count) {
         txtSelected.setText(getString(R.string.Chat_Selected_Member, count));
         btnSelected.setEnabled(isCreateGroup ? count >= 2 : count >= 1);
-        btnSelected.setText(getString(R.string.Chat_Determine_Count, count));
+        btnSelected.setText(getString(R.string.Common_OK));
     }
 
     public boolean isCreateGroup() {
@@ -174,7 +159,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     }
 
     public String getUid() {
-        return uid;
+        return idnetify;
     }
 
     public Map<String, Object> getSelectMembers() {
@@ -184,12 +169,12 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     public boolean isContains(String selectKey) {
         return selectMembers.containsKey(selectKey) ||
                 selectKey.equals(userBean.getUid()) ||
-                (isCreateGroup && uid.equals(selectKey)) ||
+                (isCreateGroup && idnetify.equals(selectKey)) ||
                 (!isCreateGroup && groupMemebers.containsKey(selectKey));
     }
 
     public boolean isRemoveSelect(String selectKey) {
-        return (isCreateGroup() && !uid.equals(selectKey)) ||
+        return (isCreateGroup() && !idnetify.equals(selectKey)) ||
                 (!isCreateGroup() && !groupMemebers.containsKey(selectKey));
     }
 

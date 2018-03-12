@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connect.database.green.bean.ContactEntity;
+import connect.database.green.bean.ConversionEntity;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
 import connect.widget.DepartmentAvatar;
@@ -22,9 +23,9 @@ import connect.widget.DepartmentAvatar;
  * Created by PuJin on 2018/1/11.
  */
 
-public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelectAdapter.FavoriteHolder> {
+public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelectAdapter.RecentHolder> {
 
-    private List<ContactEntity> contactEntities = new ArrayList<>();
+    private List<ConversionEntity> contactEntities = new ArrayList<>();
     private Context context;
 
     public BaseGroupSelectAdapter() {
@@ -35,92 +36,45 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
         notifyDataSetChanged();
     }
 
-    public void setData(List<ContactEntity> contactEntities) {
+    public void setData(List<ConversionEntity> contactEntities) {
         this.contactEntities = contactEntities;
         notifyDataSetChanged();
     }
 
     @Override
-    public FavoriteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.item_basegroup_favorite, parent, false);
-        FavoriteHolder holder = new FavoriteHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_basegroup_recent, parent, false);
+        RecentHolder holder = new RecentHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final FavoriteHolder holder, int position) {
-        final ContactEntity entity = contactEntities.get(position);
-
+    public void onBindViewHolder(final RecentHolder holder, int position) {
+        final ConversionEntity entity = contactEntities.get(position);
         String avatar = entity.getAvatar();
         String name = entity.getName();
 
-        if (position == 1) {
-            holder.topTv.setVisibility(View.VISIBLE);
-            holder.topTv.setText(context.getString(R.string.Link_Favorite_Friend));
-        } else {
-            holder.topTv.setVisibility(View.GONE);
-        }
+        holder.selectView.setVisibility(View.VISIBLE);
+        holder.nameTv.setVisibility(View.VISIBLE);
+        holder.avatarImg.setVisibility(View.VISIBLE);
+        holder.departmentAvatar.setVisibility(View.GONE);
 
-        if (TextUtils.isEmpty(avatar)) {
-            if (entity.getGender() == 3) {
-                holder.selectView.setVisibility(View.GONE);
-                holder.nameTv.setVisibility(View.VISIBLE);
-                holder.avatarImg.setVisibility(View.VISIBLE);
-                holder.departmentAvatar.setVisibility(View.GONE);
-
-                holder.nameTv.setText(name);
-                GlideUtil.loadAvatarRound(holder.avatarImg, R.mipmap.department);
-                holder.contentLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        groupSelectListener.organizeClick();
-                    }
-                });
-            } else {
-                holder.selectView.setVisibility(View.VISIBLE);
-                holder.nameTv.setVisibility(View.VISIBLE);
-                holder.avatarImg.setVisibility(View.GONE);
-                holder.departmentAvatar.setVisibility(View.VISIBLE);
-
-                holder.selectView.setSelected(groupSelectListener.isContains(entity.getUid()));
-                holder.nameTv.setText(name);
-                holder.departmentAvatar.setAvatarName(name, false, entity.getGender());
-                holder.contentLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String uid = entity.getUid();
-                        if (groupSelectListener.isMoveSelect(uid)) {
-                            boolean isselect = holder.selectView.isSelected();
-                            isselect = !isselect;
-                            groupSelectListener.itemClick(isselect, entity);
-                            holder.selectView.setSelected(isselect);
-                        }
-                    }
-                });
-            }
-        } else {
-            holder.selectView.setVisibility(View.VISIBLE);
-            holder.nameTv.setVisibility(View.VISIBLE);
-            holder.avatarImg.setVisibility(View.VISIBLE);
-            holder.departmentAvatar.setVisibility(View.GONE);
-
-            holder.selectView.setSelected(groupSelectListener.isContains(entity.getUid()));
-            holder.nameTv.setText(name);
-            GlideUtil.loadAvatarRound(holder.avatarImg, entity.getAvatar());
-            holder.contentLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String uid = entity.getUid();
-                    if (groupSelectListener.isMoveSelect(uid)) {
-                        boolean isselect = holder.selectView.isSelected();
-                        isselect = !isselect;
-                        groupSelectListener.itemClick(isselect, entity);
-                        holder.selectView.setSelected(isselect);
-                    }
+        holder.selectView.setSelected(groupSelectListener.isContains(entity.getIdentifier()));
+        holder.nameTv.setText(name);
+        GlideUtil.loadImage(holder.avatarImg, avatar);
+        holder.contentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uid = entity.getIdentifier();
+                if (groupSelectListener.isMoveSelect(uid)) {
+                    boolean isselect = holder.selectView.isSelected();
+                    isselect = !isselect;
+                    groupSelectListener.itemClick(isselect, entity);
+                    holder.selectView.setSelected(isselect);
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
@@ -128,19 +82,17 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
         return contactEntities.size();
     }
 
-    static class FavoriteHolder extends RecyclerView.ViewHolder {
+    static class RecentHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout contentLayout;
-        TextView topTv;
+        View contentLayout;
         View selectView;
         DepartmentAvatar departmentAvatar;
         ImageView avatarImg;
         TextView nameTv;
 
-        FavoriteHolder(View view) {
+        RecentHolder(View view) {
             super(view);
-            topTv = (TextView) view.findViewById(R.id.top_tv);
-            contentLayout = (LinearLayout) view.findViewById(R.id.linearlayout);
+            contentLayout = view;
             selectView = view.findViewById(R.id.select);
             departmentAvatar = (DepartmentAvatar) view.findViewById(R.id.avatar_lin);
             avatarImg = (ImageView) view.findViewById(R.id.avatar_rimg);
@@ -158,7 +110,7 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
         void organizeClick();
 
-        void itemClick(boolean isSelect, ContactEntity contactEntity);
+        void itemClick(boolean isSelect, ConversionEntity contactEntity);
     }
 
     public void setGroupSelectListener(BaseGroupSelectListener groupSelectListener) {

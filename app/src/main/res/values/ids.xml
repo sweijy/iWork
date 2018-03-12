@@ -183,6 +183,11 @@
     <item name="include_2" type="id"/>
     <item name="include_3" type="id"/>
     <item name="include_4" type="id"/>
+    <item name="include_search" type="id"/>
+    <item name="include_all" type="id"/>
+    <item name="include_manager" type="id"/>
+    <item name="include_organization" type="id"/>
+    <item name="include_contacts" type="id"/>
 
     <item name="toggle" type="id"/>
     <item name="top" type="id"/>
@@ -285,7 +290,6 @@
     <item name="group_select_content" type="id"/>
     <item name="line_view" type="id"/>
 
-
     <item name="view_voicerecord_state" type="id"/>
     <item name="img_voicerecord_state" type="id"/>
     <item name="txt_voicerecord_tips" type="id"/>
@@ -295,4 +299,9 @@
     <item name="recycler_popup" type="id" />
     <item name="right_trangle" type="id"/>
     <item name="linearlayout_groupmember" type="id"/>
+    <item name="groupat_all" type="id"/>
+    <item name="groupat_manager" type="id"/>
+    <item name="name" type="id"/>
+    <item name="department" type="id"/>
+    <item name="checkstate" type="id"/>
 </resources>

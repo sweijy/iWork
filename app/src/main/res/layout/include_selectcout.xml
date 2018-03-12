@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/layout_selected"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_32"
-    android:background="@color/color_f0f0f6">
+    android:layout_height="@dimen/dp_48"
+    android:background="@color/color_FFFFFF">
 
     <View
         android:id="@id/line_view"
@@ -14,15 +14,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dp_12" />
+        android:layout_marginLeft="@dimen/dp_12"
+        android:text="@string/Chat_Selected_Member" />
 
     <Button
         android:id="@id/btn_selected"
-        style="@style/ButtonShortStyle"
         android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_28"
+        android:layout_height="@dimen/dp_30"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dp_12"
-        android:text="@string/Chat_Determine_Count" />
+        android:background="@drawable/selector_btn_selectback"
+        android:text="@string/Common_OK"
+        android:textColor="@drawable/selector_btn_selectcolor"
+        android:textSize="@dimen/sp_12" />
 </RelativeLayout>

@@ -115,7 +115,7 @@ public class ContactFragment extends BaseFragment {
                             .navigation();
                     break;
                 case 7:
-                    ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                    ARouter.getInstance().build("/iwork/contact/DepartmentActivity")
                             .navigation();
                     break;
                 default:

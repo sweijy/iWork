@@ -53,8 +53,9 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
     @Override
     public void start() {
         activity = view.getActivity();
-        groupIdentify = view.getRoomKey();
+        groupIdentify = view.getUid();
 
+        view.addNewMember();
         GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(groupIdentify);
         if (groupEntity == null) {
             ActivityUtil.goBack(activity);
@@ -103,7 +104,6 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
 
         boolean common = Integer.valueOf(1).equals(groupEntity.getCommon());
         view.commonSwtich(common);
-
         view.exitGroup();
     }
 
@@ -178,7 +178,6 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
                         groupName = "groupname8";
                     }
                     groupEntity.setName(groupName);
-
                     ContactHelper.getInstance().inserGroupEntity(groupEntity);
                 }
                 ContactNotice.receiverGroup();

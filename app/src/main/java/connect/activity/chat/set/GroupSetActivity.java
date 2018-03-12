@@ -32,7 +32,7 @@ import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
 /**
- * group setting
+ * 群设置
  * Created by gtq on 2016/12/15.
  */
 @Route(path = "/iwork/chat/set/GroupSetActivity")
@@ -46,6 +46,8 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
     RelativeLayout relativelayout1;
     @Bind(R.id.groupset_membercount)
     TextView groupsetMembercount;
+    @Bind(R.id.linearlayout_groupmember)
+    LinearLayout linearlayoutGroupmember;
 
     @Autowired
     String groupIdentify;
@@ -90,7 +92,9 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
     @OnClick(R.id.linearlayout_groupmember)
     public void memberLayoutClick() {
-        GroupMemberActivity.startActivity(activity, groupIdentify);
+        ARouter.getInstance().build("/iwork/chat/set/GroupMemberActivity")
+                .withString("groupIdentify", groupIdentify)
+                .navigation();
     }
 
     @Override
@@ -103,8 +107,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         return activity;
     }
 
-    @Override
-    public String getRoomKey() {
+    public String getUid() {
         return groupIdentify;
     }
 
@@ -147,10 +150,18 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
     @Override
     public void addNewMember() {
-        ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
-                .withBoolean("isCreateGroup", false)
-                .withString("uid", groupIdentify)
-                .navigation();
+        View view = findViewById(R.id.groupset_add_newmember);
+        TextView textView = (TextView) view.findViewById(R.id.txt1);
+        textView.setText(getResources().getString(R.string.Chat_GroupMember_Add));
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                        .withBoolean("isCreateGroup", false)
+                        .withString("idnetify", groupIdentify)
+                        .navigation();
+            }
+        });
     }
 
     @Override

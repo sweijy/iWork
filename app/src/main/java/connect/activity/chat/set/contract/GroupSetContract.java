@@ -13,17 +13,15 @@ public interface GroupSetContract {
 
     interface BView extends BaseView<GroupSetContract.Presenter> {
 
-        String getRoomKey();
+        String getUid();
 
         void countMember(int members);
 
         void memberList(View view);
 
-        void addNewMember();
+        void groupName(String groupname);
 
         void groupNameClickable(boolean clickable);
-
-        void groupName(String groupname);
 
         void topSwitch(boolean top);
 
@@ -32,6 +30,8 @@ public interface GroupSetContract {
         void commonSwtich(boolean common);
 
         void exitGroup();
+
+        void addNewMember();
     }
 
     interface Presenter extends BasePresenter {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f0f0f6"
+    android:background="@color/color_FAFBFC"
     android:orientation="vertical">
 
     <connect.widget.TopToolBar
@@ -10,44 +10,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@id/layout_edittext"
+    <include
+        android:id="@id/include_search"
+        layout="@layout/include_search_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@id/include_organization"
+        layout="@layout/include_img_txt_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:background="@color/color_ffffff"
-        android:paddingBottom="@dimen/dp_5"
-        android:paddingTop="@dimen/dp_5">
+        android:layout_marginTop="@dimen/px_1" />
 
-        <TextView
-            android:id="@id/text_search_user"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_35"
-            android:layout_marginLeft="@dimen/dp_32"
-            android:layout_marginRight="@dimen/dp_32"
-            android:background="@drawable/shaoe_search_department"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_24"
-            android:text="@string/Link_Search"
-            android:textColor="@color/color_b3b5bc"
-            android:textSize="@dimen/sp_14" />
+    <include
+        android:id="@id/include_contacts"
+        layout="@layout/include_img_txt_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_1" />
 
-        <ImageView
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            android:layout_alignLeft="@id/text_search_user"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:background="@mipmap/department_search" />
-
-    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_24"
+        android:text="@string/Chat_Recent_Contacts"
+        android:textColor="@color/color_AEAEAE"
+        android:textSize="@dimen/sp_12" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/layout_edittext"
+        android:layout_marginTop="@dimen/dp_12"
         android:divider="@color/color_clear"
         android:dividerHeight="@dimen/dp_0"
         android:listSelector="@android:color/transparent" />
-</RelativeLayout>
+</LinearLayout>
