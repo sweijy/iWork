@@ -10,6 +10,7 @@
     <item name="back" type="id"/>
     <item name="content_top" type="id"/>
 
+    <item name="view" type="id"/>
     <item name="view1" type="id"/>
     <item name="siderbar" type="id"/>
     <item name="recyclerview" type="id"/>
@@ -255,6 +256,8 @@
 
 
     <item name="relative_item" type="id" />
+    <item name="relative_department_select" type="id" />
+    <item name="relative_workmate_select" type="id" />
     <item name="relative_at" type="id" />
     <item name="relative_attention" type="id" />
     <item name="txt_count_at" type="id" />
@@ -304,4 +307,10 @@
     <item name="name" type="id"/>
     <item name="department" type="id"/>
     <item name="checkstate" type="id"/>
+    <item name="view_avatar_search" type="id"/>
+    <item name="recyclerview_recents" type="id"/>
+    <item name="recyclerview_contacts" type="id"/>
+    <item name="view_department_select" type="id" />
+    <item name="view_workmate_select" type="id" />
+    <item name="depart_avatar" type="id"/>
 </resources>

@@ -331,4 +331,8 @@
     <string name="Chat_Contacts_Choose">从通讯录中选择</string>
     <string name="Chat_Contacts_Select">选中联系人</string>
     <string name="Chat_Contacts_To_Select">选择联系人</string>
+    <string name="Chat_All">所有</string>
+    <string name="Chat_Contacts">通讯录</string>
+    <string name="Chat_Set_Remove_Members">是否确认移除群成员?</string>
+    <string name="Chat_Remove_Conversation">是否移除该条会话记录?</string>
 </resources>

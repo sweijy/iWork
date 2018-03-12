@@ -216,7 +216,7 @@ public class ContactHelper extends BaseDao {
      */
     public List<ContactEntity> loadFriendEntityFromText(String text) {
         QueryBuilder<ContactEntity> queryBuilder = contactEntityDao.queryBuilder();
-        queryBuilder.where(ContactEntityDao.Properties.Name.like("%" + text + "%")).limit(1).build();
+        queryBuilder.where(ContactEntityDao.Properties.Name.like("%" + text + "%")).build();
         List<ContactEntity> friendEntities = queryBuilder.list();
         return friendEntities;
     }

@@ -64,6 +64,14 @@ public class NameLinear extends LinearLayout {
         scrollview.setScrollX(500);
     }
 
+    public int getCurrentDepartmentPosition() {
+        return list.size();
+    }
+
+    public Connect.Department getLastDepartment() {
+        return list.get(list.size() - 1);
+    }
+
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }

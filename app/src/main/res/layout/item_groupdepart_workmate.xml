@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_FFFFFF"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@id/relative_workmate_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@id/view_workmate_select"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/selector_checkstate" />
+    </RelativeLayout>
+
+    <connect.widget.DepartmentAvatar
+        android:id="@id/depart_avatar"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_38"
+        android:layout_gravity="center_vertical"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/nickname_tv"
+        style="@style/BaseTextStyle.12"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_22"
+        android:ellipsize="middle"
+        android:lines="1"
+        android:text="" />
+</LinearLayout>

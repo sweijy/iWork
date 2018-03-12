@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -42,8 +41,6 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
     TopToolBar toolbar;
     @Bind(R.id.linearlayout)
     LinearLayout linearlayout;
-    @Bind(R.id.relativelayout_1)
-    RelativeLayout relativelayout1;
     @Bind(R.id.groupset_membercount)
     TextView groupsetMembercount;
     @Bind(R.id.linearlayout_groupmember)

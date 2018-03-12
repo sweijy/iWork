@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        android:id="@id/include_search"
-        layout="@layout/include_search_edittext"
+    <connect.widget.AvatarSearchView
+        android:id="@id/view_avatar_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

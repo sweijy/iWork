@@ -8,6 +8,8 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+
 import org.greenrobot.eventbus.EventBus;
 
 import connect.activity.base.BaseActivity;
@@ -50,9 +52,12 @@ public abstract class BaseChatActvity extends BaseActivity {
     protected ChatAdapter chatAdapter;
     protected ScrollPositionListener positionListener = new ScrollPositionListener();
 
-    protected Connect.ChatType chatType;
-    protected String chatIdentify;
-    protected String searchTxt;
+    @Autowired
+    public Connect.ChatType chatType;
+    @Autowired
+    public String chatIdentify;
+    @Autowired
+    public String searchTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

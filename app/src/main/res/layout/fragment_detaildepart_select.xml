@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F6F6F6"
+    android:background="@color/color_FAFBFC"
     android:orientation="vertical">
 
     <connect.widget.TopToolBar
@@ -10,45 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
+    <connect.widget.AvatarSearchView
+        android:id="@id/view_avatar_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_5"
-        android:background="@color/color_ffffff">
-
-        <EditText
-            android:id="@id/edittext_search_user"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_35"
-            android:layout_marginLeft="@dimen/dp_32"
-            android:layout_marginRight="@dimen/dp_32"
-            android:background="@drawable/shaoe_search_department"
-            android:drawableLeft="@mipmap/department_search"
-            android:drawablePadding="@dimen/dp_10"
-            android:hint="@string/Link_Search"
-            android:textColorHint="@color/color_b3b5bc"
-            android:textSize="@dimen/sp_14"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingLeft="@dimen/dp_5" />
-
-        <ImageView
-            android:id="@id/imageview_clear"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            android:layout_alignRight="@id/edittext_search_user"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@mipmap/input_del" />
-    </RelativeLayout>
+        android:layout_marginTop="@dimen/dp_5" />
 
     <HorizontalScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/px_1"
         android:background="@color/color_ffffff"
         android:scrollbars="none">
+
         <connect.widget.NameLinear
             android:id="@+id/name_linear"
             android:layout_width="match_parent"
@@ -56,6 +32,31 @@
             android:orientation="horizontal"
             android:padding="@dimen/dp_5" />
     </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@id/linearlayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@id/view"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/selector_checkstate" />
+
+        <TextView
+            style="@style/BaseTextStyle.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="@string/Chat_All"
+            android:textColor="@color/color_393939" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
