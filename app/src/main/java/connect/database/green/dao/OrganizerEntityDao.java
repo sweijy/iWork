@@ -38,6 +38,7 @@ public class OrganizerEntityDao extends AbstractDao<OrganizerEntity, Long> {
         public final static Property Mobile = new Property(11, String.class, "mobile", false, "MOBILE");
         public final static Property Gender = new Property(12, Integer.class, "gender", false, "GENDER");
         public final static Property Tips = new Property(13, String.class, "tips", false, "TIPS");
+        public final static Property Username = new Property(14, String.class, "Username", false, "USERNAME");
     }
 
 
@@ -66,7 +67,8 @@ public class OrganizerEntityDao extends AbstractDao<OrganizerEntity, Long> {
                 "\"EMP_NO\" TEXT," + // 10: empNo
                 "\"MOBILE\" TEXT," + // 11: mobile
                 "\"GENDER\" INTEGER," + // 12: gender
-                "\"TIPS\" TEXT);"); // 13: tips
+                "\"TIPS\" TEXT," + // 13: tips
+                "\"USERNAME\" TEXT);"); // 14: Username
     }
 
     /** Drops the underlying database table. */
@@ -144,6 +146,11 @@ public class OrganizerEntityDao extends AbstractDao<OrganizerEntity, Long> {
         if (tips != null) {
             stmt.bindString(14, tips);
         }
+ 
+        String Username = entity.getUsername();
+        if (Username != null) {
+            stmt.bindString(15, Username);
+        }
     }
 
     @Override
@@ -215,6 +222,11 @@ public class OrganizerEntityDao extends AbstractDao<OrganizerEntity, Long> {
         if (tips != null) {
             stmt.bindString(14, tips);
         }
+ 
+        String Username = entity.getUsername();
+        if (Username != null) {
+            stmt.bindString(15, Username);
+        }
     }
 
     @Override
@@ -238,7 +250,8 @@ public class OrganizerEntityDao extends AbstractDao<OrganizerEntity, Long> {
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // empNo
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // mobile
             cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12), // gender
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // tips
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // tips
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // Username
         );
         return entity;
     }
@@ -259,6 +272,7 @@ public class OrganizerEntityDao extends AbstractDao<OrganizerEntity, Long> {
         entity.setMobile(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setGender(cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12));
         entity.setTips(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setUsername(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
      }
     
     @Override

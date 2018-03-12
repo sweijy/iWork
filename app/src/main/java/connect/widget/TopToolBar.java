@@ -31,7 +31,8 @@ public class TopToolBar extends LinearLayout {
     private EditText titleEdit;
     private ImageView rightImg;
     private TextView rightText;
-    private LinearLayout rightLayout;
+    private RelativeLayout rightLayout;
+    private TextView leftText;
 
     public TopToolBar(Context context) {
         this(context, null);
@@ -47,6 +48,8 @@ public class TopToolBar extends LinearLayout {
     private void initView(View view) {
         leftRela = (RelativeLayout) view.findViewById(R.id.left_rela);
         leftImg = (ImageView) view.findViewById(R.id.left_img);
+        leftText = (TextView)view.findViewById(R.id.left_text);
+
         titleImg = (ImageView) view.findViewById(R.id.title_img);
         titleTv = (TextView) view.findViewById(R.id.title_tv);
         titleEdit = (EditText) view.findViewById(R.id.title_edittext);
@@ -54,15 +57,18 @@ public class TopToolBar extends LinearLayout {
         titleSearchRela = (RelativeLayout) view.findViewById(R.id.title_relative_edite);
         rightImg = (ImageView) view.findViewById(R.id.right_img);
         rightText = (TextView) view.findViewById(R.id.right_text);
-        rightLayout = (LinearLayout) view.findViewById(R.id.right_lin);
+        rightLayout = (RelativeLayout) view.findViewById(R.id.right_lin);
         titleSearchImg = (ImageView) view.findViewById(R.id.image_title_search);
-    }
 
-    public void setBlackStyle() {
-        this.setBackgroundResource(R.color.color_161A21);
+        this.setBackgroundResource(R.color.color_457DE3);
         titleTv.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
         rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
         //SystemUtil.setWindowStatusBarColor((Activity)context,R.color.color_161A21);
+    }
+
+    @Deprecated
+    public void setBlackStyle(){
+
     }
 
     public void setRedStyle() {
@@ -82,7 +88,15 @@ public class TopToolBar extends LinearLayout {
     }
 
     public void setLeftImg(Integer resourceId) {
+        leftRela.setVisibility(View.VISIBLE);
+        leftText.setVisibility(View.GONE);
         leftImg.setImageResource(resourceId);
+    }
+
+    public void setLeftText(Integer textId){
+        leftRela.setVisibility(View.VISIBLE);
+        leftImg.setVisibility(View.GONE);
+        leftText.setText(textId);
     }
 
     public void setLeftListener(OnClickListener onClickListener) {
@@ -139,6 +153,8 @@ public class TopToolBar extends LinearLayout {
     }
 
     public void setRightImg(Integer resId) {
+        rightLayout.setVisibility(View.VISIBLE);
+        rightText.setVisibility(View.GONE);
         if (resId == null) {
             rightImg.setVisibility(View.GONE);
         } else {
@@ -148,10 +164,14 @@ public class TopToolBar extends LinearLayout {
     }
 
     public void setRightText(Integer resId) {
+        rightLayout.setVisibility(View.VISIBLE);
+        rightImg.setVisibility(View.GONE);
         rightText.setText(resId);
     }
 
     public void setRightText(String resId) {
+        rightLayout.setVisibility(View.VISIBLE);
+        rightImg.setVisibility(View.GONE);
         rightText.setText(resId);
     }
 
@@ -170,7 +190,7 @@ public class TopToolBar extends LinearLayout {
     public void setRightTextEnable(boolean enable) {
         rightText.setEnabled(enable);
         if (enable) {
-            rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_007aff));
+            rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
         } else {
             rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_767a82));
         }

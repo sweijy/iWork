@@ -28,117 +28,99 @@ public class ContactEntity implements Serializable {
     private Integer gender;
     private String tips;
     private Boolean registed;
+    private String Username;
 
+    @Generated(hash = 516121535)
+    public ContactEntity(Long _id, @NotNull String uid, String name, String avatar,
+            String ou, String publicKey, String empNo, String mobile,
+            Integer gender, String tips, Boolean registed, String Username) {
+        this._id = _id;
+        this.uid = uid;
+        this.name = name;
+        this.avatar = avatar;
+        this.ou = ou;
+        this.publicKey = publicKey;
+        this.empNo = empNo;
+        this.mobile = mobile;
+        this.gender = gender;
+        this.tips = tips;
+        this.registed = registed;
+        this.Username = Username;
+    }
     @Generated(hash = 393979869)
     public ContactEntity() {
     }
-
-    @Generated(hash = 338746229)
-    public ContactEntity(Long _id, @NotNull String uid, String name, String avatar,
-            String ou, String publicKey, String empNo, String mobile,
-            Integer gender, String tips, Boolean registed) {
-        this._id = _id;
-        this.uid = uid;
-        this.name = name;
-        this.avatar = avatar;
-        this.ou = ou;
-        this.publicKey = publicKey;
-        this.empNo = empNo;
-        this.mobile = mobile;
-        this.gender = gender;
-        this.tips = tips;
-        this.registed = registed;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public Long get_id() {
-        return _id;
+        return this._id;
     }
-
     public void set_id(Long _id) {
         this._id = _id;
     }
-
     public String getUid() {
-        return uid;
+        return this.uid;
     }
-
     public void setUid(String uid) {
         this.uid = uid;
     }
-
     public String getName() {
-        return name;
+        return this.name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getAvatar() {
-        return avatar;
+        return this.avatar;
     }
-
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
     public String getOu() {
-        return ou;
+        return this.ou;
     }
-
     public void setOu(String ou) {
         this.ou = ou;
     }
-
     public String getPublicKey() {
-        return publicKey;
+        return this.publicKey;
     }
-
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
     }
-
     public String getEmpNo() {
-        return empNo;
+        return this.empNo;
     }
-
     public void setEmpNo(String empNo) {
         this.empNo = empNo;
     }
-
     public String getMobile() {
-        return mobile;
+        return this.mobile;
     }
-
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
     public Integer getGender() {
-        return gender;
+        return this.gender;
     }
-
     public void setGender(Integer gender) {
         this.gender = gender;
     }
-
     public String getTips() {
-        return tips;
+        return this.tips;
     }
-
     public void setTips(String tips) {
         this.tips = tips;
     }
-
     public Boolean getRegisted() {
-        return registed;
+        return this.registed;
     }
-
     public void setRegisted(Boolean registed) {
         this.registed = registed;
     }
+    public String getUsername() {
+        return this.Username;
+    }
+    public void setUsername(String Username) {
+        this.Username = Username;
+    }
+    
 }

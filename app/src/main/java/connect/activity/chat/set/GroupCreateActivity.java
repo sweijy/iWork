@@ -61,7 +61,6 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getResources().getString(R.string.Chat_set_Create_New_Group));
         toolbar.setRightText(R.string.Chat_Complete);

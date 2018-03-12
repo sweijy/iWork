@@ -1,7 +1,6 @@
 package connect.activity.home.adapter;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,8 +30,6 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ArrayList<ContactBean> mData = new ArrayList<>();
     private OnItemChildListener onItemChildListener;
     private ContactListManage contactManage = new ContactListManage();
-    private List<ContactBean> groupList;
-    private ArrayList<ContactBean> friendList;
     /** The location of the sideBar started sliding */
     private int startPosition = 0;
     /** Friends / group */
@@ -43,12 +40,6 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int STATUS_FRIEND_CONNECT = 103;
     /** Connect robot */
     private final int STATUS_FRIEND_TITLE = 104;
-    /** Update all contact */
-    public final String updateTypeContact = "contact";
-    /** Update group */
-    public final String updateTypeGroup = "group";
-    /** Update friend */
-    public final String updateTypeFriend = "friend";
 
     public ContactAdapter(Activity activity) {
         this.activity = activity;
@@ -109,25 +100,22 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if(position != 0){
                     connectLetter = contactManage.checkShowFriendTop(currBean, mData.get(position - 1));
                 }
-                if (TextUtils.isEmpty(connectLetter)) {
+                if (currBean.getStatus() == 7 || currBean.getStatus() == 9 || TextUtils.isEmpty(connectLetter)) {
                     ((ConnectHolder) holder).topTv.setVisibility(View.GONE);
                     ((ConnectHolder) holder).lineView.setVisibility(View.GONE);
                 } else {
                     ((ConnectHolder) holder).topTv.setVisibility(View.VISIBLE);
                     ((ConnectHolder) holder).lineView.setVisibility(View.VISIBLE);
-                    if(currBean.getStatus() == 2){
-                        Drawable draGroup = activity.getResources().getDrawable(R.mipmap.contract_group_chat3x);
-                        draGroup.setBounds(0, 0, draGroup.getMinimumWidth(), draGroup.getMinimumHeight());
-                        ((ConnectHolder) holder).topTv.setCompoundDrawables(draGroup, null, null, null);
-                        ((ConnectHolder) holder).topTv.setText(R.string.Link_Group);
-                    }else{
-                        ((ConnectHolder) holder).topTv.setCompoundDrawables(null, null, null, null);
-                        ((ConnectHolder) holder).topTv.setText(connectLetter);
-                    }
+                    ((ConnectHolder) holder).topTv.setCompoundDrawables(null, null, null, null);
+                    ((ConnectHolder) holder).topTv.setText(connectLetter);
                 }
+
                 if(currBean.getStatus() == 7){
                     ((ConnectHolder) holder).avatarImg.setImageResource(R.mipmap.department);
                     ((ConnectHolder) holder).nameTv.setText(R.string.Chat_Organizational_structure);
+                }else if(currBean.getStatus() == 9){
+                    ((ConnectHolder) holder).avatarImg.setImageResource(R.mipmap.contact_group);
+                    ((ConnectHolder) holder).nameTv.setText(R.string.Link_Group);
                 }else if(currBean.getStatus() == 6){
                     GlideUtil.loadAvatarRound(((ConnectHolder) holder).avatarImg, R.mipmap.connect_logo);
                     ((ConnectHolder) holder).nameTv.setText(R.string.app_name);
@@ -161,7 +149,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int status = mData.get(position).getStatus();
         if (status == 1) {
             return STATUS_FRIEND;
-        } else if(status == 2 || status == 6 || status == 7){
+        } else if(status == 6 || status == 7 || status == 9){
             return STATUS_FRIEND_CONNECT;
         } else if(status == 8){
             return STATUS_FRIEND_TITLE;
@@ -230,52 +218,33 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     /**
      * Update the friends list.
      */
-    public void updateContact(final String updateType) {
-        new AsyncTask<Void, Void, Void>() {
+    public void updateContact() {
+        new AsyncTask<Void, Void, ArrayList<ContactBean>>() {
             @Override
-            protected Void doInBackground(Void... params) {
-                switch (updateType){
-                    case updateTypeContact:
-                        groupList = contactManage.getGroupData();
-                        friendList = contactManage.getFriendList();
-                        break;
-                    case updateTypeGroup:
-                        groupList = contactManage.getGroupData();
-                        break;
-                    case updateTypeFriend:
-                        friendList = contactManage.getFriendList();
-                        break;
-                    default:
-                        break;
-                }
-                return null;
+            protected ArrayList<ContactBean> doInBackground(Void... params) {
+                ArrayList<ContactBean> friendList = contactManage.getFriendList();
+                return friendList;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
+            protected void onPostExecute(ArrayList<ContactBean> friendList) {
+                super.onPostExecute(friendList);
                 ArrayList<ContactBean> finalList = new ArrayList<>();
                 final int friendSize = friendList.size();
-                final int groupSize = groupList.size();
-                ContactBean contactBeanOri = new ContactBean();
-                contactBeanOri.setStatus(7);
-                finalList.add(contactBeanOri);
+
+                finalList.add(new ContactBean(7, "department"));
+                finalList.add(new ContactBean(9, "group"));
                 if(friendSize > 0){
                     ContactBean contactBeanTitle = new ContactBean();
                     contactBeanTitle.setStatus(8);
                     finalList.add(contactBeanTitle);
                 }
-                finalList.addAll(groupList);
                 finalList.addAll(friendList);
                 startPosition = finalList.size() - friendSize;
 
                 String bottomTxt = "";
-                if (friendSize > 0 && groupSize == 0) {
+                if (friendSize > 0) {
                     bottomTxt = BaseApplication.getInstance().getString(R.string.Link_contact_count, friendSize, "", "");
-                } else if (friendSize == 0 && groupSize > 0) {
-                    bottomTxt = BaseApplication.getInstance().getString(R.string.Link_group_count, groupSize);
-                } else if (friendSize > 0 && groupSize > 0) {
-                    bottomTxt = String.format(BaseApplication.getInstance().getString(R.string.Link_contact_count_group_count), friendSize, groupSize);
                 }
                 setDataNotify(finalList, bottomTxt);
             }

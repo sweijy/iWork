@@ -7,18 +7,19 @@
     <TextView
         android:id="@+id/top_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_23"
+        android:layout_height="@dimen/dp_40"
         android:drawablePadding="@dimen/dp_3"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_15"
         android:text=""
-        android:textColor="@color/color_393939"
+        android:textColor="@color/color_9A9A9A"
+        android:background="@color/color_FAFBFC"
         android:textSize="@dimen/sp_12"
         android:visibility="gone" />
 
     <View
         android:id="@+id/line_view"
-        style="@style/BaseViewLine.f1f1f1" />
+        style="@style/BaseViewLine.eeeeee"/>
 
     <RelativeLayout
         android:id="@id/content_layout"
@@ -59,7 +60,6 @@
             android:id="@+id/avatar_rela"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/color_FBFBFB"
             android:paddingBottom="@dimen/dp_9"
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
@@ -73,7 +73,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-    <View style="@style/BaseViewLine.f1f1f1" />
 
 </LinearLayout>

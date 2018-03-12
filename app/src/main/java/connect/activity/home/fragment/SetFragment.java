@@ -91,7 +91,6 @@ public class SetFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        toolbarTop.setBlackStyle();
         toolbarTop.setTitle(null, R.string.Set_Setting);
 
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();

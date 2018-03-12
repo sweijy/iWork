@@ -41,7 +41,6 @@ public class StartPagePresenter implements StartContract.Presenter {
                 } else {
                     mView.goIntoHome();
                 }
-                mActivity.finish();
             }
         }).start();
     }

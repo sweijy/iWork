@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.protobuf.ByteString;
 
@@ -46,19 +50,21 @@ public class LoginUserActivity extends BaseActivity {
     EditText passwordEt;
     @Bind(R.id.next_btn)
     TextView nextBtn;
-    @Bind(R.id.pass_text)
-    TextView passText;
-    @Bind(R.id.name_text)
-    TextView nameText;
     @Bind(R.id.text_forget_password)
     TextView textForgetPassword;
     @Bind(R.id.image_loading)
     View imageLoading;
     @Bind(R.id.relative_login)
     RelativeLayout relativeLogin;
+    @Bind(R.id.name_clear_image)
+    ImageView nameClearImage;
+    @Bind(R.id.password_clear_image)
+    ImageView passwordClearImage;
 
     @Autowired
     String value;
+    @Bind(R.id.login_edit_linear)
+    LinearLayout loginEditLinear;
 
     private LoginUserActivity mActivity;
 
@@ -73,7 +79,6 @@ public class LoginUserActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-
         nextBtn.setEnabled(false);
         nameEt.addTextChangedListener(textWatcher);
         passwordEt.addTextChangedListener(textWatcher);
@@ -85,11 +90,11 @@ public class LoginUserActivity extends BaseActivity {
         }
     }
 
-    public void popRomteLoginDialog(String deveiceName){
+    public void popRomteLoginDialog(String deveiceName) {
         String showContent = TextUtils.isEmpty(deveiceName) ?
                 getString(R.string.Error_Device_Remote_Other_Login) :
                 getString(R.string.Error_Device_Remote_Login, deveiceName);
-        DialogUtil.showAlertTextView(mActivity, null,showContent , null, getString(R.string.Common_OK), true, false, new DialogUtil.OnItemClickListener() {
+        DialogUtil.showAlertTextView(mActivity, null, showContent, null, getString(R.string.Common_OK), true, false, new DialogUtil.OnItemClickListener() {
             @Override
             public void confirm(String value) {
                 HomeAction.getInstance().sendEvent(HomeAction.HomeType.EXIT);
@@ -102,14 +107,14 @@ public class LoginUserActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.name_text)
-    void nameText(View view) {
-        nameEt.requestFocus();
+    @OnClick(R.id.name_clear_image)
+    void clearName(View view) {
+        nameEt.setText("");
     }
 
-    @OnClick(R.id.pass_text)
-    void passText(View view) {
-        passwordEt.requestFocus();
+    @OnClick(R.id.password_clear_image)
+    void clearPassword(View view) {
+        passwordEt.setText("");
     }
 
     @OnClick(R.id.text_forget_password)
@@ -120,12 +125,10 @@ public class LoginUserActivity extends BaseActivity {
                 "", "", false, new DialogUtil.OnItemClickListener() {
                     @Override
                     public void confirm(String value) {
-
                     }
 
                     @Override
                     public void cancel() {
-
                     }
                 });
     }
@@ -166,8 +169,12 @@ public class LoginUserActivity extends BaseActivity {
                         SharedPreferenceUtil.getInstance().putUser(userBean1);
 
                         ARouter.getInstance().build("/iwork/HomeActivity")
-                                .navigation();
-                        mActivity.finish();
+                                .navigation(mActivity, new NavCallback() {
+                                    @Override
+                                    public void onArrival(Postcard postcard) {
+                                        mActivity.finish();
+                                    }
+                                });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -217,8 +224,12 @@ public class LoginUserActivity extends BaseActivity {
                 SharedPreferenceUtil.getInstance().putUser(userBean1);
 
                 ARouter.getInstance().build("/iwork/HomeActivity")
-                        .navigation();
-                mActivity.finish();
+                        .navigation(mActivity, new NavCallback() {
+                            @Override
+                            public void onArrival(Postcard postcard) {
+                                mActivity.finish();
+                            }
+                        });
             }
 
             @Override
@@ -240,6 +251,18 @@ public class LoginUserActivity extends BaseActivity {
         public void afterTextChanged(Editable s) {
             String name = nameEt.getText().toString();
             String password = passwordEt.getText().toString();
+            if (TextUtils.isEmpty(name)) {
+                nameClearImage.setVisibility(View.GONE);
+            } else {
+                nameClearImage.setVisibility(View.VISIBLE);
+            }
+
+            if (TextUtils.isEmpty(password)) {
+                passwordClearImage.setVisibility(View.GONE);
+            } else {
+                passwordClearImage.setVisibility(View.VISIBLE);
+            }
+
             if (TextUtils.isEmpty(name) || TextUtils.isEmpty(password)) {
                 relativeLogin.setEnabled(false);
             } else {

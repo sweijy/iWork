@@ -17,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.common.PushSDK;
 
@@ -218,8 +220,12 @@ public class HomeActivity extends BaseFragmentActivity {
                     }
                 }
                 ARouter.getInstance().build("/iwork/login/LoginUserActivity")
-                        .navigation();
-                finish();
+                        .navigation(activity, new NavCallback() {
+                            @Override
+                            public void onArrival(Postcard postcard) {
+                                activity.finish();
+                            }
+                        });
                 break;
             case SWITCHFRAGMENT:
                 int fragmentCode = (Integer) objects[0];
@@ -233,7 +239,7 @@ public class HomeActivity extends BaseFragmentActivity {
                             .withSerializable("groupIdentify", "")
                             .navigation();
                 }else if(position == 2){
-                    ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
+                    ARouter.getInstance().build("/iwork/contact/ScanAddFriendActivity")
                             .navigation();
                 }else if(position == 3){
                     SystemSetBean systemSetBean = ParamManager.getInstance().getSystemSet();

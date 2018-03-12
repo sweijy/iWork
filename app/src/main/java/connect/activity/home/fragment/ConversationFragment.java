@@ -206,7 +206,8 @@ public class ConversationFragment extends BaseFragment {
         }
     }
 
-//    @OnClick({R.id.relativelayout_1})
+
+//    @OnClick({R.id.relativelayout_1, R.id.search_image1})
 //    void onClickListener(View view) {
 //        switch (view.getId()) {
 //            case R.id.relativelayout_1:
@@ -214,6 +215,9 @@ public class ConversationFragment extends BaseFragment {
 //                int offsetX = SystemUtil.dipToPx(30);
 //                int offsetY = SystemUtil.dipToPx(0);
 //                popWindow.showAsDropDown(connectStateView.findViewById(R.id.txt1), offsetX, offsetY);
+//                break;
+//            case R.id.search_image1:
+//                ARouter.getInstance().build("/chat/earchActivity").navigation();
 //                break;
 //        }
 //    }

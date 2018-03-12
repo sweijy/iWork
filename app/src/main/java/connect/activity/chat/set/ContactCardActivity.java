@@ -63,7 +63,6 @@ public class ContactCardActivity extends BaseActivity implements ContactCardCont
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getResources().getString(R.string.Chat_Send_a_namecard));
         toolbar.setLeftListener(new View.OnClickListener() {

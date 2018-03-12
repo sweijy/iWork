@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -28,6 +29,7 @@ import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.ToastEUtil;
+import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
@@ -41,34 +43,32 @@ import protos.Connect;
 @Route(path = "/iwork/contact/ContactInfoActivity")
 public class ContactInfoActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    TopToolBar toolbar;
-    @Bind(R.id.name_text)
-    TextView nameText;
-    @Bind(R.id.number_tv)
-    TextView numberTv;
-    @Bind(R.id.department_tv)
-    TextView departmentTv;
-    @Bind(R.id.phone_tv)
-    TextView phoneTv;
-    @Bind(R.id.cell_image)
-    ImageView cellImage;
-    @Bind(R.id.chat_btn)
-    Button chatBtn;
-    @Bind(R.id.avatar_image)
-    DepartmentAvatar avatarImage;
-    @Bind(R.id.gender_image)
-    ImageView genderImage;
-    @Bind(R.id.avatar_imageview)
-    ImageView avatarImageview;
-    @Bind(R.id.number_text)
-    TextView numberText;
 
     @Autowired
     String uid;
+    @Bind(R.id.toolbar)
+    TopToolBar toolbar;
+    @Bind(R.id.avatar_imageview)
+    ImageView avatarImageview;
+    @Bind(R.id.avatar_image)
+    DepartmentAvatar avatarImage;
+    @Bind(R.id.avatar_rela)
+    RelativeLayout avatarRela;
+    @Bind(R.id.name_text)
+    TextView nameText;
+    @Bind(R.id.gender_image)
+    ImageView genderImage;
+    @Bind(R.id.account_text)
+    TextView accountText;
+    @Bind(R.id.department_text)
+    TextView departmentText;
+    @Bind(R.id.chat_btn)
+    Button chatBtn;
+    @Bind(R.id.contact_btn)
+    Button contactBtn;
 
     private ContactInfoActivity mActivity;
-    private Connect.Workmate workmate;
+    private ContactEntity contactEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,67 +81,59 @@ public class ContactInfoActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setTitle(null, R.string.Chat_Contact_details);
+        toolbar.setTitle(null, R.string.Set_Personal_information);
 
         uid = getIntent().getExtras().getString("uid");
-        numberText.setText(mActivity.getString(R.string.Link_Employee_number) + ":");
+        contactEntity = (ContactEntity) getIntent().getExtras().getSerializable("contactEntity");
+        if(contactEntity != null){
+            showView();
+        }
         searchUser(uid);
     }
 
     private void showView() {
-        nameText.setText(workmate.getName());
-        if (workmate.getGender() == 1) {
+        nameText.setText(contactEntity.getName());
+        departmentText.setText(contactEntity.getOu());
+        accountText.setText(contactEntity.getUsername());
+        if (contactEntity.getGender() == 1) {
             genderImage.setImageResource(R.mipmap.man);
         } else {
             genderImage.setImageResource(R.mipmap.woman);
         }
-        numberTv.setText(workmate.getEmpNo());
-        departmentTv.setText(workmate.getOU());
-        phoneTv.setText(workmate.getMobile());
 
-        if (ContactHelper.getInstance().loadFriendByUid(workmate.getUid()) == null) {
-            if (workmate.getGender() == 1) {
-                toolbar.setRightText(R.string.Work_Pay_attention_to_him);
-            } else {
-                toolbar.setRightText(R.string.Work_Pay_attention_to_her);
-            }
+        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
+            contactBtn.setText(R.string.Link_Add_contacts);
+            contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_414141));
         } else {
-            toolbar.setRightText(R.string.Work_Cancel_the_attention);
+            contactBtn.setText(R.string.Link_Delete_contact);
+            contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_F56565));
         }
         avatarImageview.setVisibility(View.VISIBLE);
         avatarImage.setVisibility(View.GONE);
-        GlideUtil.loadAvatarRound(avatarImageview, workmate.getAvatar(), 8);
+        GlideUtil.loadAvatarRound(avatarImageview, contactEntity.getAvatar(), 8);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }
 
-    @OnClick(R.id.right_lin)
+    @OnClick(R.id.contact_btn)
     void attention(View view) {
-        if (ContactHelper.getInstance().loadFriendByUid(workmate.getUid()) == null) {
+        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
             addFollow(true);
         } else {
             addFollow(false);
         }
     }
 
-    @OnClick(R.id.cell_image)
-    void call(View view) {
-        SystemUtil.callPhone(mActivity, workmate.getMobile());
-    }
-
     @OnClick(R.id.chat_btn)
     void chat(View view) {
-        if (workmate != null && !TextUtils.isEmpty(workmate.getUid())) {
-            ARouter.getInstance().build("/iwork/chat/ChatActivity")
-                    .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
-                    .withString("CHAT_IDENTIFY", workmate.getUid())
-                    .navigation();
-        }
+        ARouter.getInstance().build("/iwork/chat/ChatActivity")
+                .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
+                .withString("CHAT_IDENTIFY", contactEntity.getUid())
+                .navigation();
     }
 
     private void searchUser(final String uid) {
@@ -155,7 +147,8 @@ public class ContactInfoActivity extends BaseActivity {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
-                    workmate = workmates.getList(0);
+                    Connect.Workmate workmate = workmates.getList(0);
+                    contactEntity = new ContactListManage().convertContactEntity(workmate);
                     showView();
                     // 更新通信录好友头像
                     final ContactEntity contactEntityLocal = ContactHelper.getInstance().loadFriendByUid(workmate.getUid());
@@ -198,7 +191,7 @@ public class ContactInfoActivity extends BaseActivity {
     private void addFollow(final boolean isAdd) {
         Connect.UserFollow userFollow = Connect.UserFollow.newBuilder()
                 .setFollow(isAdd)
-                .setUid(workmate.getUid())
+                .setUid(contactEntity.getUid())
                 .build();
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_USERS_FOLLOW, userFollow, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
@@ -211,19 +204,19 @@ public class ContactInfoActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 if (isAdd) {
-                    ContactHelper.getInstance().insertContact(new ContactListManage().convertContactEntity(workmate));
-                    ToastEUtil.makeText(mActivity, R.string.Link_Focus_successful).show();
+                    ContactHelper.getInstance().insertContact(contactEntity);
+                    ToastUtil.getInstance().showToast(R.string.Link_Added_to_contact);
+
                     ContactNotice.receiverContact();
-                    toolbar.setRightText(R.string.Work_Cancel_the_attention);
+                    contactBtn.setText(R.string.Link_Delete_contact);
+                    contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_F56565));
                 } else {
-                    ContactHelper.getInstance().deleteEntity(workmate.getUid());
-                    ToastEUtil.makeText(mActivity, R.string.Link_Focus_cancle_successful).show();
+                    ContactHelper.getInstance().deleteEntity(contactEntity.getUid());
+                    ToastUtil.getInstance().showToast(R.string.Link_Deleted_contact);
+
                     ContactNotice.receiverContact();
-                    if (workmate.getGender() == 1) {
-                        toolbar.setRightText(R.string.Work_Pay_attention_to_him);
-                    } else {
-                        toolbar.setRightText(R.string.Work_Pay_attention_to_her);
-                    }
+                    contactBtn.setText(R.string.Link_Add_contacts);
+                    contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_161A21));
                 }
             }
 

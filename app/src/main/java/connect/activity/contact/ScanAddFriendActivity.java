@@ -36,7 +36,7 @@ import connect.widget.album.model.AlbumFile;
 /**
  * scan it
  */
-@Route(path = "/iwork/contact/ContactInfoShowActivity")
+@Route(path = "/iwork/contact/ScanAddFriendActivity")
 public class ScanAddFriendActivity extends BaseScanActivity {
 
     @Bind(R.id.capture_preview)

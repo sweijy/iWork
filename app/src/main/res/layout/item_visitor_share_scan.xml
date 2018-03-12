@@ -27,6 +27,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_70"
+        android:elevation="@dimen/dp_3"
         android:background="@drawable/shape_8px_ffffff">
         <ImageView
             android:id="@+id/scan_image"

@@ -70,7 +70,6 @@ public class GoogleMapActivity extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
         activity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(getResources().getString(R.string.Chat_Loc));
         toolbarTop.setRightText(R.string.Link_Send);

@@ -76,11 +76,10 @@ public class VisitorsAuditActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Work_Visitors_to_approval);
 
-        visitorRecord = (Connect.VisitorRecord) getIntent().getExtras().getSerializable("bean");
+        visitorRecord = (Connect.VisitorRecord) getIntent().getExtras().getSerializable("visitorRecord");
 
         String guestName = TextUtils.isEmpty(visitorRecord.getGuestName()) ? "" : visitorRecord.getGuestName();
         nameTv.setText(guestName);
@@ -106,7 +105,7 @@ public class VisitorsAuditActivity extends BaseActivity {
                 .create();
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

@@ -57,7 +57,6 @@ public class SupportFeedbackActivity extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Set_Help_and_feedback);
         String languageCode = SharedPreferenceUtil.getInstance().getLanguageCode();
@@ -79,7 +78,7 @@ public class SupportFeedbackActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

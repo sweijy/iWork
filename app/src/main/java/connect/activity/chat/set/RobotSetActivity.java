@@ -41,7 +41,6 @@ public class RobotSetActivity extends BaseActivity implements RobotSetContract.B
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getResources().getString(R.string.Chat_System_Set));
         toolbar.setLeftListener(new View.OnClickListener() {

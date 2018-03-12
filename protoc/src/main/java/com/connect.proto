@@ -1773,8 +1773,9 @@ message Workmate {
  bool registed = 6;
  string emp_no = 7;
  string mobile = 8;
- int32  gender = 9;
+ int32 gender = 9;
  string tips = 10;
+ string username = 11;
 }
 
 message Workmates {

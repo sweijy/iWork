@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:dividerHeight="@dimen/dp_0"
         android:divider="@color/color_clear"
+        android:overScrollMode="never"
         android:layout_below="@id/toolbar_top"
         android:listSelector="@android:color/transparent"/>
 

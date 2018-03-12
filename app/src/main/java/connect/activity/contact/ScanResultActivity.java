@@ -15,7 +15,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
-@Route(path = "/iwork/contact/ContactInfoShowActivity")
+@Route(path = "/iwork/contact/ScanResultActivity")
 public class ScanResultActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_top)
@@ -39,7 +39,6 @@ public class ScanResultActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setTitle(null, R.string.Link_Scan_Result);
 
@@ -48,7 +47,7 @@ public class ScanResultActivity extends BaseActivity {
         resultText.setTextIsSelectable(true);
     }
 
-    @OnClick(R.id.left_img)
+    @OnClick(R.id.left_rela)
     void goBack(View view) {
         ActivityUtil.goBack(mActivity);
     }

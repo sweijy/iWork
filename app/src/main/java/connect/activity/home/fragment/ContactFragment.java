@@ -21,6 +21,7 @@ import connect.activity.base.BaseFragment;
 import connect.activity.contact.bean.ContactNotice;
 import connect.activity.home.adapter.ContactAdapter;
 import connect.activity.home.bean.ContactBean;
+import connect.activity.home.view.LineDecoration;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.ContactEntity;
 import connect.ui.activity.R;
@@ -68,17 +69,17 @@ public class ContactFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        toolbarTop.setBlackStyle();
         toolbarTop.setTitle(null, R.string.Link_Contacts);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         recyclerview.setLayoutManager(linearLayoutManager);
+        recyclerview.addItemDecoration(new LineDecoration(mActivity));
         adapter = new ContactAdapter(mActivity);
         recyclerview.setAdapter(adapter);
         sideBar.setOnTouchingLetterChangedListener(changedListener);
 
         adapter.setOnSideMenuListener(onSideMenuListener);
-        adapter.updateContact(adapter.updateTypeContact);
+        adapter.updateContact();
     }
 
     SideBar.OnTouchingLetterChangedListener changedListener = new SideBar.OnTouchingLetterChangedListener(){
@@ -109,13 +110,17 @@ public class ContactFragment extends BaseFragment {
                     break;
                 case 1:
                     ContactEntity contactEntity = ContactHelper.getInstance().loadFriendByUid(entity.getUid());
-
                     ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
                             .withString("uid",contactEntity.getUid())
+                            .withSerializable("contactEntity", contactEntity)
                             .navigation();
                     break;
                 case 7:
                     ARouter.getInstance().build("/iwork/contact/DepartmentActivity")
+                            .navigation();
+                    break;
+                case 9:
+                    ARouter.getInstance().build("/iwork/contact/ContactGroupActivity")
                             .navigation();
                     break;
                 default:
@@ -127,11 +132,7 @@ public class ContactFragment extends BaseFragment {
     @Subscribe
     public void onEventMainThread(ContactNotice notice) {
         if (notice.getNotice() == ContactNotice.ConNotice.RecContact) {
-            adapter.updateContact(adapter.updateTypeContact);
-        } else if (notice.getNotice() == ContactNotice.ConNotice.RecGroup) {
-            adapter.updateContact(adapter.updateTypeGroup);
-        } else if (notice.getNotice() == ContactNotice.ConNotice.RecFriend) {
-            adapter.updateContact(adapter.updateTypeFriend);
+            adapter.updateContact();
         }
     }
 

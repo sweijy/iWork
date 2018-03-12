@@ -112,7 +112,6 @@ public class ChatActivity extends BaseChatSendActivity {
         RoomSession.getInstance().setRoomKey(chatIdentify);
 
         super.initView();
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setRightImg(R.mipmap.menu_white);
         toolbar.setLeftListener(new View.OnClickListener() {

@@ -82,7 +82,6 @@ public class SelectFriendActivity extends BaseActivity {
     @Override
     public void initView() {
         mActivity = this;
-        toolbarTop.setBlackStyle();
         toolbarTop.setLeftImg(R.mipmap.back_white);
         toolbarTop.setRightText(R.string.Wallet_Transfer);
         toolbarTop.setRightTextEnable(false);

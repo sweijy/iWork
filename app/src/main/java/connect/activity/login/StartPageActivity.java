@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.huawei.android.hms.agent.HuaweiRegister;
 
@@ -52,13 +54,23 @@ public class StartPageActivity extends BaseActivity implements StartContract.Vie
     @Override
     public void goIntoLoginForPhone() {
         ARouter.getInstance().build("/iwork/login/LoginUserActivity")
-                .navigation();
+                .navigation(mActivity, new NavCallback() {
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        mActivity.finish();
+                    }
+                });
     }
 
     @Override
     public void goIntoHome() {
         ARouter.getInstance().build("/iwork/HomeActivity")
-                .navigation();
+                .navigation(mActivity, new NavCallback() {
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        mActivity.finish();
+                    }
+                });
     }
 
     @Override

@@ -134,6 +134,7 @@ public class ContactListManage {
         contactEntity.setRegisted(workmate.getRegisted());
         contactEntity.setUid(workmate.getUid());
         contactEntity.setOu(workmate.getOU());
+        contactEntity.setUsername(workmate.getUsername());
         return contactEntity;
     }
 

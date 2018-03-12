@@ -121,6 +121,7 @@
     <string name="Link_Clear_All_Chat_History">Очистить историю переписки</string>
     <string name="Link_Clear_Chat_History">Очистить историю записи</string>
     <string name="Link_Contacts">Контактное лицо</string>
+    <string name="Link_Account">Номер счета:</string>
     <string name="Link_My_group">Я группы</string>
     <string name="Link_Chat_record">чата</string>
     <string name="Link_Delete_Successful">Успешное удаление</string>
@@ -176,8 +177,12 @@
     <string name="Link_group_count">Группа %d</string>
     <string name="Link_My_application">Я приложений</string>
     <string name="Link_Employee_number">Номер сотрудника</string>
-    <string name="Link_Subordinate_departments">Принадлежащего сектор:</string>
+    <string name="Link_Subordinate_departments">сектор:</string>
     <string name="Link_Contact_number">Номер:</string>
+    <string name="Link_Add_contacts">Добавить контакт</string>
+    <string name="Link_Added_to_contact">Добавляется к контактов</string>
+    <string name="Link_Deleted_contact">Уже удалить контакт</string>
+    <string name="Link_Delete_contact">Удалить контакт</string>
     <string name="Link_invited_to_the_group_chat">%1$s пригласила , чтобы добавить в группу %2$s
     </string>
     <string name="Link_update_Failed">Сбой при исправлении</string>
@@ -242,6 +247,7 @@
     <string name="Set_Logging_out">Выход...</string>
     <string name="Set_Logout_delete_login_data_still_log">после выхода  в следующий раз  не  удалять любые  исторических данных  ,  по - прежнему  можете использовать этот  счет  входа </string>
     <string name="Set_My_Profile">Мой профайл</string>
+    <string name="Set_Personal_information">Персональная информация</string>
     <string name="Set_Name">Никнейм</string>
     <string name="Set_Now_update_app">Немедленно обновить</string>
     <string name="Set_Please_connect_at_least_4_points">Просьба минимум ввести 4 точки</string>
@@ -321,6 +327,7 @@
     <string name="Chat_Create_Group_Success">создать группу  успеха</string>
     <string name="Error_Device_Remote_Login">ваш счет  уже  в  %1$s  устройств  входа  в</string>
     <string name="Login">вход</string>
+    <string name="Login_Welcome_to_iWork">Добро пожаловать в iWork</string>
     <string name="Login_Account">компания  имя пользователя</string>
     <string name="Login_password">пароль</string>
     <string name="Please_Input_Login_username">компания  имя пользователя</string>
@@ -337,6 +344,7 @@
     <string name="Link_Group_Create">создать группу</string>
     <string name="Link_Group_Invite">пригласить  в  группы</string>
     <string name="Link_Group_Invite_Success">Приглашение выполнено успешно</string>
+    <string name="Contact_Group_No_data">Ты еще не экономьте группа поболтаем</string>
     <string name="Login_Forget_Password">Забыли пароль</string>
     <string name="Login_Connect_Change_Password">Пожалуйста, свяжитесь с администрацией, чтобы изменить пароль</string>
     <string name="Link_Function_Under_Development">Функция находится в разработке...</string>

@@ -85,7 +85,7 @@
     <style name="ButtonLongStyle" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:layout_marginLeft">@dimen/dp_20</item>
         <item name="android:layout_marginRight">@dimen/dp_20</item>
         <item name="android:textColor">@color/color_ffffff</item>
@@ -96,7 +96,7 @@
     <style name="ButtonLongStyle_White" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:layout_marginLeft">@dimen/dp_20</item>
         <item name="android:layout_marginRight">@dimen/dp_20</item>
         <item name="android:textColor">@color/color_red</item>
@@ -106,7 +106,7 @@
     <style name="ButtonLongStyle_Red" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:layout_marginLeft">@dimen/dp_20</item>
         <item name="android:layout_marginRight">@dimen/dp_20</item>
         <item name="android:textColor">@color/color_ffffff</item>
@@ -125,7 +125,7 @@
     <style name="ButtonTextStyle" parent="android:Animation">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:padding">@dimen/dp_5</item>
         <item name="android:textColor">@drawable/sele_text_btn</item>
     </style>
@@ -163,6 +163,11 @@
     <style name="BaseViewLine.f1f1f1">
         <item name="android:layout_height">@dimen/dp_1</item>
         <item name="android:background">@color/color_FBFBFB</item>
+    </style>
+
+    <style name="BaseViewLine.e7e7e7">
+        <item name="android:layout_height">@dimen/dp_1</item>
+        <item name="android:background">@color/color_E7E7E7</item>
     </style>
 
     <style name="text_chat_msgtime_style">
