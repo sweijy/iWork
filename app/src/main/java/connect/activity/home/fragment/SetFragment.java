@@ -122,8 +122,11 @@ public class SetFragment extends BaseFragment {
 
     @OnClick(R.id.llAbout)
     void intoAbout(View view) {
-        ARouter.getInstance().build("/iwork/set/AboutActivity")
-                .navigation();
+        /*ARouter.getInstance().build("/iwork/set/AboutActivity")
+                .navigation();*/
+
+        ARouter.getInstance().build("/chat/SearchActivity").
+                navigation();
     }
 
     @OnClick(R.id.log_out_tv)
