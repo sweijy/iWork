@@ -4,11 +4,13 @@
     <item name="status_key" type="id"/>
     <item name="position_key" type="id"/>
     <item name="toolbar" type="id"/>
+    <item name="toolbar_search" type="id"/>
     <item name="image_view" type="id"/>
     <item name="text_view" type="id"/>
     <item name="back" type="id"/>
     <item name="content_top" type="id"/>
 
+    <item name="view" type="id"/>
     <item name="view1" type="id"/>
     <item name="siderbar" type="id"/>
     <item name="recyclerview" type="id"/>
@@ -182,6 +184,11 @@
     <item name="include_2" type="id"/>
     <item name="include_3" type="id"/>
     <item name="include_4" type="id"/>
+    <item name="include_search" type="id"/>
+    <item name="include_all" type="id"/>
+    <item name="include_manager" type="id"/>
+    <item name="include_organization" type="id"/>
+    <item name="include_contacts" type="id"/>
 
     <item name="toggle" type="id"/>
     <item name="top" type="id"/>
@@ -195,12 +202,14 @@
     <item name="groupset_groupname" type="id"/>
     <item name="groupset_myname" type="id"/>
     <item name="groupset_qrcode" type="id"/>
+    <item name="groupset_add_newmember" type="id"/>
     <item name="groupset_manage" type="id"/>
     <item name="groupset_sureinvite" type="id"/>
     <item name="groupset_introdue" type="id"/>
     <item name="groupset_transferto" type="id"/>
     <item name="groupset_category" type="id"/>
     <item name="groupset_category_explain" type="id"/>
+    <item name="groupset_membercount" type="id"/>
 
     <!-- The wallet -->
     <item name="btc" type="id"/>
@@ -247,6 +256,8 @@
 
 
     <item name="relative_item" type="id" />
+    <item name="relative_department_select" type="id" />
+    <item name="relative_workmate_select" type="id" />
     <item name="relative_at" type="id" />
     <item name="relative_attention" type="id" />
     <item name="txt_count_at" type="id" />
@@ -282,8 +293,24 @@
     <item name="group_select_content" type="id"/>
     <item name="line_view" type="id"/>
 
-
     <item name="view_voicerecord_state" type="id"/>
     <item name="img_voicerecord_state" type="id"/>
     <item name="txt_voicerecord_tips" type="id"/>
+
+    <item name="img_connect_state" type="id" />
+    <item name="image_notify" type="id" />
+    <item name="recycler_popup" type="id" />
+    <item name="right_trangle" type="id"/>
+    <item name="linearlayout_groupmember" type="id"/>
+    <item name="groupat_all" type="id"/>
+    <item name="groupat_manager" type="id"/>
+    <item name="name" type="id"/>
+    <item name="department" type="id"/>
+    <item name="checkstate" type="id"/>
+    <item name="view_avatar_search" type="id"/>
+    <item name="recyclerview_recents" type="id"/>
+    <item name="recyclerview_contacts" type="id"/>
+    <item name="view_department_select" type="id" />
+    <item name="view_workmate_select" type="id" />
+    <item name="depart_avatar" type="id"/>
 </resources>

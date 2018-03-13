@@ -5,38 +5,33 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
-import connect.activity.chat.SearchContentActivity;
-import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.set.contract.GroupSetContract;
 import connect.activity.chat.set.presenter.GroupSetPresenter;
 import connect.activity.contact.bean.ContactNotice;
-import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.bean.ConversionEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
-import connect.utils.dialog.DialogUtil;
 import connect.widget.TopToolBar;
 
 /**
- * group setting
+ * 群设置
  * Created by gtq on 2016/12/15.
  */
 @Route(path = "/iwork/chat/set/GroupSetActivity")
@@ -46,12 +41,16 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
     TopToolBar toolbar;
     @Bind(R.id.linearlayout)
     LinearLayout linearlayout;
-    @Bind(R.id.relativelayout_1)
-    RelativeLayout relativelayout1;
+    @Bind(R.id.groupset_membercount)
+    TextView groupsetMembercount;
+    @Bind(R.id.linearlayout_groupmember)
+    LinearLayout linearlayoutGroupmember;
 
-    private GroupSetActivity activity;
+    @Autowired
+    String groupIdentify;
+
     private static String TAG = "_GroupSetActivity";
-    private String groupKey;
+    private GroupSetActivity activity;
     private GroupSetContract.Presenter presenter;
 
     @Override
@@ -59,13 +58,8 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupset);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String groupkey) {
-        Bundle bundle = new Bundle();
-        bundle.putString("GROUP_IDENTIFY", groupkey);
-        ActivityUtil.next(activity, GroupSetActivity.class, bundle);
     }
 
     @Override
@@ -79,7 +73,6 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
             }
         });
 
-        groupKey = getIntent().getStringExtra("GROUP_IDENTIFY");
         new GroupSetPresenter(this).start();
         presenter.syncGroupInfo();
     }
@@ -93,9 +86,11 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         }
     }
 
-    @OnClick(R.id.relativelayout_1)
-    public void memberLayoutClickListener() {
-        GroupMemberActivity.startActivity(activity, groupKey);
+    @OnClick(R.id.linearlayout_groupmember)
+    public void memberLayoutClick() {
+        ARouter.getInstance().build("/iwork/chat/set/GroupMemberActivity")
+                .withString("groupIdentify", groupIdentify)
+                .navigation();
     }
 
     @Override
@@ -108,62 +103,25 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         return activity;
     }
 
-    @Override
-    public String getRoomKey() {
-        return groupKey;
+    public String getUid() {
+        return groupIdentify;
     }
 
     @Override
     public void countMember(int members) {
-        toolbar.setTitle(getResources().getString(R.string.Chat_Group_Setting, members));
+        groupsetMembercount.setText(getResources().getString(R.string.Chat_GroupMember_Count, members));
     }
 
     @Override
     public void memberList(View view) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout);
         layout.addView(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String uid = (String) v.getTag();
-                if ("GROUP_ADD".equals(uid)) {
-                    ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
-                            .withBoolean("isCreate", false)
-                            .withSerializable("groupIdentify", groupKey)
-                            .navigation();
-                } else {
-                    if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(uid)) {
-                        ARouter.getInstance().build("/iwork/set/UserInfoActivity").
-                                navigation();
-                    } else {
-                        ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                                .withString("uid",uid)
-                                .navigation();
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    public void searchGroupHistoryTxt() {
-        View view = findViewById(R.id.groupset_searchhistory);
-
-        TextView searchTxt = (TextView) view.findViewById(R.id.txt1);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img1);
-
-        searchTxt.setText(getResources().getString(R.string.Chat_Search_Txt));
-        imageView.setImageResource(R.mipmap.group_item_arrow);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SearchContentActivity.lunchActivity(activity, 3);
-            }
-        });
     }
 
     @Override
     public void groupName(String groupname) {
+        toolbar.setTitle(groupname);
+
         View view = findViewById(R.id.groupset_groupname);
         TextView txt1 = (TextView) view.findViewById(R.id.txt1);
         TextView txt2 = (TextView) view.findViewById(R.id.txt2);
@@ -180,7 +138,23 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build("/iwork/chat/set/GroupNameActivity")
-                        .withSerializable("groupIdentify", groupKey)
+                        .withSerializable("groupIdentify", groupIdentify)
+                        .navigation();
+            }
+        });
+    }
+
+    @Override
+    public void addNewMember() {
+        View view = findViewById(R.id.groupset_add_newmember);
+        TextView textView = (TextView) view.findViewById(R.id.txt1);
+        textView.setText(getResources().getString(R.string.Chat_GroupMember_Add));
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                        .withBoolean("isCreateGroup", false)
+                        .withString("idnetify", groupIdentify)
                         .navigation();
             }
         });
@@ -198,17 +172,15 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Sticky_on_Top_chat));
 
-        View topToggle = view.findViewById(R.id.toggle);
-        topToggle.setSelected(top);
-        topToggle.setOnClickListener(new View.OnClickListener() {
+        Switch topToggle = (Switch) view.findViewById(R.id.toggle);
+        topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                int top = v.isSelected() ? 1 : 0;
-                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupKey);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                int top = b ? 1 : 0;
+                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupIdentify);
                 if (conversionEntity == null) {
                     conversionEntity = new ConversionEntity();
-                    conversionEntity.setIdentifier(groupKey);
+                    conversionEntity.setIdentifier(groupIdentify);
                 }
                 conversionEntity.setTop(top);
                 ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
@@ -222,13 +194,11 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Mute_Notification));
 
-        View topToggle = view.findViewById(R.id.toggle);
-        topToggle.setSelected(notice);
-        topToggle.setOnClickListener(new View.OnClickListener() {
+        Switch noticeSwitch = (Switch) view.findViewById(R.id.toggle);
+        noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                boolean mutestate = v.isSelected();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                boolean mutestate = b;
                 presenter.updateGroupMute(mutestate);
             }
         });
@@ -240,36 +210,11 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Link_Save_to_Contacts));
 
-        View topToggle = view.findViewById(R.id.toggle);
-        topToggle.setSelected(common);
-        topToggle.setOnClickListener(new View.OnClickListener() {
+        Switch commonSwitch = (Switch) view.findViewById(R.id.toggle);
+        commonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                boolean common = v.isSelected();
-                presenter.updateGroupCommon(common);
-            }
-        });
-    }
-
-    @Override
-    public void clearHistory() {
-        View view = findViewById(R.id.clear);
-        ImageView img = (ImageView) view.findViewById(R.id.img);
-        TextView txt = (TextView) view.findViewById(R.id.groupset_clear_history);
-        txt.setText(getResources().getString(R.string.Link_Clear_Chat_History));
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> strings = new ArrayList();
-                strings.add(getString(R.string.Link_Clear_Chat_History));
-                DialogUtil.showBottomView(activity, strings, new DialogUtil.DialogListItemClickListener() {
-                    @Override
-                    public void confirm(int position) {
-                        ConversionHelper.getInstance().deleteRoom(groupKey);
-                        RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.CLEAR_HISTORY, groupKey);
-                    }
-                });
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                presenter.updateGroupCommon(b);
             }
         });
     }

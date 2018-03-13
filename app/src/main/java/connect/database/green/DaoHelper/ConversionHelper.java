@@ -128,7 +128,7 @@ public class ConversionHelper extends BaseDao {
      *
      * @return
      */
-    public List<RoomAttrBean> loadRecentRoomEntities() {
+    public List<RoomAttrBean> loadRecentRoomEntitiesLimit() {
         String sql = "SELECT R.*, S.DISTURB FROM CONVERSION_ENTITY R \n" +
                 " LEFT OUTER JOIN CONVERSION_SETTING_ENTITY S ON R.IDENTIFIER = S.IDENTIFIER \n" +
                 " WHERE R.TYPE != 2 ORDER BY R.TOP DESC,R.LAST_TIME DESC LIMIT 10;";
@@ -158,11 +158,26 @@ public class ConversionHelper extends BaseDao {
         return attrBeanList;
     }
 
+    public List<ConversionEntity> loadRecentConversations(){
+        QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
+        queryBuilder.where(ConversionEntityDao.Properties.Type.eq(0)).build();
+        List<ConversionEntity> conversionEntities = queryBuilder.list();
+        return (conversionEntities == null || conversionEntities.size() == 0) ? null : conversionEntities;
+    }
+
     public ConversionEntity loadRoomEnitity(String roomid) {
         QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
-        queryBuilder.where(ConversionEntityDao.Properties.Identifier.eq(roomid)).limit(1).build();
+        queryBuilder.where(ConversionEntityDao.Properties.Identifier.eq(roomid)).build();
         List<ConversionEntity> roomEntities = queryBuilder.list();
         return (roomEntities == null || roomEntities.size() == 0) ? null : roomEntities.get(0);
+    }
+
+    public List<ConversionEntity> loadRoomEnitityLikeName(String name) {
+        QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
+        queryBuilder.where(ConversionEntityDao.Properties.Name.like("%" + name + "%"),
+                ConversionEntityDao.Properties.Type.eq(0)).build();
+        List<ConversionEntity> roomEntities = queryBuilder.list();
+        return (roomEntities == null || roomEntities.size() == 0) ? new ArrayList() : roomEntities;
     }
 
     /************************ add *****************************************/

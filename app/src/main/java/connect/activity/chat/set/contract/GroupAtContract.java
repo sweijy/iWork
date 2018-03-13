@@ -1,4 +1,4 @@
-package connect.activity.chat.exts.contract;
+package connect.activity.chat.set.contract;
 
 import connect.activity.base.contract.BasePresenter;
 import connect.activity.base.contract.BaseView;
@@ -11,7 +11,13 @@ public interface GroupAtContract {
 
     interface BView extends BaseView<GroupAtContract.Presenter> {
 
-        String getGroupKey();
+        String groupIndentify();
+
+        void searchTxtListener();
+
+        void atAll();
+
+        void atGroupManager(String avatar,String name);
     }
 
     interface Presenter extends BasePresenter {

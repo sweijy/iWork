@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -26,107 +30,107 @@ import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
+import connect.utils.dialog.DialogUtil;
 import connect.widget.SideBar;
 import connect.widget.TopToolBar;
 
 /**
- * Group member list(remove member)
+ * 群成员列表
  * Created by gtq on 2016/12/15.
  */
 @Route(path = "/iwork/chat/set/GroupMemberActivity")
 public class GroupMemberActivity extends BaseActivity implements GroupMemberContract.BView {
 
-    @Bind(R.id.toolbar_top)
-    TopToolBar toolbarTop;
+    @Bind(R.id.toolbar)
+    TopToolBar toolbar;
+    @Bind(R.id.search_edit)
+    EditText searchEdit;
+    @Bind(R.id.roundimg)
+    ImageView roundimg;
+    @Bind(R.id.name)
+    TextView name;
+    @Bind(R.id.department)
+    TextView department;
+    @Bind(R.id.groupat_manager)
+    TextView groupatManager;
     @Bind(R.id.recordview)
     RecyclerView recordview;
     @Bind(R.id.siderbar)
     SideBar siderbar;
-    private String groupKey;
 
-    private GroupMemberActivity activity;
+    @Autowired
+    String groupIdentify;
+
     private static String TAG = "_GroupMemberActivity";
-    private static String GROUP_IDENTIFY = "GROUP_IDENTIFY";
+    private GroupMemberActivity activity;
 
-    private GroupMemberOnscrollListener onscrollListener = new GroupMemberOnscrollListener();
-    private GroupMemberLetterChanged letterChanged = new GroupMemberLetterChanged();
     private LinearLayoutManager layoutManager;
-    private  List<GroupMemberEntity> memEntities =new ArrayList<>();
+    private List<GroupMemberEntity> memEntities = new ArrayList<>();
     private GroupMemberContract.Presenter presenter;
     private GroupMemberAdapter memberAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_groupmemre);
+        setContentView(R.layout.activity_groupmember);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String groupkey) {
-        Bundle bundle = new Bundle();
-        bundle.putString(GROUP_IDENTIFY, groupkey);
-        ActivityUtil.next(activity, GroupMemberActivity.class, bundle);
     }
 
     @Override
     public void initView() {
         activity = this;
-        toolbarTop.setLeftImg(R.mipmap.back_white);
-        toolbarTop.setRightText(R.string.Link_Invite);
-        toolbarTop.setLeftListener(new View.OnClickListener() {
+        toolbar.setRedStyle();
+        toolbar.setLeftImg(R.mipmap.back_white);
+        toolbar.setRightText(getResources().getString(R.string.Chat_Member_All));
+        toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityUtil.goBack(activity);
             }
         });
-        toolbarTop.setRightListener(new View.OnClickListener() {
+        toolbar.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
-                        .withBoolean("isCreate", false)
-                        .withSerializable("groupIdentify", groupKey)
-                        .navigation();
+                String myUid = SharedPreferenceUtil.getInstance().getUser().getUid();
+                GroupMemberEntity myMember = ContactHelper.getInstance().loadGroupMemberEntity(groupIdentify, myUid);
+
+                final ArrayList<String> arrayList = new ArrayList<String>();
+                arrayList.add(getString(R.string.Chat_Member_Add));
+                if (myMember.getRole() == 1) {
+                    arrayList.add(getString(R.string.Chat_Member_Remove));
+                }
+                DialogUtil.showBottomView(activity, arrayList, new DialogUtil.DialogListItemClickListener() {
+                    @Override
+                    public void confirm(int position) {
+                        String string = arrayList.get(position);
+                        if (string.equals(getString(R.string.Chat_Member_Add))) {
+                            ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                                    .withBoolean("isCreateGroup", false)
+                                    .withString("uid", groupIdentify)
+                                    .navigation();
+                        } else if (string.equals(getString(R.string.Chat_Member_Remove))) {
+                            ARouter.getInstance().build("/iwork/chat/exts/GroupRemoveActivity")
+                                    .withString("groupIdentify", groupIdentify)
+                                    .navigation();
+                        }
+                    }
+                });
             }
         });
 
-        groupKey = getIntent().getStringExtra(GROUP_IDENTIFY);
-        String myUid = SharedPreferenceUtil.getInstance().getUser().getUid();
-        GroupMemberEntity myMember = ContactHelper.getInstance().loadGroupMemberEntity(groupKey, myUid);
-
-        memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupKey);
+        memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
         Collections.sort(memEntities, new GroupComPara());
-        toolbarTop.setTitle(getString(R.string.Chat_Group_Members, memEntities.size()));
 
         layoutManager = new LinearLayoutManager(activity);
         recordview.setLayoutManager(layoutManager);
-        memberAdapter = new GroupMemberAdapter(activity, memEntities);
-
-        boolean canScroll = myMember != null && myMember.getRole() == 1;
-        memberAdapter.setCanScroll(canScroll);
+        memberAdapter = new GroupMemberAdapter();
         recordview.setAdapter(memberAdapter);
+        memberAdapter.setData(memEntities);
         recordview.addItemDecoration(new LineDecoration(activity));
-        recordview.addOnScrollListener(onscrollListener);
-
-        memberAdapter.setItemRemoveListener(new GroupMemberAdapter.OnItemRemoveListener() {
-            @Override
-            public void itemRemove(GroupMemberEntity entity) {
-                memEntities.remove(entity);
-                GroupSetActivity.startActivity(activity, groupKey);
-            }
-        });
-
-        siderbar.setOnTouchingLetterChangedListener(letterChanged);
+        siderbar.setOnTouchingLetterChangedListener(new GroupMemberLetterChanged());
         new GroupMemberPresenter(this).start();
-    }
-
-    private class GroupMemberOnscrollListener extends RecyclerView.OnScrollListener {
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            memberAdapter.closeMenu();
-        }
     }
 
     private class GroupMemberLetterChanged implements SideBar.OnTouchingLetterChangedListener {
@@ -150,7 +154,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
 
     @Override
     public String getRoomKey() {
-        return groupKey;
+        return groupIdentify;
     }
 
     @Override

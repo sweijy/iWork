@@ -127,7 +127,7 @@ public class SelectRecentlyChatActivity extends BaseActivity {
         new AsyncTask<Void, Void, List<RoomAttrBean>>() {
             @Override
             protected List<RoomAttrBean> doInBackground(Void... params) {
-                return ConversionHelper.getInstance().loadRecentRoomEntities();
+                return ConversionHelper.getInstance().loadRecentRoomEntitiesLimit();
             }
 
             @Override

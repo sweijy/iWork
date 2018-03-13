@@ -7,42 +7,47 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.chat.adapter.BaseGroupSelectAdapter;
 import connect.activity.chat.set.GroupSelectActivity;
-import connect.database.green.DaoHelper.ContactHelper;
-import connect.database.green.bean.ContactEntity;
+import connect.database.green.DaoHelper.ConversionHelper;
+import connect.database.green.bean.ConversionEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.UriUtil;
+import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
+import connect.widget.AvatarSearchView;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
 /**
+ * 选择联系人
  * Created by PuJin on 2018/2/22.
  */
 public class BaseDepartSelectFragment extends BaseFragment {
 
     @Bind(R.id.toolbar)
     TopToolBar toolbar;
-    @Bind(R.id.text_search_user)
-    TextView textSearchUser;
-    @Bind(R.id.layout_edittext)
-    RelativeLayout layoutEdittext;
+    @Bind(R.id.view_avatar_search)
+    AvatarSearchView viewAvatarSearch;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+
+    private View view;
 
     private GroupSelectActivity activity;
     private BaseGroupSelectAdapter selectAdapter = null;
@@ -57,7 +62,7 @@ public class BaseDepartSelectFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_departselect, container, false);
+        view = inflater.inflate(R.layout.fragment_departselect, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -84,39 +89,81 @@ public class BaseDepartSelectFragment extends BaseFragment {
                 ActivityUtil.goBack(activity);
             }
         });
+        toolbar.setTitle(getResources().getString(R.string.Chat_Choose_contact));
 
-        if (activity.isCreateGroup()) {
-            toolbar.setTitle(getResources().getString(R.string.Link_Group_Create));
-        } else {
-            toolbar.setTitle(getResources().getString(R.string.Link_Group_Invite));
+        // 组织架构选择
+        View organization = view.findViewById(R.id.include_organization);
+        ImageView oganizationImg = (ImageView) organization.findViewById(R.id.roundimg);
+        TextView organizationTxt = (TextView) organization.findViewById(R.id.name);
+        GlideUtil.loadImage(oganizationImg, R.mipmap.icon_organize);
+        organizationTxt.setText(getString(R.string.Chat_Organization_Choose));
+        organization.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.switchFragment(DetailDepartSelectFragment.startFragment());
+            }
+        });
+        // 通讯录选择
+        View contacts = view.findViewById(R.id.include_contacts);
+        ImageView contactsImg = (ImageView) contacts.findViewById(R.id.roundimg);
+        TextView contactsTxt = (TextView) contacts.findViewById(R.id.name);
+        GlideUtil.loadImage(contactsImg, R.mipmap.icon_contacts);
+        contactsTxt.setText(getString(R.string.Chat_Contacts_Choose));
+        contacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.switchFragment(ContactsFragment.startFragment());
+            }
+        });
+
+        List<ConversionEntity> conversionEntities = ConversionHelper.getInstance().loadRecentConversations();
+        if (conversionEntities == null) {
+            conversionEntities = new ArrayList<>();
         }
-
-        List<ContactEntity> contactEntities = ContactHelper.getInstance().loadFriend();
         requestUserInfo(activity.getUid());
-
-        //添加组织架构
-        ContactEntity originEntity = new ContactEntity();
-        originEntity.setName(getString(R.string.Chat_Organizational_structure));
-        originEntity.setGender(3);
-        contactEntities.add(0, originEntity);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         selectAdapter = new BaseGroupSelectAdapter();
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.setAdapter(selectAdapter);
-        selectAdapter.setData(contactEntities);
+        selectAdapter.setData(conversionEntities);
         selectAdapter.setGroupSelectListener(groupSelectListener);
+        viewAvatarSearch.setListener(new AvatarSearchView.AvatarListener() {
+
+            @Override
+            public void removeUid(String uid) {
+                activity.removeWorkMate(uid);
+            }
+
+            @Override
+            public void editClick() {
+                activity.switchFragment(LocalSearchFragment.startFragment());
+            }
+        });
+
+        updateSelect();
+    }
+
+    public void updateSelect() {
+        Map<String, Object> objectMap = activity.getSelectMembers();
+        Iterator iterator = objectMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            Connect.Workmate workmate = (Connect.Workmate) entry.getValue();
+            viewAvatarSearch.addAvatar(workmate.getAvatar(), workmate.getUid());
+        }
     }
 
     private class GroupSelectListener implements BaseGroupSelectAdapter.BaseGroupSelectListener {
         @Override
-        public boolean isContains(String selectKey) {
-            return activity.isContains(selectKey);
+        public boolean isContains(String avatar, String selectKey) {
+            boolean iscontains = activity.isContains(selectKey);
+            return iscontains;
         }
 
         @Override
         public boolean isMoveSelect(String selectKey) {
-            return activity.isRemoveSelect(selectKey);
+            return activity.isSelected(selectKey);
         }
 
         @Override
@@ -125,34 +172,24 @@ public class BaseDepartSelectFragment extends BaseFragment {
         }
 
         @Override
-        public void itemClick(boolean isSelect, ContactEntity contactEntity) {
-            String uid = contactEntity.getUid();
+        public void itemClick(boolean isSelect, ConversionEntity contactEntity) {
+            String avatar = contactEntity.getAvatar();
+            String uid = contactEntity.getIdentifier();
             if (isSelect) {
                 Connect.Workmate workmate = Connect.Workmate.newBuilder()
-                        .setPubKey(contactEntity.getPublicKey())
+//                        .setPubKey(contactEntity.getIdentifier())
                         .setAvatar(contactEntity.getAvatar())
                         .setName(contactEntity.getName())
-                        .setUid(contactEntity.getUid())
+                        .setUid(contactEntity.getIdentifier())
                         .build();
 
                 activity.addWorkMate(workmate);
+                viewAvatarSearch.addAvatar(avatar, uid);
             } else {
                 activity.removeWorkMate(uid);
+                viewAvatarSearch.removeAvatar(uid);
             }
         }
-    }
-
-    @OnClick({R.id.layout_edittext})
-    void OnclickListener(View view) {
-        switch (view.getId()) {
-            case R.id.layout_edittext:
-                startDepartSearch();
-                break;
-        }
-    }
-
-    private void startDepartSearch() {
-        activity.switchFragment(DepartSearchFragment.startFragment());
     }
 
     public void requestUserInfo(String value) {

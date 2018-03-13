@@ -50,7 +50,7 @@
     <string name="Chat_Name_Card">名片</string>
     <string name="Chat_Network_connection_failed_please_check_network">网络连接失败，请检查网络</string>
     <string name="Chat_Not_Group_Master">你不是该群的群主</string>
-    <string name="Chat_Not_connected">聊天(未连接)</string>
+    <string name="Chat_Not_connected">网络连接不可用</string>
     <string name="Chat_Photo">照片</string>
     <string name="Chat_Picture">[图片]</string>
     <string name="Chat_Preview">预览</string>
@@ -63,7 +63,7 @@
     <string name="Chat_Slide_left_to_cancel">向左滑动取消发送</string>
     <string name="Chat_Snapchat">[阅后即焚]</string>
     <string name="Chat_Someone_note_me">[有人@我]</string>
-    <string name="Chat_Sticky_on_Top_chat">置顶聊天</string>
+    <string name="Chat_Sticky_on_Top_chat">聊天置顶</string>
     <string name="Chat_Tips">[提示信息]</string>
     <string name="Chat_Transfer">[转账]</string>
     <string name="Chat_Unpaid">未支付</string>
@@ -324,5 +324,24 @@
     <string name="Chat_System_Set">系统消息</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">进度: %1$s</string>
-
+    <string name="Chat_Group_Name">群成员</string>
+    <string name="Chat_Group_Member">群成员</string>
+    <string name="Chat_GroupMember_Count">%1$d人</string>
+    <string name="Chat_GroupMember_Add">添加新成员</string>
+    <string name="Chat_Choose_AT_Member">选择要@的人</string>
+    <string name="Chat_All_Members">所有人</string>
+    <string name="Chat_Group_Manager">群主</string>
+    <string name="Chat_Member_All">全部成员</string>
+    <string name="Chat_Member_Add">添加成员</string>
+    <string name="Chat_Member_Remove">移除成员</string>
+    <string name="Chat_Member_Cancel">取消</string>
+    <string name="Chat_Recent_Contacts">最近联系人</string>
+    <string name="Chat_Organization_Choose">从组织架构选择</string>
+    <string name="Chat_Contacts_Choose">从通讯录中选择</string>
+    <string name="Chat_Contacts_Select">选中联系人</string>
+    <string name="Chat_Contacts_To_Select">选择联系人</string>
+    <string name="Chat_All">所有</string>
+    <string name="Chat_Contacts">通讯录</string>
+    <string name="Chat_Set_Remove_Members">是否确认移除群成员?</string>
+    <string name="Chat_Remove_Conversation">是否移除该条会话记录?</string>
 </resources>

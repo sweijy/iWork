@@ -1,12 +1,20 @@
-package connect.activity.chat.exts;
+package connect.activity.chat.set;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -15,16 +23,17 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
+import connect.activity.base.compare.GroupMemberCompara;
 import connect.activity.chat.adapter.GroupAtAdapter;
 import connect.activity.chat.bean.RecExtBean;
-import connect.activity.chat.exts.contract.GroupAtContract;
-import connect.activity.chat.exts.presenter.GroupAtPresenter;
-import connect.activity.base.compare.GroupMemberCompara;
+import connect.activity.chat.set.contract.GroupAtContract;
+import connect.activity.chat.set.presenter.GroupAtPresenter;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
+import connect.utils.glide.GlideUtil;
 import connect.widget.SideBar;
 import connect.widget.TopToolBar;
 
@@ -40,11 +49,14 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
     RecyclerView recyclerview;
     @Bind(R.id.siderbar)
     SideBar siderbar;
+    @Bind(R.id.search_edit)
+    EditText searchEdit;
 
-    private GroupAtActivity activity;
+    @Autowired
+    String groupIdentify;
+
     private static String TAG = "_GroupAtActivity";
-    private static String GROUP_IDENTIFY = "GROUP_IDENTIFY";
-    private String groupKey = null;
+    private GroupAtActivity activity;
     private boolean move;
     private int topPosi;
 
@@ -59,20 +71,15 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_at);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
-    }
-
-    public static void startActivity(Activity activity, String groupkey) {
-        Bundle bundle = new Bundle();
-        bundle.putString(GROUP_IDENTIFY, groupkey);
-        ActivityUtil.next(activity, GroupAtActivity.class, bundle);
     }
 
     @Override
     public void initView() {
         activity = this;
         toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setTitle(getResources().getString(R.string.Chat_Choose_Members));
+        toolbar.setTitle(getResources().getString(R.string.Chat_Choose_AT_Member));
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,10 +87,27 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
             }
         });
 
-        groupKey = getIntent().getStringExtra(GROUP_IDENTIFY);
+        linearLayoutManager = new LinearLayoutManager(activity);
+        adapter = new GroupAtAdapter(activity);
+        recyclerview.setLayoutManager(linearLayoutManager);
+        recyclerview.setAdapter(adapter);
+        recyclerview.addOnScrollListener(onscrollListener);
+        adapter.setGroupAtListener(groupAtListener);
+        siderbar.setOnTouchingLetterChangedListener(letterChanged);
+
+        new GroupAtPresenter(this).start();
+        searchGroupMember("");
+    }
+
+    public void searchGroupMember(String memberKey) {
+        List<GroupMemberEntity> groupMemEntities = null;
+        if (TextUtils.isEmpty(memberKey)) {
+            groupMemEntities = ContactHelper.getInstance().loadGroupMemEntities(groupIdentify);
+        } else {
+            groupMemEntities = ContactHelper.getInstance().loadGroupMemEntitiesLikeKey(groupIdentify, memberKey);
+        }
 
         String myPublicKey = SharedPreferenceUtil.getInstance().getUser().getUid();
-        List<GroupMemberEntity> groupMemEntities = ContactHelper.getInstance().loadGroupMemEntities(groupKey);
         Iterator<GroupMemberEntity> iterator = groupMemEntities.iterator();
         while (iterator.hasNext()) {
             GroupMemberEntity memberEntity = iterator.next();
@@ -91,16 +115,75 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
                 iterator.remove();
             }
         }
-        Collections.sort(groupMemEntities, new GroupMemberCompara());
 
-        linearLayoutManager = new LinearLayoutManager(activity);
-        adapter = new GroupAtAdapter(activity, groupMemEntities);
-        recyclerview.setLayoutManager(linearLayoutManager);
-        recyclerview.setAdapter(adapter);
-        recyclerview.addOnScrollListener(onscrollListener);
-        adapter.setGroupAtListener(groupAtListener);
-        siderbar.setOnTouchingLetterChangedListener(letterChanged);
-        new GroupAtPresenter(this).start();
+        Collections.sort(groupMemEntities, new GroupMemberCompara());
+        adapter.setData(groupMemEntities);
+    }
+
+    @Override
+    public String groupIndentify() {
+        return groupIdentify;
+    }
+
+    @Override
+    public void searchTxtListener() {
+        searchEdit.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String memberKey = editable.toString();
+                searchGroupMember(memberKey);
+            }
+        });
+    }
+
+    @Override
+    public void atAll() {
+        View view = findViewById(R.id.include_all);
+        ImageView imageView = (ImageView) view.findViewById(R.id.roundimg);
+        TextView username = (TextView) view.findViewById(R.id.name);
+        TextView manager = (TextView) view.findViewById(R.id.groupat_manager);
+
+        GlideUtil.loadImage(imageView, R.mipmap.default_user_avatar);
+        username.setText(getResources().getString(R.string.Chat_All_Members));
+        manager.setVisibility(View.GONE);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.GROUP_AT, "");
+                ActivityUtil.goBack(activity);
+            }
+        });
+    }
+
+    @Override
+    public void atGroupManager(String avatar, String name) {
+        View view = findViewById(R.id.include_manager);
+        ImageView imageView = (ImageView) view.findViewById(R.id.roundimg);
+        TextView username = (TextView) view.findViewById(R.id.name);
+        TextView manager = (TextView) view.findViewById(R.id.groupat_manager);
+
+        GlideUtil.loadImage(imageView, avatar);
+        username.setText(name);
+        manager.setVisibility(View.VISIBLE);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.GROUP_AT, "");
+                ActivityUtil.goBack(activity);
+            }
+        });
     }
 
     private class GroupAtOnscrollListener extends RecyclerView.OnScrollListener {
@@ -152,11 +235,6 @@ public class GroupAtActivity extends BaseActivity implements GroupAtContract.BVi
                 move = true;
             }
         }
-    }
-
-    @Override
-    public String getGroupKey() {
-        return groupKey;
     }
 
     @Override

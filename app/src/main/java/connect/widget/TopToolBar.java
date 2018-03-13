@@ -66,6 +66,11 @@ public class TopToolBar extends LinearLayout {
         //SystemUtil.setWindowStatusBarColor((Activity)context,R.color.color_161A21);
     }
 
+    @Deprecated
+    public void setBlackStyle(){
+
+    }
+
     public void setRedStyle() {
         this.setBackgroundResource(R.color.color_ff6c5a);
         titleTv.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));

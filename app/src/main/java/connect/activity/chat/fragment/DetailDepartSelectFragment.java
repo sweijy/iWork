@@ -7,18 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,8 +26,6 @@ import connect.activity.base.BaseListener;
 import connect.activity.chat.adapter.GroupDepartSelectAdapter;
 import connect.activity.chat.set.GroupSelectActivity;
 import connect.activity.home.view.LineDecoration;
-import connect.activity.login.bean.UserBean;
-import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
@@ -37,34 +33,38 @@ import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
-import connect.utils.system.SystemUtil;
+import connect.widget.AvatarSearchView;
 import connect.widget.NameLinear;
 import connect.widget.TopToolBar;
 import protos.Connect;
 
 /**
+ * 从组织架构选择
  * Created by PuJin on 2018/2/22.
  */
-
 public class DetailDepartSelectFragment extends BaseFragment {
 
     @Bind(R.id.toolbar_top)
     TopToolBar toolbarTop;
-    @Bind(R.id.edittext_search_user)
-    EditText edittextSearchUser;
-    @Bind(R.id.imageview_clear)
-    ImageView imageviewClear;
     @Bind(R.id.name_linear)
     NameLinear nameLinear;
     @Bind(R.id.scrollview)
     HorizontalScrollView scrollview;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.view_avatar_search)
+    AvatarSearchView viewAvatarSearch;
+    @Bind(R.id.view)
+    View view;
+    @Bind(R.id.linearlayout_1)
+    LinearLayout linearlayout_1;
 
     private GroupSelectActivity activity;
     private GroupDepartSelectAdapter departSelectAdapter;
     private ArrayList<Connect.Department> nameList = new ArrayList<>();
+
     private List<String> selectDeparts = new ArrayList<>();
+    private DepartmentListener departmentListener = new DepartmentListener();
 
     public static DetailDepartSelectFragment startFragment() {
         DetailDepartSelectFragment fragment = new DetailDepartSelectFragment();
@@ -99,22 +99,16 @@ public class DetailDepartSelectFragment extends BaseFragment {
         toolbarTop.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SystemUtil.hideKeyBoard(getContext(), edittextSearchUser);
                 activity.popBackLastFragment();
             }
         });
-
-        if (activity.isCreateGroup()) {
-            toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Create));
-        } else {
-            toolbarTop.setTitle(getResources().getString(R.string.Link_Group_Invite));
-        }
+        toolbarTop.setTitle(getResources().getString(R.string.Chat_Contacts_To_Select));
 
         nameLinear.setVisibility(View.VISIBLE);
         nameList.clear();
         Connect.Department department = Connect.Department.newBuilder()
                 .setId(2)
-                .setName("组织架构")
+                .setName("比特大陆组织架构")
                 .build();
         nameList.add(department);
         nameLinear.notifyAddView(nameList, scrollview);
@@ -125,102 +119,10 @@ public class DetailDepartSelectFragment extends BaseFragment {
         recyclerview.addItemDecoration(new LineDecoration(activity));
         departSelectAdapter = new GroupDepartSelectAdapter(activity);
         recyclerview.setAdapter(departSelectAdapter);
-        departSelectAdapter.setItemClickListener(new GroupDepartSelectAdapter.GroupDepartSelectListener() {
+        departSelectAdapter.setItemClickListener(departmentListener);
 
-            UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-
-            @Override
-            public boolean isMoveSelect(String selectKey) {
-                return activity.isRemoveSelect(selectKey);
-            }
-
-            @Override
-            public boolean isContains(boolean isDepart, String selectKey) {
-                if (isDepart) {
-                    return selectDeparts.contains(selectKey);
-                } else {
-                    return activity.isContains(selectKey);
-                }
-            }
-
-            @Override
-            public void itemClick(OrganizerEntity department) {
-                if (department != null || department.getId() != null) {
-                    requestDepartmentInfoShow(department.getId());
-
-                    Connect.Department department1 = Connect.Department.newBuilder()
-                            .setId(department.getId())
-                            .setCount(department.getCount())
-                            .setName(department.getName())
-                            .build();
-                    nameList.add(department1);
-                    nameLinear.notifyAddView(nameList, scrollview);
-                }
-            }
-
-            @Override
-            public void departmentClick(boolean isSelect, OrganizerEntity department) {
-                final long departmentId = department.getId();
-                final String departmentKey = String.valueOf(departmentId);
-                if (isSelect) {
-                    requestDepartmentWorksById(departmentId, new BaseListener<Connect.Workmates>() {
-                        @Override
-                        public void Success(Connect.Workmates workmates) {
-                            selectDeparts.add(departmentKey);
-
-                            for (Connect.Workmate workmate : workmates.getListList()) {
-                                if (workmate.getRegisted()) {
-                                    activity.addWorkMate(workmate);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void fail(Object... objects) {
-
-                        }
-                    });
-                } else {
-                    requestDepartmentWorksById(departmentId, new BaseListener<Connect.Workmates>() {
-                        @Override
-                        public void Success(Connect.Workmates workmates) {
-                            selectDeparts.remove(departmentKey);
-
-                            for (Connect.Workmate workmate : workmates.getListList()) {
-                                String workMateUid = workmate.getUid();
-                                activity.removeWorkMate(workMateUid);
-                            }
-                        }
-
-                        @Override
-                        public void fail(Object... objects) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void workmateClick(boolean isSelect, OrganizerEntity workmate) {
-                String workmateKey = workmate.getUid();
-                if (isSelect) {
-                    if (workmate.getRegisted()) {
-                        Connect.Workmate workmate1 = Connect.Workmate.newBuilder()
-                                .setName(workmate.getName())
-                                .setAvatar(workmate.getAvatar())
-                                .setGender(workmate.getGender())
-                                .setPubKey(workmate.getPub_key())
-                                .setUid(workmate.getUid())
-                                .build();
-                        activity.addWorkMate(workmate1);
-                    }
-                } else {
-                    activity.removeWorkMate(workmateKey);
-                }
-            }
-        });
-
-        edittextSearchUser.addTextChangedListener(new TextWatcher() {
+        requestDepartmentInfoShow(2);
+        viewAvatarSearch.addTextWatch(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -235,28 +137,153 @@ public class DetailDepartSelectFragment extends BaseFragment {
             public void afterTextChanged(Editable editable) {
                 String searchTxt = editable.toString();
                 if (TextUtils.isEmpty(searchTxt)) {
-                    imageviewClear.setVisibility(View.GONE);
                     nameLinear.setVisibility(View.VISIBLE);
+                    linearlayout_1.setVisibility(View.VISIBLE);
+                    onItemClickListener.itemClick(nameLinear.getCurrentDepartmentPosition());
                 } else {
-                    imageviewClear.setVisibility(View.VISIBLE);
+                    linearlayout_1.setVisibility(View.GONE);
+                    String mateName = editable.toString();
+                    requestWorkmateSearch(mateName);
                 }
             }
         });
-        edittextSearchUser.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        viewAvatarSearch.setListener(new AvatarSearchView.AvatarListener() {
+
             @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEND ||
-                        actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    String mateName = edittextSearchUser.getText().toString();
-                    requestWorkmateSearch(mateName);
-                    return true;
-                }
-                return false;
+            public void removeUid(String uid) {
+                activity.removeWorkMate(uid);
+            }
+
+            @Override
+            public void editClick() {
+
             }
         });
 
-        requestDepartmentInfoShow(2);
+        updateSelect();
+    }
+
+    public void updateSelect() {
+        Map<String, Object> objectMap = activity.getSelectMembers();
+        Iterator iterator = objectMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            Connect.Workmate workmate = (Connect.Workmate) entry.getValue();
+            viewAvatarSearch.addAvatar(workmate.getAvatar(), workmate.getUid());
+        }
+    }
+
+    @OnClick({R.id.linearlayout_1})
+    void onClickListener(View view) {
+        switch (view.getId()) {
+            case R.id.linearlayout_1:
+                boolean isSelected = view.isSelected();
+                isSelected = !isSelected;
+                view.setSelected(isSelected);
+
+                Connect.Department department1 = nameLinear.getLastDepartment();
+                OrganizerEntity organizerEntity = new OrganizerEntity();
+                organizerEntity.setId(department1.getId());
+                departmentListener.departmentClick(isSelected, organizerEntity);
+                break;
+        }
+    }
+
+    private class DepartmentListener implements GroupDepartSelectAdapter.GroupDepartSelectListener {
+
+        @Override
+        public boolean isMoveSelect(String selectKey) {
+            return activity.isSelected(selectKey);
+        }
+
+        @Override
+        public boolean isContains(boolean isDepart, String selectKey) {
+            if (isDepart) {
+                return selectDeparts.contains(selectKey);
+            } else {
+                return activity.isContains(selectKey);
+            }
+        }
+
+        @Override
+        public void itemClick(OrganizerEntity department) {
+            if (department != null || department.getId() != null) {
+                requestDepartmentInfoShow(department.getId());
+
+                Connect.Department department1 = Connect.Department.newBuilder()
+                        .setId(department.getId())
+                        .setCount(department.getCount())
+                        .setName(department.getName())
+                        .build();
+                nameList.add(department1);
+                nameLinear.notifyAddView(nameList, scrollview);
+            }
+        }
+
+        @Override
+        public void departmentClick(boolean isSelect, OrganizerEntity department) {
+            final long departmentId = department.getId();
+            final String departmentKey = String.valueOf(departmentId);
+            if (isSelect) {
+                requestDepartmentWorksById(departmentId, new BaseListener<Connect.Workmates>() {
+                    @Override
+                    public void Success(Connect.Workmates workmates) {
+                        selectDeparts.add(departmentKey);
+
+                        for (Connect.Workmate workmate : workmates.getListList()) {
+                            if (workmate.getRegisted()) {
+                                activity.addWorkMate(workmate);
+                                viewAvatarSearch.addAvatar(workmate.getAvatar(), workmate.getUid());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+
+                    }
+                });
+            } else {
+                requestDepartmentWorksById(departmentId, new BaseListener<Connect.Workmates>() {
+                    @Override
+                    public void Success(Connect.Workmates workmates) {
+                        selectDeparts.remove(departmentKey);
+
+                        for (Connect.Workmate workmate : workmates.getListList()) {
+                            String workMateUid = workmate.getUid();
+                            activity.removeWorkMate(workMateUid);
+                            viewAvatarSearch.removeAvatar(workMateUid);
+                        }
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void workmateClick(boolean isSelect, OrganizerEntity workmate) {
+            String workmateKey = workmate.getUid();
+            if (isSelect) {
+                if (workmate.getRegisted()) {
+                    Connect.Workmate workmate1 = Connect.Workmate.newBuilder()
+                            .setName(workmate.getName())
+                            .setAvatar(workmate.getAvatar())
+                            .setGender(workmate.getGender())
+                            .setPubKey(workmate.getPub_key())
+                            .setUid(workmate.getUid())
+                            .build();
+                    activity.addWorkMate(workmate1);
+                    viewAvatarSearch.addAvatar(workmate1.getAvatar(), workmate1.getUid());
+                }
+            } else {
+                activity.removeWorkMate(workmateKey);
+                viewAvatarSearch.removeAvatar(workmateKey);
+            }
+        }
     }
 
     /**
@@ -317,7 +344,6 @@ public class DetailDepartSelectFragment extends BaseFragment {
             }
         });
     }
-
 
     NameLinear.OnItemClickListener onItemClickListener = new NameLinear.OnItemClickListener() {
         @Override
@@ -422,16 +448,6 @@ public class DetailDepartSelectFragment extends BaseFragment {
             public void onError(Connect.HttpNotSignResponse response) {
             }
         });
-    }
-
-    @OnClick({R.id.imageview_clear})
-    void OnClickListener(View view) {
-        switch (view.getId()) {
-            case R.id.imageview_clear:
-                edittextSearchUser.setText("");
-                onItemClickListener.itemClick(0);
-                break;
-        }
     }
 
     @Override
