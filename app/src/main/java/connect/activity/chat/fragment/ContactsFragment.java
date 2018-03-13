@@ -116,7 +116,6 @@ public class ContactsFragment extends BaseFragment {
                             .setUid(contactEntity.getUid())
                             .setName(contactEntity.getName())
                             .setAvatar(contactEntity.getAvatar())
-                            .setPubKey(contactEntity.getPublicKey())
                             .setGender(contactEntity.getGender())
                             .build();
                     activity.addWorkMate(workmate);

@@ -13,6 +13,7 @@ import connect.activity.base.BaseApplication;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.contact.bean.ContactNotice;
 import connect.activity.contact.bean.MsgSendBean;
+import connect.activity.contact.model.ContactListManage;
 import connect.activity.home.bean.ConversationAction;
 import connect.activity.home.bean.GroupRecBean;
 import connect.activity.home.bean.MsgNoticeBean;
@@ -77,86 +78,21 @@ public class CommandReceiver implements CommandListener {
     }
 
     @Override
-    public void loadAllContacts(Connect.SyncCompany userRelationship) throws Exception {
-        Connect.WorkmatesVersion relationShip = userRelationship.getWorkmatesVersion();
-        List<Connect.Workmate> friendInfoList = relationShip.getListList();
-
+    public void loadAllContacts(List<Connect.Workmate> workmates) throws Exception {
         Map<String, ContactEntity> contactEntityMap = new HashMap<>();
-        for (Connect.Workmate friendInfo : friendInfoList) {
+        for (Connect.Workmate friendInfo : workmates) {
             String friendUid = friendInfo.getUid();
-
             if (TextUtils.isEmpty(friendUid)) {
                 continue;
             }
 
-            ContactEntity contactEntity = new ContactEntity();
-            contactEntity.setUid(friendUid);
-            contactEntity.setName(friendInfo.getName());
-            contactEntity.setAvatar(friendInfo.getAvatar());
-            contactEntity.setOu(friendInfo.getOU());
-            contactEntity.setPublicKey(friendInfo.getPubKey());
-            contactEntity.setRegisted(true);
-            contactEntity.setEmpNo(friendInfo.getEmpNo());
-            contactEntity.setMobile(friendInfo.getMobile());
-            contactEntity.setGender(friendInfo.getGender());
-            contactEntity.setTips(friendInfo.getTips());
-            contactEntity.setUsername(friendInfo.getUsername());
+            ContactEntity contactEntity = ContactListManage.getInstance().convertContactEntity(friendInfo);
             contactEntityMap.put(friendUid, contactEntity);
         }
+
         Collection<ContactEntity> contactEntityCollection = contactEntityMap.values();
         List<ContactEntity> friendInfoEntities = new ArrayList<ContactEntity>(contactEntityCollection);
-
-        //To add a system message contact
-        String connect = BaseApplication.getInstance().getString(R.string.app_name);
-        ContactEntity connectEntity = ContactHelper.getInstance().loadFriendEntity(connect);
-        if (connectEntity == null) {
-            connectEntity = new ContactEntity();
-            connectEntity.setUid(connect);
-            connectEntity.setName(connect);
-
-            friendInfoEntities.add(connectEntity);
-        }
         ContactHelper.getInstance().insertContacts(friendInfoEntities);
-
-        //Synchronous common group
-        Map<String, GroupEntity> groupEntityMap = new HashMap<>();
-        Map<String, GroupMemberEntity> memberEntityMap = new HashMap<>();
-        Connect.UserCommonGroups commonGroups = userRelationship.getUserCommonGroups();
-        List<Connect.GroupInfo> groupInfos = commonGroups.getGroupsList();
-        for (Connect.GroupInfo groupInfo : groupInfos) {
-            Connect.Group group = groupInfo.getGroup();
-
-            String groupIdentifier = group.getIdentifier();
-            GroupEntity groupEntity = new GroupEntity();
-            groupEntity.setIdentifier(groupIdentifier);
-            groupEntity.setAvatar(RegularUtil.groupAvatar(groupIdentifier));
-            groupEntity.setName(group.getName());
-            groupEntity.setCategory(group.getCategory());
-            groupEntity.setSummary(group.getSummary());
-            groupEntity.setCommon(1);
-            groupEntityMap.put(groupIdentifier, groupEntity);
-
-            List<Connect.GroupMember> members = groupInfo.getMembersList();
-            for (Connect.GroupMember member : members) {
-                GroupMemberEntity memberEntity = new GroupMemberEntity();
-                memberEntity.setIdentifier(groupIdentifier);
-                memberEntity.setUid(member.getUid());
-                memberEntity.setAvatar(member.getAvatar());
-                memberEntity.setUsername(member.getName());
-                memberEntity.setRole(member.getRole());
-                String memberIdentifyKey = groupIdentifier + member.getUid();
-                memberEntityMap.put(memberIdentifyKey, memberEntity);
-            }
-        }
-
-        Collection<GroupEntity> groupEntityCollection = groupEntityMap.values();
-        List<GroupEntity> groupEntities = new ArrayList<GroupEntity>(groupEntityCollection);
-        ContactHelper.getInstance().inserGroupEntity(groupEntities);
-
-        Collection<GroupMemberEntity> memberEntityCollection = memberEntityMap.values();
-        List<GroupMemberEntity> memEntities = new ArrayList<GroupMemberEntity>(memberEntityCollection);
-        ContactHelper.getInstance().inserGroupMemEntity(memEntities);
-
         ContactNotice.receiverContact();
     }
 
@@ -178,19 +114,7 @@ public class CommandReceiver implements CommandListener {
                         newFriend = true;
                         entity = new ContactEntity();
                     }
-
-                    entity.setUid(uid);
-                    entity.setName(friendInfo.getName());
-                    entity.setAvatar(friendInfo.getAvatar());
-                    entity.setOu(friendInfo.getOU());
-                    entity.setPublicKey(friendInfo.getPubKey());
-                    entity.setRegisted(true);
-
-                    entity.setEmpNo(friendInfo.getEmpNo());
-                    entity.setMobile(friendInfo.getMobile());
-                    entity.setGender(friendInfo.getGender());
-                    entity.setTips(friendInfo.getTips());
-                    entity.setUsername(friendInfo.getUsername());
+                    entity = ContactListManage.getInstance().convertContactEntity(friendInfo, entity);
                     ContactHelper.getInstance().insertContact(entity);
 
                     if (newFriend) { // Add a welcome message

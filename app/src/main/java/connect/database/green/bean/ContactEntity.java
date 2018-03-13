@@ -29,11 +29,12 @@ public class ContactEntity implements Serializable {
     private String tips;
     private Boolean registed;
     private String Username;
-
-    @Generated(hash = 516121535)
+    private String organizational;
+    @Generated(hash = 544985471)
     public ContactEntity(Long _id, @NotNull String uid, String name, String avatar,
             String ou, String publicKey, String empNo, String mobile,
-            Integer gender, String tips, Boolean registed, String Username) {
+            Integer gender, String tips, Boolean registed, String Username,
+            String organizational) {
         this._id = _id;
         this.uid = uid;
         this.name = name;
@@ -46,6 +47,7 @@ public class ContactEntity implements Serializable {
         this.tips = tips;
         this.registed = registed;
         this.Username = Username;
+        this.organizational = organizational;
     }
     @Generated(hash = 393979869)
     public ContactEntity() {
@@ -121,6 +123,12 @@ public class ContactEntity implements Serializable {
     }
     public void setUsername(String Username) {
         this.Username = Username;
+    }
+    public String getOrganizational() {
+        return this.organizational;
+    }
+    public void setOrganizational(String organizational) {
+        this.organizational = organizational;
     }
     
 }

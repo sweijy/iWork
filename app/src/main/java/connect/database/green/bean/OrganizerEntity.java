@@ -36,12 +36,13 @@ public class OrganizerEntity implements Serializable {
     private Integer gender;
     private String tips;
     private String Username;
+    private String organizational;
 
-    @Generated(hash = 114132328)
+    @Generated(hash = 1722274308)
     public OrganizerEntity(Long _id, long upperId, Long id, Long count, String name,
             String o_u, String uid, String avatar, String pub_key, Boolean registed,
             String empNo, String mobile, Integer gender, String tips,
-            String Username) {
+            String Username, String organizational) {
         this._id = _id;
         this.upperId = upperId;
         this.id = id;
@@ -57,6 +58,7 @@ public class OrganizerEntity implements Serializable {
         this.gender = gender;
         this.tips = tips;
         this.Username = Username;
+        this.organizational = organizational;
     }
 
     @Generated(hash = 1783806479)
@@ -186,4 +188,13 @@ public class OrganizerEntity implements Serializable {
     public void setUsername(String Username) {
         this.Username = Username;
     }
+
+    public String getOrganizational() {
+        return this.organizational;
+    }
+
+    public void setOrganizational(String organizational) {
+        this.organizational = organizational;
+    }
+
 }

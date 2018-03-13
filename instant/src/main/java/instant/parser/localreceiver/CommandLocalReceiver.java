@@ -1,5 +1,7 @@
 package instant.parser.localreceiver;
 
+import java.util.List;
+
 import instant.parser.inter.CommandListener;
 import protos.Connect;
 
@@ -42,8 +44,8 @@ public class CommandLocalReceiver implements CommandListener {
     }
 
     @Override
-    public void loadAllContacts(Connect.SyncCompany userRelationship) throws Exception {
-        getCommandListener().loadAllContacts(userRelationship);
+    public void loadAllContacts(List<Connect.Workmate> workmates) throws Exception {
+        getCommandListener().loadAllContacts(workmates);
     }
 
     @Override

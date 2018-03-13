@@ -130,9 +130,9 @@ public class ShakeHandParser extends InterParse {
         int userLogin = SharedUtil.getInstance().loadUserLogin();
         if (userLogin == 0) {
             SharedUtil.getInstance().updateUserLogin(1);
-            requestFriendsByVersion();
         }
 
+        requestFriendsByVersion();
         connectLogin();
         pullOffLineMsg();
         checkCurVersion();

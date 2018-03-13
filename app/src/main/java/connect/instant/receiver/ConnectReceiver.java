@@ -1,9 +1,13 @@
 package connect.instant.receiver;
 
+import connect.activity.base.BaseApplication;
 import connect.activity.home.bean.HomeAction;
+import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.MessageHelper;
+import connect.database.green.bean.ContactEntity;
 import connect.instant.bean.ConnectState;
 import connect.instant.model.CRobotChat;
+import connect.ui.activity.R;
 import instant.bean.ChatMsgEntity;
 import instant.bean.Session;
 import instant.parser.inter.ConnectListener;
@@ -13,7 +17,6 @@ import instant.ui.InstantSdk;
 /**
  * Created by Administrator on 2017/10/18.
  */
-
 public class ConnectReceiver implements ConnectListener {
 
     private static String TAG = "_ConnectReceiver";
@@ -46,6 +49,16 @@ public class ConnectReceiver implements ConnectListener {
 
         MessageHelper.getInstance().insertMsgExtEntity(msgEntity);
         CRobotChat.getInstance().updateRoomMsg(null, msgEntity.showContent(), msgEntity.getCreatetime(), -1, 1);
+
+        //To add a system message contact
+        String connect = BaseApplication.getInstance().getString(R.string.app_name);
+        ContactEntity connectEntity = ContactHelper.getInstance().loadFriendEntity(connect);
+        if (connectEntity == null) {
+            connectEntity = new ContactEntity();
+            connectEntity.setUid(connect);
+            connectEntity.setName(connect);
+        }
+        ContactHelper.getInstance().insertContact(connectEntity);
     }
 
     @Override

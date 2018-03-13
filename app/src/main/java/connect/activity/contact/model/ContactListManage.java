@@ -18,7 +18,19 @@ import protos.Connect;
 
 public class ContactListManage {
 
+    private static ContactListManage contactManage;
     private FriendCompara friendCompare = new FriendCompara();
+
+    public static ContactListManage getInstance() {
+        if (contactManage == null) {
+            synchronized (ContactListManage.class) {
+                if (contactManage == null) {
+                    contactManage = new ContactListManage();
+                }
+            }
+        }
+        return contactManage;
+    }
 
     /**
      * group list
@@ -124,14 +136,18 @@ public class ContactListManage {
         if (workmate == null)
             return null;
         ContactEntity contactEntity = new ContactEntity();
+        return convertContactEntity(workmate, contactEntity);
+    }
+
+    public ContactEntity convertContactEntity(Connect.Workmate workmate, ContactEntity contactEntity) {
+        if (workmate == null)
+            return null;
         contactEntity.setName(workmate.getName());
         contactEntity.setAvatar(workmate.getAvatar());
-        contactEntity.setPublicKey(workmate.getPubKey());
         contactEntity.setEmpNo(workmate.getEmpNo());
         contactEntity.setMobile(workmate.getMobile());
         contactEntity.setGender(workmate.getGender());
         contactEntity.setTips(workmate.getTips());
-        contactEntity.setRegisted(workmate.getRegisted());
         contactEntity.setUid(workmate.getUid());
         contactEntity.setOu(workmate.getOU());
         contactEntity.setUsername(workmate.getUsername());

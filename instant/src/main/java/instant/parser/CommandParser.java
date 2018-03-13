@@ -175,9 +175,9 @@ public class CommandParser extends InterParse {
     private void syncContacts(ByteString buffer) throws Exception {
         String version = SharedUtil.getInstance().getStringValue(SharedUtil.CONTACTS_VERSION);
         if (TextUtils.isEmpty(version)) {
-            Connect.SyncCompany relationship = Connect.SyncCompany.parseFrom(buffer);
-            version = relationship.getWorkmatesVersion().getVersion();
-            CommandLocalReceiver.receiver.loadAllContacts(relationship);
+            Connect.WorkmatesVersion  workmatesVersion = Connect.WorkmatesVersion.parseFrom(buffer);
+            version = workmatesVersion.getVersion();
+            CommandLocalReceiver.receiver.loadAllContacts(workmatesVersion.getListList());
         } else {
             Connect.WorkmateChangeRecords changeRecords = Connect.WorkmateChangeRecords.parseFrom(buffer);
             version = changeRecords.getVersion();

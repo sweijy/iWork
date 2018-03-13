@@ -231,10 +231,10 @@ public class DetailDepartSelectFragment extends BaseFragment {
                         selectDeparts.add(departmentKey);
 
                         for (Connect.Workmate workmate : workmates.getListList()) {
-                            if (workmate.getRegisted()) {
+                            /*if (workmate.getRegisted()) {
                                 activity.addWorkMate(workmate);
                                 viewAvatarSearch.addAvatar(workmate.getAvatar(), workmate.getUid());
-                            }
+                            }*/
                         }
                     }
 
@@ -273,7 +273,6 @@ public class DetailDepartSelectFragment extends BaseFragment {
                             .setName(workmate.getName())
                             .setAvatar(workmate.getAvatar())
                             .setGender(workmate.getGender())
-                            .setPubKey(workmate.getPub_key())
                             .setUid(workmate.getUid())
                             .build();
                     activity.addWorkMate(workmate1);
@@ -381,11 +380,11 @@ public class DetailDepartSelectFragment extends BaseFragment {
                 }
 
                 for (Connect.Workmate workmate : workmates) {
-                    if (workmate.getRegisted()) {
+                    /*if (workmate.getRegisted()) {
                         OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
                         organizerEntity.setUpperId(id);
                         departSelectBeanList.add(organizerEntity);
-                    }
+                    }*/
                 }
                 departSelectAdapter.notifyData(departSelectBeanList);
 
@@ -406,8 +405,6 @@ public class DetailDepartSelectFragment extends BaseFragment {
         entity.setName(workmate.getName());
         entity.setAvatar(workmate.getAvatar());
         entity.setO_u(workmate.getOU());
-        entity.setPub_key(workmate.getPubKey());
-        entity.setRegisted(workmate.getRegisted());
         entity.setEmpNo(workmate.getEmpNo());
         entity.setMobile(workmate.getMobile());
         entity.setGender(workmate.getGender());

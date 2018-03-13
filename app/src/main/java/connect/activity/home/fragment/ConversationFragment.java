@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,11 +20,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.HomeActivity;
 import connect.activity.home.adapter.ConversationAdapter;
@@ -32,10 +33,15 @@ import connect.activity.home.bean.RoomAttrBean;
 import connect.activity.home.view.ConnectStateView;
 import connect.activity.home.view.LineDecoration;
 import connect.activity.home.view.ToolbarSearch;
+import connect.activity.set.bean.SystemSetBean;
 import connect.database.green.DaoHelper.ConversionHelper;
+import connect.database.green.DaoHelper.ParamManager;
 import connect.ui.activity.R;
 import connect.utils.log.LogManager;
-import connect.widget.TopToolBar;
+import connect.utils.system.SystemUtil;
+import connect.widget.popupsearch.SearchPopBean;
+import connect.widget.popupsearch.SearchPopWindow;
+import connect.widget.popupsearch.SearchPopupListener;
 import protos.Connect;
 
 /**
@@ -205,23 +211,41 @@ public class ConversationFragment extends BaseFragment {
             recyclerFragmentChat.addItemDecoration(new LineDecoration(activity));
             chatFragmentAdapter.setConversationListener(conversationListener);
             loadRooms();
+
+            toolbar.getRelativeLayout().setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    SearchPopBean chatBean = new SearchPopBean(R.mipmap.icon_groupchat_start, getString(R.string.Link_Group_Launch));
+
+                    SystemSetBean systemSetBean = ParamManager.getInstance().getSystemSet();
+                    String notifyTxt = systemSetBean.isRing() && systemSetBean.isVibrate() ?
+                            activity.getString(R.string.Link_Close_to_remind) :
+                            activity.getString(R.string.Link_Open_to_remind);
+                    SearchPopBean notifyBean = new SearchPopBean(R.mipmap.icon_popup_notify, notifyTxt);
+                    SearchPopBean feedbackBean = new SearchPopBean(R.mipmap.icon_popup_feedback, getString(R.string.Set_Help_and_feedback));
+                    SearchPopBean[] popBeens = new SearchPopBean[]{chatBean, notifyBean, feedbackBean};
+
+                    PopupWindow popWindow = new SearchPopWindow(getActivity(), Arrays.asList(popBeens), new SearchPopupListener() {
+                        @Override
+                        public void itemClick(int position, SearchPopBean popBean) {
+                            switch (position) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                            }
+                        }
+                    });
+                    int offsetX = SystemUtil.dipToPx(60);
+                    int offsetY = SystemUtil.dipToPx(30);
+                    popWindow.showAsDropDown(toolbar.findViewById(R.id.relative_layout), offsetX, offsetY);
+                }
+            });
         }
     }
-    
-//    @OnClick({R.id.relativelayout_1, R.id.search_image1})
-//    void onClickListener(View view) {
-//        switch (view.getId()) {
-//            case R.id.relativelayout_1:
-//                PopupWindow popWindow = new ChatAddPopWindow(getActivity());
-//                int offsetX = SystemUtil.dipToPx(30);
-//                int offsetY = SystemUtil.dipToPx(0);
-//                popWindow.showAsDropDown(connectStateView.findViewById(R.id.txt1), offsetX, offsetY);
-//                break;
-//            case R.id.search_image1:
-//                ARouter.getInstance().build("/chat/earchActivity").navigation();
-//                break;
-//        }
-//    }
 
     private class ConversationListener implements ConversationAdapter.ItemListener {
 

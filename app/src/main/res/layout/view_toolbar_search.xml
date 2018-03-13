@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_45"
-    android:background="@color/color_161A21">
+    android:background="@color/color_5987F0">
 
     <LinearLayout
+        android:id="@id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_30"
         android:layout_centerVertical="true"
@@ -27,6 +28,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp_10"
             android:background="@null"
+            android:clickable="false"
+            android:focusable="false"
             android:hint="@string/Work_Search"
             android:textColor="@color/color_6DA1FF"
             android:textColorHint="@color/color_6DA1FF"

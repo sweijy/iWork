@@ -29,7 +29,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Activity activity;
     private ArrayList<ContactBean> mData = new ArrayList<>();
     private OnItemChildListener onItemChildListener;
-    private ContactListManage contactManage = new ContactListManage();
+    private ContactListManage contactManage = ContactListManage.getInstance();
     /** The location of the sideBar started sliding */
     private int startPosition = 0;
     /** Friends / group */

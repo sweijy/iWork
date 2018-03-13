@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connect.database.green.BaseDao;
+import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.OrganizerEntity;
 import connect.database.green.dao.OrganizerEntityDao;
+import protos.Connect;
 
 /**
  * Created by PuJin on 2018/1/30.
@@ -54,4 +56,35 @@ public class OrganizerHelper extends BaseDao {
         DeleteQuery<OrganizerEntity> bd = qb.where(OrganizerEntityDao.Properties.UpperId.eq(id)).buildDelete();
         bd.executeDeleteWithoutDetachingEntities();
     }
+
+    public OrganizerEntity getContactBean(Connect.Workmate workmate){
+        OrganizerEntity departmentBean = new OrganizerEntity();
+        departmentBean.setUid(workmate.getUid());
+        departmentBean.setName(workmate.getName());
+        departmentBean.setAvatar(workmate.getAvatar());
+        departmentBean.setO_u(workmate.getOU());
+        departmentBean.setEmpNo(workmate.getEmpNo());
+        departmentBean.setMobile(workmate.getMobile());
+        departmentBean.setGender(workmate.getGender());
+        departmentBean.setTips(workmate.getTips());
+        departmentBean.setUsername(workmate.getUsername());
+        return departmentBean;
+    }
+
+    public ContactEntity getContactEntity(OrganizerEntity organizerEntity){
+        ContactEntity contactEntity = new ContactEntity();
+        contactEntity.setName(organizerEntity.getName());
+        contactEntity.setAvatar(organizerEntity.getAvatar());
+        contactEntity.setEmpNo(organizerEntity.getEmpNo());
+        contactEntity.setMobile(organizerEntity.getMobile());
+        contactEntity.setGender(organizerEntity.getGender());
+        contactEntity.setTips(organizerEntity.getTips());
+        contactEntity.setRegisted(organizerEntity.getRegisted());
+        contactEntity.setUid(organizerEntity.getUid());
+        contactEntity.setOu(organizerEntity.getO_u());
+        contactEntity.setUsername(organizerEntity.getUsername());
+        contactEntity.setOrganizational(organizerEntity.getOrganizational());
+        return contactEntity;
+    }
+
 }

@@ -19,6 +19,7 @@
     <item name="layout_first" type="id"/>
     <item name="layout_second" type="id"/>
     <item name="msgstateview" type="id"/>
+    <item name="image1" type="id"/>
     <item name="txt1" type="id"/>
     <item name="txt2" type="id"/>
     <item name="txt3" type="id"/>
@@ -314,4 +315,5 @@
     <item name="view_department_select" type="id" />
     <item name="view_workmate_select" type="id" />
     <item name="depart_avatar" type="id"/>
+    <item name="linear_layout" type="id"/>
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -33,7 +34,7 @@ import protos.Connect;
 
 /**
  * 工作台搜索应用
- *
+ * <p>
  * 0: 搜索
  * 1: 管理
  * 2: 添加
@@ -45,6 +46,8 @@ public class WorkSeachActivity extends BaseActivity {
     TopToolBar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.no_data_lin)
+    LinearLayout noDataLin;
 
     @Autowired
     int category = 0;
@@ -71,7 +74,6 @@ public class WorkSeachActivity extends BaseActivity {
             }
         });
 
-
         category = getIntent().getIntExtra("Category", 0);
         if (category == 1) {
             toolbar.setTitle(getResources().getString(R.string.Link_Function_Manager));
@@ -95,9 +97,8 @@ public class WorkSeachActivity extends BaseActivity {
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.setAdapter(workSearchAdapter);
         workSearchAdapter.setInterWorksearch(new WorkSearchAdapter.InterWorksearch() {
-
             @Override
-            public void itemClick(boolean isAdd ,String code) {
+            public void itemClick(boolean isAdd, String code) {
                 updateAppsAddState(isAdd, code);
             }
         });
@@ -133,6 +134,14 @@ public class WorkSeachActivity extends BaseActivity {
                         }
                         applications1 = filterApplications;
                     }
+
+                    if(applications1.size() > 0){
+                        noDataLin.setVisibility(View.GONE);
+                        recyclerview.setVisibility(View.VISIBLE);
+                    }else{
+                        noDataLin.setVisibility(View.VISIBLE);
+                        recyclerview.setVisibility(View.GONE);
+                    }
                     workSearchAdapter.setDatas(applications1);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -140,12 +149,14 @@ public class WorkSeachActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Connect.HttpNotSignResponse response) {}
+            public void onError(Connect.HttpNotSignResponse response) {
+            }
         });
     }
 
     /**
      * 更改应用的添加状态
+     *
      * @param isAdd
      * @param code
      */
@@ -160,12 +171,12 @@ public class WorkSeachActivity extends BaseActivity {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
                 searchAppsWorks("");
-                if(isAdd){
+                if (isAdd) {
                     ApplicationEntity applicationEntity = new ApplicationEntity();
                     applicationEntity.setCode(code);
                     applicationEntity.setCategory(2);
                     ApplicationHelper.getInstance().insertApplicationEntity(applicationEntity);
-                }else{
+                } else {
                     ApplicationHelper.getInstance().deleteApplicationEntity(code);
                 }
                 EventBus.getDefault().post(new AppsState(AppsState.AppsEnum.APPLICATION));

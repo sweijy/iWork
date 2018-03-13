@@ -30,6 +30,7 @@ import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
+import connect.utils.dialog.DialogUtil;
 import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
@@ -92,7 +93,7 @@ public class ContactInfoActivity extends BaseActivity {
 
     private void showView() {
         nameText.setText(contactEntity.getName());
-        departmentText.setText(contactEntity.getOu());
+        departmentText.setText(contactEntity.getOrganizational());
         accountText.setText(contactEntity.getUsername());
         if (contactEntity.getGender() == 1) {
             genderImage.setImageResource(R.mipmap.man);
@@ -107,9 +108,15 @@ public class ContactInfoActivity extends BaseActivity {
             contactBtn.setText(R.string.Link_Delete_contact);
             contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_F56565));
         }
-        avatarImageview.setVisibility(View.VISIBLE);
-        avatarImage.setVisibility(View.GONE);
-        GlideUtil.loadAvatarRound(avatarImageview, contactEntity.getAvatar(), 8);
+        if(TextUtils.isEmpty(contactEntity.getAvatar())){
+            avatarImageview.setVisibility(View.GONE);
+            avatarImage.setVisibility(View.VISIBLE);
+            avatarImage.setAvatarName(contactEntity.getName(), contactEntity.getGender());
+        }else{
+            avatarImageview.setVisibility(View.VISIBLE);
+            avatarImage.setVisibility(View.GONE);
+            GlideUtil.loadAvatarRound(avatarImageview, contactEntity.getAvatar(), 8);
+        }
     }
 
     @OnClick(R.id.left_rela)
@@ -122,7 +129,17 @@ public class ContactInfoActivity extends BaseActivity {
         if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
             addFollow(true);
         } else {
-            addFollow(false);
+            DialogUtil.showAlertTextView(mActivity, getString(R.string.Set_tip_title),
+                    getString(R.string.Link_Confirm_delete_contact),
+                    "", "", true, new DialogUtil.OnItemClickListener() {
+                        @Override
+                        public void confirm(String value) {
+                            addFollow(false);
+                        }
+
+                        @Override
+                        public void cancel() {}
+                    });
         }
     }
 
@@ -151,7 +168,7 @@ public class ContactInfoActivity extends BaseActivity {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
                     Connect.Workmate workmate = workmates.getList(0);
-                    contactEntity = new ContactListManage().convertContactEntity(workmate);
+                    contactEntity = ContactListManage.getInstance().convertContactEntity(workmate);
                     showView();
                     // 更新通信录好友头像
                     final ContactEntity contactEntityLocal = ContactHelper.getInstance().loadFriendByUid(workmate.getUid());
@@ -193,7 +210,7 @@ public class ContactInfoActivity extends BaseActivity {
     private void addFollow(final boolean isAdd) {
         Connect.UserFollow userFollow = Connect.UserFollow.newBuilder()
                 .setFollow(isAdd)
-                .setUid(contactEntity.getUid())
+                .setUsername(contactEntity.getUsername())
                 .build();
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_USERS_FOLLOW, userFollow, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
@@ -223,8 +240,7 @@ public class ContactInfoActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Connect.HttpNotSignResponse response) {
-            }
+            public void onError(Connect.HttpNotSignResponse response) {}
         });
     }
 

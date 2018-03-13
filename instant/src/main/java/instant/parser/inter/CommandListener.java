@@ -1,5 +1,7 @@
 package instant.parser.inter;
 
+import java.util.List;
+
 import protos.Connect;
 
 /**
@@ -13,7 +15,7 @@ public interface CommandListener {
 
     void updateMsgSendState(String publickey,String msgid, int state);
 
-    void loadAllContacts(Connect.SyncCompany userRelationship) throws Exception;
+    void loadAllContacts(List<Connect.Workmate> workmates) throws Exception;
 
     void contactChanges(Connect.WorkmateChangeRecords changeRecords);
 
