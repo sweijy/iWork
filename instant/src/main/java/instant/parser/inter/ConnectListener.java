@@ -7,12 +7,6 @@ public interface ConnectListener {
 
     void disConnect();
 
-    void requestLogin();
-
-    void loginSuccess();
-
-    void pullOfflineMessage();
-
     void connectSuccess();
 
     void welcome();

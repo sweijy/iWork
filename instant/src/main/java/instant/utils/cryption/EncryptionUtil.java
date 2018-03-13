@@ -106,4 +106,8 @@ public class EncryptionUtil {
     public static void setAb(byte[] ab) {
         EncryptionUtil.ab = ab;
     }
+
+    public static void defaultAdd(){
+        EncryptionUtil.ab = "ConnectEncrypted".getBytes();
+    }
 }

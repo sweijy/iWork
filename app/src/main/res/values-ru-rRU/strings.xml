@@ -400,4 +400,5 @@
     <string name="Chat_Contacts">контакты</string>
     <string name="Chat_Set_Remove_Members">убрать членов группы?</string>
     <string name="Chat_Remove_Conversation">удалить разговор?</string>
+    <string name="Chat_Conversation_Notify_Close">уже закрыть напоминание</string>
 </resources>

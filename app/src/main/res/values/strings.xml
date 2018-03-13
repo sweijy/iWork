@@ -377,4 +377,5 @@
     <string name="Chat_Contacts">contacts</string>
     <string name="Chat_Set_Remove_Members">remove the group members?</string>
     <string name="Chat_Remove_Conversation">remove the conversation?</string>
+    <string name="Chat_Conversation_Notify_Close">Already closed reminding</string>
 </resources>

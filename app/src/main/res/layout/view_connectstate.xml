@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_45"
-    android:background="@color/color_F09AB6">
->
-
-    <ImageView
-        android:id="@+id/search_image1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:clickable="false"
-        android:contentDescription="@string/app_name"
-        android:paddingLeft="@dimen/dp_17"
-        android:paddingRight="@dimen/dp_20"
-        android:src="@mipmap/search3x"/>
-
-    <TextView
-        android:id="@id/txt1"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_45"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/Chat_Not_connected"
-        android:textColor="@color/color_ffffff"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold" />
+    android:layout_height="@dimen/dp_30"
+    android:background="@color/color_F09AB6"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@id/img1"
         android:layout_width="@dimen/dp_16"
         android:layout_height="@dimen/dp_16"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/dp_12"
-        android:layout_toLeftOf="@id/txt1"
-        android:src="@mipmap/attention_message3x" />
-</RelativeLayout>
+        android:layout_marginBottom="@dimen/dp_7"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_7" />
+
+    <TextView
+        android:id="@id/txt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_22"
+        android:text="@string/Chat_Not_connected"
+        android:textColor="@color/color_555555"
+        android:textSize="@dimen/sp_12" />
+</LinearLayout>

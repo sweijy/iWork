@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.HomeActivity;
 import connect.activity.home.adapter.ConversationAdapter;
@@ -34,6 +35,7 @@ import connect.activity.home.view.ToolbarSearch;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.ui.activity.R;
 import connect.utils.log.LogManager;
+import connect.widget.TopToolBar;
 import protos.Connect;
 
 /**
@@ -54,8 +56,8 @@ public class ConversationFragment extends BaseFragment {
     TextView txtCountAttention;
     @Bind(R.id.relative_attention)
     RelativeLayout relativeAttention;
-    @Bind(R.id.toolbar_search)
-    ToolbarSearch toolbarSearch;
+    @Bind(R.id.toolbar)
+    ToolbarSearch toolbar;
 
     private String Tag = "_ConversationFragment";
     private Activity activity;
@@ -205,8 +207,7 @@ public class ConversationFragment extends BaseFragment {
             loadRooms();
         }
     }
-
-
+    
 //    @OnClick({R.id.relativelayout_1, R.id.search_image1})
 //    void onClickListener(View view) {
 //        switch (view.getId()) {

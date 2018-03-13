@@ -344,4 +344,5 @@
     <string name="Chat_Contacts">通讯录</string>
     <string name="Chat_Set_Remove_Members">是否确认移除群成员?</string>
     <string name="Chat_Remove_Conversation">是否移除该条会话记录?</string>
+    <string name="Chat_Conversation_Notify_Close">已关闭手机提醒</string>
 </resources>

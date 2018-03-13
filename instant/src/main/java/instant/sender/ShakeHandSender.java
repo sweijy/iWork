@@ -28,13 +28,7 @@ public class ShakeHandSender {
      * @return
      */
     public void firstLoginShake() {
-        try {
-            ConnectLocalReceiver.receiver.requestLogin();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LogManager.getLogger().d(TAG, e.getMessage());
-        }
-
+        EncryptionUtil.defaultAdd();
         UserCookie userCookie = Session.getInstance().getConnectCookie();
         String uid = userCookie.getUid();
         String token = userCookie.getToken();

@@ -32,7 +32,6 @@ import protos.Connect;
 /**
  * Created by pujin on 2017/4/18.
  */
-
 public class ShakeHandParser extends InterParse {
 
     private static String TAG = "_ShakeHandParser";
@@ -56,11 +55,12 @@ public class ShakeHandParser extends InterParse {
     private void shakeMsgSend(ByteBuffer buffer) throws Exception {
         Connect.IMResponse response = Connect.IMResponse.parser().parseFrom(buffer.array());
 
+        UserCookie connectCookie = Session.getInstance().getConnectCookie();
         UserCookie chatCookie = Session.getInstance().getChatCookie();
-        String uid = chatCookie.getUid();
-        String myPrivateKey = chatCookie.getPrivateKey();
+        String uid = connectCookie.getUid();
+        String privateKey = chatCookie.getPrivateKey();
 
-        byte[] bytes = DecryptionUtil.decodeAESGCM(EncryptionUtil.ExtendedECDH.EMPTY, myPrivateKey, XmlParser.getInstance().serverPubKey(), response.getCipherData());
+        byte[] bytes = DecryptionUtil.decodeAESGCM(EncryptionUtil.ExtendedECDH.EMPTY, privateKey, XmlParser.getInstance().serverPubKey(), response.getCipherData());
         Connect.StructData structData = Connect.StructData.parseFrom(bytes);
         Connect.NewConnection newConnection = Connect.NewConnection.parser().parseFrom(structData.getPlainData());
 
@@ -96,7 +96,7 @@ public class ShakeHandParser extends InterParse {
         Connect.GcmData gcmDataTemp = EncryptionUtil.encodeAESGCMStructData(EncryptionUtil.ExtendedECDH.NONE, saltByte, deviceInfo.toByteString());
 
         //imTransferData
-        String signHash = SupportKeyUril.signHash(myPrivateKey, gcmDataTemp.toByteArray());
+        String signHash = SupportKeyUril.signHash(privateKey, gcmDataTemp.toByteArray());
         Connect.IMTransferData imTransferData = Connect.IMTransferData.newBuilder()
                 .setCipherData(gcmDataTemp)
                 .setSign(signHash)
@@ -111,23 +111,13 @@ public class ShakeHandParser extends InterParse {
      * connect success
      */
     private void connectSuccess(ByteBuffer buffer) throws Exception {
-        Connect.IMResponse response = Connect.IMResponse.parser().parseFrom(buffer.array());
-        UserCookie chatCookie = Session.getInstance().getChatCookie();
-        String uid = chatCookie.getUid();
-        String myPrivateKey = chatCookie.getPrivateKey();
+        ConnectLocalReceiver.receiver.connectSuccess();
 
-        byte[] bytes = DecryptionUtil.decodeAESGCM(EncryptionUtil.ExtendedECDH.EMPTY, myPrivateKey, XmlParser.getInstance().serverPubKey(), response.getCipherData());
-        Connect.StructData structData = Connect.StructData.parseFrom(bytes);
+        Connect.StructData structData = imTransferToStructData(buffer);
         Connect.GcmAad gcmAad = Connect.GcmAad.parser().parseFrom(structData.getPlainData());
         EncryptionUtil.setAb(gcmAad.getAad().toByteArray());
 
         LogManager.getLogger().d(TAG, "===>  connectSuccess");
-        try {
-            ConnectLocalReceiver.receiver.loginSuccess();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         String version = SharedUtil.getInstance().getStringValue(SharedUtil.CONTACTS_VERSION);
         if (TextUtils.isEmpty(version)) {
             int welcomeVersion = SharedUtil.getInstance().getIntValue(SharedUtil.WELCOME_VERSION);//version == 0 ,the first time login
@@ -170,8 +160,6 @@ public class ShakeHandParser extends InterParse {
      * pull offline message
      */
     protected void pullOffLineMsg() {
-        ConnectLocalReceiver.receiver.pullOfflineMessage();
-
         String msgid = TimeUtil.timestampToMsgid();
         SenderManager.getInstance().sendAckMsg(SocketACK.PULL_OFFLINE, null, msgid, ByteString.copyFrom(new byte[]{}));
     }

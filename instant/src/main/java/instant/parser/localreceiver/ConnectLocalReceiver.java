@@ -6,7 +6,7 @@ import instant.parser.inter.ConnectListener;
  * Created by Administrator on 2017/10/18.
  */
 
-public class ConnectLocalReceiver implements ConnectListener{
+public class ConnectLocalReceiver implements ConnectListener {
 
     public static ConnectLocalReceiver receiver = getInstance();
 
@@ -33,21 +33,6 @@ public class ConnectLocalReceiver implements ConnectListener{
     @Override
     public void disConnect() {
         getConnectListener().disConnect();
-    }
-
-    @Override
-    public void requestLogin() {
-        getConnectListener().requestLogin();
-    }
-
-    @Override
-    public void loginSuccess() {
-        getConnectListener().loginSuccess();
-    }
-
-    @Override
-    public void pullOfflineMessage() {
-        getConnectListener().pullOfflineMessage();
     }
 
     @Override

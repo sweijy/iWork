@@ -255,6 +255,7 @@
     <item name="search_relative" type="id" />
 
 
+    <item name="relative_layout" type="id" />
     <item name="relative_item" type="id" />
     <item name="relative_department_select" type="id" />
     <item name="relative_workmate_select" type="id" />

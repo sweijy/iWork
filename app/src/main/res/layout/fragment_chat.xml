@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <connect.activity.home.view.ToolbarSearch
-        android:id="@id/toolbar_search"
+        android:id="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

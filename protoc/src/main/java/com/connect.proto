@@ -580,8 +580,7 @@ message DeviceInfo {
     string locale = 3;
     int32 cv = 4;
     string uuid = 5;
-    ChatCookieData chatCookieData = 6;
-    string token = 7;
+    string token = 6;
 }
 
 message QuitMessage {

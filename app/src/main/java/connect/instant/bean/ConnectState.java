@@ -26,10 +26,7 @@ public class ConnectState {
 
     public enum ConnectType {
         DISCONN,
-        REFRESH_ING,
-        REFRESH_SUCCESS,
         CONNECT,
-        OFFLINE_PULL,
     }
 
     private ConnectType type;

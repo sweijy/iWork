@@ -11,6 +11,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import connect.database.green.DaoHelper.ParamManager;
 import connect.instant.bean.ConnectState;
 import connect.ui.activity.R;
 
@@ -43,30 +44,39 @@ public class ConnectStateView extends RelativeLayout {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ConnectState connectState) {
-        String showTxt = null;
         switch (connectState.getType()) {
             case DISCONN:
-                view.setVisibility(VISIBLE);
-                img1.setBackgroundResource(R.mipmap.attention_message3x);
-                showTxt = getContext().getString(R.string.Chat_Not_connected);
-                txt1.setText(showTxt);
-                break;
-            case REFRESH_ING:
-            case REFRESH_SUCCESS:
-                view.setVisibility(GONE);
-                showTxt = getContext().getString(R.string.Chat_Loading);
+                setNetNotConnect();
                 break;
             case CONNECT:
-                view.setVisibility(GONE);
-                showTxt = getContext().getString(R.string.Chat_Chats);
-                txt1.setText(showTxt);
-                break;
-            case OFFLINE_PULL:
-                view.setVisibility(GONE);
-                showTxt = getContext().getString(R.string.Chat_Loading);
-                txt1.setText(showTxt);
+                int notify = ParamManager.getInstance().getInt(ParamManager.CONVERSATION_NOTIFY);
+                if (notify == 0) {
+                    setConnect();
+                } else {
+                    setCloseNotify();
+                }
                 break;
         }
+    }
+
+    public void setConnect() {
+        view.setVisibility(GONE);
+    }
+
+    public void setNetNotConnect() {
+        view.setVisibility(VISIBLE);
+        view.setBackgroundColor(getResources().getColor(R.color.color_F9E7E7));
+        img1.setBackgroundResource(R.mipmap.icon_conversation_error);
+        String showTxt = getContext().getString(R.string.Chat_Not_connected);
+        txt1.setText(showTxt);
+    }
+
+    public void setCloseNotify() {
+        view.setVisibility(VISIBLE);
+        view.setBackgroundColor(getResources().getColor(R.color.color_D9E7EF));
+        img1.setBackgroundResource(R.mipmap.icon_conversation_notify);
+        String showTxt = getContext().getString(R.string.Chat_Conversation_Notify_Close);
+        txt1.setText(showTxt);
     }
 
     @Override

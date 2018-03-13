@@ -4,8 +4,6 @@ import connect.activity.home.bean.HomeAction;
 import connect.database.green.DaoHelper.MessageHelper;
 import connect.instant.bean.ConnectState;
 import connect.instant.model.CRobotChat;
-import connect.utils.NotificationBar;
-import connect.utils.TimeUtil;
 import instant.bean.ChatMsgEntity;
 import instant.bean.Session;
 import instant.parser.inter.ConnectListener;
@@ -32,21 +30,6 @@ public class ConnectReceiver implements ConnectListener {
     @Override
     public void disConnect() {
         ConnectState.getInstance().sendEvent(ConnectState.ConnectType.DISCONN);
-    }
-
-    @Override
-    public void requestLogin() {
-        ConnectState.getInstance().sendEvent(ConnectState.ConnectType.REFRESH_ING);
-    }
-
-    @Override
-    public void loginSuccess() {
-        ConnectState.getInstance().sendEvent(ConnectState.ConnectType.REFRESH_SUCCESS);
-    }
-
-    @Override
-    public void pullOfflineMessage() {
-        ConnectState.getInstance().sendEvent(ConnectState.ConnectType.OFFLINE_PULL);
     }
 
     @Override

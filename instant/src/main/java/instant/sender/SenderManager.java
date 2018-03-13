@@ -122,7 +122,7 @@ public class SenderManager implements LocalServiceListener {
                 if (transfer) { // transferData,Encapsulating server checksum data
                     UserCookie userCookie = Session.getInstance().getChatCookie();
                     byte[] salt = userCookie.getSalts();
-                    UserCookie connectCookie = Session.getInstance().getConnectCookie();
+                    UserCookie connectCookie = Session.getInstance().getChatCookie();
                     String priKey = connectCookie.getPrivateKey();
                     Connect.GcmData gcmData = EncryptionUtil.encodeAESGCMStructData(
                             EncryptionUtil.ExtendedECDH.NONE,

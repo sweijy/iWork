@@ -30,6 +30,7 @@ public class ParamManager {
     public static final String GENERATE_TOKEN_SALT = "GENERATE_TOKEN_SALT";
     public static final String GENERATE_TOKEN_EXPIRED = "GENERATE_TOKEN_EXPIRED ";
     public static final String COMMONLY_SEARCH = "commonly_search";
+    public static final String CONVERSATION_NOTIFY= "CONVERSATION_NOTIFY";
 
     public static ParamManager getInstance() {
         if (paramManager == null) {

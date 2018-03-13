@@ -4,50 +4,49 @@
     android:layout_height="@dimen/dp_45"
     android:background="@color/color_161A21">
 
-    <ImageView
-        android:id="@+id/search_image1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
         android:layout_centerVertical="true"
-        android:clickable="false"
-        android:contentDescription="@string/app_name"
-        android:paddingLeft="@dimen/dp_17"
-        android:paddingRight="@dimen/dp_20"
-        android:src="@mipmap/search3x"/>
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_toLeftOf="@id/relative_layout"
+        android:background="@drawable/shape_stroke_deepblue"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@id/txt1"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_45"
-        android:gravity="center"
-        android:text="@string/Chat_Not_connected"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/color_ffffff"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold" />
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:src="@mipmap/icon_search_blue" />
 
-    <ProgressBar
-        android:id="@id/probar1"
-        style="?android:attr/progressBarStyleSmall"
-        android:layout_width="@dimen/dp_20"
-        android:layout_height="@dimen/dp_20"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/txt1"
-        android:indeterminateDrawable="@anim/rotate_progressbar"
-        android:visibility="gone" />
+        <EditText
+            android:id="@id/edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@null"
+            android:hint="@string/Work_Search"
+            android:textColor="@color/color_6DA1FF"
+            android:textColorHint="@color/color_6DA1FF"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
 
     <RelativeLayout
-        android:id="@id/relativelayout_1"
-        android:layout_width="@dimen/dp_45"
-        android:layout_height="@dimen/dp_45"
+        android:id="@id/relative_layout"
+        android:layout_width="@dimen/dp_44"
+        android:layout_height="@dimen/dp_28"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_12"
+        android:background="@drawable/shape_stroke_frame_blue"
         android:gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/add_white3x" />
+            android:id="@id/image_view"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:src="@mipmap/icon_conversation_add" />
     </RelativeLayout>
-
 </RelativeLayout>
