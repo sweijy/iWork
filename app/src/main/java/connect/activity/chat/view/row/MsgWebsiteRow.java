@@ -21,6 +21,7 @@ public class MsgWebsiteRow extends MsgChatRow {
         } else {
             container = new BaseContainer(context, R.layout.item_chat_website_to);
         }
+
         MsgWebsiteHolder msgWebsiteHolder = new MsgWebsiteHolder(container);
         return msgWebsiteHolder;
     }

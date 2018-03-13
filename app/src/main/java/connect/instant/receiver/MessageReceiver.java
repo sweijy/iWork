@@ -51,7 +51,7 @@ public class MessageReceiver implements MessageListener {
         String friendUid = chatMessage.getFrom();
         String friendPublicKey = messageData.getChatSession().getPubKey();
 
-        UserCookie userCookie = Session.getInstance().getConnectCookie();
+        UserCookie userCookie = Session.getInstance().getChatCookie();
         String myPrivateKey = userCookie.getPrivateKey();
 
         byte[] contents = null;

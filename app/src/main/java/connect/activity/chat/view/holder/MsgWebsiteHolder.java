@@ -6,18 +6,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
 
 import connect.ui.activity.R;
-import connect.utils.ProtoBufUtil;
 import connect.utils.RegularUtil;
-import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
-import connect.utils.okhttp.OkHttpUtil;
-import connect.utils.okhttp.ResultCall;
 import instant.bean.ChatMsgEntity;
-import instant.bean.UserOrderBean;
 import protos.Connect;
 
 /**
@@ -58,7 +51,7 @@ public class MsgWebsiteHolder extends MsgChatHolder {
             if (TextUtils.isEmpty(imgUrl)) {
                 GlideUtil.loadAvatarRound(typeImg, R.mipmap.message_link2x);
             } else {
-                GlideUtil.loadImage(typeImg, imgUrl,R.mipmap.message_link2x);
+                GlideUtil.loadImage(typeImg, imgUrl, R.mipmap.message_link2x);
             }
         }
 
@@ -67,70 +60,10 @@ public class MsgWebsiteHolder extends MsgChatHolder {
             @Override
             public void onClick(View v) {
                 String content = (String) v.getTag();
-                if (RegularUtil.matches(content, RegularUtil.OUTER_BITWEBSITE_TRANSFER)) {//outer transfer
-                    GlideUtil.loadAvatarRound(typeImg, R.mipmap.message_send_bitcoin2x);
-
-                    int transStart = content.indexOf("token") + 6;
-                    int transEnd = content.indexOf("&");
-                    if (transEnd == -1) {
-                        transEnd = content.length();
-                    }
-                    String transToken = content.substring(transStart, transEnd);
-
-                    UserOrderBean userOrderBean = new UserOrderBean();
-                    userOrderBean.outerTransfer(transToken);
-                } else if (RegularUtil.matches(content, RegularUtil.OUTER_BITWEBSITE_PACKET)) {//outer lucky packet
-                    GlideUtil.loadAvatarRound(typeImg, R.mipmap.luckybag3x);
-
-                    int packetStart = content.indexOf("token") + 6;
-                    int packetEnd = content.indexOf("&");
-                    if (packetEnd == -1) {
-                        packetEnd = content.length();
-                    }
-                    String packetToken = content.substring(packetStart, packetEnd);
-                    avaliableOuterRedPacket(packetToken);
-                }else {//outer link
-                    ARouter.getInstance().build("/iwork/chat/exts/OuterWebsiteActivity")
-                            .withString("URL", content)
-                            .navigation();
-                }
+                ARouter.getInstance().build("/iwork/chat/exts/OuterWebsiteActivity")
+                        .withString("URL", content)
+                        .navigation();
             }
         });
-    }
-
-    /**
-     * token query detail
-     *
-     * @param token
-     */
-    private void avaliableOuterRedPacket(final String token) {
-        /*OkHttpUtil.getInstance().postEncrySelf(UriUtil.WALLET_PACKAGE_INFO + "/" + token, ByteString.copyFrom(new byte[]{}),
-                new ResultCall<Connect.HttpResponse>() {
-                    @Override
-                    public void onResponse(Connect.HttpResponse response) {
-                        try {
-                            Connect.HttpNotSignResponse imResponse = Connect.HttpNotSignResponse.parseFrom(response.getBody().toByteArray());
-                            Connect.StructData structData = Connect.StructData.parseFrom(imResponse.getBody());
-                            Connect.RedPackage redPackage = Connect.RedPackage.parseFrom(structData.getPlainData());
-                            if (ProtoBufUtil.getInstance().checkProtoBuf(redPackage)) {
-                                if (redPackage.getRemainSize() == 0) {//lucky packet is brought out
-                                    String hashid = redPackage.getHashId();
-                                    int type = redPackage.getSystem() ? 1 : 0;
-                                    //PacketDetailActivity.startActivity((Activity) context, hashid, type);
-                                } else {
-                                    UserOrderBean userOrderBean = new UserOrderBean();
-                                    userOrderBean.outerRedPacket(token);
-                                }
-                            }
-                        } catch (InvalidProtocolBufferException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Connect.HttpResponse response) {
-
-                    }
-                });*/
     }
 }

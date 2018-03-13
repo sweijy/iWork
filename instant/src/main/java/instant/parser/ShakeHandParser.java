@@ -48,7 +48,7 @@ public class ShakeHandParser extends InterParse {
                 shakeMsgSend(byteBuffer);
                 break;
             case 0x02://connect success
-                connectSuccess();
+                connectSuccess(byteBuffer);
                 break;
         }
     }
@@ -56,9 +56,9 @@ public class ShakeHandParser extends InterParse {
     private void shakeMsgSend(ByteBuffer buffer) throws Exception {
         Connect.IMResponse response = Connect.IMResponse.parser().parseFrom(buffer.array());
 
-        UserCookie userCookie = Session.getInstance().getConnectCookie();
-        String uid = userCookie.getUid();
-        String myPrivateKey = userCookie.getPrivateKey();
+        UserCookie chatCookie = Session.getInstance().getChatCookie();
+        String uid = chatCookie.getUid();
+        String myPrivateKey = chatCookie.getPrivateKey();
 
         byte[] bytes = DecryptionUtil.decodeAESGCM(EncryptionUtil.ExtendedECDH.EMPTY, myPrivateKey, XmlParser.getInstance().serverPubKey(), response.getCipherData());
         Connect.StructData structData = Connect.StructData.parseFrom(bytes);
@@ -110,7 +110,17 @@ public class ShakeHandParser extends InterParse {
     /**
      * connect success
      */
-    private void connectSuccess() {
+    private void connectSuccess(ByteBuffer buffer) throws Exception {
+        Connect.IMResponse response = Connect.IMResponse.parser().parseFrom(buffer.array());
+        UserCookie chatCookie = Session.getInstance().getChatCookie();
+        String uid = chatCookie.getUid();
+        String myPrivateKey = chatCookie.getPrivateKey();
+
+        byte[] bytes = DecryptionUtil.decodeAESGCM(EncryptionUtil.ExtendedECDH.EMPTY, myPrivateKey, XmlParser.getInstance().serverPubKey(), response.getCipherData());
+        Connect.StructData structData = Connect.StructData.parseFrom(bytes);
+        Connect.GcmAad gcmAad = Connect.GcmAad.parser().parseFrom(structData.getPlainData());
+        EncryptionUtil.setAb(gcmAad.getAad().toByteArray());
+
         LogManager.getLogger().d(TAG, "===>  connectSuccess");
         try {
             ConnectLocalReceiver.receiver.loginSuccess();
@@ -131,7 +141,6 @@ public class ShakeHandParser extends InterParse {
         if (userLogin == 0) {
             SharedUtil.getInstance().updateUserLogin(1);
             requestFriendsByVersion();
-            requestCommonGroup();
         }
 
         connectLogin();

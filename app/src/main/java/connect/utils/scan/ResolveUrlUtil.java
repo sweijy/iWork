@@ -62,12 +62,6 @@ public class ResolveUrlUtil {
             case TYPE_WEB_FRIEND:
                 dealFriend(resultBean, isCloseScan);
                 break;
-            case TYPE_WEB_TRANSFER:
-                dealTransfer(resultBean);
-                break;
-            case TYPE_WEB_PACKET:
-                dealPacket(resultBean);
-                break;
             case TYPE_WEB_GROUNP:
                 break;
             default:
@@ -89,32 +83,6 @@ public class ResolveUrlUtil {
                 ActivityUtil.goBack(activity);
             }
         }
-    }
-
-    /**
-     * Receive user external transfer
-     * @param resultBean
-     */
-    private void dealTransfer(ScanResultBean resultBean){
-        MsgSendBean transferBean = new MsgSendBean();
-        transferBean.setType(MsgSendBean.SendType.TypeOutTransfer);
-        transferBean.setTips(resultBean.getTip());
-
-        UserOrderBean userOrderBean = new UserOrderBean();
-        userOrderBean.outerTransfer(resultBean.getToken(), transferBean);
-    }
-
-    /**
-     * Receive user external bonus
-     * @param resultBean
-     */
-    private void dealPacket(ScanResultBean resultBean){
-        MsgSendBean packetBean = new MsgSendBean();
-        packetBean.setType(MsgSendBean.SendType.TypeOutPacket);
-        packetBean.setTips(resultBean.getTip());
-
-        UserOrderBean userOrderBean = new UserOrderBean();
-        userOrderBean.outerRedPacket(resultBean.getToken(), packetBean);
     }
 
     /**

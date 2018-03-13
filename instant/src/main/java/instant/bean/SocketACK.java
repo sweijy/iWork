@@ -16,23 +16,11 @@ public enum SocketACK {
     ACK_BACK_OFFLINEBATCH(new byte[]{0x03, 0x04}),//Batch receipt
 
     CONTACT_SYNC(new byte[]{0x04, 0x01}),//Sync contacts
-    PULL_OFFLINE(new byte[]{0x04, 0x04}),//Pull the offline messages
-    CONTACT_LOGIN(new byte[]{0x04, 0x06}),//The login
-    CONTACT_LOGOUT(new byte[]{0x04, 0x07}),//exit
-    ADD_FRIEND(new byte[]{0x04, 0x08}),//Add buddy
-    AGREE_FRIEND(new byte[]{0x04, 0x09}),//Agree to add buddy
-    REMOVE_FRIEND(new byte[]{0x04, 0x0a}),//remove friend
-    SET_FRIEND(new byte[]{0x04, 0x0b}),//Modify the friends remark and common friends
-    OUTER_TRANSFER(new byte[]{0x04, 0x11}),//External transfer
-    OUTER_REDPACKET(new byte[]{0x04, 0x12}),//Outside a red envelope
-    UPLOAD_APPINFO(new byte[]{0x04, 0x16}),//Report the device version information
-    UPLOAD_CHATCOOKIE(new byte[]{0x04, 0x17}),//Upload session Cookie
-    DOWNLOAD_FRIENDCOOKIE(new byte[]{0x04, 0x18}),//Get friends cookies
+    PULL_OFFLINE(new byte[]{0x04, 0x02}),//Pull the offline messages
+    CONTACT_LOGIN(new byte[]{0x04, 0x04}),//The login
+    CONTACT_LOGOUT(new byte[]{0x04, 0x05}),//exit
+    UPLOAD_APPINFO(new byte[]{0x04, 0x06}),//Report the device version information
     DIFFERENT_DEVICE(new byte[]{0x04, 0x19}),//different devive login in
-    BURNREAD_SETTING(new byte[]{0x04, 0x1a}),//Burn after reading setting
-    BURNREAD_RECEIPT(new byte[]{0x04, 0x1b}),//Burning receipt after reading
-    BROAD_GROUP_MEMBERPKEY(new byte[]{0x04, 0x1c}),//broad my group key
-    UPLOAD_COMMON_GROUP(new byte[]{0x04, 0x1e}),//拉取常用群组
 
     ROBOT_CHAT(new byte[]{0x05, 0x00}),//Robot news
     SINGLE_CHAT(new byte[]{0x05, 0x01}),//The private chat

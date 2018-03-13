@@ -16,7 +16,6 @@ import instant.parser.localreceiver.CommandLocalReceiver;
 import instant.parser.localreceiver.ConnectLocalReceiver;
 import instant.utils.SharedUtil;
 import instant.utils.log.LogManager;
-import instant.utils.manager.FailMsgsManager;
 import protos.Connect;
 
 /**
@@ -33,7 +32,7 @@ public class CommandParser extends InterParse {
 
     @Override
     public synchronized void msgParse() throws Exception {
-        if (ackByte == 0x04) {
+        if (ackByte == 0x02) {
             receiveOffLineMsgs(byteBuffer);
         } else {
             Connect.Command command = imTransferToCommand(byteBuffer);
@@ -42,19 +41,10 @@ public class CommandParser extends InterParse {
             switch (ackByte) {
                 case 0x01:
                 case 0x03:
+                case 0x04:
                 case 0x05:
                 case 0x06:
-                case 0x0a:
-                case 0x0b:
                 case 0x0c:
-                case 0x0e:
-                case 0x10:
-                case 0x15:
-                case 0x16:
-                case 0x17:
-                case 0x1a:
-                case 0x1b:
-                case 0x1e:
                     break;
                 default:
                     backOnLineAck(4, msgid);
@@ -67,50 +57,11 @@ public class CommandParser extends InterParse {
                     break;
                 case 0x06://bind servicetoken
                     break;
-                case 0x07://login out success
-                    //HomeAction.sendTypeMsg(HomeAction.HomeType.EXIT);
-                    break;
-                case 0x08://receive add friend request
-                    // receiverAddFriendRequest(command.getDetail(), command.getErrNo(),msgid);
-                    break;
-                case 0x09://Accept agreed to be a friend request
-                    // receiverAcceptAddFriend(command.getDetail(), msgid, command.getErrNo());
-                    break;
-                case 0x0a://delete friend
-                    // receiverAcceptDelFriend(command.getDetail(), msgid, command.getErrNo());
-                    break;
-                case 0x0b://Modify the friends remark and common friends
-                    receiverSetUserInfo(command.getDetail(), msgid, command.getErrNo());
-                    break;
                 case 0x0c://conversation mute notify
                     conversationMute(command.getDetail());
                     break;
                 case 0x0d://modify group information
                     updateGroupInfo(command.getDetail(), msgid, command.getErrNo());
-                    break;
-                case 0x11://outer translate
-                    handlerOuterTransfer(command.getDetail(), msgid, command.getErrNo());
-                    break;
-                case 0x12://outer red packet
-                    // handlerOuterRedPacket(command.getDetail(), msgid, command.getErrNo());
-                    break;
-                case 0x17://upload cookie
-                    chatCookieInfo(command.getErrNo());
-                    break;
-                case 0x18://get friend chatcookie
-                    //friencChatCookie(command.getDetail(), msgid);
-                    break;
-                case 0x19:
-                    //reloadUserCookie();
-                    break;
-                case 0x1a://burn reading setting
-                    // burnReadingSetting(command.getDetail(), msgid);
-                    break;
-                case 0x1b://burn reading receipt
-                    // burnReadingReceipt(command.getDetail(), msgid);
-                    break;
-                case 0x1e://同步常用群
-                    commonGroups(command.getDetail());
                     break;
             }
         }
@@ -158,34 +109,8 @@ public class CommandParser extends InterParse {
                                 case 0x01://contact list
                                     syncContacts(transferDataByte);
                                     break;
-                                case 0x06://bind servicetoken
-                                    break;
-                                case 0x07://login out success
-                                    //HomeAction.sendTypeMsg(HomeAction.HomeType.EXIT);
-                                    break;
-                                case 0x08://receive add friend request
-                                    // receiverAddFriendRequest(transferDataByte, errorNumber);
-                                    break;
-                                case 0x09://Accept agreed to be a friend request
-                                    // receiverAcceptAddFriend(transferDataByte, messageId, errorNumber);
-                                    break;
-                                case 0x0a://delete friend
-                                    // receiverAcceptDelFriend(transferDataByte, messageId, errorNumber);
-                                    break;
-                                case 0x0b://Modify the friends remark and common friends
-                                    receiverSetUserInfo(transferDataByte, messageId, errorNumber);
-                                    break;
                                 case 0x0d://modify group information
                                     updateGroupInfo(transferDataByte, messageId, errorNumber);
-                                    break;
-                                case 0x11://outer translate
-                                    handlerOuterTransfer(transferDataByte, messageId, errorNumber);
-                                    break;
-                                case 0x12://outer red packet
-                                    // handlerOuterRedPacket(transferDataByte, messageId, errorNumber);
-                                    break;
-                                case 0x1e:
-                                    commonGroups(transferDataByte);
                                     break;
                             }
                             break;
@@ -261,33 +186,6 @@ public class CommandParser extends InterParse {
         SharedUtil.getInstance().putValue(SharedUtil.CONTACTS_VERSION, version);
     }
 
-    private void commonGroups(ByteString buffer) throws Exception {
-        Connect.UserCommonGroups commonGroups = Connect.UserCommonGroups.parseFrom(buffer);
-        CommandLocalReceiver.receiver.commonGroups(commonGroups);
-    }
-
-    /**
-     * Modify the friends remark and common friends
-     *
-     * @param buffer
-     * @throws Exception
-     */
-    private void receiverSetUserInfo(ByteString buffer, Object... objs) throws Exception {
-        boolean setState = false;
-        if (objs.length <= 0) {
-            setState = true;
-        }
-
-        switch ((int) objs[1]) {
-            case 0:
-                setState = true;
-                break;
-            default:
-                break;
-        }
-        receiptUserSendAckMsg(objs[0], setState);
-    }
-
     /**
      * Conversation mute
      *
@@ -306,59 +204,5 @@ public class CommandParser extends InterParse {
     private void updateGroupInfo(ByteString buffer, Object... objs) throws Exception {
         Connect.GroupChange groupChange = Connect.GroupChange.parseFrom(buffer);
         CommandLocalReceiver.receiver.updateGroupChange(groupChange);
-    }
-
-    /**
-     * Upload the cookie state
-     *
-     * @param errNum
-     */
-    public void chatCookieInfo(int errNum) {
-        String pubKey = Session.getInstance().getConnectCookie().getUid();
-        switch (errNum) {
-            case 0://Save the generated temporary cookies
-                Session.getInstance().setUpFailTime(pubKey, 0);
-
-                try {
-                    FailMsgsManager.getInstance().sendFailMsgs();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 2:
-            case 3:
-            case 4://cookie is overdue ,user old protocal
-                int failTime = Session.getInstance().getUpFailTime(pubKey);
-                if (failTime <= 2) {
-                    //uploadRandomCookie();
-                } else {
-                    ConnectLocalReceiver.receiver.exceptionConnect();
-                }
-                Session.getInstance().setUpFailTime(pubKey, ++failTime);
-                break;
-        }
-    }
-
-    /**
-     * External transfer
-     *
-     * @param buffer
-     * @throws Exception
-     */
-    private void handlerOuterTransfer(ByteString buffer, Object... objs) throws Exception {
-        switch ((int) objs[1]) {
-            case 0://Get the success
-                break;
-            case 1://There is no
-                break;
-            case 2://To receive your transfer
-                break;
-        }
-
-        if ((int) objs[1] > 0) {//Get the failure
-            receiptUserSendAckMsg(objs[0], false, objs[1]);
-        } else {
-            receiptUserSendAckMsg(objs[0], true);
-        }
     }
 }

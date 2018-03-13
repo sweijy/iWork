@@ -45,10 +45,11 @@ public class EncryptionUtil {
         return encodeAESGCM(extendedECDH, rawECDHKey, structData.toByteArray());
     }
 
+    public static byte[] ab = "ConnectEncrypted".getBytes();
+
     public static Connect.GcmData encodeAESGCM(ExtendedECDH extendedECDH, byte[] rawECDHKey, byte[] encodes) {
         rawECDHKey = getKeyExtendedECDH(extendedECDH, rawECDHKey);
 
-        byte[] ab = "ConnectEncrypted".getBytes();
         ByteString iv = ByteString.copyFrom(SecureRandom.getSeed(16));
         byte[] ib = iv.toByteArray();
 
@@ -102,4 +103,7 @@ public class EncryptionUtil {
         return rawECDHKey;
     }
 
+    public static void setAb(byte[] ab) {
+        EncryptionUtil.ab = ab;
+    }
 }

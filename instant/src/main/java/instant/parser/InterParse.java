@@ -13,7 +13,6 @@ import instant.bean.SocketACK;
 import instant.bean.UserCookie;
 import instant.parser.localreceiver.CommandLocalReceiver;
 import instant.sender.SenderManager;
-import instant.ui.InstantSdk;
 import instant.utils.SharedUtil;
 import instant.utils.TimeUtil;
 import instant.utils.cryption.DecryptionUtil;
@@ -74,7 +73,7 @@ public abstract class InterParse {
                 .setMsgId(msgid)
                 .build();
 
-        UserCookie userCookie = Session.getInstance().getConnectCookie();
+        UserCookie userCookie = Session.getInstance().getChatCookie();
         Connect.GcmData gcmData = EncryptionUtil.encodeAESGCMStructData(EncryptionUtil.ExtendedECDH.NONE,
                 Session.getInstance().getChatCookie().getSalts(), ack.toByteString());
 
@@ -98,7 +97,7 @@ public abstract class InterParse {
                 .addAllAcks(socketACKs)
                 .build();
 
-        UserCookie userCookie = Session.getInstance().getConnectCookie();
+        UserCookie userCookie = Session.getInstance().getChatCookie();
         Connect.GcmData gcmData = EncryptionUtil.encodeAESGCMStructData(EncryptionUtil.ExtendedECDH.NONE,
                 Session.getInstance().getChatCookie().getSalts(), ackBatch.toByteString());
 
@@ -205,19 +204,5 @@ public abstract class InterParse {
         Connect.SyncRelationship syncRelationship = Connect.SyncRelationship.newBuilder()
                 .setVersion(version).build();
         commandToIMTransfer(TimeUtil.timestampToMsgid(), SocketACK.CONTACT_SYNC, syncRelationship.toByteString());
-    }
-
-
-    /**
-     * sycn contact
-     *
-     * @return
-     */
-    protected void requestCommonGroup() {
-        Connect.SyncRelationship syncRelationship = Connect.SyncRelationship.newBuilder()
-                .setVersion("0")
-                .build();
-
-        commandToIMTransfer(TimeUtil.timestampToMsgid(), SocketACK.UPLOAD_COMMON_GROUP, syncRelationship.toByteString());
     }
 }
