@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import connect.activity.base.BaseListener;
 import connect.activity.chat.set.contract.PrivateSetContract;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
@@ -17,7 +18,12 @@ import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.ConversionSettingEntity;
 import connect.ui.activity.R;
+import connect.utils.ProtoBufUtil;
+import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
+import connect.utils.okhttp.OkHttpUtil;
+import connect.utils.okhttp.ResultCall;
+import protos.Connect;
 
 /**
  * Created by Administrator on 2017/8/7.
@@ -91,5 +97,45 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
             headerview.setTag(entity.getUid());
             view.showContactInfo(headerview);
         }
+    }
+
+    @Override
+    public void switchTop(boolean checkon, final BaseListener<Boolean> listener) {
+        Connect.SessionSet sessionSet = Connect.SessionSet.newBuilder()
+                .setUid(uid)
+                .setVal(checkon)
+                .build();
+
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_TOP, sessionSet, new ResultCall<Connect.HttpResponse>() {
+            @Override
+            public void onResponse(Connect.HttpResponse response) {
+                listener.Success(true);
+            }
+
+            @Override
+            public void onError(Connect.HttpResponse response) {
+                listener.fail(true);
+            }
+        });
+    }
+
+    @Override
+    public void switchDisturb(boolean checkon, final BaseListener<Boolean> listener) {
+        Connect.SessionSet sessionSet = Connect.SessionSet.newBuilder()
+                .setUid(uid)
+                .setVal(checkon)
+                .build();
+
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_MUTE, sessionSet, new ResultCall<Connect.HttpResponse>() {
+            @Override
+            public void onResponse(Connect.HttpResponse response) {
+                listener.Success(true);
+            }
+
+            @Override
+            public void onError(Connect.HttpResponse response) {
+                listener.fail(true);
+            }
+        });
     }
 }

@@ -337,9 +337,10 @@ string username=1;
  string uid=3;
  int32 role=4;
  string nick=5;
- string pub_key=6;
- string salt=7;
- string name = 8;
+ string name = 6;
+ string ou = 7;
+ bool mute = 8;
+ bool top=9;
 }
 
 message GroupApplyChange {
@@ -1998,4 +1999,39 @@ message RecordsUpdate {
 
 message GcmAad {
  bytes aad = 1;
+}
+
+message SessionSet {
+ string uid = 1;
+ bool val =2;
+}
+
+message SessionInfo {
+ bool mute = 1;
+ bool top = 2;
+}
+
+
+message GetSession {
+ string uid =1;
+ string friendId = 2;
+}
+
+message SearchGroupResult {
+repeated Group groups = 1;
+repeated GroupMemberMatch members = 2;
+}
+
+message SearchGroup {
+ string name = 1;
+}
+
+message GroupMemberMatch {
+Group group = 1;
+GroupMember member = 2;
+}
+
+message UpdateGroupSession {
+ string identifier = 1;
+ bool val = 2;
 }

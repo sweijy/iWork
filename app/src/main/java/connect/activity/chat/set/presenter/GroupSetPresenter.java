@@ -1,16 +1,15 @@
 package connect.activity.chat.set.presenter;
 
 import android.app.Activity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.List;
 
+import connect.activity.base.BaseListener;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.set.contract.GroupSetContract;
-import connect.activity.contact.bean.ContactNotice;
 import connect.activity.home.HomeActivity;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -135,7 +134,27 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
     }
 
     @Override
-    public void updateGroupMute(final boolean state) {
+    public void groupTop(boolean checkon, final BaseListener<Boolean> listener) {
+        Connect.UpdateGroupSession groupSession = Connect.UpdateGroupSession.newBuilder()
+                .setIdentifier(groupIdentify)
+                .setVal(checkon)
+                .build();
+
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_GROUP_TOP, groupSession, new ResultCall<Connect.HttpResponse>() {
+            @Override
+            public void onResponse(Connect.HttpResponse response) {
+                listener.Success(true);
+            }
+
+            @Override
+            public void onError(Connect.HttpResponse response) {
+                listener.fail();
+            }
+        });
+    }
+
+    @Override
+    public void groupMute(final boolean state, final BaseListener<Boolean> listener) {
         Connect.UpdateGroupMute groupMute = Connect.UpdateGroupMute.newBuilder()
                 .setIdentifier(groupIdentify)
                 .setMute(state)
@@ -144,48 +163,29 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_GROUP_MUTE, groupMute, new ResultCall<Connect.HttpResponse>() {
             @Override
             public void onResponse(Connect.HttpResponse response) {
-                int disturb = state ? 1 : 0;
-                ConversionSettingEntity setEntity = ConversionSettingHelper.getInstance().loadSetEntity(groupIdentify);
-                if (setEntity == null) {
-                    setEntity = new ConversionSettingEntity();
-                    setEntity.setIdentifier(groupIdentify);
-                }
-                setEntity.setDisturb(disturb);
-                ConversionSettingHelper.getInstance().insertSetEntity(setEntity);
+                listener.Success(true);
             }
 
             @Override
             public void onError(Connect.HttpResponse response) {
-                view.noticeSwitch(!state);
+                listener.fail();
             }
         });
     }
 
     @Override
-    public void updateGroupCommon(final boolean state) {
+    public void groupCommon(final boolean state, final BaseListener<Boolean> listener) {
         Connect.GroupId groupId = Connect.GroupId.newBuilder().setIdentifier(groupIdentify).build();
         String coomonUrl = state ? UriUtil.GROUP_COMMON : UriUtil.GROUP_RECOMMON;
         OkHttpUtil.getInstance().postEncrySelf(coomonUrl, groupId, new ResultCall<Connect.HttpResponse>() {
             @Override
             public void onResponse(Connect.HttpResponse response) {
-                int common = state ? 1 : 0;
-                GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(groupIdentify);
-                if (!(groupEntity == null || TextUtils.isEmpty(groupEntity.getName()))) {
-                    groupEntity.setCommon(common);
-
-                    String groupName = groupEntity.getName();
-                    if (TextUtils.isEmpty(groupName)) {
-                        groupName = "groupname8";
-                    }
-                    groupEntity.setName(groupName);
-                    ContactHelper.getInstance().inserGroupEntity(groupEntity);
-                }
-                ContactNotice.receiverGroup();
+                listener.Success(true);
             }
 
             @Override
             public void onError(Connect.HttpResponse response) {
-                view.commonSwtich(!state);
+                listener.fail(true);
             }
         });
     }

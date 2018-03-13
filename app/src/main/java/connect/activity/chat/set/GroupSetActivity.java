@@ -21,11 +21,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
+import connect.activity.base.BaseListener;
 import connect.activity.chat.set.contract.GroupSetContract;
 import connect.activity.chat.set.presenter.GroupSetPresenter;
 import connect.activity.contact.bean.ContactNotice;
+import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionHelper;
+import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.bean.ConversionEntity;
+import connect.database.green.bean.ConversionSettingEntity;
+import connect.database.green.bean.GroupEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
@@ -172,18 +177,30 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Sticky_on_Top_chat));
 
-        Switch topToggle = (Switch) view.findViewById(R.id.toggle);
+        final Switch topToggle = (Switch) view.findViewById(R.id.toggle);
         topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                int top = b ? 1 : 0;
-                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupIdentify);
-                if (conversionEntity == null) {
-                    conversionEntity = new ConversionEntity();
-                    conversionEntity.setIdentifier(groupIdentify);
-                }
-                conversionEntity.setTop(top);
-                ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                presenter.groupTop(b, new BaseListener<Boolean>() {
+
+                    @Override
+                    public void Success(Boolean ts) {
+                        int top = b ? 1 : 0;
+                        ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupIdentify);
+                        if (conversionEntity == null) {
+                            conversionEntity = new ConversionEntity();
+                            conversionEntity.setIdentifier(groupIdentify);
+                        }
+                        conversionEntity.setTop(top);
+                        ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                        topToggle.setChecked(!b);
+                    }
+                });
             }
         });
     }
@@ -194,12 +211,29 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Mute_Notification));
 
-        Switch noticeSwitch = (Switch) view.findViewById(R.id.toggle);
+        final Switch noticeSwitch = (Switch) view.findViewById(R.id.toggle);
         noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                boolean mutestate = b;
-                presenter.updateGroupMute(mutestate);
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                presenter.groupMute(b, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        int disturb = b ? 1 : 0;
+                        ConversionSettingEntity setEntity = ConversionSettingHelper.getInstance().loadSetEntity(groupIdentify);
+                        if (setEntity == null) {
+                            setEntity = new ConversionSettingEntity();
+                            setEntity.setIdentifier(groupIdentify);
+                        }
+                        setEntity.setDisturb(disturb);
+                        ConversionSettingHelper.getInstance().insertSetEntity(setEntity);
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                        noticeSwitch.setChecked(!b);
+                    }
+                });
             }
         });
     }
@@ -210,11 +244,33 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Link_Save_to_Contacts));
 
-        Switch commonSwitch = (Switch) view.findViewById(R.id.toggle);
+        final Switch commonSwitch = (Switch) view.findViewById(R.id.toggle);
         commonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                presenter.updateGroupCommon(b);
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                presenter.groupCommon(b, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        int common = b ? 1 : 0;
+                        GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(groupIdentify);
+                        if (!(groupEntity == null || TextUtils.isEmpty(groupEntity.getName()))) {
+                            groupEntity.setCommon(common);
+
+                            String groupName = groupEntity.getName();
+                            if (TextUtils.isEmpty(groupName)) {
+                                groupName = "groupname8";
+                            }
+                            groupEntity.setName(groupName);
+                            ContactHelper.getInstance().inserGroupEntity(groupEntity);
+                        }
+                        ContactNotice.receiverGroup();
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                        commonSwitch.setChecked(!b);
+                    }
+                });
             }
         });
     }

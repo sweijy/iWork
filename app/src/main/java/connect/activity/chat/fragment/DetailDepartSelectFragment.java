@@ -268,16 +268,14 @@ public class DetailDepartSelectFragment extends BaseFragment {
         public void workmateClick(boolean isSelect, OrganizerEntity workmate) {
             String workmateKey = workmate.getUid();
             if (isSelect) {
-                if (workmate.getRegisted()) {
-                    Connect.Workmate workmate1 = Connect.Workmate.newBuilder()
-                            .setName(workmate.getName())
-                            .setAvatar(workmate.getAvatar())
-                            .setGender(workmate.getGender())
-                            .setUid(workmate.getUid())
-                            .build();
-                    activity.addWorkMate(workmate1);
-                    viewAvatarSearch.addAvatar(workmate1.getAvatar(), workmate1.getUid());
-                }
+                Connect.Workmate workmate1 = Connect.Workmate.newBuilder()
+                        .setName(workmate.getName())
+                        .setAvatar(workmate.getAvatar())
+                        .setGender(workmate.getGender())
+                        .setUid(workmate.getUid())
+                        .build();
+                activity.addWorkMate(workmate1);
+                viewAvatarSearch.addAvatar(workmate1.getAvatar(), workmate1.getUid());
             } else {
                 activity.removeWorkMate(workmateKey);
                 viewAvatarSearch.removeAvatar(workmateKey);
@@ -380,11 +378,9 @@ public class DetailDepartSelectFragment extends BaseFragment {
                 }
 
                 for (Connect.Workmate workmate : workmates) {
-                    /*if (workmate.getRegisted()) {
-                        OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
-                        organizerEntity.setUpperId(id);
-                        departSelectBeanList.add(organizerEntity);
-                    }*/
+                    OrganizerEntity organizerEntity = getOrganizerEntity(workmate);
+                    organizerEntity.setUpperId(id);
+                    departSelectBeanList.add(organizerEntity);
                 }
                 departSelectAdapter.notifyData(departSelectBeanList);
 

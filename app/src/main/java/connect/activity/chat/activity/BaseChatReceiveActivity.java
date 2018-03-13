@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import connect.activity.base.BaseListener;
 import connect.activity.chat.bean.RecExtBean;
-import connect.activity.chat.set.ContactCardActivity;
 import connect.activity.home.HomeActivity;
 import connect.database.green.DaoHelper.MessageHelper;
 import connect.utils.ActivityUtil;
@@ -34,7 +33,7 @@ import instant.sender.model.GroupChat;
  * Created by Administrator on 2017/10/31.
  */
 
-public abstract class BaseChatReceiveActivity extends BaseChatActvity{
+public abstract class BaseChatReceiveActivity extends BaseChatActvity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +78,6 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                     MessageHelper.getInstance().deleteRoomMsg(chatIdentify);
                 }
                 break;
-            case NAMECARD:
-                ARouter.getInstance().build("/iwork/chat/set/ContactCardActivity")
-                        .withString("UID",chatIdentify)
-                        .navigation();
-                break;
             case MSGSTATE://message send state 0:sending 1:send success 2:send fail 3:send refuse
                 if (chatIdentify.equals(objects[0])) {
                     String msgid = (String) objects[1];
@@ -110,7 +104,7 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                 });
                 break;
             case NOTICE://notice message
-                adapterInsetItem(normalChat.noticeMsg(0,(String) objects[0],""));
+                adapterInsetItem(normalChat.noticeMsg(0, (String) objects[0], ""));
                 break;
             case SCROLLBOTTOM:
                 final int itemCounts = chatAdapter.getItemCount();
@@ -149,7 +143,7 @@ public abstract class BaseChatReceiveActivity extends BaseChatActvity{
                 break;
             case GROUPAT_TO:
                 ARouter.getInstance().build("/iwork/chat/exts/GroupAtActivity")
-                        .withString("groupIdentify",normalChat.chatKey())
+                        .withString("groupIdentify", normalChat.chatKey())
                         .navigation();
                 break;
             case MESSAGE_RECEIVE:

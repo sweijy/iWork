@@ -17,6 +17,4 @@ public interface UnreachableListener {
     void friendCookieExpired(String rejectUid);
 
     void saltNotMatch(String msgid, String rejectUid, Connect.ChatCookie cookie) throws Exception;
-
-    void publicKeyNotMatch(String msgid, String rejectUid,Connect.PubKey pubKey) throws Exception;
 }
