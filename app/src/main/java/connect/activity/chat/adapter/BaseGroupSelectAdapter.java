@@ -85,7 +85,7 @@ public class BaseGroupSelectAdapter extends RecyclerView.Adapter<BaseGroupSelect
 
                 holder.selectView.setSelected(groupSelectListener.isContains(entity.getUid()));
                 holder.nameTv.setText(name);
-                holder.departmentAvatar.setAvatarName(name, false, entity.getGender());
+                holder.departmentAvatar.setAvatarName(name, entity.getGender());
                 holder.contentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

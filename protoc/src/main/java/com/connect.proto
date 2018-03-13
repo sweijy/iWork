@@ -467,6 +467,10 @@ message UserCommonGroups {
 repeated GroupInfo groups=1;
 }
 
+message Groups {
+ repeated Group groups = 1;
+}
+
 message GroupId {
 string identifier = 1;
 }

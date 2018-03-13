@@ -57,7 +57,7 @@ public class DepartSelectShowAdapter extends RecyclerView.Adapter<DepartSelectSh
             holder.departmentAvatar.setVisibility(View.VISIBLE);
 
             holder.nameTv.setText(name);
-            holder.departmentAvatar.setAvatarName(name, false, workmate.getGender());
+            holder.departmentAvatar.setAvatarName(name, workmate.getGender());
         } else {
             holder.nameTv.setVisibility(View.VISIBLE);
             holder.avatarImg.setVisibility(View.VISIBLE);

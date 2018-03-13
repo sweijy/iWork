@@ -149,6 +149,7 @@
         android:orientation="horizontal">
         <View
             style="@style/BaseViewLine.d1d5da"
+            android:background="@color/color_BEBEBE"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_weight="1" />
         <TextView
@@ -156,10 +157,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_8"
             android:text="@string/Beijing_BitMain"
-            android:textColor="@color/color_828282"
+            android:textColor="@color/color_BEBEBE"
             android:textSize="@dimen/sp_12" />
         <View
             style="@style/BaseViewLine.d1d5da"
+            android:background="@color/color_BEBEBE"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_weight="1" />
     </LinearLayout>

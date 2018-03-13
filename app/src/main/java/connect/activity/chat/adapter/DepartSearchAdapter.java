@@ -56,7 +56,7 @@ public class DepartSearchAdapter extends RecyclerView.Adapter<DepartSearchAdapte
 
             holder.selectView.setSelected(departSearchListener.isContains(workmate.getUid()));
             holder.nameTv.setText(name);
-            holder.departmentAvatar.setAvatarName(name, false, workmate.getGender());
+            holder.departmentAvatar.setAvatarName(name, workmate.getGender());
             holder.contentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

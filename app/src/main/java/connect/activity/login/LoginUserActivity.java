@@ -152,30 +152,24 @@ public class LoginUserActivity extends BaseActivity {
                 try {
                     imageLoading.clearAnimation();
                     imageLoading.setVisibility(View.GONE);
-
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody().toByteArray());
                     Connect.UserLoginInfo userLoginInfo = Connect.UserLoginInfo.parseFrom(structData.getPlainData());
-                    UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-                    if (userBean == null || TextUtils.isEmpty(userLoginInfo.getPubKey())
-                            || !userLoginInfo.getPubKey().equals(userBean.getPubKey())) {
-                        requestUpdatePub(userLoginInfo, userName);
-                    } else {
-                        UserBean userBean1 = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
-                                userLoginInfo.getOU(), userLoginInfo.getToken(), userBean.getPubKey(), userBean.getPriKey());
-                        userBean1.setEmp_no(userLoginInfo.getEmpNo());
-                        userBean1.setGender(userLoginInfo.getGender());
-                        userBean1.setMobile(userLoginInfo.getMobile());
-                        userBean1.setTips(userLoginInfo.getTips());
-                        SharedPreferenceUtil.getInstance().putUser(userBean1);
 
-                        ARouter.getInstance().build("/iwork/HomeActivity")
-                                .navigation(mActivity, new NavCallback() {
-                                    @Override
-                                    public void onArrival(Postcard postcard) {
-                                        mActivity.finish();
-                                    }
-                                });
-                    }
+                    UserBean userBean = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
+                            userLoginInfo.getOU(), userLoginInfo.getToken());
+                    userBean.setEmp_no(userLoginInfo.getEmpNo());
+                    userBean.setGender(userLoginInfo.getGender());
+                    userBean.setMobile(userLoginInfo.getMobile());
+                    userBean.setTips(userLoginInfo.getTips());
+                    SharedPreferenceUtil.getInstance().putUser(userBean);
+
+                    ARouter.getInstance().build("/iwork/HomeActivity")
+                            .navigation(mActivity, new NavCallback() {
+                                @Override
+                                public void onArrival(Postcard postcard) {
+                                    mActivity.finish();
+                                }
+                            });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -193,47 +187,6 @@ public class LoginUserActivity extends BaseActivity {
                 super.onError();
                 imageLoading.clearAnimation();
                 imageLoading.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    private void requestUpdatePub(final Connect.UserLoginInfo userLoginInfo, final String userName) {
-        final String priKey = AllNativeMethod.cdCreateNewPrivKey();
-        final String pubKey1 = AllNativeMethod.cdGetPubKeyFromPrivKey(priKey);
-        Connect.PubKey pubKey = Connect.PubKey.newBuilder()
-                .setPubKey(pubKey1)
-                .build();
-        ByteString random = ByteString.copyFrom(StringUtil.getSecureRandom(16));
-        Connect.StructData structData = Connect.StructData.newBuilder()
-                .setRandom(random)
-                .setPlainData(pubKey.toByteString())
-                .build();
-        Connect.HttpRequest httpRequest = Connect.HttpRequest.newBuilder()
-                .setUid(userLoginInfo.getUid())
-                .setBody(structData.toByteString())
-                .setToken(userLoginInfo.getToken()).build();
-        HttpRequest.getInstance().post(UriUtil.CONNECT_V3_PUBKEY, httpRequest, new ResultCall<Connect.HttpNotSignResponse>() {
-            @Override
-            public void onResponse(Connect.HttpNotSignResponse response) {
-                UserBean userBean1 = new UserBean(userLoginInfo.getName(), userName, userLoginInfo.getAvatar(), userLoginInfo.getUid(),
-                        userLoginInfo.getOU(), userLoginInfo.getToken(), pubKey1, priKey);
-                userBean1.setEmp_no(userLoginInfo.getEmpNo());
-                userBean1.setGender(userLoginInfo.getGender());
-                userBean1.setMobile(userLoginInfo.getMobile());
-                userBean1.setTips(userLoginInfo.getTips());
-                SharedPreferenceUtil.getInstance().putUser(userBean1);
-
-                ARouter.getInstance().build("/iwork/HomeActivity")
-                        .navigation(mActivity, new NavCallback() {
-                            @Override
-                            public void onArrival(Postcard postcard) {
-                                mActivity.finish();
-                            }
-                        });
-            }
-
-            @Override
-            public void onError(Connect.HttpNotSignResponse response) {
             }
         });
     }

@@ -155,14 +155,14 @@ public class ResolveScanUtil {
                 .setCriteria(value)
                 .setTyp(1)
                 .build();
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V1_USER_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                    Connect.UsersInfo sendUserInfo = Connect.UsersInfo.parseFrom(structData.getPlainData());
-                    if(sendUserInfo != null && sendUserInfo.getUsersList().size() > 0){
-                        onResultBack.call(2, sendUserInfo.getUsers(0).getUid());
+                    Connect.Workmates sendUserInfo = Connect.Workmates.parseFrom(structData.getPlainData());
+                    if(sendUserInfo != null && sendUserInfo.getListList().size() > 0){
+                        onResultBack.call(2, sendUserInfo.getList(0).getUid());
                     }else{
                         onResultBack.call(3, "");
                     }

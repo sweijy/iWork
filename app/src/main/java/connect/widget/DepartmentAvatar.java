@@ -18,7 +18,6 @@ public class DepartmentAvatar extends RelativeLayout {
 
     private final Context context;
     private TextView nameTv;
-    private TextView inactiveTv;
 
     public DepartmentAvatar(Context context) {
         this(context, null);
@@ -37,10 +36,9 @@ public class DepartmentAvatar extends RelativeLayout {
 
     private void initView(View view) {
         nameTv = (TextView)view.findViewById(R.id.name_tv);
-        inactiveTv = (TextView)view.findViewById(R.id.inactive_tv);
     }
 
-    public void setAvatarName(String name, boolean isShow, int gender){
+    public void setAvatarName(String name, int gender){
         if(StringUtil.checkZh(name)){
             if(name.length() > 2){
                 nameTv.setText(name.substring(0,2).toUpperCase());
@@ -59,13 +57,6 @@ public class DepartmentAvatar extends RelativeLayout {
             this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_6b91ea));
         }else{
             this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_f27e32));
-        }
-
-        if(isShow){
-            inactiveTv.setVisibility(VISIBLE);
-            this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_366b91ea));
-        }else{
-            inactiveTv.setVisibility(GONE);
         }
     }
 

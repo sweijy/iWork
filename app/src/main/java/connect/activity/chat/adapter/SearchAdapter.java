@@ -68,7 +68,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         if(searchBean.getStyle() == 1 && TextUtils.isEmpty(searchBean.getUid())){
             holder.avatarRimg.setVisibility(View.VISIBLE);
             holder.avatarImage.setVisibility(View.GONE);
-            holder.avatarRimg.setAvatarName(searchBean.getName(), true, 1);
+            holder.avatarRimg.setAvatarName(searchBean.getName(), 1);
         }else{
             holder.avatarRimg.setVisibility(View.GONE);
             holder.avatarImage.setVisibility(View.VISIBLE);

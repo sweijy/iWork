@@ -94,7 +94,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             } else {
                 holder.avater.setVisibility(View.VISIBLE);
                 holder.registerAvatar.setVisibility(View.GONE);
-                holder.avater.setAvatarName(department.getName(), true, department.getGender());
+                holder.avater.setAvatarName(department.getName(), department.getGender());
             }
             holder.workmateSelectView.setOnClickListener(new View.OnClickListener() {
                 @Override

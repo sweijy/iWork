@@ -59,9 +59,6 @@ import instant.bean.UserOrderBean;
 import instant.utils.manager.FailMsgsManager;
 import protos.Connect;
 
-/**
- * Created by gtq on 2016/11/19.
- */
 @Route(path = "/iwork/HomeActivity")
 public class HomeActivity extends BaseFragmentActivity {
 
