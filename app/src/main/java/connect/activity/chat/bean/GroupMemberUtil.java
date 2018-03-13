@@ -79,19 +79,25 @@ public class GroupMemberUtil {
                 .setTyp(1)
                 .setCriteria(publickey)
                 .build();
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V1_USER_SEARCH, searchUser, new ResultCall<Connect.HttpResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpResponse>() {
             @Override
             public void onResponse(Connect.HttpResponse response) {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                    Connect.UsersInfo userInfo = Connect.UsersInfo.parseFrom(structData.getPlainData());
-                    if (ProtoBufUtil.getInstance().checkProtoBuf(userInfo)) {
+                    Connect.Workmates userInfos = Connect.Workmates.parseFrom(structData.getPlainData());
+                    /*if (ProtoBufUtil.getInstance().checkProtoBuf(userInfo)) {
                         GroupMemberEntity memberEntity = new GroupMemberEntity();
                         memberEntity.setAvatar(userInfo.getUsers(0).getAvatar());
                         memberEntity.setUsername(userInfo.getUsers(0).getName());
                         memEntityMap.put(userInfo.getUsers(0).getUid(), memberEntity);
                         baseListener.Success(memberEntity);
-                    }
+                    }*/
+
+                    GroupMemberEntity memberEntity = new GroupMemberEntity();
+                    memberEntity.setAvatar(userInfos.getList(0).getAvatar());
+                    memberEntity.setUsername(userInfos.getList(0).getName());
+                    memEntityMap.put(userInfos.getList(0).getUid(), memberEntity);
+                    baseListener.Success(memberEntity);
                 } catch (InvalidProtocolBufferException e) {
                     e.printStackTrace();
                 }

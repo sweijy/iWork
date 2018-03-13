@@ -11,60 +11,70 @@ public class UriUtil {
     private static String  addressVisitor = ConfigUtil.getInstance().visitorAddress();
     /** 仓库服务器地址 */
     private static String  addressWarehouse = ConfigUtil.getInstance().warehouseAddress();
+    /** iWork服务器地址 */
+    private static String  addressServiceTemp = "http://192.168.40.110:18087";
 
     /** =================================== iWork ==================================== */
     /** Upload a file */
     public static String UPLOAD_FILE = addressService + "/fs/v1/up";
     /** The private key is registered */
-    public static String CONNECT_V3_LOGIN = addressService + "/connect/v3/login";
+    public static String CONNECT_V3_LOGIN = addressService + "/bm/users/v1/login";
     /** The private key is registered */
-    public static String CONNECT_V3_DEPARTMENT = addressService + "/connect/v3/department";
+    public static String CONNECT_V3_DEPARTMENT = addressService + "/bm/users/v1/department";
     /** Query the user information 1: name(en)  2:uid  3:name(zh)*/
-    public static String CONNECT_V3_WORKMATE_SEARCH = addressService + "/connect/v3/workmate/search";
+    public static String CONNECT_V3_WORKMATE_SEARCH = addressService + "/bm/users/v1/workmate/search";
 
-    public static String CONNECT_V3_USERS_FOLLOW = addressService + "/connect/v3/users/follow";
+    public static String CONNECT_V3_USERS_FOLLOW = addressService + "/bm/users/v1/users/follow";
 
-    public static String CONNECT_V3_API_BANNERS = addressService + "/connect/v3/api/banners";
+    public static String CONNECT_V3_API_BANNERS = addressServiceTemp + "/bm/apps/v1/api/banners";
 
-    public static String CONNECT_V3_API_APPLICATIONS = addressService + "/connect/v3/api/applications";
+    public static String CONNECT_V3_API_APPLICATIONS = addressServiceTemp + "/bm/apps/v1/api/applications";
 
-    public static String CONNECT_V3_API_APPLICATIONS_ADD = addressService + "/connect/v3/api/applications/add";
+    public static String CONNECT_V3_API_APPLICATIONS_ADD = addressServiceTemp + "/bm/apps/v1/api/applications/add";
 
-    public static String CONNECT_V3_API_APPLICATIONS_DEL = addressService + "/connect/v3/api/applications/del";
+    public static String CONNECT_V3_API_APPLICATIONS_DEL = addressServiceTemp + "/bm/apps/v1/api/applications/del";
+
     /** 根据 部门id查询 所有员工 */
-    public static String CONNECT_V3_DEPAERTMENT_WORKMATES = addressService + "/connect/v3/department/workmates";
+    public static String CONNECT_V3_DEPAERTMENT_WORKMATES = addressService + "/bm/users/v1/department/workmates";
     /** 群成员邀请入群 */
     public static String CONNECT_V3_GROUP_INVITE = addressService + "/connect/v3/group/invite";
     /** The App update */
-    public static String CONNECT_V1_VERSION = addressService + "/connect/v1/version";
-    /** Query the user information 1: uid   2:connectid  "":username*/
-    public static String CONNECT_V1_USER_SEARCH = addressService + "/connect/v1/users/search";
+    public static String CONNECT_V1_VERSION = addressService + "/bm/users/v1/version";
     /** set user avatar */
-    public static String AVATAR_V1_SET = addressService + "/connect/v1/setting/avatar";
-    /** delete account */
-    public static String CONNECT_V3_PUBKEY = addressService + "/connect/v3/pubkey";
+    public static String AVATAR_V1_SET = addressService + "/bm/users/v1/setting/avatar";
+    /** 同步组织架构 */
+    public static String BM_USERS_V1_SYNC_WORKMATE = addressService + "/bm/users/v1/sync_workmate";
 
     /** =================================== setting group ==================================== */
     /** create group */
-    public static String CREATE_GROUP = addressService + "/connect/v1/group";
+    public static String CREATE_GROUP = addressService + "/bm/users/v1/group";
     /** remove member */
-    public static String GROUP_REMOVE = addressService + "/connect/v1/group/deluser";
+    public static String GROUP_REMOVE = addressService + "/bm/users/v1/group/deluser";
     /** exit from group */
-    public static String GROUP_QUIT = addressService + "/connect/v1/group/quit";
+    public static String GROUP_QUIT = addressService + "/bm/users/v1/group/quit";
     /** command group */
-    public static String GROUP_COMMON = addressService + "/connect/v1/group/set_common";
+    public static String GROUP_COMMON = addressService + "/bm/users/v1/group/set_common";
     /** remove command */
-    public static String GROUP_RECOMMON = addressService + "/connect/v1/group/remove_common";
+    public static String GROUP_RECOMMON = addressService + "/bm/users/v1/group/remove_common";
     /** modify member nick */
-    public static String GROUP_MEMUPDATE = addressService + "/connect/v1/group/member_update";
+    public static String GROUP_MEMUPDATE = addressService + "/bm/users/v1/group/member_update";
     /** modify group nick */
-    public static String GROUP_UPDATE = addressService + "/connect/v1/group/update";
+    public static String GROUP_UPDATE = addressService + "/bm/users/v1/group/update";
     /** get group detail */
-    public static String GROUP_PULLINFO = addressService + "/connect/v1/group/info";
+    public static String GROUP_PULLINFO = addressService + "/bm/users/v1/group/info";
     /** get group setting */
-    public static String GROUP_SETTING_INFO = addressService + "/connect/v1/group/setting_info";
+    public static String GROUP_SETTING_INFO = addressService + "/bm/users/v1/group/setting_info";
     /** group mute */
-    public static String CONNECT_GROUP_MUTE = addressService + "/connect/v1/group/mute";
+    public static String CONNECT_GROUP_MUTE = addressService + "/bm/users/v1/group/mute";
+    /** 获取常用群 */
+    public static String BM_USERS_V1_GROUP_LIST = addressService + "/bm/users/v1/group/list";
+    /** 获取群成员 */
+    public static String BM_USERS_V1_GROUP_MEMBERS = addressService + "/bm/users/v1/group/members";
+    /** 群设置 */
+    public static String BM_USERS_V1_GROUP_SETTING = addressService + "/bm/users/v1/group/setting";
+    /** 解散群组 */
+    public static String BM_USERS_V1_GROUP_DISBANDED = addressService + "/bm/users/v1/group/disbanded";
+
 
     /** =================================== 访客系统 ==================================== */
     /** 修改访客时间 */

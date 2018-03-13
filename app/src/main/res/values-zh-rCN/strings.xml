@@ -124,7 +124,7 @@
     <string name="Link_Commonly_used_search">常用搜索</string>
     <string name="Link_Scan_Result">扫描结果</string>
     <string name="Link_Send">发送</string>
-    <string name="Link_Contacts">联系人</string>
+    <string name="Link_Contacts">通信录</string>
     <string name="Link_Account">账号：</string>
     <string name="Link_My_group">我的群组</string>
     <string name="Link_Chat_record">聊天记录</string>
@@ -275,7 +275,7 @@
     <string name="Login_Account">公司用户名</string>
     <string name="Login_password">密码</string>
     <string name="Please_Input_Login_username">公司用户名</string>
-    <string name="Please_Input_Login_password">密码</string>
+    <string name="Please_Input_Login_password">登录密码</string>
     <string name="Login_Immediately">立即登陆</string>
     <string name="Beijing_BitMain">北京比特大陆科技有限公司</string>
     <string name="Work_No_More_Results">没有更多的搜索结果</string>

@@ -86,7 +86,7 @@ public class ContactInfoShowActivity extends BaseActivity {
         }
         departmentText.setText(workmate.getOU());
         accountText.setText(workmate.getUsername());
-        avatarImage.setAvatarName(workmate.getName(), true, workmate.getGender());
+        avatarImage.setAvatarName(workmate.getName(), workmate.getGender());
     }
 
 }

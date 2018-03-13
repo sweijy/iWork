@@ -27,15 +27,14 @@ public class ReceiverHelper {
 
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
         int userLogin = SharedPreferenceUtil.getInstance().getUserLogin();
-        InstantSdk.getInstance().registerUserInfo(
+        /*InstantSdk.getInstance().registerUserInfo(
                 context,
                 userBean.getUid(),
-                userBean.getPriKey(),
-                userBean.getPubKey(),
+                "","",
                 userBean.getToken(),
                 userBean.getName(),
                 userBean.getAvatar(),
-                userLogin);
+                userLogin);*/
 
         SharedPreferenceUtil.getInstance().setUserLogin(1);
 

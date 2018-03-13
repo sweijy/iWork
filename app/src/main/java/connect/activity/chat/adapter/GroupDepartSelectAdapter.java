@@ -83,9 +83,10 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
         } else {
             final WorkmateSelectHolder workmateSelectHolder = (WorkmateSelectHolder) holder;
             final String workmateKey = department.getUid();
+
             workmateSelectHolder.workmateSelectView.setSelected(departSelectListener.isContains(false, workmateKey));
             workmateSelectHolder.nickTxt.setText(department.getName());
-            workmateSelectHolder.avatarImg.setAvatarName(department.getName(), true, department.getGender());
+            workmateSelectHolder.avatarImg.setAvatarName(department.getName(), department.getGender());
             workmateSelectHolder.workmateSelectRelative.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

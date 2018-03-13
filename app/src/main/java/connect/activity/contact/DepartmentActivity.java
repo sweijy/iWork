@@ -29,6 +29,7 @@ import connect.activity.home.view.LineDecoration;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.OrganizerHelper;
+import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
@@ -178,20 +179,19 @@ public class DepartmentActivity extends BaseActivity {
                             .navigation();
                 }else{
                     String department = TextUtils.isEmpty(departmentBean.getO_u()) ? nameList.get(nameList.size()-1).getName() : departmentBean.getO_u();
-                    Connect.Workmate.Builder builder = Connect.Workmate.newBuilder();
-                    builder.setName(departmentBean.getName());
-                    builder.setAvatar(departmentBean.getAvatar());
-                    builder.setPubKey(departmentBean.getPub_key());
-                    builder.setEmpNo(departmentBean.getEmpNo());
-                    builder.setMobile(departmentBean.getMobile());
-                    builder.setGender(departmentBean.getGender());
-                    builder.setTips(departmentBean.getTips());
-                    builder.setRegisted(departmentBean.getRegisted());
-                    builder.setUid(departmentBean.getUid());
-                    builder.setOU(department);
-                    builder.setUsername(departmentBean.getUsername());
-                    ARouter.getInstance().build("/iwork/contact/ContactInfoShowActivity")
-                            .withSerializable("workmate",builder.build())
+                    ContactEntity contactEntity = new ContactEntity();
+                    contactEntity.setName(departmentBean.getName());
+                    contactEntity.setAvatar(departmentBean.getAvatar());
+                    contactEntity.setEmpNo(departmentBean.getEmpNo());
+                    contactEntity.setMobile(departmentBean.getMobile());
+                    contactEntity.setGender(departmentBean.getGender());
+                    contactEntity.setTips(departmentBean.getTips());
+                    contactEntity.setRegisted(departmentBean.getRegisted());
+                    contactEntity.setUid(departmentBean.getUid());
+                    contactEntity.setOu(department);
+                    contactEntity.setUsername(departmentBean.getUsername());
+                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
+                            .withSerializable("contactEntity",contactEntity)
                             .navigation();
                 }
             }

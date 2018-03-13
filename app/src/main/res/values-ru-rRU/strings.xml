@@ -331,9 +331,9 @@
     <string name="Login_Account">компания  имя пользователя</string>
     <string name="Login_password">пароль</string>
     <string name="Please_Input_Login_username">компания  имя пользователя</string>
-    <string name="Please_Input_Login_password">пароль</string>
+    <string name="Please_Input_Login_password">Пароль для входа в систему</string>
     <string name="Login_Immediately">посадку незамедлительно</string>
-    <string name="Beijing_BitMain">Beijing BitMain Technology Co., Ltd.</string>
+    <string name="Beijing_BitMain">BitMain</string>
     <string name="Work_No_More_Results">Больше никаких  результатов поиска</string>
     <string name="Work_Third_Party_Service">услуг третьих сторон</string>
     <string name="Work_Service_Search">Поиск приложений</string>

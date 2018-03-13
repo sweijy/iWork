@@ -96,14 +96,14 @@ public class CFriendChat extends FriendChat implements ConversationListener {
                 .setCriteria(frienduid)
                 .build();
 
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V1_USER_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                    Connect.UsersInfo userInfo = Connect.UsersInfo.parseFrom(structData.getPlainData());
+                    Connect.Workmates userInfo = Connect.Workmates.parseFrom(structData.getPlainData());
 
-                    Connect.UserInfo userinfo = userInfo.getUsers(0);
+                    Connect.Workmate userinfo = userInfo.getList(0);
                     userName = userinfo.getName();
                     userAvatar = userinfo.getAvatar();
                     setFriendPublicKey(userinfo.getPubKey());

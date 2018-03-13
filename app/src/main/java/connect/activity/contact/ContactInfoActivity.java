@@ -28,13 +28,11 @@ import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
-import connect.utils.ToastEUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
-import connect.utils.system.SystemUtil;
 import connect.widget.DepartmentAvatar;
 import connect.widget.TopToolBar;
 import instant.utils.SharedUtil;
@@ -84,7 +82,7 @@ public class ContactInfoActivity extends BaseActivity {
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(null, R.string.Set_Personal_information);
 
-        uid = getIntent().getExtras().getString("uid");
+        uid = getIntent().getExtras().getString("uid", "");
         contactEntity = (ContactEntity) getIntent().getExtras().getSerializable("contactEntity");
         if(contactEntity != null){
             showView();
@@ -130,13 +128,18 @@ public class ContactInfoActivity extends BaseActivity {
 
     @OnClick(R.id.chat_btn)
     void chat(View view) {
-        ARouter.getInstance().build("/iwork/chat/ChatActivity")
-                .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
-                .withString("CHAT_IDENTIFY", contactEntity.getUid())
-                .navigation();
+        if (contactEntity != null && !TextUtils.isEmpty(contactEntity.getUid())) {
+            ARouter.getInstance().build("/iwork/chat/ChatActivity")
+                    .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
+                    .withString("CHAT_IDENTIFY", contactEntity.getUid())
+                    .navigation();
+        }
     }
 
     private void searchUser(final String uid) {
+        if(TextUtils.isEmpty(uid)){
+            return;
+        }
         Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
                 .setCriteria(uid)
                 .setTyp(2)
@@ -183,8 +186,7 @@ public class ContactInfoActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Connect.HttpNotSignResponse response) {
-            }
+            public void onError(Connect.HttpNotSignResponse response) {}
         });
     }
 

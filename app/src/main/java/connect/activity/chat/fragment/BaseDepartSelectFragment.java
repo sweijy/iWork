@@ -197,19 +197,18 @@ public class BaseDepartSelectFragment extends BaseFragment {
                 .setTyp(1)
                 .setCriteria(value)
                 .build();
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V1_USER_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
-                    Connect.UsersInfo userInfo = Connect.UsersInfo.parseFrom(structData.getPlainData());
-                    Connect.UserInfo userInfo1 = userInfo.getUsersList().get(0);
+                    Connect.Workmates userInfo = Connect.Workmates.parseFrom(structData.getPlainData());
+                    Connect.Workmate userInfo1 = userInfo.getList(0);
 
                     Connect.Workmate workmate = Connect.Workmate.newBuilder()
                             .setAvatar(userInfo1.getAvatar())
                             .setUid(userInfo1.getUid())
                             .setName(userInfo1.getName())
-                            .setPubKey(userInfo1.getCaPub())
                             .build();
                     activity.addWorkMate(workmate);
                 } catch (InvalidProtocolBufferException e) {
