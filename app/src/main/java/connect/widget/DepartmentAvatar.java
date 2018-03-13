@@ -1,6 +1,7 @@
 package connect.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,16 @@ public class DepartmentAvatar extends RelativeLayout {
     }
 
     public void setAvatarName(String name, int gender){
+        if(gender == 1){
+            this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_6b91ea));
+        }else{
+            this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_f27e32));
+        }
+
+        if(TextUtils.isEmpty(name)){
+            nameTv.setText("");
+            return ;
+        }
         if(StringUtil.checkZh(name)){
             if(name.length() > 2){
                 nameTv.setText(name.substring(0,2).toUpperCase());
@@ -51,12 +62,6 @@ public class DepartmentAvatar extends RelativeLayout {
             }else{
                 nameTv.setText(name);
             }
-        }
-
-        if(gender == 1){
-            this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_6b91ea));
-        }else{
-            this.setBackground(context.getResources().getDrawable(R.drawable.shape_8px_f27e32));
         }
     }
 

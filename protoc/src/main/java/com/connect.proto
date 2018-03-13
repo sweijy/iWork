@@ -1769,18 +1769,18 @@ message HttpRequest {
 }
 
 message Workmate {
- string name = 1;
- string o_u = 2;
- string uid = 3;
- string avatar = 4;
- string pub_key = 5;
- bool registed = 6;
- string emp_no = 7;
- string mobile = 8;
- int32 gender = 9;
- string tips = 10;
- string username = 11;
+  string name = 1;
+  string o_u = 2;
+  string uid = 3;
+  string avatar = 4;
+  string emp_no = 5;
+  string mobile = 6;
+  int32 gender = 7;
+  string tips = 8;
+  string username = 9;
+  string organizational = 10;
 }
+
 
 message Workmates {
  repeated Workmate list = 1;
@@ -1806,8 +1806,8 @@ Departments depts = 2;
 }
 
 message UserFollow {
- string uid = 1;
- bool follow = 2;
+  string username = 1;
+  bool follow = 2;
 }
 
 message SyncUserRelationship {

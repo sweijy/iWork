@@ -106,7 +106,7 @@ public class CFriendChat extends FriendChat implements ConversationListener {
                     Connect.Workmate userinfo = userInfo.getList(0);
                     userName = userinfo.getName();
                     userAvatar = userinfo.getAvatar();
-                    setFriendPublicKey(userinfo.getPubKey());
+                    //setFriendPublicKey(userinfo.getPubKey());
                     friendUid = userinfo.getUid();
 
                     if (baseListener != null) {

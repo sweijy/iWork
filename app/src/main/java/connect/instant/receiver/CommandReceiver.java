@@ -13,6 +13,7 @@ import connect.activity.base.BaseApplication;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.contact.bean.ContactNotice;
 import connect.activity.contact.bean.MsgSendBean;
+import connect.activity.contact.model.ContactListManage;
 import connect.activity.home.bean.ConversationAction;
 import connect.activity.home.bean.GroupRecBean;
 import connect.activity.home.bean.MsgNoticeBean;
@@ -84,23 +85,11 @@ public class CommandReceiver implements CommandListener {
         Map<String, ContactEntity> contactEntityMap = new HashMap<>();
         for (Connect.Workmate friendInfo : friendInfoList) {
             String friendUid = friendInfo.getUid();
-
             if (TextUtils.isEmpty(friendUid)) {
                 continue;
             }
 
-            ContactEntity contactEntity = new ContactEntity();
-            contactEntity.setUid(friendUid);
-            contactEntity.setName(friendInfo.getName());
-            contactEntity.setAvatar(friendInfo.getAvatar());
-            contactEntity.setOu(friendInfo.getOU());
-            contactEntity.setPublicKey(friendInfo.getPubKey());
-            contactEntity.setRegisted(true);
-            contactEntity.setEmpNo(friendInfo.getEmpNo());
-            contactEntity.setMobile(friendInfo.getMobile());
-            contactEntity.setGender(friendInfo.getGender());
-            contactEntity.setTips(friendInfo.getTips());
-            contactEntity.setUsername(friendInfo.getUsername());
+            ContactEntity contactEntity = ContactListManage.getInstance().convertContactEntity(friendInfo);
             contactEntityMap.put(friendUid, contactEntity);
         }
         Collection<ContactEntity> contactEntityCollection = contactEntityMap.values();
@@ -178,19 +167,7 @@ public class CommandReceiver implements CommandListener {
                         newFriend = true;
                         entity = new ContactEntity();
                     }
-
-                    entity.setUid(uid);
-                    entity.setName(friendInfo.getName());
-                    entity.setAvatar(friendInfo.getAvatar());
-                    entity.setOu(friendInfo.getOU());
-                    entity.setPublicKey(friendInfo.getPubKey());
-                    entity.setRegisted(true);
-
-                    entity.setEmpNo(friendInfo.getEmpNo());
-                    entity.setMobile(friendInfo.getMobile());
-                    entity.setGender(friendInfo.getGender());
-                    entity.setTips(friendInfo.getTips());
-                    entity.setUsername(friendInfo.getUsername());
+                    entity = ContactListManage.getInstance().convertContactEntity(friendInfo, entity);
                     ContactHelper.getInstance().insertContact(entity);
 
                     if (newFriend) { // Add a welcome message

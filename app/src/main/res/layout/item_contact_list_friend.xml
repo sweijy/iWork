@@ -71,7 +71,6 @@
                 android:layout_height="@dimen/dp_38"
                 android:scaleType="fitXY" />
         </RelativeLayout>
-
     </RelativeLayout>
 
 </LinearLayout>

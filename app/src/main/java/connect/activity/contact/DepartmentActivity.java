@@ -2,6 +2,7 @@ package connect.activity.contact;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -173,25 +174,13 @@ public class DepartmentActivity extends BaseActivity {
                 if(userBean.getUid().equals(departmentBean.getUid())){
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").
                             navigation();
-                }else if(departmentBean.getRegisted()){
+                }/*else if(departmentBean.getRegisted()){
                     ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
                             .withString("uid",departmentBean.getUid())
                             .navigation();
-                }else{
-                    String department = TextUtils.isEmpty(departmentBean.getO_u()) ? nameList.get(nameList.size()-1).getName() : departmentBean.getO_u();
-                    ContactEntity contactEntity = new ContactEntity();
-                    contactEntity.setName(departmentBean.getName());
-                    contactEntity.setAvatar(departmentBean.getAvatar());
-                    contactEntity.setEmpNo(departmentBean.getEmpNo());
-                    contactEntity.setMobile(departmentBean.getMobile());
-                    contactEntity.setGender(departmentBean.getGender());
-                    contactEntity.setTips(departmentBean.getTips());
-                    contactEntity.setRegisted(departmentBean.getRegisted());
-                    contactEntity.setUid(departmentBean.getUid());
-                    contactEntity.setOu(department);
-                    contactEntity.setUsername(departmentBean.getUsername());
+                }*/else{
                     ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                            .withSerializable("contactEntity",contactEntity)
+                            .withSerializable("contactEntity", OrganizerHelper.getInstance().getContactEntity(departmentBean))
                             .navigation();
                 }
             }
@@ -221,7 +210,7 @@ public class DepartmentActivity extends BaseActivity {
                         list.add(departmentBean);
                     }
                     for (Connect.Workmate workmate : syncWorkmates.getWorkmates().getListList()) {
-                        OrganizerEntity organizerEntity = getContactBean(workmate);
+                        OrganizerEntity organizerEntity = OrganizerHelper.getInstance().getContactBean(workmate);
                         organizerEntity.setUpperId(id);
                         list.add(organizerEntity);
                     }
@@ -261,7 +250,7 @@ public class DepartmentActivity extends BaseActivity {
                     }
                     ArrayList<OrganizerEntity> list = new ArrayList<>();
                     for (Connect.Workmate workmate : workmates.getListList()) {
-                        OrganizerEntity organizerEntity = getContactBean(workmate);
+                        OrganizerEntity organizerEntity = OrganizerHelper.getInstance().getContactBean(workmate);
                         list.add(organizerEntity);
                     }
                     adapter.setNotify(list);
@@ -274,22 +263,6 @@ public class DepartmentActivity extends BaseActivity {
             @Override
             public void onError(Connect.HttpNotSignResponse response) {}
         });
-    }
-
-    private OrganizerEntity getContactBean(Connect.Workmate workmate){
-        OrganizerEntity departmentBean = new OrganizerEntity();
-        departmentBean.setUid(workmate.getUid());
-        departmentBean.setName(workmate.getName());
-        departmentBean.setAvatar(workmate.getAvatar());
-        departmentBean.setO_u(workmate.getOU());
-        departmentBean.setPub_key(workmate.getPubKey());
-        departmentBean.setRegisted(workmate.getRegisted());
-        departmentBean.setEmpNo(workmate.getEmpNo());
-        departmentBean.setMobile(workmate.getMobile());
-        departmentBean.setGender(workmate.getGender());
-        departmentBean.setTips(workmate.getTips());
-        departmentBean.setUsername(workmate.getUsername());
-        return departmentBean;
     }
 
 }

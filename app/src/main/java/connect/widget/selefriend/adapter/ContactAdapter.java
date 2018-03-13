@@ -25,7 +25,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     private Activity mActivity;
     private ArrayList<ContactBean> dataList = new ArrayList<>();
-    private ContactListManage contactManage = new ContactListManage();
+    private ContactListManage contactManage = ContactListManage.getInstance();
     private OnItemClickListener itemClickListener;
     private int startPosition;
 

@@ -125,7 +125,7 @@ public class SelectContactActivity extends BaseActivity {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                ContactListManage contactManage = new ContactListManage();
+                ContactListManage contactManage = ContactListManage.getInstance();
                 groupList = contactManage.getGroupData();
                 friendList = contactManage.getFriendListExcludeSys("");
                 return null;

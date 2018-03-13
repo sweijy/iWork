@@ -33,7 +33,6 @@ public class UriUtil {
     public static String CONNECT_V3_API_APPLICATIONS_ADD = addressServiceTemp + "/bm/apps/v1/api/applications/add";
 
     public static String CONNECT_V3_API_APPLICATIONS_DEL = addressServiceTemp + "/bm/apps/v1/api/applications/del";
-
     /** 根据 部门id查询 所有员工 */
     public static String CONNECT_V3_DEPAERTMENT_WORKMATES = addressService + "/bm/users/v1/department/workmates";
     /** 群成员邀请入群 */
