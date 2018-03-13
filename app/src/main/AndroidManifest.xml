@@ -102,6 +102,12 @@
             android:name="connect.activity.contact.ContactInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="connect.activity.chat.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="connect.activity.chat.SearchContentActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="connect.activity.contact.ContactInfoShowActivity"
             android:screenOrientation="portrait" />
         <activity
