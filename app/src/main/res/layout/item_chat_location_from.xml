@@ -55,7 +55,7 @@
                 android:paddingBottom="@dimen/dp_2"
                 android:paddingLeft="@dimen/dp_6"
                 android:paddingTop="@dimen/dp_2"
-                android:textColor="@color/color_white"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_10"/>
         </RelativeLayout>
     </LinearLayout>

@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/Work_Search"
-                android:textColor="@color/color_ffffff"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_14"
                 android:singleLine="true"
                 android:paddingLeft="@dimen/dp_3"

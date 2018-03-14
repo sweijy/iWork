@@ -81,13 +81,9 @@ public class CommandReceiver implements CommandListener {
     public void loadAllContacts(List<Connect.Workmate> workmates) throws Exception {
         Map<String, ContactEntity> contactEntityMap = new HashMap<>();
         for (Connect.Workmate friendInfo : workmates) {
-            String friendUid = friendInfo.getUid();
-            if (TextUtils.isEmpty(friendUid)) {
-                continue;
-            }
 
             ContactEntity contactEntity = ContactListManage.getInstance().convertContactEntity(friendInfo);
-            contactEntityMap.put(friendUid, contactEntity);
+            contactEntityMap.put(friendInfo.getUsername(), contactEntity);
         }
 
         Collection<ContactEntity> contactEntityCollection = contactEntityMap.values();

@@ -38,7 +38,7 @@
         <View
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
-            android:background="@color/color_line_diviver"/>
+            android:background="@color/color_EEEEEE"/>
         
         <RelativeLayout
             android:layout_width="0px"

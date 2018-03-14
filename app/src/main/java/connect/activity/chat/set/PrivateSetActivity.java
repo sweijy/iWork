@@ -22,6 +22,7 @@ import connect.activity.home.bean.ConversationAction;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
+import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.ConversionSettingEntity;
 import connect.ui.activity.R;
@@ -168,8 +169,8 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").
                             navigation();
                 } else {
-                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                            .withString("uid",tag)
+                    ARouter.getInstance().build("/iwork/contact/ContactDepartmentActivity")
+                            .withString("userName",uid)
                             .navigation();
                 }
             }

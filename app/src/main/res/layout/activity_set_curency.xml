@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@color/color_ffffff"
+        android:background="@color/color_FFFFFF"
         android:divider="@color/color_clear"
         android:dividerHeight="@dimen/px_0"/>
 

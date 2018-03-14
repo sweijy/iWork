@@ -11,6 +11,7 @@ import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.OrganizerEntity;
 import connect.database.green.dao.OrganizerEntityDao;
 import protos.Connect;
+import retrofit2.Retrofit;
 
 /**
  * Created by PuJin on 2018/1/30.
@@ -68,6 +69,7 @@ public class OrganizerHelper extends BaseDao {
         departmentBean.setGender(workmate.getGender());
         departmentBean.setTips(workmate.getTips());
         departmentBean.setUsername(workmate.getUsername());
+        departmentBean.setOrganizational(workmate.getOrganizational());
         return departmentBean;
     }
 
@@ -85,6 +87,21 @@ public class OrganizerHelper extends BaseDao {
         contactEntity.setUsername(organizerEntity.getUsername());
         contactEntity.setOrganizational(organizerEntity.getOrganizational());
         return contactEntity;
+    }
+
+    public Connect.Workmate getWorkmate(OrganizerEntity organizerEntity){
+        Connect.Workmate.Builder builder = Connect.Workmate.newBuilder();
+        builder.setName(organizerEntity.getName());
+        builder.setAvatar(organizerEntity.getAvatar());
+        builder.setEmpNo(organizerEntity.getEmpNo());
+        builder.setMobile(organizerEntity.getMobile());
+        builder.setGender(organizerEntity.getGender());
+        builder.setTips(organizerEntity.getTips());
+        builder.setUid(organizerEntity.getUid());
+        builder.setOU(organizerEntity.getO_u());
+        builder.setUsername(organizerEntity.getUsername());
+        builder.setOrganizational(organizerEntity.getOrganizational());
+        return builder.build();
     }
 
 }

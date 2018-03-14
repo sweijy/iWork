@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_ffffff">
+    android:background="@color/color_FFFFFF">
 
     <TextView
         style="@style/BaseTextStyle.14"
@@ -37,17 +37,6 @@
             android:singleLine="true"
             android:gravity="center_horizontal"
             android:text="@string/Link_My_group" />
-        <TextView
-            android:id="@+id/chat_record_text"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            android:textColor="@color/color_767a82"
-            android:singleLine="true"
-            android:gravity="center_horizontal"
-            android:text="@string/Link_Chat_record" />
         <View
             android:layout_width="0px"
             android:layout_height="@dimen/dp_5"

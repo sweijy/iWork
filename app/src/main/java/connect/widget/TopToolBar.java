@@ -61,8 +61,8 @@ public class TopToolBar extends LinearLayout {
         titleSearchImg = (ImageView) view.findViewById(R.id.image_title_search);
 
         this.setBackgroundResource(R.color.color_457DE3);
-        titleTv.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
-        rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
+        titleTv.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FFFFFF));
+        rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FFFFFF));
         //SystemUtil.setWindowStatusBarColor((Activity)context,R.color.color_161A21);
     }
 
@@ -73,8 +73,8 @@ public class TopToolBar extends LinearLayout {
 
     public void setRedStyle() {
         this.setBackgroundResource(R.color.color_ff6c5a);
-        titleTv.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
-        rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
+        titleTv.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FFFFFF));
+        rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FFFFFF));
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = ((Activity) context).getWindow();
@@ -190,7 +190,7 @@ public class TopToolBar extends LinearLayout {
     public void setRightTextEnable(boolean enable) {
         rightText.setEnabled(enable);
         if (enable) {
-            rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_ffffff));
+            rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FFFFFF));
         } else {
             rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_767a82));
         }

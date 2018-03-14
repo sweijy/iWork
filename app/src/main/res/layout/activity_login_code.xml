@@ -136,7 +136,7 @@
                 android:layout_toRightOf="@+id/image_loading"
                 android:enabled="false"
                 android:text="@string/Login_Immediately"
-                android:textColor="@color/color_ffffff" />
+                android:textColor="@color/color_FFFFFF" />
         </RelativeLayout>
     </LinearLayout>
 

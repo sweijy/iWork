@@ -40,6 +40,14 @@ public class ToolbarSearch extends RelativeLayout {
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_layout);
     }
 
+    public void setRightLayoutVisible(boolean isShow){
+        if(isShow){
+            relativeLayout.setVisibility(View.VISIBLE);
+        }else{
+            relativeLayout.setVisibility(View.GONE);
+        }
+    }
+
     public LinearLayout getLinearLayout() {
         return linearLayout;
     }

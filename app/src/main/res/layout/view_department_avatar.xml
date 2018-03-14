@@ -7,7 +7,7 @@
         android:id="@+id/name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_ffffff"
+        android:textColor="@color/color_FFFFFF"
         android:layout_centerInParent="true"
         android:textSize="@dimen/sp_14"/>
 

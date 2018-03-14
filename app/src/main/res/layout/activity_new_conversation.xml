@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:dividerHeight="@dimen/px_1"
-        android:background="@color/color_ffffff"
+        android:background="@color/color_FFFFFF"
         android:divider="@color/color_f1f1f1"/>
 
     <connect.widget.SideBar

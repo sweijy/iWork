@@ -14,7 +14,7 @@
         android:id="@id/layout_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_ffffff"
+        android:background="@color/color_FFFFFF"
         android:paddingBottom="@dimen/dp_5"
         android:paddingTop="@dimen/dp_5">
 

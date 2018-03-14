@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
+import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.ui.activity.R;
 import connect.utils.glide.GlideUtil;
 import instant.bean.ChatMsgEntity;
@@ -43,8 +44,8 @@ public class MsgCardHolder extends MsgChatHolder {
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").
                             navigation();
                 } else {
-                    ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                            .withString("uid", uid)
+                    ARouter.getInstance().build("/iwork/contact/ContactDepartmentActivity")
+                            .withString("userName",uid)
                             .navigation();
                 }
             }

@@ -53,7 +53,7 @@ public class CycleViewPager extends RelativeLayout{
         linDot = (LinearLayout)view.findViewById(R.id.lin_dot);
         pagerHandler = new CyclePagerHandler(viewPager);
         pagerHandler.sendEmptyMessageDelayed(1, 3000);
-        listData = new ArrayList<Connect.Banner>();
+        listData = new ArrayList<>();
         myPagerAdapter = new MyPagerAdapter(listData,pagerHandler,context);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

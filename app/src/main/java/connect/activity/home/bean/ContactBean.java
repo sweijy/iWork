@@ -13,6 +13,7 @@ public class ContactBean {
     private int count;
     private String ou;
     private int gender;
+    private String userName;
 
     public ContactBean() {
     }
@@ -84,5 +85,13 @@ public class ContactBean {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

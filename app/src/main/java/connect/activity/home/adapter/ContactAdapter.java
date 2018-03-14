@@ -92,7 +92,15 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     ((FriendHolder) holder).topTv.setText(currLetter);
                 }
                 ((FriendHolder) holder).ouTv.setText(currBean.getOu());
-                GlideUtil.loadAvatarRound(((FriendHolder) holder).avatar, currBean.getAvatar());
+                if(TextUtils.isEmpty(currBean.getAvatar())){
+                    ((FriendHolder) holder).avatarNameRimg.setVisibility(View.VISIBLE);
+                    ((FriendHolder) holder).avatar.setVisibility(View.GONE);
+                    ((FriendHolder) holder).avatarNameRimg.setAvatarName(currBean.getName(), currBean.getGender());
+                }else{
+                    ((FriendHolder) holder).avatarNameRimg.setVisibility(View.GONE);
+                    ((FriendHolder) holder).avatar.setVisibility(View.VISIBLE);
+                    GlideUtil.loadAvatarRound(((FriendHolder) holder).avatar, currBean.getAvatar());
+                }
                 ((FriendHolder) holder).name.setText(currBean.getName());
                 break;
             case STATUS_FRIEND_CONNECT:// 机器人 组织架构 群组
@@ -167,6 +175,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View lineView;
         TextView ouTv;
         TextView lineTv;
+        connect.widget.DepartmentAvatar avatarNameRimg;
 
         public FriendHolder(View itemView) {
             super(itemView);
@@ -177,6 +186,8 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             lineView = itemView.findViewById(R.id.line_view);
             ouTv = (TextView)itemView.findViewById(R.id.ou_tv);
             lineTv = (TextView)itemView.findViewById(R.id.line_tv);
+            avatarNameRimg = (connect.widget.DepartmentAvatar)itemView.findViewById(R.id.avatar_name_rimg);
+
         }
     }
 

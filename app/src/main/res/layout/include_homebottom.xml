@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
-                android:background="@color/color_ffffff"
+                android:background="@color/color_FFFFFF"
                 android:orientation="horizontal">
 
     <LinearLayout
@@ -48,7 +48,7 @@
                 android:layout_marginLeft="@dimen/dp__10"
                 android:layout_marginTop="@dimen/dp_2"
                 android:layout_toRightOf="@id/msg_content_rela"
-                android:textColor="@color/color_white"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_6"
                 android:visibility="gone"/>
         </RelativeLayout>
@@ -88,7 +88,7 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:layout_marginLeft="@dimen/dp__10"
                 android:layout_toRightOf="@id/contact_content_rela"
-                android:textColor="@color/color_white"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_6"
                 android:visibility="gone"/>
         </RelativeLayout>

@@ -69,14 +69,12 @@ public class ContactListManage {
         Collections.sort(loacalFriend, friendCompare);
         ArrayList<ContactBean> friendList = new ArrayList<>();
         for(ContactEntity friendEntity : loacalFriend){
-            if(friendEntity.getUid().equals(pubKeyExc))
-                continue;
-
             ContactBean contactBean = new ContactBean();
             contactBean.setName(friendEntity.getName());
             contactBean.setAvatar(friendEntity.getAvatar());
             contactBean.setUid(friendEntity.getUid());
             contactBean.setOu(friendEntity.getOu());
+            contactBean.setUserName(friendEntity.getUsername());
             contactBean.setGender(friendEntity.getGender() == null ? 1 : friendEntity.getGender());
             if(friendEntity.getUid().equals(sysName) && friendEntity.getName().equals(sysName)){
                 contactBean.setStatus(6);
@@ -151,6 +149,7 @@ public class ContactListManage {
         contactEntity.setUid(workmate.getUid());
         contactEntity.setOu(workmate.getOU());
         contactEntity.setUsername(workmate.getUsername());
+        contactEntity.setOrganizational(workmate.getOrganizational());
         return contactEntity;
     }
 

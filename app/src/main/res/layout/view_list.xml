@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_18"
-        android:textColor="@color/color_ffffff"
+        android:textColor="@color/color_FFFFFF"
         android:paddingBottom="@dimen/dp_15"/>
 
     <LinearLayout

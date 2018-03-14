@@ -337,9 +337,10 @@ string username=1;
  string uid=3;
  int32 role=4;
  string nick=5;
- string pub_key=6;
- string salt=7;
- string name = 8;
+ string name = 6;
+ string ou = 7;
+ bool mute = 8;
+ bool top=9;
 }
 
 message GroupApplyChange {
@@ -1750,17 +1751,16 @@ string password = 2;
 }
 
 message UserLoginInfo {
- string token = 1;
- bool logined = 2;
- string name = 3;
- string o_u = 4;
- string uid = 5;
- string avatar = 6;
- string pub_key = 7;
- string emp_no = 8;
- string mobile = 9;
- int32  gender = 10;
- string tips = 11;
+  string token = 1;
+  bool logined = 2;
+  string name = 3;
+  string o_u = 4;
+  string uid = 5;
+  string avatar = 6;
+  string emp_no = 7;
+  string mobile = 8;
+  int32 gender = 9;
+  string tips = 10;
 }
 
 message HttpRequest {
@@ -1998,4 +1998,34 @@ message RecordsUpdate {
 
 message GcmAad {
  bytes aad = 1;
+}
+
+message SessionSet {
+ string uid = 1;
+ bool val =2;
+}
+
+message SessionInfo {
+ bool mute = 1;
+ bool top = 2;
+}
+
+
+message GetSession {
+ string uid =1;
+ string friendId = 2;
+}
+
+message SearchGroupResult {
+repeated Group groups = 1;
+repeated GroupMemberMatch members = 2;
+}
+
+message SearchGroup {
+ string name = 1;
+}
+
+message GroupMemberMatch {
+Group group = 1;
+GroupMember member = 2;
 }

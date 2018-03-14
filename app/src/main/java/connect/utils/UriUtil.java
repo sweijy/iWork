@@ -11,8 +11,6 @@ public class UriUtil {
     private static String  addressVisitor = ConfigUtil.getInstance().visitorAddress();
     /** 仓库服务器地址 */
     private static String  addressWarehouse = ConfigUtil.getInstance().warehouseAddress();
-    /** iWork服务器地址 */
-    private static String  addressServiceTemp = "http://192.168.40.110:18087";
 
     /** =================================== iWork ==================================== */
     /** Upload a file */
@@ -26,13 +24,13 @@ public class UriUtil {
 
     public static String CONNECT_V3_USERS_FOLLOW = addressService + "/bm/users/v1/users/follow";
 
-    public static String CONNECT_V3_API_BANNERS = addressServiceTemp + "/bm/apps/v1/api/banners";
+    public static String CONNECT_V3_API_BANNERS = addressService + "/bm/apps/v1/api/banners";
 
-    public static String CONNECT_V3_API_APPLICATIONS = addressServiceTemp + "/bm/apps/v1/api/applications";
+    public static String CONNECT_V3_API_APPLICATIONS = addressService + "/bm/apps/v1/api/applications";
 
-    public static String CONNECT_V3_API_APPLICATIONS_ADD = addressServiceTemp + "/bm/apps/v1/api/applications/add";
+    public static String CONNECT_V3_API_APPLICATIONS_ADD = addressService + "/bm/apps/v1/api/applications/add";
 
-    public static String CONNECT_V3_API_APPLICATIONS_DEL = addressServiceTemp + "/bm/apps/v1/api/applications/del";
+    public static String CONNECT_V3_API_APPLICATIONS_DEL = addressService + "/bm/apps/v1/api/applications/del";
     /** 根据 部门id查询 所有员工 */
     public static String CONNECT_V3_DEPAERTMENT_WORKMATES = addressService + "/bm/users/v1/department/workmates";
     /** 群成员邀请入群 */
@@ -43,6 +41,8 @@ public class UriUtil {
     public static String AVATAR_V1_SET = addressService + "/bm/users/v1/setting/avatar";
     /** 同步组织架构 */
     public static String BM_USERS_V1_SYNC_WORKMATE = addressService + "/bm/users/v1/sync_workmate";
+    /** 搜索群组 SearchGroup  SearchGroupResult */
+    public static String BM_USERS_V1_GROUP_SEARCH = addressService + "/bm/users/v1/group/search";
 
     /** =================================== setting group ==================================== */
     /** create group */

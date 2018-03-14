@@ -50,7 +50,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:maxWidth="@dimen/dp_120"
-                android:textColor="@color/color_white"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_14"/>
         </LinearLayout>
 

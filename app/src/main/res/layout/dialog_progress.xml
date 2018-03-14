@@ -21,7 +21,7 @@
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:layout_gravity="center_horizontal"
-                android:indeterminateTint="@color/color_ffffff"
+                android:indeterminateTint="@color/color_FFFFFF"
                 android:indeterminateTintMode="src_atop"
                 tools:targetApi="lollipop"/>
 
@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_10"
-                android:textColor="@color/color_ffffff"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_14"
                 android:text="@string/Common_Loading"/>
 

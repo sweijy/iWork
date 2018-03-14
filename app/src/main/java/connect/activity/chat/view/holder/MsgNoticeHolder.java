@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.ui.activity.R;
 import instant.bean.ChatMsgEntity;
 import protos.Connect;
@@ -66,8 +67,8 @@ public class MsgNoticeHolder extends MsgBaseHolder {
                         public void onClick(View v) {
                             try {
                                 String friendUid = notifyMessage.getExtion();
-                                ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                                        .withString("uid",friendUid)
+                                ARouter.getInstance().build("/iwork/contact/ContactDepartmentActivity")
+                                        .withString("userName",friendUid)
                                         .navigation();
                             } catch (Exception e) {
                                 e.printStackTrace();

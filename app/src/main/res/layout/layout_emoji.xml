@@ -25,7 +25,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_1"
-        android:background="@color/color_line_diviver" />
+        android:background="@color/color_EEEEEE" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"

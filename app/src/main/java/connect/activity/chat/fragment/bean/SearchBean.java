@@ -6,13 +6,15 @@ package connect.activity.chat.fragment.bean;
 
 public class SearchBean {
 
+    private int style;
+    private int status;
     private String uid;
     private String avatar;
     private String name;
+    private String userName;
     private String searchStr;
     private String hinit;
-    private int style;
-    private int status;
+    private int gender;
 
     public String getUid() {
         return uid;
@@ -68,5 +70,21 @@ public class SearchBean {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

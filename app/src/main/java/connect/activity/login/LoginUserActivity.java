@@ -19,7 +19,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.protobuf.ByteString;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,13 +28,11 @@ import connect.activity.home.bean.HomeAction;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.ui.activity.R;
-import connect.utils.StringUtil;
 import connect.utils.ToastUtil;
 import connect.utils.UriUtil;
 import connect.utils.dialog.DialogUtil;
 import connect.utils.okhttp.HttpRequest;
 import connect.utils.okhttp.ResultCall;
-import connect.wallet.jni.AllNativeMethod;
 import protos.Connect;
 
 /**
@@ -85,8 +82,8 @@ public class LoginUserActivity extends BaseActivity {
         relativeLogin.setEnabled(false);
 
         //// TODO: 2018/3/13 测试
-        nameEt.setText("jinlong.pu");
-        passwordEt.setText("Bitmain.com1!");
+        nameEt.setText("wei_li");
+        passwordEt.setText("Qwer1234");
 
         String deveiceName = getIntent().getStringExtra("VALUE");
         if (!TextUtils.isEmpty(deveiceName)) {
@@ -128,12 +125,10 @@ public class LoginUserActivity extends BaseActivity {
                 mActivity.getString(R.string.Login_Connect_Change_Password),
                 "", "", false, new DialogUtil.OnItemClickListener() {
                     @Override
-                    public void confirm(String value) {
-                    }
+                    public void confirm(String value) {}
 
                     @Override
-                    public void cancel() {
-                    }
+                    public void cancel() {}
                 });
     }
 
@@ -197,12 +192,10 @@ public class LoginUserActivity extends BaseActivity {
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {

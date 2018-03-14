@@ -19,6 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Set_Help_and_feedback"
-        android:textColor="@color/color_white"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="@dimen/sp_14" />
 </LinearLayout>

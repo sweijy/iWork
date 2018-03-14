@@ -39,8 +39,8 @@ import connect.activity.base.BaseListener;
 import connect.activity.contact.bean.MsgSendBean;
 import connect.activity.home.bean.HomeAction;
 import connect.activity.home.bean.MsgNoticeBean;
-import connect.activity.home.fragment.ContactFragment;
 import connect.activity.home.fragment.ConversationFragment;
+import connect.activity.home.fragment.DepartmentFragment;
 import connect.activity.home.fragment.SetFragment;
 import connect.activity.home.fragment.WorkbenchFragment;
 import connect.activity.home.view.CheckUpdate;
@@ -101,7 +101,7 @@ public class HomeActivity extends BaseFragmentActivity {
     private HomeActivity activity;
 
     private ConversationFragment chatListFragment;
-    private ContactFragment contactFragment;
+    private DepartmentFragment departmentFragment;
     private WorkbenchFragment workbenchFragment;
     private SetFragment setFragment;
     private ResolveUrlUtil resolveUrlUtil;
@@ -341,7 +341,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
     public void setDefaultFragment() {
         chatListFragment = ConversationFragment.startFragment();
-        contactFragment = ContactFragment.startFragment();
+        departmentFragment = DepartmentFragment.startFragment();
         workbenchFragment = WorkbenchFragment.startFragment();
         setFragment = SetFragment.startFragment();
 
@@ -371,10 +371,10 @@ public class HomeActivity extends BaseFragmentActivity {
                 }
                 break;
             case 1:
-                if (!contactFragment.isAdded()) {
-                    fragmentTransaction.add(R.id.home_content, contactFragment);
+                if (!departmentFragment.isAdded()) {
+                    fragmentTransaction.add(R.id.home_content, departmentFragment);
                 } else {
-                    fragmentTransaction.show(contactFragment);
+                    fragmentTransaction.show(departmentFragment);
                 }
                 break;
             case 2:

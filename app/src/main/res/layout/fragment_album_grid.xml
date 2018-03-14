@@ -81,7 +81,7 @@
             android:paddingLeft="@dimen/dp_12"
             android:paddingRight="@dimen/dp_6"
             android:text="@string/Chat_All_Image_Video"
-            android:textColor="@color/color_white"
+            android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/sp_16"/>
 
         <TextView

@@ -13,7 +13,7 @@
         android:id="@+id/title_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
-        android:background="@color/color_ffffff"
+        android:background="@color/color_FFFFFF"
         android:paddingLeft="@dimen/dp_15"
         android:gravity="center_vertical"
         android:textSize="@dimen/sp_14"
@@ -22,7 +22,7 @@
 
     <View
         style="@style/BaseViewLine.eeeeee"
-        android:background="@color/color_FBFBFB"
+        android:background="@color/color_E7E7E7"
         android:layout_height="@dimen/dp_1"/>
 
     <LinearLayout
@@ -32,21 +32,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@drawable/selector_list_item_bg">
-        <!--<RelativeLayout
-            android:id="@+id/avatar_rela"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_9"
-            android:paddingBottom="@dimen/dp_9"
-            android:background="@color/color_FBFBFB">
-            <ImageView
-                android:id="@+id/avatar_image"
-                android:layout_width="@dimen/dp_38"
-                android:layout_height="@dimen/dp_38"
-                android:scaleType="fitXY"/>
-        </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/avatar_rela"
@@ -55,8 +40,7 @@
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
             android:paddingTop="@dimen/dp_9"
-            android:paddingBottom="@dimen/dp_9"
-            android:background="@color/color_FBFBFB">
+            android:paddingBottom="@dimen/dp_9">
             <connect.widget.DepartmentAvatar
                 android:id="@+id/avatar_rimg"
                 android:layout_width="@dimen/dp_38"
@@ -92,7 +76,5 @@
                 android:textColor="@color/color_858998"/>
         </LinearLayout>
     </LinearLayout>
-
-
 
 </LinearLayout>

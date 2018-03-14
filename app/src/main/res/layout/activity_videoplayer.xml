@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/img2"
-            android:textColor="@color/color_white"
+            android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/sp_14"/>
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_7"
             android:layout_centerVertical="true"
-            android:textColor="@color/color_white"
+            android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/sp_14"/>
 
         <ProgressBar

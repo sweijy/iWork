@@ -110,7 +110,7 @@ public class ContactHelper extends BaseDao {
 
     public ContactEntity loadFriendByUid(String uid) {
         QueryBuilder<ContactEntity> queryBuilder = contactEntityDao.queryBuilder();
-        queryBuilder.where(ContactEntityDao.Properties.Uid.eq(uid)).build();
+        queryBuilder.where(ContactEntityDao.Properties.Username.eq(uid)).build();
         List<ContactEntity> friendEntities = queryBuilder.list();
         ContactEntity contactEntity = null;
         if (friendEntities != null && friendEntities.size() > 0) {

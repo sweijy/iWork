@@ -41,7 +41,7 @@ public class DVideoProView extends View {
     }
 
     protected void initView() {
-        mPaint.setColor(getContext().getResources().getColor(R.color.color_white));
+        mPaint.setColor(getContext().getResources().getColor(R.color.color_FFFFFF));
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(SystemUtil.pxToSp(2));

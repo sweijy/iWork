@@ -39,9 +39,12 @@ import connect.widget.TopToolBar;
 import instant.utils.SharedUtil;
 import protos.Connect;
 
+/**
+ * 个人信息
+ * (1.0版本隐藏)
+ */
 @Route(path = "/iwork/contact/ContactInfoActivity")
 public class ContactInfoActivity extends BaseActivity {
-
 
     @Autowired
     String uid;
@@ -101,7 +104,7 @@ public class ContactInfoActivity extends BaseActivity {
             genderImage.setImageResource(R.mipmap.woman);
         }
 
-        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
+        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUsername()) == null) {
             contactBtn.setText(R.string.Link_Add_contacts);
             contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_414141));
         } else {
@@ -126,7 +129,7 @@ public class ContactInfoActivity extends BaseActivity {
 
     @OnClick(R.id.contact_btn)
     void attention(View view) {
-        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUid()) == null) {
+        if (ContactHelper.getInstance().loadFriendByUid(contactEntity.getUsername()) == null) {
             addFollow(true);
         } else {
             DialogUtil.showAlertTextView(mActivity, getString(R.string.Set_tip_title),
@@ -171,7 +174,7 @@ public class ContactInfoActivity extends BaseActivity {
                     contactEntity = ContactListManage.getInstance().convertContactEntity(workmate);
                     showView();
                     // 更新通信录好友头像
-                    final ContactEntity contactEntityLocal = ContactHelper.getInstance().loadFriendByUid(workmate.getUid());
+                    final ContactEntity contactEntityLocal = ContactHelper.getInstance().loadFriendByUid(workmate.getUsername());
                     if (contactEntityLocal != null) {
                         if (!workmate.getAvatar().equals(contactEntityLocal.getAvatar())) {
                             contactEntityLocal.setAvatar(workmate.getAvatar());

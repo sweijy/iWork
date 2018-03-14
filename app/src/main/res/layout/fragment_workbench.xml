@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_ffffff"
+    android:background="@color/color_FFFFFF"
     android:orientation="vertical">
 
     <LinearLayout
@@ -32,6 +32,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:drawableLeft="@mipmap/department_search"
+                    android:textSize="@dimen/sp_12"
                     android:drawablePadding="@dimen/dp_5"
                     android:text="@string/Common_The_search_application" />
             </RelativeLayout>
@@ -50,7 +51,7 @@
                 android:padding="@dimen/dp_5"
                 android:singleLine="true"
                 android:text="@string/Common_Management"
-                android:textColor="@color/color_ffffff"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
     </LinearLayout>

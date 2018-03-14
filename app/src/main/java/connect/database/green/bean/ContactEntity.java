@@ -16,8 +16,6 @@ public class ContactEntity implements Serializable {
     @Id(autoincrement = true)
     private Long _id;
 
-    @NotNull
-    @Unique
     private String uid;
     private String name;
     private String avatar;
@@ -28,12 +26,14 @@ public class ContactEntity implements Serializable {
     private Integer gender;
     private String tips;
     private Boolean registed;
+    @NotNull
+    @Unique
     private String Username;
     private String organizational;
-    @Generated(hash = 544985471)
-    public ContactEntity(Long _id, @NotNull String uid, String name, String avatar,
+    @Generated(hash = 1544462309)
+    public ContactEntity(Long _id, String uid, String name, String avatar,
             String ou, String publicKey, String empNo, String mobile,
-            Integer gender, String tips, Boolean registed, String Username,
+            Integer gender, String tips, Boolean registed, @NotNull String Username,
             String organizational) {
         this._id = _id;
         this.uid = uid;
@@ -130,5 +130,6 @@ public class ContactEntity implements Serializable {
     public void setOrganizational(String organizational) {
         this.organizational = organizational;
     }
+
     
 }

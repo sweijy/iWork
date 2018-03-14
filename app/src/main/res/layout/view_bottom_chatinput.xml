@@ -80,7 +80,7 @@
         android:paddingRight="@dimen/dp_5"
         android:paddingTop="@dimen/dp_7"
         android:text="@string/Link_Send"
-        android:textColor="@color/color_white"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="@dimen/sp_14"
         android:visibility="gone" />
 </LinearLayout>

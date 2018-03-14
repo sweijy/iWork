@@ -52,7 +52,7 @@
             android:paddingLeft="@dimen/dp_6"
             android:paddingRight="@dimen/dp_6"
             android:text="@string/Common_OK"
-            android:textColor="@color/color_white"
+            android:textColor="@color/color_FFFFFF"
             android:textSize="@dimen/sp_14"/>
 
     </RelativeLayout>

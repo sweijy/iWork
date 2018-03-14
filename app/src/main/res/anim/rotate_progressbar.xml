@@ -13,7 +13,7 @@
             android:centerColor="@color/color_f1f1f1"
             android:centerY="0.50"
             android:endColor="@color/color_black"
-            android:startColor="@color/color_white"
+            android:startColor="@color/color_FFFFFF"
             android:type="sweep"
             android:useLevel="false"/>
     </shape>

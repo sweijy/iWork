@@ -97,7 +97,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.itemRelative.setBackgroundResource(R.color.color_F5F5F5);
         } else {
             holder.topImg.setVisibility(View.GONE);
-            holder.itemRelative.setBackgroundResource(R.color.color_WHITE);
+            holder.itemRelative.setBackgroundResource(R.color.color_FFFFFF);
         }
 
         holder.itemRelative.setTag(R.id.position, position);
@@ -126,7 +126,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 if (roomAttr.getTop() == 1) {
 
                 } else {
-                    view.setBackgroundColor(context.getResources().getColor(R.color.color_WHITE));
+                    view.setBackgroundColor(context.getResources().getColor(R.color.color_FFFFFF));
                 }
             }
 

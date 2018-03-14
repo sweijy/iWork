@@ -20,6 +20,7 @@ import connect.activity.chat.bean.RoomSession;
 import connect.activity.chat.view.MsgStateView;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.MessageHelper;
+import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ToastEUtil;
@@ -105,8 +106,8 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
                                     navigation();
                         } else if (direct == MsgDirect.From) {
                             String uid = RoomSession.getInstance().getRoomKey();
-                            ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                                    .withString("uid",uid)
+                            ARouter.getInstance().build("/iwork/contact/ContactDepartmentActivity")
+                                    .withString("userName",uid)
                                     .navigation();
                         }
                     }
@@ -124,8 +125,8 @@ public abstract class MsgChatHolder extends MsgBaseHolder {
                                     navigation();
                         } else if (direct == MsgDirect.From) {
                             String memberKey = msgExtEntity.getMessage_from();
-                            ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
-                                    .withString("uid",memberKey)
+                            ARouter.getInstance().build("/iwork/contact/ContactDepartmentActivity")
+                                    .withString("userName",memberKey)
                                     .navigation();
                         }
                     }

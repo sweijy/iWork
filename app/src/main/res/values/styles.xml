@@ -88,7 +88,7 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:layout_marginLeft">@dimen/dp_20</item>
         <item name="android:layout_marginRight">@dimen/dp_20</item>
-        <item name="android:textColor">@color/color_ffffff</item>
+        <item name="android:textColor">@color/color_FFFFFF</item>
         <item name="android:background">@drawable/select_btn_stroke</item>
         <item name="android:textAllCaps">false</item>
     </style>
@@ -109,7 +109,7 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:layout_marginLeft">@dimen/dp_20</item>
         <item name="android:layout_marginRight">@dimen/dp_20</item>
-        <item name="android:textColor">@color/color_ffffff</item>
+        <item name="android:textColor">@color/color_FFFFFF</item>
         <item name="android:background">@drawable/select_btn_red_stroke</item>
     </style>
 
@@ -117,7 +117,7 @@
         <item name="android:layout_width">@dimen/dp_60</item>
         <item name="android:layout_height">@dimen/dp_30</item>
         <item name="android:textSize">@dimen/sp_12</item>
-        <item name="android:textColor">@color/color_ffffff</item>
+        <item name="android:textColor">@color/color_FFFFFF</item>
         <item name="android:background">@drawable/select_btn_short_stroke</item>
         <item name="android:textAllCaps">false</item>
     </style>
@@ -157,7 +157,7 @@
     </style>
 
     <style name="BaseViewLine.eeeeee">
-        <item name="android:background">@color/color_eeeeee</item>
+        <item name="android:background">@color/color_EEEEEE</item>
     </style>
 
     <style name="BaseViewLine.f1f1f1">

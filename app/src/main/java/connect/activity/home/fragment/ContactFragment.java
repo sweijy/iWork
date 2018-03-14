@@ -31,6 +31,7 @@ import protos.Connect;
 
 /**
  * The address book contacts
+ * (1.0版本隐藏)
  */
 @Route(path = "/iwork/home/fragment/ContactFragment")
 public class ContactFragment extends BaseFragment {
@@ -109,7 +110,7 @@ public class ContactFragment extends BaseFragment {
                             .navigation();
                     break;
                 case 1:
-                    ContactEntity contactEntity = ContactHelper.getInstance().loadFriendByUid(entity.getUid());
+                    ContactEntity contactEntity = ContactHelper.getInstance().loadFriendByUid(entity.getUserName());
                     ARouter.getInstance().build("/iwork/contact/ContactInfoActivity")
                             .withString("uid",contactEntity.getUid())
                             .withSerializable("contactEntity", contactEntity)

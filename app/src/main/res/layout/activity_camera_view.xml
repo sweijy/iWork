@@ -19,7 +19,7 @@
         android:paddingRight="@dimen/dp_20"
         android:text="@string/Login_Camera_guide_tip"
         android:layout_marginBottom="@dimen/dp_40"
-        android:textColor="@color/color_ffffff"/>
+        android:textColor="@color/color_FFFFFF"/>
 
     <RelativeLayout
         android:id="@+id/bottom_rela"

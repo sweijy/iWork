@@ -3,7 +3,7 @@
     android:id="@id/relative_item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_60"
-    android:background="@color/color_white"
+    android:background="@color/color_FFFFFF"
     android:gravity="center_vertical">
 
     <RelativeLayout

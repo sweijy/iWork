@@ -36,6 +36,7 @@ import protos.Connect;
 
 /**
  *  组织架构
+ *  (1.0版本隐藏)
  */
 @Route(path = "/iwork/contact/DepartmentActivity")
 public class DepartmentActivity extends BaseActivity {

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginTop="@dimen/px_1"
-        android:background="@color/color_ffffff"
+        android:background="@color/color_FFFFFF"
         android:scrollbars="none">
 
         <connect.widget.NameLinear
