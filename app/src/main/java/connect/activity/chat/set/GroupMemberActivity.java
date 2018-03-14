@@ -31,6 +31,7 @@ import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.utils.dialog.DialogUtil;
+import connect.utils.glide.GlideUtil;
 import connect.widget.SideBar;
 import connect.widget.TopToolBar;
 
@@ -49,10 +50,6 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
     ImageView roundimg;
     @Bind(R.id.name)
     TextView name;
-    @Bind(R.id.department)
-    TextView department;
-    @Bind(R.id.groupat_manager)
-    TextView groupatManager;
     @Bind(R.id.recordview)
     RecyclerView recordview;
     @Bind(R.id.siderbar)
@@ -81,9 +78,8 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
     @Override
     public void initView() {
         activity = this;
-        toolbar.setRedStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setRightText(getResources().getString(R.string.Chat_Member_All));
+        toolbar.setRightImg(R.mipmap.icon_selectmore);
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +104,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
                         if (string.equals(getString(R.string.Chat_Member_Add))) {
                             ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
                                     .withBoolean("isCreateGroup", false)
-                                    .withString("uid", groupIdentify)
+                                    .withString("identify", groupIdentify)
                                     .navigation();
                         } else if (string.equals(getString(R.string.Chat_Member_Remove))) {
                             ARouter.getInstance().build("/iwork/chat/exts/GroupRemoveActivity")
@@ -123,6 +119,10 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
         memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
         Collections.sort(memEntities, new GroupComPara());
 
+        GroupMemberEntity manageEntity = memEntities.get(0);
+        GlideUtil.loadAvatarRound(roundimg, manageEntity.getAvatar());
+        name.setText(manageEntity.getUsername());
+
         layoutManager = new LinearLayoutManager(activity);
         recordview.setLayoutManager(layoutManager);
         memberAdapter = new GroupMemberAdapter();
@@ -130,6 +130,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
         memberAdapter.setData(memEntities);
         recordview.addItemDecoration(new LineDecoration(activity));
         siderbar.setOnTouchingLetterChangedListener(new GroupMemberLetterChanged());
+
         new GroupMemberPresenter(this).start();
     }
 

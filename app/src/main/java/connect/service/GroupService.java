@@ -17,26 +17,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import connect.activity.chat.bean.RecExtBean;
 import connect.activity.contact.bean.ContactNotice;
 import connect.activity.home.bean.GroupRecBean;
+import connect.activity.login.bean.UserBean;
+import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
-import connect.database.green.DaoHelper.MessageHelper;
 import connect.database.green.bean.ConversionSettingEntity;
 import connect.database.green.bean.GroupEntity;
 import connect.database.green.bean.GroupMemberEntity;
-import connect.database.green.bean.MessageEntity;
-import connect.instant.model.CGroupChat;
-import connect.ui.activity.R;
 import connect.utils.ProtoBufUtil;
 import connect.utils.RegularUtil;
-import connect.utils.TimeUtil;
 import connect.utils.UriUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
-import instant.bean.ChatMsgEntity;
-import instant.utils.manager.FailMsgsManager;
 import protos.Connect;
 
 public class GroupService extends Service {
@@ -113,6 +107,9 @@ public class GroupService extends Service {
                             ContactHelper.getInstance().inserGroupEntity(groupEntity);
                         }
 
+                        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
+                        String uid = userBean.getUid();
+
                         Map<String, GroupMemberEntity> memberEntityMap = new HashMap<>();
                         for (Connect.GroupMember member : groupInfo.getMembersList()) {
                             GroupMemberEntity memEntity = new GroupMemberEntity();
@@ -122,33 +119,14 @@ public class GroupService extends Service {
                             memEntity.setUsername(member.getName());
                             memEntity.setRole(member.getRole());
                             memberEntityMap.put(member.getUid(), memEntity);
+
+                            if (uid.equals(member.getUid())) {
+                                ConversionSettingHelper.getInstance().updateDisturb(groupIdentifier, member.getMute() ? 1 : 0);
+                            }
                         }
                         Collection<GroupMemberEntity> memberEntityCollection = memberEntityMap.values();
                         List<GroupMemberEntity> memEntities = new ArrayList<GroupMemberEntity>(memberEntityCollection);
                         ContactHelper.getInstance().inserGroupMemEntity(memEntities);
-
-                        String content = service.getResources().getString(R.string.Chat_Notice_New_Message);
-                        long messageTime = TimeUtil.getCurrentTimeInLong();
-//                        CGroupChat cGroupChat = new CGroupChat(groupEntity);
-//                        MessageEntity messageEntity = MessageHelper.getInstance().loadMsgLastOne(groupIdentifier);
-//                        if (messageEntity != null) {
-//                            content = messageEntity.messageToChatEntity().showContent();
-//                            messageTime = messageEntity.getCreatetime();
-//                        }
-//                        cGroupChat.updateRoomMsg("", content, messageTime, -1, 0, true, -1);
-//
-//                        Map<String, Object> failMaps = FailMsgsManager.getInstance().receiveFailMsgs(pubkey);
-//                        if (!failMaps.isEmpty()) {
-//                            for (Object obj : failMaps.values()) {
-//                                if (obj instanceof String) {
-//                                    ChatMsgEntity msgExtEntity = cGroupChat.noticeMsg(0, (String) obj, "");
-//                                    MessageHelper.getInstance().insertMsgExtEntity(msgExtEntity);
-//
-//                                    RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.MESSAGE_RECEIVE, pubkey, msgExtEntity);
-//                                }
-//                            }
-//                        }
-
                         ContactNotice.receiverGroup();
                     }
                 } catch (Exception e) {

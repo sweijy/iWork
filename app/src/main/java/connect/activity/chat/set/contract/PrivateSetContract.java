@@ -29,6 +29,8 @@ public interface PrivateSetContract {
 
     interface Presenter extends BasePresenter {
 
+        void pullSettingInfo();
+
         void switchTop(boolean checkon, BaseListener<Boolean> listener);
 
         void switchDisturb(boolean checkon,BaseListener<Boolean> listener);

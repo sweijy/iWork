@@ -89,14 +89,12 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         private ImageView headImg;
         private TextView txt;
         private TextView nameTxt;
-        private TextView departmentTxt;
 
         public MemberReHolder(View itemView) {
             super(itemView);
             txt = (TextView) itemView.findViewById(R.id.txt);
             headImg = (ImageView) itemView.findViewById(R.id.roundimg);
             nameTxt = (TextView) itemView.findViewById(R.id.name);
-            departmentTxt = (TextView) itemView.findViewById(R.id.department);
         }
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -102,27 +101,32 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
     }
 
     @Override
-    public void switchTop(String name, boolean state) {
+    public void switchTop(String name, final boolean state) {
         View view = findViewById(R.id.top);
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(name);
 
-        final Switch topToggle = (Switch) view.findViewById(R.id.toggle);
-        topToggle.setSelected(state);
-        topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(state);
+        toggle.setOnClickListener(new View.OnClickListener() {
+
+            boolean isSelect;
 
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                presenter.switchTop(b, new BaseListener<Boolean>() {
+            public void onClick(View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.switchTop(isSelect, new BaseListener<Boolean>() {
                     @Override
                     public void Success(Boolean ts) {
+                        toggle.setSelected(isSelect);
                         ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
                         if (conversionEntity == null) {
                             conversionEntity = new ConversionEntity();
                             conversionEntity.setIdentifier(uid);
                         }
 
-                        int top = b ? 1 : 0;
+                        int top = !state ? 1 : 0;
                         conversionEntity.setTop(top);
                         ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
                         ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
@@ -130,7 +134,6 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
 
                     @Override
                     public void fail(Object... objects) {
-                        topToggle.setChecked(!b);
                     }
                 });
             }
@@ -138,25 +141,32 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
     }
 
     @Override
-    public void switchDisturb(String name, boolean state) {
+    public void switchDisturb(String name, final boolean state) {
         View view = findViewById(R.id.mute);
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(name);
 
-        final Switch disturbToggle = (Switch) view.findViewById(R.id.toggle);
-        disturbToggle.setSelected(state);
-        disturbToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(state);
+        toggle.setOnClickListener(new View.OnClickListener() {
+
+            boolean isSelect;
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                presenter.switchDisturb(b, new BaseListener<Boolean>() {
+            public void onClick(View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.switchDisturb(isSelect, new BaseListener<Boolean>() {
                     @Override
                     public void Success(Boolean ts) {
-                        int disturb = b ? 1 : 0;
+                        toggle.setSelected(isSelect);
+
                         ConversionSettingEntity settingEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
                         if (settingEntity == null) {
                             settingEntity = new ConversionSettingEntity();
                             settingEntity.setIdentifier(uid);
                         }
+                        int disturb = isSelect ? 1 : 0;
                         settingEntity.setDisturb(disturb);
                         ConversionSettingHelper.getInstance().insertSetEntity(settingEntity);
                         ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
@@ -164,7 +174,6 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
 
                     @Override
                     public void fail(Object... objects) {
-                        disturbToggle.setChecked(!b);
                     }
                 });
             }
@@ -175,6 +184,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
     public void showContactInfo(View view) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout);
         layout.addView(view);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

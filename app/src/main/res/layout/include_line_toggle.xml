@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_42"
     android:background="@color/color_white"
+    android:gravity="center_vertical"
     android:paddingLeft="@dimen/dp_16"
     android:paddingRight="@dimen/dp_16">
 
@@ -11,16 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:gravity="center"
         android:textColor="@color/color_474747"
-        android:textSize="@dimen/sp_12" />
+        android:textSize="@dimen/sp_14" />
 
-    <Switch
+    <View
         android:id="@id/toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_24"
+        style="@style/BtnSwitchStyle"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:checked="false"
-        android:thumb="@drawable/switch_thumb"
-        android:track="@drawable/switch_track" />
+        android:layout_centerVertical="true" />
 </RelativeLayout>

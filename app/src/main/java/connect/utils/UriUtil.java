@@ -50,7 +50,7 @@ public class UriUtil {
     /** 点对点聊天置顶 */
     public static String BM_USERS_V1_TOP = addressService + "/bm/users/v1/session/top";
     /** 点对点聊天session 信息 */
-    public static String BM_USERS_V1_DEPARTMENT = addressService + "/bm/users/v1/department";
+    public static String BM_USERS_V1_SESSION_INFO = addressService + "/bm/users/v1/session/info";
 
     /** =================================== setting group ==================================== */
     /** create group */

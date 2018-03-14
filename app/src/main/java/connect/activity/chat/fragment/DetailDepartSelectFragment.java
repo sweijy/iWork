@@ -153,11 +153,6 @@ public class DetailDepartSelectFragment extends BaseFragment {
             public void removeUid(String uid) {
                 activity.removeWorkMate(uid);
             }
-
-            @Override
-            public void editClick() {
-
-            }
         });
 
         updateSelect();

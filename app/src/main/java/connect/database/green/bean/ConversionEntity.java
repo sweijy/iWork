@@ -1,12 +1,12 @@
 package connect.database.green.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class ConversionEntity implements Serializable {
@@ -21,6 +21,7 @@ public class ConversionEntity implements Serializable {
 
     private Integer type;
     private String name;
+    private String userName;
     private String avatar;
     private String draft;
     private String content;
@@ -30,19 +31,16 @@ public class ConversionEntity implements Serializable {
     private Integer top;
     private Long last_time;
 
-    @Generated(hash = 1944361742)
-    public ConversionEntity() {
-    }
-
-    @Generated(hash = 1456079774)
+    @Generated(hash = 1162971017)
     public ConversionEntity(Long _id, @NotNull String identifier, Integer type,
-            String name, String avatar, String draft, String content,
-            Integer unread_count, Integer unread_at, Integer unread_attention,
-            Integer top, Long last_time) {
+            String name, String userName, String avatar, String draft,
+            String content, Integer unread_count, Integer unread_at,
+            Integer unread_attention, Integer top, Long last_time) {
         this._id = _id;
         this.identifier = identifier;
         this.type = type;
         this.name = name;
+        this.userName = userName;
         this.avatar = avatar;
         this.draft = draft;
         this.content = content;
@@ -53,60 +51,82 @@ public class ConversionEntity implements Serializable {
         this.last_time = last_time;
     }
 
+    @Generated(hash = 1944361742)
+    public ConversionEntity() {
+    }
+
     public Long get_id() {
         return this._id;
     }
+
     public void set_id(Long _id) {
         this._id = _id;
     }
+
     public String getIdentifier() {
         return this.identifier;
     }
+
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
+
     public Integer getType() {
         return this.type;
     }
+
     public void setType(Integer type) {
         this.type = type;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getAvatar() {
         return this.avatar;
     }
+
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
     public String getDraft() {
         return this.draft;
     }
+
     public void setDraft(String draft) {
         this.draft = draft;
     }
+
     public String getContent() {
         return this.content;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
+
     public Integer getUnread_count() {
         return this.unread_count;
     }
+
     public void setUnread_count(Integer unread_count) {
         this.unread_count = unread_count;
     }
+
     public Integer getTop() {
         return this.top;
     }
+
     public void setTop(Integer top) {
         this.top = top;
     }
+
     public Long getLast_time() {
         return this.last_time;
     }
@@ -131,4 +151,11 @@ public class ConversionEntity implements Serializable {
         this.last_time = last_time;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

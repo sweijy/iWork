@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/color_white"
+        android:background="@color/color_00c400"
         android:orientation="vertical">
 
         <include

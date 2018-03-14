@@ -8,11 +8,11 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import connect.ui.activity.R;
+import connect.widget.VoiceVolumeView;
 import connect.widget.recordvoice.inter.RecordVoiceListener;
 
 /**
@@ -21,9 +21,8 @@ import connect.widget.recordvoice.inter.RecordVoiceListener;
 public class VoiceRecordView extends RelativeLayout implements RecordVoiceListener {
 
     private View view;
-    private ImageView recordStateImg;
+    private VoiceVolumeView volumeView;
     private TextView recordTipsTxt;
-
 
     public VoiceRecordView(Context context) {
         super(context);
@@ -43,7 +42,7 @@ public class VoiceRecordView extends RelativeLayout implements RecordVoiceListen
     protected void initView() {
         Context context = getContext();
         view = LayoutInflater.from(context).inflate(R.layout.view_voicerecord, this);
-        recordStateImg = (ImageView) view.findViewById(R.id.img_voicerecord_state);
+        volumeView = (VoiceVolumeView) view.findViewById(R.id.view_voice_volume);
         recordTipsTxt = (TextView) view.findViewById(R.id.txt_voicerecord_tips);
     }
 
@@ -54,36 +53,13 @@ public class VoiceRecordView extends RelativeLayout implements RecordVoiceListen
 
     @Override
     public void updateRecordVolume(int db) {
-        switch (db / 5) {
-            case 0:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_1);
-                break;
-            case 1:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_2);
-                break;
-            case 2:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_3);
-                break;
-            case 3:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_4);
-                break;
-            case 4:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_5);
-                break;
-            case 5:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_6);
-                break;
-            case 6:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_7);
-                break;
-            default:
-                recordStateImg.setImageResource(R.mipmap.ic_volume_8);
-        }
+        db = db / 5;
+        volumeView.setVolumePaint(db);
     }
 
     @Override
     public void cancelRecord() {
-        recordStateImg.setImageResource(R.mipmap.ic_volume_cancel);
+        volumeView.setBackgroundResource(R.mipmap.ic_volume_cancel);
         recordTipsTxt.setText(R.string.Chat_Loosen_The_Finger_Cancel_The_Sending);
         recordTipsTxt.setBackground(getResources().getDrawable(R.drawable.shape_stroke_red));
     }
@@ -96,7 +72,7 @@ public class VoiceRecordView extends RelativeLayout implements RecordVoiceListen
 
     @Override
     public void recordShort() {
-        recordStateImg.setImageResource(R.mipmap.ic_volume_wraning);
+        volumeView.setBackgroundResource(R.mipmap.ic_volume_wraning);
         recordTipsTxt.setText(R.string.Chat_Voice_Record_Short);
         handler.sendEmptyMessageDelayed(100, 200);
     }

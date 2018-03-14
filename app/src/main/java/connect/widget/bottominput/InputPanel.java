@@ -44,7 +44,8 @@ public class InputPanel extends LinearLayout {
     public void initView() {
         inputPanel = this;
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_inputpanel, this);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(params);
     }

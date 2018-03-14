@@ -65,7 +65,7 @@ public class NameLinear extends LinearLayout {
     }
 
     public int getCurrentDepartmentPosition() {
-        return list.size();
+        return list.size() - 1;
     }
 
     public Connect.Department getLastDepartment() {

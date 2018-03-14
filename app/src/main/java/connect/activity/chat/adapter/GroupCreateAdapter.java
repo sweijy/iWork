@@ -47,7 +47,8 @@ public class GroupCreateAdapter extends RecyclerView.Adapter<GroupCreateAdapter.
 
     @Override
     public int getItemCount() {
-        return contactEntities.size();
+        int count = contactEntities == null ? 0 : contactEntities.size();
+        return count;
     }
 
     class MemberHolder extends RecyclerView.ViewHolder {

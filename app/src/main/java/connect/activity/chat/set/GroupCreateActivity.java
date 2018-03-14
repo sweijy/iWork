@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,9 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
     RecyclerView recyclerview;
 
     @Autowired
-    ArrayList<Connect.Workmate> workmates;
+    ArrayList<Connect.Workmate> workmateList;
 
     private GroupCreateActivity activity;
-    boolean isCreate = true;
     private GroupCreateContract.Presenter presenter;
 
     @Override
@@ -55,6 +55,7 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
     }
 
@@ -80,9 +81,7 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
                 if (TextUtils.isEmpty(groupName)) {
                     groupName = edittxt1.getHint().toString();
                 }
-                if (isCreate) {
-                    presenter.createGroup(groupName);
-                }
+                presenter.createGroup(groupName);
 
                 Message message = new Message();
                 message.what = 100;
@@ -90,14 +89,29 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
             }
         });
 
+        workmateList = (ArrayList<Connect.Workmate>) getIntent().getSerializableExtra("workmateList");
+        StringBuffer stringBuffer = new StringBuffer();
         UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-        edittxt1.setHint(String.format(activity.getString(R.string.Link_user_friends), userBean.getName()));
+        stringBuffer.append(userBean.getName());
+        stringBuffer.append(",");
+        for (int i = 0; i < 2; i++) {
+            Connect.Workmate workmate = workmateList.get(i);
+            String showName = TextUtils.isEmpty(workmate.getName()) ?
+                    workmate.getUsername() :
+                    workmate.getName();
+            stringBuffer.append(showName);
 
+            if (i == 0) {
+                stringBuffer.append(",");
+            }
+        }
+
+        edittxt1.setText(stringBuffer.toString());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new LineDecoration(activity));
         GroupCreateAdapter adapter = new GroupCreateAdapter();
-        adapter.setData(workmates);
+        adapter.setData(workmateList);
         recyclerview.setAdapter(adapter);
 
         new GroupCreatePresenter(this).start();
@@ -117,7 +131,7 @@ public class GroupCreateActivity extends BaseActivity implements GroupCreateCont
 
     @Override
     public List<Connect.Workmate> groupMemberList() {
-        return workmates;
+        return workmateList;
     }
 
     @Override

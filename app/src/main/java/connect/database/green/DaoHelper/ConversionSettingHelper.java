@@ -6,9 +6,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 import connect.database.green.BaseDao;
-import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.ConversionSettingEntity;
-import connect.database.green.dao.ConversionEntityDao;
 import connect.database.green.dao.ConversionSettingEntityDao;
 
 /**
@@ -56,16 +54,6 @@ public class ConversionSettingHelper extends BaseDao {
         }
         setEntity = entity;
         conversionSettingEntityDao.insertOrReplace(setEntity);
-    }
-
-    public void updateBurnTime(String roomkey, long time) {
-        ConversionSettingEntity setEntity = loadSetEntity(roomkey);
-        if (setEntity == null) {
-            setEntity = new ConversionSettingEntity();
-            setEntity.setIdentifier(roomkey);
-        }
-        setEntity.setSnap_time(time);
-        insertSetEntity(setEntity);
     }
 
     public void updateDisturb(String roomkey, int state) {
