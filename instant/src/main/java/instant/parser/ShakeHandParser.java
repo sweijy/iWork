@@ -132,7 +132,8 @@ public class ShakeHandParser extends InterParse {
             SharedUtil.getInstance().updateUserLogin(1);
         }
 
-        requestFriendsByVersion();
+        //// TODO: 2018/3/14 屏蔽了同步通讯录
+        // requestFriendsByVersion();
         connectLogin();
         pullOffLineMsg();
         checkCurVersion();

@@ -18,7 +18,6 @@ import connect.database.green.bean.ContactEntity;
 import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.ConversionSettingEntity;
 import connect.ui.activity.R;
-import connect.utils.ProtoBufUtil;
 import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
@@ -45,30 +44,6 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
         uid = view.getUid();
         activity = view.getActivity();
 
-        boolean istop = false;
-        ConversionEntity roomEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
-        if (roomEntity == null) {
-            roomEntity = new ConversionEntity();
-            roomEntity.setIdentifier(uid);
-            roomEntity.setTop(0);
-        }
-        if (Integer.valueOf(1).equals(roomEntity.getTop())) {
-            istop = true;
-        }
-        view.switchTop(activity.getResources().getString(R.string.Chat_Sticky_on_Top_chat), istop);
-
-        boolean isDisturb = false;
-        ConversionSettingEntity chatSetEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
-        if (chatSetEntity == null) {
-            chatSetEntity = new ConversionSettingEntity();
-            chatSetEntity.setIdentifier(uid);
-            chatSetEntity.setDisturb(0);
-        }
-        if (Integer.valueOf(1).equals(chatSetEntity.getDisturb())) {
-            isDisturb = true;
-        }
-        view.switchDisturb(activity.getResources().getString(R.string.Chat_Mute_Notification), isDisturb);
-
         ContactEntity friendEntity = new ContactEntity();
         friendEntity.setAvatar(view.getAvatar());
         friendEntity.setUid(uid);
@@ -80,7 +55,6 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
             View headerview = LayoutInflater.from(activity).inflate(R.layout.linear_contact, null);
             ImageView headimg = (ImageView) headerview.findViewById(R.id.roundimg);
             TextView name = (TextView) headerview.findViewById(R.id.name);
-
             if (TextUtils.isEmpty(entity.getName())) {
                 name.setVisibility(View.GONE);
             } else {
@@ -97,6 +71,68 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
             headerview.setTag(entity.getUid());
             view.showContactInfo(headerview);
         }
+
+        pullSettingInfo();
+    }
+
+    @Override
+    public void pullSettingInfo() {
+        Connect.SessionSet sessionSet = Connect.SessionSet.newBuilder()
+                .setUid(uid)
+                .build();
+
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_SESSION_INFO, sessionSet, new ResultCall<Connect.HttpResponse>() {
+            @Override
+            public void onResponse(Connect.HttpResponse response) {
+                try {
+                    Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
+                    Connect.SessionInfo sessionInfo = Connect.SessionInfo.parseFrom(structData.getPlainData());
+
+                    boolean mute = sessionInfo.getMute();
+                    boolean top = sessionInfo.getTop();
+                    ConversionSettingHelper.getInstance().updateDisturb(uid, mute ? 1 : 0);
+                    ConversionHelper.getInstance().updateRoomEntityTop(uid, top);
+                    checkMute();
+                    checkTop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Connect.HttpResponse response) {
+                checkMute();
+                checkTop();
+            }
+        });
+    }
+
+    public void checkTop() {
+        boolean istop = false;
+        ConversionEntity roomEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
+        if (roomEntity == null) {
+            roomEntity = new ConversionEntity();
+            roomEntity.setIdentifier(uid);
+            roomEntity.setTop(0);
+        }
+        if (Integer.valueOf(1).equals(roomEntity.getTop())) {
+            istop = true;
+        }
+        view.switchTop(activity.getResources().getString(R.string.Chat_Sticky_on_Top_chat), istop);
+    }
+
+    public void checkMute() {
+        boolean isDisturb = false;
+        ConversionSettingEntity chatSetEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
+        if (chatSetEntity == null) {
+            chatSetEntity = new ConversionSettingEntity();
+            chatSetEntity.setIdentifier(uid);
+            chatSetEntity.setDisturb(0);
+        }
+        if (Integer.valueOf(1).equals(chatSetEntity.getDisturb())) {
+            isDisturb = true;
+        }
+        view.switchDisturb(activity.getResources().getString(R.string.Chat_Mute_Notification), isDisturb);
     }
 
     @Override

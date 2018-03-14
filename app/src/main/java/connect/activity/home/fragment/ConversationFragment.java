@@ -242,7 +242,7 @@ public class ConversationFragment extends BaseFragment {
                             }
                         }
                     });
-                    int offsetX = SystemUtil.dipToPx(40);
+                    int offsetX = SystemUtil.dipToPx(30);
                     int offsetY = SystemUtil.dipToPx(30);
                     popWindow.showAsDropDown(toolbar.findViewById(R.id.relative_layout), offsetX, offsetY);
                 }

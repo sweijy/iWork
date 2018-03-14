@@ -2,6 +2,7 @@ package connect.activity.chat.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,11 +91,13 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             workmateSelectHolder.workmateSelectRelative.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (departSelectListener.isMoveSelect(workmateKey)) {
-                        boolean isselect = workmateSelectHolder.workmateSelectView.isSelected();
-                        isselect = !isselect;
-                        departSelectListener.workmateClick(isselect, department);
-                        workmateSelectHolder.workmateSelectView.setSelected(isselect);
+                    if (!TextUtils.isEmpty(department.getUid())) {
+                        if (departSelectListener.isMoveSelect(workmateKey)) {
+                            boolean isselect = workmateSelectHolder.workmateSelectView.isSelected();
+                            isselect = !isselect;
+                            departSelectListener.workmateClick(isselect, department);
+                            workmateSelectHolder.workmateSelectView.setSelected(isselect);
+                        }
                     }
                 }
             });

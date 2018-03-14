@@ -162,7 +162,16 @@ public class ConversionHelper extends BaseDao {
         QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
         queryBuilder.where(ConversionEntityDao.Properties.Type.eq(0)).build();
         List<ConversionEntity> conversionEntities = queryBuilder.list();
-        return (conversionEntities == null || conversionEntities.size() == 0) ? null : conversionEntities;
+        return conversionEntities;
+    }
+
+    public List<ConversionEntity> loadRecentConversationsLike(String string) {
+        QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
+        queryBuilder.where(ConversionEntityDao.Properties.Type.eq(0),
+                ConversionEntityDao.Properties.Name.like("%" + string + "%"))
+                .build();
+        List<ConversionEntity> conversionEntities = queryBuilder.list();
+        return conversionEntities;
     }
 
     public ConversionEntity loadRoomEnitity(String roomid) {
@@ -186,6 +195,17 @@ public class ConversionHelper extends BaseDao {
     }
 
     /************************ update *****************************************/
+    public void updateRoomEntityTop(String identify,boolean istop) {
+        ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(identify);
+        if (conversionEntity == null) {
+            conversionEntity = new ConversionEntity();
+            conversionEntity.setIdentifier(identify);
+        }
+        int top = (null == conversionEntity.getTop() || conversionEntity.getTop() == 0) ? 1 : 0;
+        conversionEntity.setTop(top);
+        ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+    }
+
     public void updateRoomEntity(ConversionEntity entity) {
         conversionEntityDao.update(entity);
     }

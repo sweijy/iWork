@@ -19,14 +19,14 @@
         android:id="@id/include_organization"
         layout="@layout/include_img_txt_manager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_60"
         android:layout_marginTop="@dimen/px_1" />
 
     <include
         android:id="@id/include_contacts"
         layout="@layout/include_img_txt_manager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_60"
         android:layout_marginTop="@dimen/px_1"
         android:visibility="gone" />
 

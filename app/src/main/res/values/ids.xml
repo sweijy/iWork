@@ -316,4 +316,5 @@
     <item name="view_workmate_select" type="id" />
     <item name="depart_avatar" type="id"/>
     <item name="linear_layout" type="id"/>
+    <item name="view_voice_volume" type="id"/>
 </resources>

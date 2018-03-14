@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -177,28 +175,34 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Sticky_on_Top_chat));
 
-        final Switch topToggle = (Switch) view.findViewById(R.id.toggle);
-        topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(top);
+        toggle.setOnClickListener(new View.OnClickListener() {
+
+            boolean isSelect;
 
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                presenter.groupTop(b, new BaseListener<Boolean>() {
+            public void onClick(View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.groupTop(isSelect, new BaseListener<Boolean>() {
 
                     @Override
                     public void Success(Boolean ts) {
-                        int top = b ? 1 : 0;
+                        toggle.setSelected(isSelect);
+
                         ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupIdentify);
                         if (conversionEntity == null) {
                             conversionEntity = new ConversionEntity();
                             conversionEntity.setIdentifier(groupIdentify);
                         }
+                        int top = isSelect ? 1 : 0;
                         conversionEntity.setTop(top);
                         ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
                     }
 
                     @Override
                     public void fail(Object... objects) {
-                        topToggle.setChecked(!b);
                     }
                 });
             }
@@ -211,31 +215,37 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Mute_Notification));
 
-        final Switch noticeSwitch = (Switch) view.findViewById(R.id.toggle);
-        noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(notice);
+        toggle.setOnClickListener(new View.OnClickListener() {
+            boolean isSelect;
 
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                presenter.groupMute(b, new BaseListener<Boolean>() {
+            public void onClick(View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.groupMute(isSelect, new BaseListener<Boolean>() {
                     @Override
                     public void Success(Boolean ts) {
-                        int disturb = b ? 1 : 0;
+                        toggle.setSelected(isSelect);
                         ConversionSettingEntity setEntity = ConversionSettingHelper.getInstance().loadSetEntity(groupIdentify);
                         if (setEntity == null) {
                             setEntity = new ConversionSettingEntity();
                             setEntity.setIdentifier(groupIdentify);
                         }
+                        int disturb = isSelect ? 1 : 0;
                         setEntity.setDisturb(disturb);
                         ConversionSettingHelper.getInstance().insertSetEntity(setEntity);
                     }
 
                     @Override
                     public void fail(Object... objects) {
-                        noticeSwitch.setChecked(!b);
                     }
                 });
             }
         });
+
+
     }
 
     @Override
@@ -244,16 +254,23 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Link_Save_to_Contacts));
 
-        final Switch commonSwitch = (Switch) view.findViewById(R.id.toggle);
-        commonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(common);
+        toggle.setOnClickListener(new View.OnClickListener() {
+            boolean isSelect;
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                presenter.groupCommon(b, new BaseListener<Boolean>() {
+            public void onClick(final View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.groupCommon(isSelect, new BaseListener<Boolean>() {
                     @Override
                     public void Success(Boolean ts) {
-                        int common = b ? 1 : 0;
+                        toggle.setSelected(isSelect);
+
                         GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(groupIdentify);
                         if (!(groupEntity == null || TextUtils.isEmpty(groupEntity.getName()))) {
+                            int common = isSelect ? 1 : 0;
                             groupEntity.setCommon(common);
 
                             String groupName = groupEntity.getName();
@@ -268,7 +285,6 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
 
                     @Override
                     public void fail(Object... objects) {
-                        commonSwitch.setChecked(!b);
                     }
                 });
             }
