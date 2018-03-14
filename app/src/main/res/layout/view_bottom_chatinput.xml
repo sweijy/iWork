@@ -10,19 +10,26 @@
     android:paddingRight="@dimen/dp_8"
     android:paddingTop="@dimen/dp_9">
 
-    <ImageView
-        android:id="@id/inputvoice"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:scaleType="fitXY"
-        android:src="@drawable/selector_voiceswitch" />
+        android:background="@drawable/shape_stroke_edit_bottom">
+
+        <ImageView
+            android:id="@id/inputvoice"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:scaleType="fitXY"
+            android:src="@drawable/selector_voiceswitch" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_5"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/shape_stroke_edit_bottom">
 
         <connect.activity.chat.view.ChatEditText
             android:id="@id/inputedit"
@@ -47,40 +54,57 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <ImageView
-        android:id="@id/inputface"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/dp_5"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
-        android:src="@mipmap/icon_editchat_face" />
-
-    <ImageView
-        android:id="@id/inputmore"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/dp_5"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
-        android:src="@mipmap/icon_editchat_more" />
-
-    <TextView
-        android:id="@id/inputtxt"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginLeft="@dimen/dp_5"
-        android:background="@mipmap/icon_editchat_send"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/dp_7"
-        android:paddingLeft="@dimen/dp_5"
-        android:paddingRight="@dimen/dp_5"
-        android:paddingTop="@dimen/dp_7"
-        android:text="@string/Link_Send"
-        android:textColor="@color/color_FFFFFF"
-        android:textSize="@dimen/sp_14"
-        android:visibility="gone" />
+        android:background="@drawable/shape_stroke_edit_bottom">
+
+        <ImageView
+            android:id="@id/inputface"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_editchat_face" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:background="@drawable/shape_stroke_edit_bottom">
+
+        <ImageView
+            android:id="@id/inputmore"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_editchat_more" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:background="@drawable/shape_stroke_edit_bottom">
+
+        <TextView
+            android:id="@id/inputtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_editchat_send"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_7"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_7"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>
