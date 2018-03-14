@@ -68,21 +68,10 @@ public class UnreachableReceiver implements UnreachableListener {
     @Override
     public void saltNotMatch(String msgid, String rejectUid, Connect.ChatCookie cookie) throws Exception {
         Connect.ChatCookieData cookieData = cookie.getData();
-
         LogManager.getLogger().d(TAG, "saltNotMatch :" + msgid);
         ContactEntity friendEntity = ContactHelper.getInstance().loadFriendEntity(rejectUid);
         if (friendEntity == null) {
             return;
-        }
-    }
-
-    @Override
-    public void publicKeyNotMatch(String msgid, final String rejectUid,Connect.PubKey pubKey) throws Exception {
-        final ChatMsgEntity messageEntity = MessageHelper.getInstance().loadMsgByMsgid(msgid);
-        if (messageEntity != null) {
-            CFriendChat friendChat = new CFriendChat(rejectUid);
-            friendChat.setFriendPublicKey(pubKey.getPubKey());
-            friendChat.sendPushMsg(messageEntity);
         }
     }
 }

@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseActivity;
+import connect.activity.base.BaseListener;
 import connect.activity.chat.set.contract.PrivateSetContract;
 import connect.activity.chat.set.presenter.PrivateSetPresenter;
 import connect.activity.home.bean.ConversationAction;
@@ -30,7 +31,7 @@ import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
 
 /**
- * private chat setting
+ * 个人设置
  * Created by gtq on 2016/11/22.
  */
 @Route(path = "/iwork/chat/set/PrivateSetActivity")
@@ -49,8 +50,8 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
     String userName;
 
     private static String TAG = "_PrivateSetActivity";
-    private PrivateSetActivity activity;
 
+    private PrivateSetActivity activity;
     private PrivateSetContract.Presenter presenter;
 
     @Override
@@ -107,21 +108,32 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(name);
 
-        Switch topToggle = (Switch) view.findViewById(R.id.toggle);
+        final Switch topToggle = (Switch) view.findViewById(R.id.toggle);
         topToggle.setSelected(state);
-        topToggle.setTag(name);topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                int top = b ? 1 : 0;
-                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
-                if (conversionEntity == null) {
-                    conversionEntity = new ConversionEntity();
-                    conversionEntity.setIdentifier(uid);
-                }
-                conversionEntity.setTop(top);
-                ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+        topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-                ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                presenter.switchTop(b, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(uid);
+                        if (conversionEntity == null) {
+                            conversionEntity = new ConversionEntity();
+                            conversionEntity.setIdentifier(uid);
+                        }
+
+                        int top = b ? 1 : 0;
+                        conversionEntity.setTop(top);
+                        ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+                        ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                        topToggle.setChecked(!b);
+                    }
+                });
             }
         });
     }
@@ -132,22 +144,30 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(name);
 
-        Switch topToggle = (Switch) view.findViewById(R.id.toggle);
-        topToggle.setSelected(state);
-        topToggle.setTag(name);
-        topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final Switch disturbToggle = (Switch) view.findViewById(R.id.toggle);
+        disturbToggle.setSelected(state);
+        disturbToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                int disturb = b ? 1 : 0;
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                presenter.switchDisturb(b, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        int disturb = b ? 1 : 0;
+                        ConversionSettingEntity settingEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
+                        if (settingEntity == null) {
+                            settingEntity = new ConversionSettingEntity();
+                            settingEntity.setIdentifier(uid);
+                        }
+                        settingEntity.setDisturb(disturb);
+                        ConversionSettingHelper.getInstance().insertSetEntity(settingEntity);
+                        ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
+                    }
 
-                ConversionSettingEntity settingEntity = ConversionSettingHelper.getInstance().loadSetEntity(uid);
-                if (settingEntity == null) {
-                    settingEntity = new ConversionSettingEntity();
-                    settingEntity.setIdentifier(uid);
-                }
-                settingEntity.setDisturb(disturb);
-                ConversionSettingHelper.getInstance().insertSetEntity(settingEntity);
-                ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
+                    @Override
+                    public void fail(Object... objects) {
+                        disturbToggle.setChecked(!b);
+                    }
+                });
             }
         });
     }

@@ -104,17 +104,17 @@ public class BaseDepartSelectFragment extends BaseFragment {
             }
         });
         // 通讯录选择
-        View contacts = view.findViewById(R.id.include_contacts);
-        ImageView contactsImg = (ImageView) contacts.findViewById(R.id.roundimg);
-        TextView contactsTxt = (TextView) contacts.findViewById(R.id.name);
-        GlideUtil.loadImage(contactsImg, R.mipmap.icon_contacts);
-        contactsTxt.setText(getString(R.string.Chat_Contacts_Choose));
-        contacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.switchFragment(ContactsFragment.startFragment());
-            }
-        });
+//        View contacts = view.findViewById(R.id.include_contacts);
+//        ImageView contactsImg = (ImageView) contacts.findViewById(R.id.roundimg);
+//        TextView contactsTxt = (TextView) contacts.findViewById(R.id.name);
+//        GlideUtil.loadImage(contactsImg, R.mipmap.icon_contacts);
+//        contactsTxt.setText(getString(R.string.Chat_Contacts_Choose));
+//        contacts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                activity.switchFragment(ContactsFragment.startFragment());
+//            }
+//        });
 
         List<ConversionEntity> conversionEntities = ConversionHelper.getInstance().loadRecentConversations();
         if (conversionEntities == null) {
@@ -177,7 +177,6 @@ public class BaseDepartSelectFragment extends BaseFragment {
             String uid = contactEntity.getIdentifier();
             if (isSelect) {
                 Connect.Workmate workmate = Connect.Workmate.newBuilder()
-//                        .setPubKey(contactEntity.getIdentifier())
                         .setAvatar(contactEntity.getAvatar())
                         .setName(contactEntity.getName())
                         .setUid(contactEntity.getIdentifier())
@@ -193,10 +192,11 @@ public class BaseDepartSelectFragment extends BaseFragment {
     }
 
     public void requestUserInfo(String value) {
-        final Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
-                .setTyp(1)
+        Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
+                .setTyp(2)
                 .setCriteria(value)
                 .build();
+
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {

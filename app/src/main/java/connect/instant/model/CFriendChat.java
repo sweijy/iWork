@@ -38,7 +38,7 @@ public class CFriendChat extends FriendChat implements ConversationListener {
     private BaseListener<String> baseListener;
 
     public CFriendChat(String uid) {
-        super(uid, "");
+        super(uid);
 
         ContactEntity contactEntity = ContactHelper.getInstance().loadFriendEntity(uid);
         if (contactEntity == null) {
@@ -76,9 +76,7 @@ public class CFriendChat extends FriendChat implements ConversationListener {
         } else {
             userName = contactEntity.getName();
             userAvatar = contactEntity.getAvatar();
-            setFriendPublicKey(contactEntity.getPublicKey());
-
-            if(baseListener!=null){
+            if (baseListener != null) {
                 baseListener.Success("");
             }
         }
@@ -92,7 +90,7 @@ public class CFriendChat extends FriendChat implements ConversationListener {
 
     public void requestFriendInfo(final String frienduid) {
         Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
-                .setTyp(1)
+                .setTyp(2)
                 .setCriteria(frienduid)
                 .build();
 
@@ -106,7 +104,6 @@ public class CFriendChat extends FriendChat implements ConversationListener {
                     Connect.Workmate userinfo = userInfo.getList(0);
                     userName = userinfo.getName();
                     userAvatar = userinfo.getAvatar();
-                    //setFriendPublicKey(userinfo.getPubKey());
                     friendUid = userinfo.getUid();
 
                     if (baseListener != null) {

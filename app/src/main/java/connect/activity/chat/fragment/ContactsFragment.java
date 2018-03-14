@@ -109,9 +109,17 @@ public class ContactsFragment extends BaseFragment {
         recyclerview.setAdapter(selectContactsAdapter);
         siderbar.setOnTouchingLetterChangedListener(new ContactsLetterChanged());
         selectContactsAdapter.setItemClick(new SelectContactsAdapter.ItemClick() {
+
             @Override
-            public void itemClick(ContactEntity contactEntity) {
-                if (contactEntity.getRegisted()) {
+            public boolean isContains(String selectKey) {
+                return activity.isContains(selectKey);
+            }
+
+            @Override
+            public void itemClick(boolean isselect ,ContactEntity contactEntity) {
+                if(isselect){
+
+                }else{
                     Connect.Workmate workmate = Connect.Workmate.newBuilder()
                             .setUid(contactEntity.getUid())
                             .setName(contactEntity.getName())

@@ -171,13 +171,6 @@ public class MessageParser extends InterParse {
             case 8://upload cookie salt expire
                 UnreachableLocalReceiver.localReceiver.friendCookieExpired(rejectUid);
                 break;
-            case 9://upload cookie salt not match
-                // reloadUserCookie(msgid, rejectUid);
-                break;
-            case 10://PUBKEY_NOT_MATCH
-                Connect.PubKey pubKey = Connect.PubKey.parseFrom(data);
-                UnreachableLocalReceiver.localReceiver.publicKeyNotMatch(msgid, rejectUid,pubKey);
-                break;
         }
         // receiptMsg(msgid, 2);
     }

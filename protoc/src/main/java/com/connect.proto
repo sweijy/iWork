@@ -1,7 +1,7 @@
 syntax = "proto3";
 package protos;
 
-//system message ===============
+//system message
 message Announcement {
 float created_at = 1;
 string title = 2;
@@ -82,21 +82,21 @@ bool success = 4;
 }
 
 
-//transaction ===============
+//transaction
 message SendToUserMessage {
 string hashId = 1;
 string operation = 2;
 int32 status = 3;
 }
 
-//blockchain ===============
+//blockchain
 message ComposeRequest {
 repeated string addresses = 1;
 uint64 amount = 2;
 int32 sendLength = 3;
 }
 
-//http request ===============
+//http request
 message HttpServerResponse {
 int32 code = 1;
 string message=2;
@@ -113,7 +113,7 @@ string message=2;
 bytes body=3;
 }
 
-//user ===============
+//user
 message UserInfo {
    string username = 1;
  string avatar = 2;
@@ -229,7 +229,7 @@ message NOInterest {
 string uid = 1;
 }
 
-//setting ===============
+//setting
 message Privacy {
 bool phone_num = 1;
 bool verify = 2;
@@ -289,7 +289,7 @@ bytes salt=1;
 int64 expired =2;
 }
 
-//group ===============
+//group
 message GroupApplyMessage{
 bytes apply_data=1;
 string message_id=2;
@@ -505,7 +505,7 @@ message GroupAvatarResponse {
 string url = 1;
 }
 
-//Connect IM===============
+//Connect IM
 // Aes GCM
 message GcmData {
 bytes iv = 1;
@@ -627,7 +627,7 @@ string remark = 6;
 string upgrade_url=7;
 }
 
-//friend relationship ===============
+//friend relationship
 
 message SyncRelationship {
 string version = 1;
@@ -674,7 +674,7 @@ string  tips = 2;
 int32 source = 3;
 }
 
-//message===============
+//message
 message UpdateMobileBind {
 string username = 1;
 }
@@ -745,7 +745,7 @@ bytes body = 2;
 string msg_id = 3;
 }
 
-//wallet===============
+//wallet
 
 message Input {
 repeated string prev_addresses=1;
@@ -1109,7 +1109,7 @@ string pay_pin=1;
 message PayPinVersion {
 string version = 1;
 }
-//notice ===============
+//notice
 message SyncBadge {
 int32 badge=1;
 }
@@ -2028,4 +2028,9 @@ message SearchGroup {
 message GroupMemberMatch {
 Group group = 1;
 GroupMember member = 2;
+}
+
+message UpdateGroupSession {
+ string identifier = 1;
+ bool val = 2;
 }

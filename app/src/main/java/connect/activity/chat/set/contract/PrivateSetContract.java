@@ -2,6 +2,7 @@ package connect.activity.chat.set.contract;
 
 import android.view.View;
 
+import connect.activity.base.BaseListener;
 import connect.activity.base.contract.BasePresenter;
 import connect.activity.base.contract.BaseView;
 
@@ -28,5 +29,8 @@ public interface PrivateSetContract {
 
     interface Presenter extends BasePresenter {
 
+        void switchTop(boolean checkon, BaseListener<Boolean> listener);
+
+        void switchDisturb(boolean checkon,BaseListener<Boolean> listener);
     }
 }
