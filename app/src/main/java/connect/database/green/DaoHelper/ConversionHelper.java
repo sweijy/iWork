@@ -158,6 +158,10 @@ public class ConversionHelper extends BaseDao {
         return attrBeanList;
     }
 
+    public List<ConversionEntity> loadRecentConversationsAll(){
+        return conversionEntityDao.loadAll();
+    }
+
     public List<ConversionEntity> loadRecentConversations(){
         QueryBuilder<ConversionEntity> queryBuilder = conversionEntityDao.queryBuilder();
         queryBuilder.where(ConversionEntityDao.Properties.Type.eq(0)).build();

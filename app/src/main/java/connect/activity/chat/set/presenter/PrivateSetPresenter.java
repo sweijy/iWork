@@ -81,9 +81,9 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
                 .setUid(uid)
                 .build();
 
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_SESSION_INFO, sessionSet, new ResultCall<Connect.HttpResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_SESSION_INFO, sessionSet, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
-            public void onResponse(Connect.HttpResponse response) {
+            public void onResponse(Connect.HttpNotSignResponse response) {
                 try {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.SessionInfo sessionInfo = Connect.SessionInfo.parseFrom(structData.getPlainData());
@@ -100,7 +100,7 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
             }
 
             @Override
-            public void onError(Connect.HttpResponse response) {
+            public void onError(Connect.HttpNotSignResponse response) {
                 checkMute();
                 checkTop();
             }

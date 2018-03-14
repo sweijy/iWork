@@ -66,14 +66,15 @@
                 style="@style/BaseTextStyle.14"
                 android:lines="1"
                 android:ellipsize="middle"
-                android:text="" />
+                android:text="aaaaa" />
 
             <TextView
                 android:id="@+id/hint_tv"
                 style="@style/BaseTextStyle"
                 android:lines="1"
                 android:text=""
-                android:textColor="@color/color_858998" />
+                android:textColor="@color/color_858998"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <Button

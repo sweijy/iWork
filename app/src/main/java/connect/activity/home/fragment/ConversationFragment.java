@@ -255,8 +255,8 @@ public class ConversationFragment extends BaseFragment {
         @Override
         public void itemClick(Connect.ChatType chatType, String identify) {
             ARouter.getInstance().build("/iwork/chat/ChatActivity")
-                    .withSerializable("CHAT_TYPE", chatType)
-                    .withString("CHAT_IDENTIFY", identify)
+                    .withSerializable("chatType", chatType)
+                    .withString("chatIdentify", identify)
                     .navigation();
         }
     }

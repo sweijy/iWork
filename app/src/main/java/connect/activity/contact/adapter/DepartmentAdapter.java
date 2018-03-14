@@ -53,12 +53,12 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
 
             //GlideUtil.loadAvatarRound(holder.avatar, departmentBean.getAvatar());
             holder.nameTvS.setText(departmentBean.getName());
-            if(TextUtils.isEmpty(departmentBean.getO_u())){
-                holder.nicName.setVisibility(View.GONE);
-            }else{
-                holder.nicName.setVisibility(View.VISIBLE);
-                holder.nicName.setText(departmentBean.getO_u());
-            }
+//            if(TextUtils.isEmpty(departmentBean.getO_u())){
+//                holder.nicName.setVisibility(View.GONE);
+//            }else{
+//                holder.nicName.setVisibility(View.VISIBLE);
+//                holder.nicName.setText(departmentBean.getO_u());
+//            }
             if(TextUtils.isEmpty(departmentBean.getAvatar())){
                 holder.avatar.setVisibility(View.VISIBLE);
                 holder.avatar.setAvatarName(departmentBean.getName(), departmentBean.getGender());

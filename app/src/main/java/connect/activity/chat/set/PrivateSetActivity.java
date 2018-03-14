@@ -127,7 +127,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                             conversionEntity.setIdentifier(uid);
                         }
 
-                        int top = !state ? 1 : 0;
+                        int top = isSelect? 1 : 0;
                         conversionEntity.setTop(top);
                         ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
                         ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);

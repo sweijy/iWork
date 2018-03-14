@@ -140,14 +140,14 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
                 .setVal(checkon)
                 .build();
 
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_GROUP_TOP, groupSession, new ResultCall<Connect.HttpResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.BM_USERS_V1_GROUP_TOP, groupSession, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
-            public void onResponse(Connect.HttpResponse response) {
+            public void onResponse(Connect.HttpNotSignResponse response) {
                 listener.Success(true);
             }
 
             @Override
-            public void onError(Connect.HttpResponse response) {
+            public void onError(Connect.HttpNotSignResponse response) {
                 listener.fail();
             }
         });
@@ -160,14 +160,14 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
                 .setMute(state)
                 .build();
 
-        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_GROUP_MUTE, groupMute, new ResultCall<Connect.HttpResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_GROUP_MUTE, groupMute, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
-            public void onResponse(Connect.HttpResponse response) {
+            public void onResponse(Connect.HttpNotSignResponse response) {
                 listener.Success(true);
             }
 
             @Override
-            public void onError(Connect.HttpResponse response) {
+            public void onError(Connect.HttpNotSignResponse response) {
                 listener.fail();
             }
         });
@@ -177,14 +177,14 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
     public void groupCommon(final boolean state, final BaseListener<Boolean> listener) {
         Connect.GroupId groupId = Connect.GroupId.newBuilder().setIdentifier(groupIdentify).build();
         String coomonUrl = state ? UriUtil.GROUP_COMMON : UriUtil.GROUP_RECOMMON;
-        OkHttpUtil.getInstance().postEncrySelf(coomonUrl, groupId, new ResultCall<Connect.HttpResponse>() {
+        OkHttpUtil.getInstance().postEncrySelf(coomonUrl, groupId, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
-            public void onResponse(Connect.HttpResponse response) {
+            public void onResponse(Connect.HttpNotSignResponse response) {
                 listener.Success(true);
             }
 
             @Override
-            public void onError(Connect.HttpResponse response) {
+            public void onError(Connect.HttpNotSignResponse response) {
                 listener.fail(true);
             }
         });
@@ -199,9 +199,9 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
                     @Override
                     public void confirm(String value) {
                         Connect.GroupId groupId = Connect.GroupId.newBuilder().setIdentifier(groupIdentify).build();
-                        OkHttpUtil.getInstance().postEncrySelf(UriUtil.GROUP_QUIT, groupId, new ResultCall<Connect.HttpResponse>() {
+                        OkHttpUtil.getInstance().postEncrySelf(UriUtil.GROUP_QUIT, groupId, new ResultCall<Connect.HttpNotSignResponse>() {
                             @Override
-                            public void onResponse(Connect.HttpResponse response) {
+                            public void onResponse(Connect.HttpNotSignResponse response) {
                                 RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.CLEAR_HISTORY, groupIdentify);
 
                                 ContactHelper.getInstance().removeGroupInfos(groupIdentify);
@@ -210,7 +210,7 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
                             }
 
                             @Override
-                            public void onError(Connect.HttpResponse response) {
+                            public void onError(Connect.HttpNotSignResponse response) {
                                 if (response.getCode() == 2424) {
                                     ToastEUtil.makeText(activity, R.string.Link_Already_delete_and_Leave, ToastEUtil.TOAST_STATUS_FAILE).show();
                                 } else {
