@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp_60"
     android:background="@color/color_FFFFFF"
     android:orientation="horizontal">
 
     <RelativeLayout
         android:id="@id/relative_workmate_select"
         android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content">
 
         <View
@@ -21,8 +22,9 @@
 
     <connect.widget.DepartmentAvatar
         android:id="@id/depart_avatar"
-        android:layout_width="@dimen/dp_38"
-        android:layout_height="@dimen/dp_38"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_margin="@dimen/dp_12"
         android:layout_gravity="center_vertical"
         android:scaleType="fitXY" />
 

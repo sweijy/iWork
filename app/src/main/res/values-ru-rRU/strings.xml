@@ -402,4 +402,5 @@
     <string name="Chat_Set_Remove_Members">убрать членов группы?</string>
     <string name="Chat_Remove_Conversation">удалить разговор?</string>
     <string name="Chat_Conversation_Notify_Close">уже закрыть напоминание</string>
+    <string name="Chat_Member_All_Count">все члены(%1$d)</string>
 </resources>

@@ -118,6 +118,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
 
         memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
         Collections.sort(memEntities, new GroupComPara());
+        toolbar.setTitle(getString(R.string.Chat_Member_All_Count, memEntities.size()));
 
         GroupMemberEntity manageEntity = memEntities.get(0);
         GlideUtil.loadAvatarRound(roundimg, manageEntity.getAvatar());

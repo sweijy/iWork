@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp_60"
     android:background="@color/color_FFFFFF">
 
     <ImageView
@@ -27,7 +27,10 @@
         android:layout_alignTop="@id/roundimg"
         android:layout_marginRight="@dimen/dp_12"
         android:background="@drawable/shape_8px_a8a8a8"
-        android:padding="@dimen/dp_7"
+        android:paddingBottom="@dimen/dp_3"
+        android:paddingLeft="@dimen/dp_7"
+        android:paddingRight="@dimen/dp_7"
+        android:paddingTop="@dimen/dp_3"
         android:text="@string/Chat_Group_Manager"
         android:textColor="@color/color_A8A8A8"
         android:textSize="@dimen/sp_10" />

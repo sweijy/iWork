@@ -379,4 +379,5 @@
     <string name="Chat_Set_Remove_Members">remove the group members?</string>
     <string name="Chat_Remove_Conversation">remove the conversation?</string>
     <string name="Chat_Conversation_Notify_Close">Already closed reminding</string>
+    <string name="Chat_Member_All_Count">All members(%1$d)</string>
 </resources>
