@@ -355,7 +355,6 @@
     <string name="Chat_Finger_Slippery_Cancel_The_Sending">Slide on the finger, cancel sending</string>
     <string name="Chat_Loosen_The_Finger_Cancel_The_Sending">Loosen the finger and cancel the sending</string>
     <string name="Chat_Voice_Record_Short">The recording time is short</string>
-    <string name="title_activity_robot">RobotActivity</string>
     <string name="Chat_System_Set">System Set</string>
     <string name="IWork">iWork</string>
     <string name="compress_progress">progress: %1$s</string>
@@ -379,4 +378,5 @@
     <string name="Chat_Set_Remove_Members">remove the group members?</string>
     <string name="Chat_Remove_Conversation">remove the conversation?</string>
     <string name="Chat_Conversation_Notify_Close">Already closed reminding</string>
+    <string name="Chat_Group_Name">group member</string>
 </resources>
