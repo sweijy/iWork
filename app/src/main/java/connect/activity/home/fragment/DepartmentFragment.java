@@ -104,7 +104,7 @@ public class DepartmentFragment extends BaseFragment {
 
     @OnClick(R.id.linear_layout)
     void search(View view) {
-        ARouter.getInstance().build("/contact/SearchActivity").
+        ARouter.getInstance().build("/contact/SearchContactActivity").
                 navigation();
     }
 
