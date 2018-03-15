@@ -117,6 +117,7 @@
     <string name="Link_Clear_Chat_History">Clear Chat History</string>
     <string name="Link_Contacts">Contacts</string>
     <string name="Link_Account">Account:</string>
+    <string name="Link_Such_as_in_the_group_of">%sSuch as in the group of</string>
     <string name="Link_My_group">My group</string>
     <string name="Link_Chat_record">Chat record</string>
     <string name="Link_Delete_Successful">Delete Successful</string>
@@ -142,6 +143,7 @@
     <string name="Link_Commonly_used_search">Commonly used search</string>
     <string name="Link_Scan_Result">Scan results</string>
     <string name="Link_Send">Send</string>
+    <string name="Link_See_more_contacts">See more contacts</string>
     <string name="Link_Dialogue">Dialogues</string>
     <string name="Link_Workbench">Workbench</string>
     <string name="Link_Inactive">Inactive</string>
@@ -173,6 +175,7 @@
     <string name="Link_Add_contacts">Add contacts</string>
     <string name="Link_Added_to_contact">Added to contact</string>
     <string name="Link_Deleted_contact">Deleted contact</string>
+    <string name="Link_The_contact">The contact</string>
     <string name="Link_Delete_contact">Delete contact</string>
     <string name="Link_invited_to_the_group_chat">%1$s invited %2$s to the group chat</string>
     <string name="Link_update_Failed">Update Failed</string>
@@ -212,6 +215,7 @@
         group
     </string>
     <string name="Network_No_data">No data</string>
+    <string name="link_No_search_results">No search results</string>
     <string name="Network_equest_failed_please_try_again_later">Request failed, please try again
         later
     </string>
@@ -315,6 +319,7 @@
     <string name="Work_No_More_Results">No more search results</string>
     <string name="Work_Service_Search">Search application</string>
     <string name="Work_Search">Search</string>
+    <string name="Work_Search_hint"> Search</string>
     <string name="Work_Entering_the_warehouse">Warehouse location:%1$s</string>
     <string name="Link_exit_the_group">%sexit the group</string>
     <string name="Work_Third_Party_Service">Third-party service</string>

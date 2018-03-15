@@ -324,11 +324,12 @@ string token = 1;
 }
 
 message Group {
-string identifier = 1;
-string name=2;
-string summary = 3;
-string avatar = 4;
-int32 category = 5;
+  string identifier = 1;
+  string name = 2;
+  string summary = 3;
+  string avatar = 4;
+  int32 category = 5;
+  int64 count = 6;
 }
 
 message GroupMember {
@@ -2026,8 +2027,8 @@ message SearchGroup {
 }
 
 message GroupMemberMatch {
-Group group = 1;
-GroupMember member = 2;
+  Group group = 1;
+  repeated GroupMember member = 2;
 }
 
 message UpdateGroupSession {

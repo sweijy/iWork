@@ -122,11 +122,8 @@ public class SetFragment extends BaseFragment {
 
     @OnClick(R.id.llAbout)
     void intoAbout(View view) {
-        /*ARouter.getInstance().build("/iwork/set/AboutActivity")
-                .navigation();*/
-
-        ARouter.getInstance().build("/chat/SearchActivity").
-                navigation();
+        ARouter.getInstance().build("/iwork/set/AboutActivity")
+                .navigation();
     }
 
     @OnClick(R.id.log_out_tv)
@@ -142,8 +139,7 @@ public class SetFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void cancel() {
-                    }
+                    public void cancel() {}
                 });
     }
 

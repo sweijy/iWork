@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F6F9">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/color_457DE3">
+
+        <RelativeLayout
+            android:id="@+id/left_rela"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_28"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:background="@drawable/selector_top_title_btn">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:clickable="false"
+                android:contentDescription="@string/app_name"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_toRightOf="@+id/left_rela"
+            android:layout_toLeftOf="@id/right_lin"
+            android:background="@drawable/shape_stroke_deepblue"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/search_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/Work_Search"
+                android:layout_toLeftOf="@+id/clear_image"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:textColorHint="@color/color_6DA1FF"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_F1F6FF"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:background="@null"/>
+            <ImageView
+                android:id="@+id/clear_image"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp_10"
+                android:src="@mipmap/input_del"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/right_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_28"
+            android:minWidth="@dimen/dp_45"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_top_title_btn">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_12"
+                android:text="@string/Common_Cancel" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/no_result_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_55"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/color_8E8E8E"
+        android:text="@string/link_No_search_results"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/color_d1d5da"
+        android:dividerHeight="@dimen/px_1"
+        android:listSelector="@android:color/transparent" />
+
+</LinearLayout>

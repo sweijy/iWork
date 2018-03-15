@@ -15,6 +15,7 @@ public class SearchBean {
     private String searchStr;
     private String hinit;
     private int gender;
+    private Long countMember;
 
     public String getUid() {
         return uid;
@@ -86,5 +87,13 @@ public class SearchBean {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Long getCountMember() {
+        return countMember;
+    }
+
+    public void setCountMember(Long countMember) {
+        this.countMember = countMember;
     }
 }
