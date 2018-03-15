@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import connect.ui.activity.R;
+import connect.utils.system.SystemUtil;
 import protos.Connect;
 
 /**
@@ -47,9 +48,10 @@ public class NameLinear extends LinearLayout {
             textView.setTextSize(14);
             if(i == list.size() - 1){
                 textView.setText(department.getName());
+                textView.setTextColor(context.getResources().getColor(R.color.color_AEAEAE));
             }else{
                 textView.setText(department.getName() + " >");
-                textView.setTextColor(context.getResources().getColor(R.color.color_007aff));
+                textView.setTextColor(context.getResources().getColor(R.color.color_4D84E8));
             }
             textView.setTag(i);
             textView.setOnClickListener(new OnClickListener() {

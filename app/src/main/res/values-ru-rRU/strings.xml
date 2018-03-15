@@ -182,6 +182,7 @@
     <string name="Link_Add_contacts">Добавить контакт</string>
     <string name="Link_Added_to_contact">Добавляется к контактов</string>
     <string name="Link_Deleted_contact">Уже удалить контакт</string>
+    <string name="Link_The_contact">контактов</string>
     <string name="Link_Delete_contact">Удалить контакт</string>
     <string name="Link_invited_to_the_group_chat">%1$s пригласила , чтобы добавить в группу %2$s
     </string>

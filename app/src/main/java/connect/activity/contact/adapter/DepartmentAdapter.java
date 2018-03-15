@@ -41,6 +41,20 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
     @Override
     public void onBindViewHolder(DepartmentAdapter.ViewHolder holder, final int position) {
         final OrganizerEntity departmentBean = list.get(position);
+        if(position == 0){
+            holder.bottomLine.setVisibility(View.GONE);
+            holder.topLine.setVisibility(View.VISIBLE);
+        }else{
+            if(TextUtils.isEmpty(list.get(position-1).getUsername()) && !TextUtils.isEmpty(departmentBean.getUsername())){
+                holder.bottomLine.setVisibility(View.GONE);
+                holder.topLine.setVisibility(View.VISIBLE);
+            }else{
+                holder.bottomLine.setVisibility(View.VISIBLE);
+                holder.topLine.setVisibility(View.GONE);
+            }
+        }
+
+
         if(departmentBean.getId() != null){
             holder.departmentLinear.setVisibility(View.VISIBLE);
             holder.contentLin.setVisibility(View.GONE);
@@ -51,23 +65,9 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
             holder.departmentLinear.setVisibility(View.GONE);
             holder.contentLin.setVisibility(View.VISIBLE);
 
-            //GlideUtil.loadAvatarRound(holder.avatar, departmentBean.getAvatar());
             holder.nameTvS.setText(departmentBean.getName());
-            if(TextUtils.isEmpty(departmentBean.getO_u())){
-                holder.nicName.setVisibility(View.GONE);
-            }else{
-                holder.nicName.setVisibility(View.VISIBLE);
-                holder.nicName.setText(departmentBean.getO_u());
-            }
-            if(TextUtils.isEmpty(departmentBean.getAvatar())){
-                holder.avatar.setVisibility(View.VISIBLE);
-                holder.avatar.setAvatarName(departmentBean.getName(), departmentBean.getGender());
-                holder.avatarImage.setVisibility(View.GONE);
-            }else{
-                holder.avatar.setVisibility(View.GONE);
-                holder.avatarImage.setVisibility(View.VISIBLE);
-                GlideUtil.loadAvatarRound(holder.avatarImage, departmentBean.getAvatar(), 8);
-            }
+            holder.avatarImage.setVisibility(View.VISIBLE);
+            GlideUtil.loadAvatarRound(holder.avatarImage, departmentBean.getAvatar(), 8);
         }
         holder.contentLin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,27 +92,27 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
 
         ImageView avatarImage;
         RelativeLayout contentLin;
-        DepartmentAvatar avatar;
         TextView nameTvS;
-        TextView nicName;
         Button addBtn;
 
         LinearLayout departmentLinear;
         TextView departmentTv;
         TextView countTv;
+        View topLine;
+        View bottomLine;
 
         public ViewHolder(View itemView) {
             super(itemView);
             contentLin = (RelativeLayout)itemView.findViewById(R.id.content_layout);
-            avatar = (DepartmentAvatar)itemView.findViewById(R.id.avatar_rimg);
             nameTvS = (TextView)itemView.findViewById(R.id.nickname_tv);
-            nicName = (TextView)itemView.findViewById(R.id.hint_tv);
             addBtn = (Button) itemView.findViewById(R.id.status_btn);
             avatarImage = (ImageView)itemView.findViewById(R.id.avatar_image);
 
             departmentLinear = (LinearLayout)itemView.findViewById(R.id.department_linear);
             departmentTv = (TextView)itemView.findViewById(R.id.department_tv);
             countTv = (TextView)itemView.findViewById(R.id.count_tv);
+            topLine = itemView.findViewById(R.id.top_Line);
+            bottomLine = itemView.findViewById(R.id.bottom_line);
         }
     }
 

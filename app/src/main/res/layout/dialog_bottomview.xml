@@ -15,7 +15,8 @@
         android:background="@color/color_FFFFFF"/>
 
     <View
-        style="@style/BaseViewLine.eeeeee" />
+        style="@style/BaseViewLine.eeeeee"
+        android:layout_height="@dimen/dp_5"/>
 
     <TextView
         android:id="@+id/tv_popup_cancel"

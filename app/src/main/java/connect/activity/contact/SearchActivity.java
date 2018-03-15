@@ -55,10 +55,8 @@ public class SearchActivity extends BaseFragmentActivity {
     @Override
     public void initView() {
         mActivity = this;
-
         searchEdit.setHint(" " + getString(R.string.Link_Search));
         searchEdit.addTextChangedListener(textWatcher);
-
         searchMainFragment = SearchMainFragment.startFragment();
         searchContentFragment = SearchContentFragment.startFragment();
         switchFragment(1);
@@ -86,12 +84,10 @@ public class SearchActivity extends BaseFragmentActivity {
 
     TextWatcher textWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {

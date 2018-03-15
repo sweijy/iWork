@@ -212,13 +212,14 @@ public class SearchContentFragment extends BaseFragment {
 
             @Override
             public void onError(Connect.HttpNotSignResponse response) {
+                ProgressUtil.getInstance().dismissProgress();
                 updateView(list);
             }
         });
 
     }
 
-    private ArrayList<SearchBean> getFriendData(String value) {
+    /*private ArrayList<SearchBean> getFriendData(String value) {
         ArrayList<SearchBean> list = new ArrayList<>();
         List<ContactEntity> listFriend = ContactHelper.getInstance().loadFriendEntityFromText(value);
         for (ContactEntity contactEntity : listFriend) {
@@ -232,7 +233,7 @@ public class SearchContentFragment extends BaseFragment {
             }
         }
         return list;
-    }
+    }*/
 
     @Override
     public void onDestroyView() {

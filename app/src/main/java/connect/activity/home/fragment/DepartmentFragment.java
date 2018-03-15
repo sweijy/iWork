@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.contact.adapter.DepartmentAdapter;
-import connect.activity.home.view.LineDecoration;
 import connect.activity.home.view.ToolbarSearch;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
@@ -84,7 +83,7 @@ public class DepartmentFragment extends BaseFragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         recyclerview.setLayoutManager(linearLayoutManager);
-        recyclerview.addItemDecoration(new LineDecoration(mActivity));
+        //recyclerview.addItemDecoration(new LineDecoration(mActivity));
         adapter = new DepartmentAdapter(mActivity);
         adapter.setItemClickListener(onItemListener);
         recyclerview.setAdapter(adapter);
@@ -96,7 +95,7 @@ public class DepartmentFragment extends BaseFragment {
         nameList.clear();
         Connect.Department department = Connect.Department.newBuilder()
                 .setId(2)
-                .setName("组织架构")
+                .setName("比特大陆组织架构")
                 .build();
         nameList.add(department);
         nameLinear.notifyAddView(nameList, scrollview);

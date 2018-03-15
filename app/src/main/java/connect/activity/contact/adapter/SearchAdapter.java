@@ -42,12 +42,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, final int position) {
         final SearchBean searchBean = mDataList.get(position);
-        if(position == 0 || mDataList.get(position - 1).getStyle() != searchBean.getStyle()){
-            if(position == 0){
-                holder.topLine.setVisibility(View.GONE);
-            }else{
-                holder.topLine.setVisibility(View.VISIBLE);
-            }
+        if(position == 0){
+            holder.topLine.setVisibility(View.GONE);
+            holder.titleText.setVisibility(View.VISIBLE);
+            setTitleText(holder.titleText, searchBean.getStyle());
+        }else if(mDataList.get(position - 1).getStyle() != searchBean.getStyle()){
+            holder.topLine.setVisibility(View.VISIBLE);
             holder.titleText.setVisibility(View.VISIBLE);
             setTitleText(holder.titleText, searchBean.getStyle());
         }else{
@@ -62,15 +62,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             holder.hintTv.setVisibility(View.GONE);
         }
 
-        if(searchBean.getStyle() == 1 && TextUtils.isEmpty(searchBean.getUid())){
-            holder.avatarRimg.setVisibility(View.VISIBLE);
-            holder.avatarImage.setVisibility(View.GONE);
-            holder.avatarRimg.setAvatarName(searchBean.getName(), searchBean.getGender());
-        }else{
-            holder.avatarRimg.setVisibility(View.GONE);
-            holder.avatarImage.setVisibility(View.VISIBLE);
-            GlideUtil.loadAvatarRound(holder.avatarImage, searchBean.getAvatar());
-        }
+        holder.avatarImage.setVisibility(View.VISIBLE);
+        GlideUtil.loadAvatarRound(holder.avatarImage, searchBean.getAvatar());
         holder.nicknameTv.setText(searchBean.getName());
         holder.contentLinear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +87,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private final ImageView avatarImage;
         private final TextView nicknameTv;
         private final TextView hintTv;
-        private final DepartmentAvatar avatarRimg;
-
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -105,8 +96,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             avatarImage = (ImageView) itemView.findViewById(R.id.avatar_image);
             nicknameTv = (TextView) itemView.findViewById(R.id.nickname_tv);
             hintTv = (TextView) itemView.findViewById(R.id.hint_tv);
-            avatarRimg = (DepartmentAvatar) itemView.findViewById(R.id.avatar_rimg);
-
         }
     }
 

@@ -153,6 +153,7 @@
     <string name="Link_Delete_contact">删除联系人</string>
     <string name="Link_Added_to_contact">已添加到联系人</string>
     <string name="Link_Deleted_contact">已删除联系人</string>
+    <string name="Link_The_contact">联系人</string>
 
     <string name="Link_invited_to_the_group_chat">%1$s邀请了%2$s加入群聊</string>
     <string name="Link_update_Failed">修改失败</string>
