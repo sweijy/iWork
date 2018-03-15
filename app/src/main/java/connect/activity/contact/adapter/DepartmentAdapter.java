@@ -68,6 +68,7 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
             holder.nameTvS.setText(departmentBean.getName());
             holder.avatarImage.setVisibility(View.VISIBLE);
             GlideUtil.loadAvatarRound(holder.avatarImage, departmentBean.getAvatar(), 8);
+
         }
         holder.contentLin.setOnClickListener(new View.OnClickListener() {
             @Override

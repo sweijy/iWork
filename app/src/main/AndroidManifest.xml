@@ -173,16 +173,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="connect.activity.chat.set.ContactCardActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name="connect.widget.imagewatcher.ImageViewerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.exts.VideoPlayerActivity"
             android:screenOrientation="portrait" />
-
         <receiver
             android:name="connect.broadcast.NotificationBroadcastReceiver"
             android:exported="false">
@@ -207,9 +202,6 @@
 
         <activity
             android:name="connect.activity.chat.set.GroupNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="connect.activity.chat.set.GroupMyNameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.chat.exts.OuterWebsiteActivity"

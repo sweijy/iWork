@@ -2,6 +2,7 @@ package connect.activity.chat.set.contract;
 
 import android.view.View;
 
+import connect.activity.base.BaseListener;
 import connect.activity.base.contract.BasePresenter;
 import connect.activity.base.contract.BaseView;
 
@@ -38,9 +39,11 @@ public interface GroupSetContract {
 
         void syncGroupInfo();
 
-        void updateGroupMute(boolean state);
+        void groupTop(boolean checkon,BaseListener<Boolean> listener);
 
-        void updateGroupCommon(boolean state);
+        void groupMute(boolean checkon,BaseListener<Boolean> listener);
+
+        void groupCommon(boolean checkon,BaseListener<Boolean> listener);
 
         void requestExitGroup();
     }

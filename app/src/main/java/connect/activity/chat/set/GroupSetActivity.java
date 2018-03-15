@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -21,11 +19,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
+import connect.activity.base.BaseListener;
 import connect.activity.chat.set.contract.GroupSetContract;
 import connect.activity.chat.set.presenter.GroupSetPresenter;
 import connect.activity.contact.bean.ContactNotice;
+import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionHelper;
+import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.bean.ConversionEntity;
+import connect.database.green.bean.ConversionSettingEntity;
+import connect.database.green.bean.GroupEntity;
 import connect.ui.activity.R;
 import connect.utils.ActivityUtil;
 import connect.widget.TopToolBar;
@@ -172,18 +175,36 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Sticky_on_Top_chat));
 
-        Switch topToggle = (Switch) view.findViewById(R.id.toggle);
-        topToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(top);
+        toggle.setOnClickListener(new View.OnClickListener() {
+
+            boolean isSelect;
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                int top = b ? 1 : 0;
-                ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupIdentify);
-                if (conversionEntity == null) {
-                    conversionEntity = new ConversionEntity();
-                    conversionEntity.setIdentifier(groupIdentify);
-                }
-                conversionEntity.setTop(top);
-                ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+            public void onClick(View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.groupTop(isSelect, new BaseListener<Boolean>() {
+
+                    @Override
+                    public void Success(Boolean ts) {
+                        toggle.setSelected(isSelect);
+
+                        ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(groupIdentify);
+                        if (conversionEntity == null) {
+                            conversionEntity = new ConversionEntity();
+                            conversionEntity.setIdentifier(groupIdentify);
+                        }
+                        int top = isSelect ? 1 : 0;
+                        conversionEntity.setTop(top);
+                        ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                    }
+                });
             }
         });
     }
@@ -194,14 +215,37 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Chat_Mute_Notification));
 
-        Switch noticeSwitch = (Switch) view.findViewById(R.id.toggle);
-        noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(notice);
+        toggle.setOnClickListener(new View.OnClickListener() {
+            boolean isSelect;
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                boolean mutestate = b;
-                presenter.updateGroupMute(mutestate);
+            public void onClick(View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.groupMute(isSelect, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        toggle.setSelected(isSelect);
+                        ConversionSettingEntity setEntity = ConversionSettingHelper.getInstance().loadSetEntity(groupIdentify);
+                        if (setEntity == null) {
+                            setEntity = new ConversionSettingEntity();
+                            setEntity.setIdentifier(groupIdentify);
+                        }
+                        int disturb = isSelect ? 1 : 0;
+                        setEntity.setDisturb(disturb);
+                        ConversionSettingHelper.getInstance().insertSetEntity(setEntity);
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                    }
+                });
             }
         });
+
+
     }
 
     @Override
@@ -210,11 +254,39 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         TextView txt = (TextView) view.findViewById(R.id.txt);
         txt.setText(getResources().getString(R.string.Link_Save_to_Contacts));
 
-        Switch commonSwitch = (Switch) view.findViewById(R.id.toggle);
-        commonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final View toggle = view.findViewById(R.id.toggle);
+        toggle.setSelected(common);
+        toggle.setOnClickListener(new View.OnClickListener() {
+            boolean isSelect;
+
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                presenter.updateGroupCommon(b);
+            public void onClick(final View view) {
+                isSelect = view.isSelected();
+                isSelect = !isSelect;
+                presenter.groupCommon(isSelect, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        toggle.setSelected(isSelect);
+
+                        GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(groupIdentify);
+                        if (!(groupEntity == null || TextUtils.isEmpty(groupEntity.getName()))) {
+                            int common = isSelect ? 1 : 0;
+                            groupEntity.setCommon(common);
+
+                            String groupName = groupEntity.getName();
+                            if (TextUtils.isEmpty(groupName)) {
+                                groupName = "groupname8";
+                            }
+                            groupEntity.setName(groupName);
+                            ContactHelper.getInstance().inserGroupEntity(groupEntity);
+                        }
+                        ContactNotice.receiverGroup();
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+                    }
+                });
             }
         });
     }

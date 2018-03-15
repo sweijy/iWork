@@ -16,7 +16,7 @@
         android:layout_height="@dimen/dp_32"
         android:layout_gravity="bottom"
         android:scaleType="fitXY"
-        android:src="@mipmap/chatbar_record" />
+        android:src="@drawable/selector_voiceswitch" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,9 +42,9 @@
             android:layout_height="@dimen/dp_34"
             android:background="@drawable/shape_recordvoice"
             android:text="@string/Chat_Hold_To_Talk"
-            android:visibility="gone"
             android:textColor="@color/color_757575"
-            android:textSize="@dimen/sp_15" />
+            android:textSize="@dimen/sp_15"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ImageView
@@ -55,7 +55,7 @@
         android:layout_marginLeft="@dimen/dp_5"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@mipmap/chatbar_face" />
+        android:src="@mipmap/icon_editchat_face" />
 
     <ImageView
         android:id="@id/inputmore"
@@ -65,7 +65,7 @@
         android:layout_marginLeft="@dimen/dp_5"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@mipmap/chatbar_more" />
+        android:src="@mipmap/icon_editchat_more" />
 
     <TextView
         android:id="@id/inputtxt"
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginLeft="@dimen/dp_5"
-        android:background="@drawable/shape_stroke_blue"
+        android:background="@mipmap/icon_editchat_send"
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/dp_7"
         android:paddingLeft="@dimen/dp_5"

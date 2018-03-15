@@ -17,7 +17,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_60"
         android:background="@color/color_FFFFFF">
 
         <ImageView
@@ -35,16 +35,5 @@
             android:layout_toRightOf="@id/roundimg"
             android:textColor="@color/color_393939"
             android:textSize="@dimen/sp_12" />
-
-        <TextView
-            android:id="@id/department"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:layout_marginTop="@dimen/dp_6"
-            android:layout_toRightOf="@id/roundimg"
-            android:text="default"
-            android:textColor="@color/color_A6A6A6"
-            android:textSize="@dimen/sp_10" />
     </RelativeLayout>
 </LinearLayout>

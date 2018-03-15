@@ -12,5 +12,4 @@
         android:layout_marginBottom="@dimen/dp_6"
         android:layout_marginTop="@dimen/dp_6"
         android:orientation="horizontal" />
-
 </HorizontalScrollView>

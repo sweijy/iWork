@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,29 +107,24 @@ public class BaseDepartSelectFragment extends BaseFragment {
             }
         });
         // 通讯录选择
-        View contacts = view.findViewById(R.id.include_contacts);
-        ImageView contactsImg = (ImageView) contacts.findViewById(R.id.roundimg);
-        TextView contactsTxt = (TextView) contacts.findViewById(R.id.name);
-        GlideUtil.loadImage(contactsImg, R.mipmap.icon_contacts);
-        contactsTxt.setText(getString(R.string.Chat_Contacts_Choose));
-        contacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.switchFragment(ContactsFragment.startFragment());
-            }
-        });
+//        View contacts = view.findViewById(R.id.include_contacts);
+//        ImageView contactsImg = (ImageView) contacts.findViewById(R.id.roundimg);
+//        TextView contactsTxt = (TextView) contacts.findViewById(R.id.name);
+//        GlideUtil.loadImage(contactsImg, R.mipmap.icon_contacts);
+//        contactsTxt.setText(getString(R.string.Chat_Contacts_Choose));
+//        contacts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                activity.switchFragment(ContactsFragment.startFragment());
+//            }
+//        });
 
-        List<ConversionEntity> conversionEntities = ConversionHelper.getInstance().loadRecentConversations();
-        if (conversionEntities == null) {
-            conversionEntities = new ArrayList<>();
-        }
         requestUserInfo(activity.getUid());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         selectAdapter = new BaseGroupSelectAdapter();
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.setAdapter(selectAdapter);
-        selectAdapter.setData(conversionEntities);
         selectAdapter.setGroupSelectListener(groupSelectListener);
         viewAvatarSearch.setListener(new AvatarSearchView.AvatarListener() {
 
@@ -134,13 +132,26 @@ public class BaseDepartSelectFragment extends BaseFragment {
             public void removeUid(String uid) {
                 activity.removeWorkMate(uid);
             }
+        });
+        viewAvatarSearch.addTextWatch(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
 
             @Override
-            public void editClick() {
-                activity.switchFragment(LocalSearchFragment.startFragment());
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String string = editable.toString();
+                searchContent(string);
             }
         });
 
+        searchContent("");
         updateSelect();
     }
 
@@ -152,6 +163,20 @@ public class BaseDepartSelectFragment extends BaseFragment {
             Connect.Workmate workmate = (Connect.Workmate) entry.getValue();
             viewAvatarSearch.addAvatar(workmate.getAvatar(), workmate.getUid());
         }
+    }
+
+    public void searchContent(String string) {
+        List<ConversionEntity> conversionEntities = null;
+        if (TextUtils.isEmpty(string)) {
+            viewAvatarSearch.hideKeyboard();
+            conversionEntities = ConversionHelper.getInstance().loadRecentConversations();
+            if (conversionEntities == null) {
+                conversionEntities = new ArrayList<>();
+            }
+        } else {
+            conversionEntities = ConversionHelper.getInstance().loadRecentConversationsLike(string);
+        }
+        selectAdapter.setData(conversionEntities);
     }
 
     private class GroupSelectListener implements BaseGroupSelectAdapter.BaseGroupSelectListener {
@@ -177,7 +202,6 @@ public class BaseDepartSelectFragment extends BaseFragment {
             String uid = contactEntity.getIdentifier();
             if (isSelect) {
                 Connect.Workmate workmate = Connect.Workmate.newBuilder()
-//                        .setPubKey(contactEntity.getIdentifier())
                         .setAvatar(contactEntity.getAvatar())
                         .setName(contactEntity.getName())
                         .setUid(contactEntity.getIdentifier())
@@ -193,10 +217,11 @@ public class BaseDepartSelectFragment extends BaseFragment {
     }
 
     public void requestUserInfo(String value) {
-        final Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
-                .setTyp(1)
+        Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
+                .setTyp(2)
                 .setCriteria(value)
                 .build();
+
         OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
             @Override
             public void onResponse(Connect.HttpNotSignResponse response) {

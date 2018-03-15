@@ -15,10 +15,18 @@
         android:textColor="@color/color_9A9A9A"
         android:textSize="@dimen/sp_12" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_FFFFFF">
+
+        <View
+            android:id="@id/view_workmate_select"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@drawable/selector_checkstate" />
 
         <ImageView
             android:id="@id/roundimg"
@@ -27,24 +35,27 @@
             android:layout_margin="@dimen/dp_12"
             android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@id/name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_12"
-            android:layout_toRightOf="@id/roundimg"
-            android:textColor="@color/color_393939"
-            android:textSize="@dimen/sp_12" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@id/department"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:layout_marginTop="@dimen/dp_6"
-            android:layout_toRightOf="@id/roundimg"
-            android:text="default"
-            android:textColor="@color/color_A6A6A6"
-            android:textSize="@dimen/sp_10" />
-    </RelativeLayout>
+            <TextView
+                android:id="@id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_393939"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@id/department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="default"
+                android:textColor="@color/color_A6A6A6"
+                android:textSize="@dimen/sp_10" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

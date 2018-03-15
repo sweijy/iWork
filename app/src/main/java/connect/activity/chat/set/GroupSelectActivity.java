@@ -17,7 +17,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +107,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
 
         if (isCreateGroup) {
             ARouter.getInstance().build("/iwork/chat/set/GroupCreateActivity")
-                    .withSerializable("workmates", workmates)
+                    .withSerializable("workmateList", workmates)
                     .navigation();
         } else {
             presenter.inviteJoinGroup(idnetify, workmates);

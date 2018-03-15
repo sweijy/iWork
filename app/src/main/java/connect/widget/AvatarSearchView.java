@@ -57,7 +57,6 @@ public class AvatarSearchView extends RelativeLayout {
         avatarWidth = SystemUtil.dipToPx(32);
         avatarMargin = SystemUtil.dipToPx(12);
         txtSize = SystemUtil.spToPx(6);
-
         showAvatars();
     }
 
@@ -102,12 +101,6 @@ public class AvatarSearchView extends RelativeLayout {
             editText.setHintTextColor(getResources().getColor(R.color.color_AEAEAE));
             editText.setHint(getResources().getText(R.string.Work_Search));
             editText.setGravity(Gravity.BOTTOM);
-            editText.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clickListener.editClick();
-                }
-            });
         }
         linearLayout.addView(editText);
     }
@@ -169,13 +162,15 @@ public class AvatarSearchView extends RelativeLayout {
         }
     }
 
+    public void hideKeyboard(){
+        SystemUtil.hideKeyBoard(getContext(),editText);
+    }
+
     private AvatarListener clickListener;
 
     public interface AvatarListener {
 
         void removeUid(String uid);
-
-        void editClick();
     }
 
     public void setListener(AvatarListener clickListener) {

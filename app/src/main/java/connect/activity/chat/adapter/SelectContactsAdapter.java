@@ -45,6 +45,8 @@ public class SelectContactsAdapter extends RecyclerView.Adapter<SelectContactsAd
     @Override
     public void onBindViewHolder(final SelectHolder holder, final int position) {
         final ContactEntity contactEntity = contactEntities.get(position);
+
+        holder.selectView.setSelected(itemClick.isContains(contactEntity.getUid()));
         String name = TextUtils.isEmpty(contactEntity.getName()) ? "" : contactEntity.getName();
         holder.nameTxt.setText(name);
         GlideUtil.loadAvatarRound(holder.headImg, contactEntity.getAvatar());
@@ -68,10 +70,14 @@ public class SelectContactsAdapter extends RecyclerView.Adapter<SelectContactsAd
                 holder.txt.setText(curFirst);
             }
         }
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClick.itemClick(contactEntity);
+                boolean isselect = holder.selectView.isSelected();
+                isselect = !isselect;
+                holder.selectView.setSelected(isselect);
+                itemClick.itemClick(isselect,contactEntity);
             }
         });
     }
@@ -94,6 +100,7 @@ public class SelectContactsAdapter extends RecyclerView.Adapter<SelectContactsAd
     class SelectHolder extends RecyclerView.ViewHolder {
 
         private View view;
+        private View selectView;
         private ImageView headImg;
         private TextView txt;
         private TextView nameTxt;
@@ -103,6 +110,7 @@ public class SelectContactsAdapter extends RecyclerView.Adapter<SelectContactsAd
             super(itemView);
             view = itemView;
             txt = (TextView) itemView.findViewById(R.id.txt);
+            selectView = itemView.findViewById(R.id.view_workmate_select);
             headImg = (ImageView) itemView.findViewById(R.id.roundimg);
             nameTxt = (TextView) itemView.findViewById(R.id.name);
             departmentTxt = (TextView) itemView.findViewById(R.id.department);
@@ -112,7 +120,10 @@ public class SelectContactsAdapter extends RecyclerView.Adapter<SelectContactsAd
     private ItemClick itemClick;
 
     public interface ItemClick{
-        void itemClick(ContactEntity contactEntity);
+
+        boolean isContains(String selectKey);
+
+        void itemClick(boolean isselect, ContactEntity contactEntity);
     }
 
     public void setItemClick(ItemClick itemClick) {

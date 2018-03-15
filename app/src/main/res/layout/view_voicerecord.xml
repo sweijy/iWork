@@ -10,8 +10,8 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-        <ImageView
-            android:id="@id/img_voicerecord_state"
+        <connect.widget.VoiceVolumeView
+            android:id="@id/view_voice_volume"
             android:layout_width="@dimen/dp_120"
             android:layout_height="@dimen/dp_120"
             android:layout_centerHorizontal="true"

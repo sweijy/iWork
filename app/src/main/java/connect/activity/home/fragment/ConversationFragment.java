@@ -231,6 +231,9 @@ public class ConversationFragment extends BaseFragment {
                         public void itemClick(int position, SearchPopBean popBean) {
                             switch (position) {
                                 case 0:
+                                    ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
+                                            .withBoolean("isCreateGroup", true)
+                                            .navigation();
                                     break;
                                 case 1:
                                     break;
@@ -239,7 +242,7 @@ public class ConversationFragment extends BaseFragment {
                             }
                         }
                     });
-                    int offsetX = SystemUtil.dipToPx(60);
+                    int offsetX = SystemUtil.dipToPx(30);
                     int offsetY = SystemUtil.dipToPx(30);
                     popWindow.showAsDropDown(toolbar.findViewById(R.id.relative_layout), offsetX, offsetY);
                 }
@@ -252,8 +255,8 @@ public class ConversationFragment extends BaseFragment {
         @Override
         public void itemClick(Connect.ChatType chatType, String identify) {
             ARouter.getInstance().build("/iwork/chat/ChatActivity")
-                    .withSerializable("CHAT_TYPE", chatType)
-                    .withString("CHAT_IDENTIFY", identify)
+                    .withSerializable("chatType", chatType)
+                    .withString("chatIdentify", identify)
                     .navigation();
         }
     }

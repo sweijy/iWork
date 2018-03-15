@@ -23,9 +23,8 @@ public class FriendChat extends NormalChat {
     protected String friendUid = null;
     protected String friendPublicKey = null;
 
-    public FriendChat(String uid, String publicKey) {
+    public FriendChat(String uid) {
         this.friendUid = uid;
-        this.friendPublicKey = publicKey;
     }
 
     @Override
@@ -68,13 +67,7 @@ public class FriendChat extends NormalChat {
                 chatMessageBuilder.setBody(ByteString.copyFrom(msgExtEntity.getContents()));
             }
 
-
-            Connect.ChatSession chatSession = Connect.ChatSession.newBuilder()
-                    .setPubKey(userPublicKey)
-                    .setFriendPubkey(friendPublicKey)
-                    .build();
             Connect.MessageData messageData = Connect.MessageData.newBuilder()
-                    .setChatSession(chatSession)
                     .setChatMsg(chatMessageBuilder.build())
                     .build();
 
@@ -113,9 +106,5 @@ public class FriendChat extends NormalChat {
     @Override
     public String friendPublicKey() {
         return friendPublicKey;
-    }
-
-    public void setFriendPublicKey(String friendPublicKey) {
-        this.friendPublicKey = friendPublicKey;
     }
 }

@@ -45,7 +45,7 @@
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/dp_20"
+            android:layout_margin="@dimen/dp_12"
             android:background="@drawable/selector_checkstate" />
 
         <TextView

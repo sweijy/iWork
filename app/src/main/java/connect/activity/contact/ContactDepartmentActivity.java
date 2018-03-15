@@ -101,8 +101,8 @@ public class ContactDepartmentActivity extends BaseActivity {
     void chat(View view) {
         if (workmate != null) {
             ARouter.getInstance().build("/iwork/chat/ChatActivity")
-                    .withSerializable("CHAT_TYPE", Connect.ChatType.PRIVATE)
-                    .withString("CHAT_IDENTIFY", workmate.getUid())
+                    .withSerializable("chatType", Connect.ChatType.PRIVATE)
+                    .withString("chatIdentify", workmate.getUid())
                     .navigation();
         }
     }

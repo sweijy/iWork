@@ -115,7 +115,7 @@ public class RecyclerPopupWindow {
             }
             popupWindow = new PopupWindow(contentView, mPopupWindowWidth, mPopupWindowHeight, true);
             popupWindow.setTouchable(true);
-            popupWindow.setElevation(SystemUtil.dipToPx(10));
+            // popupWindow.setElevation(SystemUtil.dipToPx(10));
             popupWindow.setBackgroundDrawable(new BitmapDrawable());
         }
 

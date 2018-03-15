@@ -44,6 +44,14 @@ public class UriUtil {
     /** 搜索群组 SearchGroup  SearchGroupResult */
     public static String BM_USERS_V1_GROUP_SEARCH = addressService + "/bm/users/v1/group/search";
 
+    /** =================================== 点对点设置 ==================================== */
+    /** 点对点聊天免扰 */
+    public static String BM_USERS_V1_MUTE = addressService + "/bm/users/v1/session/mute";
+    /** 点对点聊天置顶 */
+    public static String BM_USERS_V1_TOP = addressService + "/bm/users/v1/session/top";
+    /** 点对点聊天session 信息 */
+    public static String BM_USERS_V1_SESSION_INFO = addressService + "/bm/users/v1/session/info";
+
     /** =================================== setting group ==================================== */
     /** create group */
     public static String CREATE_GROUP = addressService + "/bm/users/v1/group";
@@ -73,7 +81,8 @@ public class UriUtil {
     public static String BM_USERS_V1_GROUP_SETTING = addressService + "/bm/users/v1/group/setting";
     /** 解散群组 */
     public static String BM_USERS_V1_GROUP_DISBANDED = addressService + "/bm/users/v1/group/disbanded";
-
+    /** 群组置顶设置 */
+    public static String BM_USERS_V1_GROUP_TOP = addressService + "/bm/users/v1/group/top";
 
     /** =================================== 访客系统 ==================================== */
     /** 修改访客时间 */

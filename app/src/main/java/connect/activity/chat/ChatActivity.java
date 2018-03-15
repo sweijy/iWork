@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -73,9 +72,9 @@ import protos.Connect;
  *
  * 传递参数：
  *
- * @ CHAT_TYPE
- * @ CHAT_IDENTIFY
- * @ CHAT_SEARCH_TXT
+ * @ chatType
+ * @ chatIdentify
+ * @ searchTxt
  */
 @Route(path = "/iwork/chat/ChatActivity")
 public class ChatActivity extends BaseChatSendActivity {
@@ -104,9 +103,13 @@ public class ChatActivity extends BaseChatSendActivity {
     @Override
     public void initView() {
         activity = this;
-        chatType = (Connect.ChatType) getIntent().getSerializableExtra("CHAT_TYPE");
-        chatIdentify = getIntent().getStringExtra("CHAT_IDENTIFY");
-        searchTxt = getIntent().getStringExtra("CHAT_SEARCH_TXT");
+
+        chatType = (Connect.ChatType) getIntent().getSerializableExtra("chatType");
+        chatIdentify = getIntent().getStringExtra("chatIdentify");
+        if (TextUtils.isEmpty(chatIdentify) || null == chatType) {
+            ActivityUtil.goBack(this);
+            return;
+        }
 
         RoomSession.getInstance().setRoomType(chatType);
         RoomSession.getInstance().setRoomKey(chatIdentify);

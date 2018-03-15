@@ -59,6 +59,6 @@ public class SearchPopWindow extends PopupWindow {
         recyclerView.setAdapter(popupAdapter);
         recyclerView.addItemDecoration(new LineDecoration(activity));
         popupAdapter.setOnItemClick(searchPopupListener);
-        this.setElevation(SystemUtil.dipToPx(10));
+        //this.setElevation(SystemUtil.dipToPx(10));
     }
 }
