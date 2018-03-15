@@ -5,11 +5,6 @@
     android:background="@color/color_FAFBFC"
     android:orientation="vertical">
 
-    <connect.widget.TopToolBar
-        android:id="@id/toolbar_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <connect.widget.AvatarSearchView
         android:id="@id/view_avatar_search"
         android:layout_width="match_parent"
@@ -20,32 +15,31 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginTop="@dimen/px_1"
         android:background="@color/color_FFFFFF"
         android:scrollbars="none">
 
         <connect.widget.NameLinear
+            android:layout_marginLeft="@dimen/dp_20"
             android:id="@+id/name_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp_5" />
+            android:orientation="horizontal" />
     </HorizontalScrollView>
 
     <LinearLayout
         android:id="@id/linearlayout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_FFFFFF"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <View
             android:id="@id/view"
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_16"
             android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/dp_12"
+            android:layout_margin="@dimen/dp_20"
             android:background="@drawable/selector_checkstate" />
 
         <TextView

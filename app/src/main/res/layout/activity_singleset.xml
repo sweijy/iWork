@@ -11,33 +11,43 @@
         android:layout_height="wrap_content" />
 
     <HorizontalScrollView
+        android:id="@id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_6"
         android:background="@color/color_FFFFFF"
+        android:clickable="false"
+        android:focusable="false"
         android:scrollbars="none">
 
         <LinearLayout
             android:id="@id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"></LinearLayout>
+            android:layout_marginBottom="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_6"
+            android:clickable="false"
+            android:focusable="false"
+            android:orientation="horizontal"></LinearLayout>
     </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:orientation="vertical"
-        android:background="@color/color_FFFFFF">
+        android:background="@color/color_FFFFFF"
+        android:orientation="vertical">
 
         <include
             android:id="@id/top"
-            layout="@layout/include_line_toggle" />
+            layout="@layout/include_line_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44" />
 
         <include
             android:id="@id/mute"
-            layout="@layout/include_line_toggle" />
+            layout="@layout/include_line_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44" />
     </LinearLayout>
 </LinearLayout>

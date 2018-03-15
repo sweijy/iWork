@@ -5,21 +5,6 @@
     android:background="@color/color_FFFFFF"
     android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@id/relative_department_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
-
-        <View
-            android:id="@id/view_department_select"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/dp_20"
-            android:background="@drawable/selector_checkstate" />
-    </RelativeLayout>
-
     <ImageView
         android:layout_width="@dimen/dp_36"
         android:layout_height="@dimen/dp_36"

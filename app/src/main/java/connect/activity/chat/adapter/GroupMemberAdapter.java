@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,10 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
 
     @Override
     public int getItemCount() {
-        return groupMemEntities.size();
+        int count = groupMemEntities == null || groupMemEntities.size() == 0 ?
+                0 :
+                groupMemEntities.size();
+        return count;
     }
 
     @Override
@@ -43,7 +48,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
 
     @Override
     public void onBindViewHolder(final MemberReHolder holder, final int position) {
-        GroupMemberEntity memEntity = groupMemEntities.get(position);
+        final GroupMemberEntity memEntity = groupMemEntities.get(position);
         String name = TextUtils.isEmpty(memEntity.getUsername()) ? "" : memEntity.getUsername();
         holder.nameTxt.setText(name);
         GlideUtil.loadAvatarRound(holder.headImg, memEntity.getAvatar());
@@ -67,6 +72,15 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
                 holder.txt.setText(curFirst);
             }
         }
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ARouter.getInstance().build("/iwork/contact/ContactDepartmentActivity")
+                        .withString("userName",memEntity.getUsername())
+                        .navigation();
+            }
+        });
     }
 
     public int getPositionForSection(char selectchar) {
@@ -86,12 +100,14 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
 
     class MemberReHolder extends RecyclerView.ViewHolder {
 
+        View view;
         private ImageView headImg;
         private TextView txt;
         private TextView nameTxt;
 
         public MemberReHolder(View itemView) {
             super(itemView);
+            view = itemView;
             txt = (TextView) itemView.findViewById(R.id.txt);
             headImg = (ImageView) itemView.findViewById(R.id.roundimg);
             nameTxt = (TextView) itemView.findViewById(R.id.name);

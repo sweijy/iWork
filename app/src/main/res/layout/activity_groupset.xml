@@ -14,6 +14,8 @@
         android:id="@id/linearlayout_groupmember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:background="@color/color_FFFFFF"
         android:orientation="vertical">
 
@@ -48,19 +50,22 @@
                     android:textSize="@dimen/sp_12" />
 
                 <ImageView
-                    android:contentDescription="@string/app_name"
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_marginLeft="@dimen/dp_6"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/group_item_arrow" />
             </LinearLayout>
         </RelativeLayout>
 
         <HorizontalScrollView
-            android:layout_width="match_parent"
+            android:id="@id/scrollview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_6"
             android:background="@color/color_FFFFFF"
+            android:clickable="false"
+            android:focusable="false"
             android:scrollbars="none">
 
             <LinearLayout
@@ -69,6 +74,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_6"
                 android:layout_marginTop="@dimen/dp_6"
+                android:clickable="false"
+                android:focusable="false"
                 android:orientation="horizontal"></LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
@@ -82,7 +89,7 @@
 
         <include
             android:id="@id/groupset_add_newmember"
-            layout="@layout/include_txt"
+            layout="@layout/include_img_txt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44" />
     </LinearLayout>
@@ -96,7 +103,7 @@
 
         <include
             android:id="@id/groupset_groupname"
-            layout="@layout/include_txt_right_txt"
+            layout="@layout/include_txt_right_txt_img"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_56" />
     </LinearLayout>
@@ -113,7 +120,6 @@
             layout="@layout/include_line_toggle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44" />
-
 
         <include
             android:id="@id/mute"

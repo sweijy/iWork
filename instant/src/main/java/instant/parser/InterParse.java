@@ -73,13 +73,14 @@ public abstract class InterParse {
                 .setMsgId(msgid)
                 .build();
 
-        UserCookie userCookie = Session.getInstance().getChatCookie();
+        UserCookie connectCookie = Session.getInstance().getConnectCookie();
+        UserCookie chatCookie = Session.getInstance().getChatCookie();
         Connect.GcmData gcmData = EncryptionUtil.encodeAESGCMStructData(EncryptionUtil.ExtendedECDH.NONE,
                 Session.getInstance().getChatCookie().getSalts(), ack.toByteString());
 
-        String myPrivateKey = userCookie.getPrivateKey();
-        String uid = userCookie.getUid();
-        String token = userCookie.getToken();
+        String myPrivateKey = chatCookie.getPrivateKey();
+        String uid = connectCookie.getUid();
+        String token = connectCookie.getToken();
         String signHash = SupportKeyUril.signHash(myPrivateKey, gcmData.toByteArray());
         Connect.IMTransferData backAck = Connect.IMTransferData.newBuilder()
                 .setCipherData(gcmData)

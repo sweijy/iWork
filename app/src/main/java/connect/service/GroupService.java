@@ -116,7 +116,11 @@ public class GroupService extends Service {
                             memEntity.setIdentifier(groupIdentifier);
                             memEntity.setUid(member.getUid());
                             memEntity.setAvatar(member.getAvatar());
-                            memEntity.setUsername(member.getName());
+
+                            String showName = TextUtils.isEmpty(member.getName()) ?
+                                    member.getUsername() :
+                                    member.getName();
+                            memEntity.setUsername(showName);
                             memEntity.setRole(member.getRole());
                             memberEntityMap.put(member.getUid(), memEntity);
 

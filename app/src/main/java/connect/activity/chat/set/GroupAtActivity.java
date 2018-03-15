@@ -38,7 +38,7 @@ import connect.widget.SideBar;
 import connect.widget.TopToolBar;
 
 /**
- * group At ,select group member
+ * 群AT 功能
  */
 @Route(path = "/iwork/chat/exts/GroupAtActivity")
 public class GroupAtActivity extends BaseActivity implements GroupAtContract.BView {

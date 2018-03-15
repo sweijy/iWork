@@ -3,14 +3,13 @@ package connect.activity.chat.set;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -23,7 +22,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.base.BaseFragmentActivity;
 import connect.activity.chat.fragment.BaseDepartSelectFragment;
@@ -34,6 +32,8 @@ import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
+import connect.utils.ActivityUtil;
+import connect.widget.TopToolBar;
 import protos.Connect;
 
 /**
@@ -42,20 +42,16 @@ import protos.Connect;
 @Route(path = "/iwork/chat/set/GroupSelectActivity")
 public class GroupSelectActivity extends BaseFragmentActivity implements GroupSelectContract.BView {
 
+    @Bind(R.id.toolbar)
+    TopToolBar toolbar;
     @Bind(R.id.group_select_content)
     FrameLayout groupSelectContent;
-    @Bind(R.id.txt_selected)
-    TextView txtSelected;
-    @Bind(R.id.btn_selected)
-    Button btnSelected;
-    @Bind(R.id.layout_selected)
-    RelativeLayout layoutSelected;
 
     @Autowired
     boolean isCreateGroup = true;
 
     @Autowired
-    String idnetify;
+    String identify;
 
     private GroupSelectActivity activity;
     private GroupSelectContract.Presenter presenter;
@@ -76,8 +72,27 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     @Override
     public void initView() {
         activity = this;
+        toolbarCancel(true);
+        toolbar.setLeftListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtil.goBack(activity);
+            }
+        });
+        toolbar.setTitle(getResources().getString(R.string.Chat_Choose_contact));
+        toolbar.setRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toolbar.setRightTextEnable(false);
+                handler.sendEmptyMessageDelayed(100, 2000);
+
+                selectFinish();
+            }
+        });
+        updateSelectMemeberCount(0);
+
         if (!isCreateGroup) {
-            List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(idnetify);
+            List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(identify);
             for (GroupMemberEntity entity : memberEntities) {
                 String memberUid = entity.getUid();
                 groupMemebers.put(memberUid, memberUid);
@@ -85,18 +100,20 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         }
 
         switchFragment(BaseDepartSelectFragment.startFragment());
-        updateSelectMemeberCount(0);
         new GroupSelectPresenter(this).start();
     }
 
-    @OnClick({R.id.btn_selected, R.id.layout_selected})
-    void OnClickListener(View view) {
-        switch (view.getId()) {
-            case R.id.btn_selected:
-                selectFinish();
-                break;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 100:
+                    toolbar.setRightTextEnable(true);
+                    break;
+            }
         }
-    }
+    };
 
     private void selectFinish() {
         ArrayList<Connect.Workmate> workmates = new ArrayList<Connect.Workmate>();
@@ -106,11 +123,9 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         }
 
         if (isCreateGroup) {
-            ARouter.getInstance().build("/iwork/chat/set/GroupCreateActivity")
-                    .withSerializable("workmateList", workmates)
-                    .navigation();
+            presenter.createGroup(workmates);
         } else {
-            presenter.inviteJoinGroup(idnetify, workmates);
+            presenter.inviteJoinGroup(identify, workmates);
         }
     }
 
@@ -149,10 +164,13 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-    public void updateSelectMemeberCount(int count) {
-        txtSelected.setText(getString(R.string.Chat_Selected_Member, count));
-        btnSelected.setEnabled(isCreateGroup ? count >= 2 : count >= 1);
-        btnSelected.setText(getString(R.string.Common_OK));
+    public void toolbarCancel(boolean istxt){
+//        if(istxt){
+//            toolbar.setLeftText(R.string.Chat_Member_Cancel);
+//        }else{
+//            toolbar.setLeftImg(R.mipmap.back_white);
+//        }
+        toolbar.setLeftText(R.string.Chat_Member_Cancel);
     }
 
     public boolean isCreateGroup() {
@@ -160,7 +178,7 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     }
 
     public String getUid() {
-        return idnetify;
+        return identify;
     }
 
     public Map<String, Object> getSelectMembers() {
@@ -170,13 +188,25 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
     public boolean isContains(String selectKey) {
         return selectMembers.containsKey(selectKey) ||
                 selectKey.equals(userBean.getUid()) ||
-                (isCreateGroup && idnetify.equals(selectKey)) ||
+                (isCreateGroup && identify.equals(selectKey)) ||
                 (!isCreateGroup && groupMemebers.containsKey(selectKey));
     }
 
     public boolean isSelected(String selectKey) {
-        return (isCreateGroup() && !idnetify.equals(selectKey)) ||
+        return (isCreateGroup() && !identify.equals(selectKey)) ||
                 (!isCreateGroup() && !groupMemebers.containsKey(selectKey));
+    }
+
+    public void updateSelectMemeberCount(int count) {
+        boolean isenable = isCreateGroup() ? count > 1 : count > 0;
+        toolbar.setRightTextEnable(isenable);
+        if (count <= 0) {
+            toolbar.setRightTextEnable(false);
+            toolbar.setRightText(getString(R.string.Common_OK));
+        } else {
+            toolbar.setRightTextEnable(true);
+            toolbar.setRightText(getString(R.string.Chat_Confirm_Number, count));
+        }
     }
 
     public void removeWorkMate(String selectKey) {

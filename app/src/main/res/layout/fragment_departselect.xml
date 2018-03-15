@@ -5,11 +5,6 @@
     android:background="@color/color_FAFBFC"
     android:orientation="vertical">
 
-    <connect.widget.TopToolBar
-        android:id="@id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <connect.widget.AvatarSearchView
         android:id="@id/view_avatar_search"
         android:layout_width="match_parent"

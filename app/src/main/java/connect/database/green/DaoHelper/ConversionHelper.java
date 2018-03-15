@@ -199,13 +199,13 @@ public class ConversionHelper extends BaseDao {
     }
 
     /************************ update *****************************************/
-    public void updateRoomEntityTop(String identify,boolean istop) {
+    public void updateRoomEntityTop(String identify, boolean istop) {
         ConversionEntity conversionEntity = ConversionHelper.getInstance().loadRoomEnitity(identify);
         if (conversionEntity == null) {
             conversionEntity = new ConversionEntity();
             conversionEntity.setIdentifier(identify);
         }
-        int top = (null == conversionEntity.getTop() || conversionEntity.getTop() == 0) ? 1 : 0;
+        int top = istop ? 1 : 0;
         conversionEntity.setTop(top);
         ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
     }

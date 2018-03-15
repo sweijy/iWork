@@ -60,7 +60,7 @@
         сети, пожалуйста проверьте сеть
     </string>
     <string name="Chat_Not_Group_Master">Ты не являешься администратором этой группы</string>
-    <string name="Chat_Not_connected">Интернет-соединение недоступно</string>
+    <string name="Chat_Not_connected">В настоящее время вы проверьте настройки сети</string>
     <string name="Chat_Photo">Фотография</string>
     <string name="Chat_Picture">[Изображение]</string>
     <string name="Chat_Preview">Предварительный просмотр</string>
@@ -337,7 +337,7 @@
     <string name="Work_No_More_Results">Больше никаких  результатов поиска</string>
     <string name="Work_Third_Party_Service">услуг третьих сторон</string>
     <string name="Work_Service_Search">Поиск приложений</string>
-    <string name="Work_Search">поиск</string>
+    <string name="Work_Search"> поиск</string>
     <string name="Work_Entering_the_warehouse">Склад положение:%1$s</string>
     <string name="Link_exit_the_group">%sыход из  группы</string>
 
@@ -403,4 +403,9 @@
     <string name="Chat_Remove_Conversation">удалить разговор?</string>
     <string name="Chat_Conversation_Notify_Close">уже закрыть напоминание</string>
     <string name="Chat_Member_All_Count">все члены(%1$d)</string>
+    <string name="Chat_Disband_Group">Роспуск группы Ли?</string>
+    <string name="Chat_Group_Disband">Роспуск группы</string>
+    <string name="Chat_Confirm_Number">Савала(%1$d)</string>
+    <string name="Chat_Confirm">Савала</string>
+    <string name="Chat_Shielded_Message">экранирование новости</string>
 </resources>

@@ -33,6 +33,8 @@ import connect.activity.chat.bean.LinkMessageRow;
 import connect.activity.chat.bean.MsgSend;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.bean.RoomSession;
+import connect.activity.login.bean.UserBean;
+import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.MessageHelper;
@@ -69,7 +71,7 @@ import protos.Connect;
 /**
  * chat message
  * Created by gtq on 2016/11/22.
- *
+ * <p>
  * 传递参数：
  *
  * @ chatType
@@ -116,7 +118,13 @@ public class ChatActivity extends BaseChatSendActivity {
 
         super.initView();
         toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setRightImg(R.mipmap.menu_white);
+
+        if (chatType == Connect.ChatType.PRIVATE) {
+            toolbar.setRightImg(R.mipmap.icon_chat_persion);
+        } else if (chatType == Connect.ChatType.GROUP) {
+            toolbar.setRightImg(R.mipmap.icon_chat_setting);
+        }
+
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,6 +210,7 @@ public class ChatActivity extends BaseChatSendActivity {
     public void loadMoreMsgs() {
         LogManager.getLogger().d(TAG, "loadMoreMsgs()");
         new AsyncTask<Void, Void, List<ChatMsgEntity>>() {
+
             @Override
             protected List<ChatMsgEntity> doInBackground(Void... params) {
                 long lastCreateTime = 0;
@@ -447,8 +456,11 @@ public class ChatActivity extends BaseChatSendActivity {
                 if (lastExtEntity != null) {
                     GroupMemberEntity memberEntity = ContactHelper.getInstance().loadGroupMemberEntity(chatIdentify, lastExtEntity.getMessage_from());
                     if (memberEntity != null) {
-                        String memberName = memberEntity.getUsername();
-                        showtxt = memberName + ": " + showtxt;
+                        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
+                        if (!userBean.getUid().equals(memberEntity.getUid())) {
+                            String memberName = memberEntity.getUsername();
+                            showtxt = memberName + ": " + showtxt;
+                        }
                     }
                 }
 

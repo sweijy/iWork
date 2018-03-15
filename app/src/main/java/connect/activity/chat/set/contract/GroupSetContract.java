@@ -30,7 +30,7 @@ public interface GroupSetContract {
 
         void commonSwtich(boolean common);
 
-        void exitGroup();
+        void quitExitGroup(boolean isquit);
 
         void addNewMember();
     }
@@ -45,6 +45,8 @@ public interface GroupSetContract {
 
         void groupCommon(boolean checkon,BaseListener<Boolean> listener);
 
-        void requestExitGroup();
+        void disbandGroup(BaseListener<Boolean> listener);
+
+        void exitGroup(BaseListener<Boolean> listener);
     }
 }

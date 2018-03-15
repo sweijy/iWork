@@ -234,9 +234,6 @@
             android:exported="false" />
 
         <activity
-            android:name="connect.activity.chat.set.GroupCreateActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="connect.activity.workbench.WorkSeachActivity"
             android:screenOrientation="portrait" />
         <activity

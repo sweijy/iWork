@@ -82,8 +82,8 @@ public class ContactGroupActivity extends BaseActivity {
         @Override
         public void itemClick(int position, GroupEntity groupEntity) {
             ARouter.getInstance().build("/iwork/chat/ChatActivity")
-                    .withSerializable("CHAT_TYPE", Connect.ChatType.GROUP)
-                    .withString("CHAT_IDENTIFY", groupEntity.getIdentifier())
+                    .withSerializable("chatType", Connect.ChatType.GROUP)
+                    .withString("chatIdentify", groupEntity.getIdentifier())
                     .navigation();
         }
     };

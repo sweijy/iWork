@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -117,12 +120,14 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
         });
 
         memEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
-        Collections.sort(memEntities, new GroupComPara());
-        toolbar.setTitle(getString(R.string.Chat_Member_All_Count, memEntities.size()));
 
         GroupMemberEntity manageEntity = memEntities.get(0);
         GlideUtil.loadAvatarRound(roundimg, manageEntity.getAvatar());
         name.setText(manageEntity.getUsername());
+
+        toolbar.setTitle(getString(R.string.Chat_Member_All_Count, memEntities.size()));
+        memEntities = memEntities.subList(1, memEntities.size());
+        Collections.sort(memEntities, new GroupComPara());
 
         layoutManager = new LinearLayoutManager(activity);
         recordview.setLayoutManager(layoutManager);
@@ -132,7 +137,39 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
         recordview.addItemDecoration(new LineDecoration(activity));
         siderbar.setOnTouchingLetterChangedListener(new GroupMemberLetterChanged());
 
+        searchEdit.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String string = editable.toString();
+                searchContent(string);
+            }
+        });
+
         new GroupMemberPresenter(this).start();
+    }
+
+    public void searchContent(String string) {
+        List<GroupMemberEntity> memberEntities = null;
+        if (TextUtils.isEmpty(string)) {
+            memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
+            if (memberEntities == null) {
+                memberEntities = new ArrayList<>();
+            }
+        } else {
+            memberEntities = ContactHelper.getInstance().loadGroupMemEntitiesLikeKey(groupIdentify, string);
+        }
+        memberAdapter.setData(memberEntities);
     }
 
     private class GroupMemberLetterChanged implements SideBar.OnTouchingLetterChangedListener {

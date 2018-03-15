@@ -20,8 +20,8 @@
             android:background="@drawable/selector_checkstate" />
     </RelativeLayout>
 
-    <connect.widget.DepartmentAvatar
-        android:id="@id/depart_avatar"
+    <ImageView
+        android:id="@id/avatar_image"
         android:layout_width="@dimen/dp_36"
         android:layout_height="@dimen/dp_36"
         android:layout_margin="@dimen/dp_12"

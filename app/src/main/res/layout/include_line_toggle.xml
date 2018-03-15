@@ -18,6 +18,8 @@
 
     <View
         android:id="@id/toggle"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_14"
         style="@style/BtnSwitchStyle"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" />

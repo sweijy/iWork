@@ -408,7 +408,7 @@ public class ContactHelper extends BaseDao {
         queryBuilder.where(GroupMemberEntityDao.Properties.Identifier.eq(identify),
                 GroupMemberEntityDao.Properties.Username.like("%" + memberkey + "%")).build();
         List<GroupMemberEntity> memberEntities = queryBuilder.list();
-        return (memberEntities == null || memberEntities.size() == 0) ? null : memberEntities;
+        return (memberEntities == null || memberEntities.size() == 0) ? new ArrayList<GroupMemberEntity>() : memberEntities;
     }
 
     public GroupMemberEntity loadGroupMemberEntity(String identify, String publickey) {
@@ -732,6 +732,15 @@ public class ContactHelper extends BaseDao {
         DeleteQuery<GroupMemberEntity> bd = qb.where(
                 GroupMemberEntityDao.Properties.Identifier.eq(groupkey),
                 GroupMemberEntityDao.Properties.Uid.eq(uid))
+                .buildDelete();
+        bd.executeDeleteWithoutDetachingEntities();
+    }
+
+    public void removeMemberEntity(String groupkey, List<String> uids) {
+        QueryBuilder<GroupMemberEntity> qb = groupMemberEntityDao.queryBuilder();
+        DeleteQuery<GroupMemberEntity> bd = qb.where(
+                GroupMemberEntityDao.Properties.Identifier.eq(groupkey),
+                GroupMemberEntityDao.Properties.Uid.in(uids))
                 .buildDelete();
         bd.executeDeleteWithoutDetachingEntities();
     }
