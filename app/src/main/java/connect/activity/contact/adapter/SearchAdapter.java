@@ -87,7 +87,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 holder.hintTv.setText(getColorString(searchBean.getHinit(), hint));
             }
 
-            holder.avatarImage.setVisibility(View.VISIBLE);
             GlideUtil.loadAvatarRound(holder.avatarImage, searchBean.getAvatar());
             holder.nicknameTv.setText(getColorString(searchBean.getSearchStr(), searchBean.getName()));
             holder.contentLinear.setOnClickListener(new View.OnClickListener() {

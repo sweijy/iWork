@@ -5,11 +5,14 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.io.File;
+import java.util.UUID;
 
 import connect.ui.activity.R;
 import connect.activity.base.BaseApplication;
@@ -44,6 +47,7 @@ public class GlideUtil {
         Glide.with(BaseApplication.getInstance())
                 .load(path)
                 .error(errorId)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imageView);
     }
 
@@ -51,6 +55,7 @@ public class GlideUtil {
         Glide.with(BaseApplication.getInstance())
                 .load(path)
                 .transform(transformations)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .error(errorId)
                 .into(imageView);
     }

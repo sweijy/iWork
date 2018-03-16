@@ -183,7 +183,8 @@ public class WorkSeachActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Connect.HttpNotSignResponse response) {}
+            public void onError(Connect.HttpNotSignResponse response) {
+            }
         });
     }
 }

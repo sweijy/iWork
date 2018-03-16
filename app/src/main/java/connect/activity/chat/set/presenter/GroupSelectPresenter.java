@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import connect.activity.chat.set.contract.GroupSelectContract;
 import connect.activity.home.bean.GroupRecBean;
@@ -22,6 +23,7 @@ import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
 import connect.utils.ProtoBufUtil;
 import connect.utils.RegularUtil;
+import connect.utils.StringUtil;
 import connect.utils.TimeUtil;
 import connect.utils.ToastEUtil;
 import connect.utils.ToastUtil;
@@ -53,22 +55,7 @@ public class GroupSelectPresenter implements GroupSelectContract.Presenter {
 
     @Override
     public void createGroup(final ArrayList<Connect.Workmate> workmates) {
-        StringBuffer stringBuffer = new StringBuffer();
-        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
-        stringBuffer.append(userBean.getName());
-        stringBuffer.append(",");
-        for (int i = 0; i < 2; i++) {
-            Connect.Workmate workmate = workmates.get(i);
-            String showName = TextUtils.isEmpty(workmate.getName()) ?
-                    workmate.getUsername() :
-                    workmate.getName();
-            stringBuffer.append(showName);
-
-            if (i == 0) {
-                stringBuffer.append(",");
-            }
-        }
-        String groupName = stringBuffer.toString();
+        String groupName = getGroupName(workmates);
 
         List<Connect.AddGroupUserInfo> groupUserInfos = new ArrayList<>();
         for (Connect.Workmate entity : workmates) {
@@ -154,6 +141,24 @@ public class GroupSelectPresenter implements GroupSelectContract.Presenter {
                 }
             }
         });
+    }
+
+    private String getGroupName(ArrayList<Connect.Workmate> workmates){
+        StringBuffer stringBuffer = new StringBuffer();
+        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
+        stringBuffer.append(userBean.getName());
+        stringBuffer.append(",");
+        int size = workmates.size() > 5 ? 5 : workmates.size();
+        for (int i = 0; i < size; i++) {
+            Connect.Workmate workmate = workmates.get(i);
+            String showName = TextUtils.isEmpty(workmate.getName()) ? workmate.getUsername() : workmate.getName();
+            if(i == size-1){
+                stringBuffer.append(showName);
+            }else{
+                stringBuffer.append(showName + ",");
+            }
+        }
+        return stringBuffer.toString();
     }
 
     public void insertLocalData(Connect.GroupInfo groupInfo, ArrayList<Connect.Workmate> workmates) {

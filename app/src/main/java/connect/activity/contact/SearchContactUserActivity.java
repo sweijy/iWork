@@ -94,6 +94,7 @@ public class SearchContactUserActivity extends BaseActivity {
         recyclerview.setVisibility(View.GONE);
 
         searchEdit.setText(searchStr);
+        searchEdit.setSelection(searchStr.length());
         requestSearch();
     }
 
@@ -169,9 +170,9 @@ public class SearchContactUserActivity extends BaseActivity {
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").
                             navigation();
                 }else if(searchBean.getStatus() == 1){
-                    ARouter.getInstance().build("/chat/ChatActivity")
-                            .withSerializable("chatType", Connect.ChatType.GROUP)
-                            .withString("chatIdentify", searchBean.getUid())
+                    ARouter.getInstance().build("/iwork/chat/ChatActivity")
+                            .withSerializable("chatType", Connect.ChatType.PRIVATE)
+                            .withString("chatIdentify", searchBean.getUserName())
                             .navigation();
                 }
             }
@@ -203,6 +204,7 @@ public class SearchContactUserActivity extends BaseActivity {
                         searchBean.setAvatar(workmate.getAvatar());
                         searchBean.setGender(workmate.getGender());
                         searchBean.setSearchStr(value);
+                        searchBean.setStatus(1);
                         searchBean.setHinit(workmate.getOrganizational());
                         list.add(searchBean);
                     }

@@ -146,9 +146,9 @@ public class SearchContactActivity extends BaseActivity {
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").
                             navigation();
                 }else if(searchBean.getStatus() == 1){
-                    ARouter.getInstance().build("/chat/ChatActivity")
-                            .withSerializable("chatType", Connect.ChatType.GROUP)
-                            .withString("chatIdentify", searchBean.getUid())
+                    ARouter.getInstance().build("/iwork/chat/ChatActivity")
+                            .withSerializable("chatType", Connect.ChatType.PRIVATE)
+                            .withString("chatIdentify", searchBean.getUserName())
                             .navigation();
                 }else if(searchBean.getStatus() == 2){
                     ARouter.getInstance().build("/contact/SearchContactUserActivity")
@@ -156,7 +156,7 @@ public class SearchContactActivity extends BaseActivity {
                             .navigation();
                 }
             } else if (searchBean.getStyle() == 2) {
-                ARouter.getInstance().build("/chat/ChatActivity")
+                ARouter.getInstance().build("/iwork/chat/ChatActivity")
                         .withSerializable("chatType", Connect.ChatType.GROUP)
                         .withString("chatIdentify", searchBean.getUid())
                         .navigation();
@@ -187,6 +187,7 @@ public class SearchContactActivity extends BaseActivity {
                         searchBean.setName(workmate.getName());
                         searchBean.setAvatar(workmate.getAvatar());
                         searchBean.setGender(workmate.getGender());
+                        searchBean.setStatus(1);
                         searchBean.setSearchStr(value);
                         searchBean.setHinit(workmate.getOrganizational());
                         list.add(searchBean);

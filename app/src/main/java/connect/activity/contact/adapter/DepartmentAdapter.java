@@ -54,13 +54,12 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
             }
         }
 
-
         if(departmentBean.getId() != null){
             holder.departmentLinear.setVisibility(View.VISIBLE);
             holder.contentLin.setVisibility(View.GONE);
 
             holder.departmentTv.setText(departmentBean.getName());
-            holder.countTv.setText("(" + departmentBean.getCount() + ")");
+            holder.countTv.setText("( " + departmentBean.getCount() + " )");
         }else{
             holder.departmentLinear.setVisibility(View.GONE);
             holder.contentLin.setVisibility(View.VISIBLE);
@@ -68,7 +67,6 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
             holder.nameTvS.setText(departmentBean.getName());
             holder.avatarImage.setVisibility(View.VISIBLE);
             GlideUtil.loadAvatarRound(holder.avatarImage, departmentBean.getAvatar(), 8);
-
         }
         holder.contentLin.setOnClickListener(new View.OnClickListener() {
             @Override

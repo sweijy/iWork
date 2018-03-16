@@ -15,12 +15,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
+import connect.activity.base.compare.DepartmentCompare;
 import connect.activity.contact.adapter.DepartmentAdapter;
 import connect.activity.home.view.ToolbarSearch;
 import connect.activity.login.bean.UserBean;
@@ -52,6 +54,7 @@ public class DepartmentFragment extends BaseFragment {
     private DepartmentAdapter adapter;
     private ArrayList<Connect.Department> nameList = new ArrayList<>();
     private UserBean userBean;
+    private DepartmentCompare departmentCompare = new DepartmentCompare();
 
     public static DepartmentFragment startFragment() {
         DepartmentFragment departmentFragment = new DepartmentFragment();
@@ -171,11 +174,14 @@ public class DepartmentFragment extends BaseFragment {
                         departmentBean.setCount(department1.getCount());
                         list.add(departmentBean);
                     }
+                    ArrayList<OrganizerEntity> listUser = new ArrayList<>();
                     for (Connect.Workmate workmate : syncWorkmates.getWorkmates().getListList()) {
                         OrganizerEntity organizerEntity = OrganizerHelper.getInstance().getContactBean(workmate);
                         organizerEntity.setUpperId(id);
-                        list.add(organizerEntity);
+                        listUser.add(organizerEntity);
                     }
+                    Collections.sort(listUser, departmentCompare);
+                    list.addAll(listUser);
                     adapter.setNotify(list);
 
                     OrganizerHelper.getInstance().removeOrganizerEntityByUpperId(id);

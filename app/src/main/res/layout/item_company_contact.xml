@@ -26,12 +26,12 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_12"
         android:paddingRight="@dimen/dp_12"
+        android:gravity="center_vertical"
         android:background="@drawable/selector_list_item_bg">
         <ImageView
             android:layout_width="@dimen/dp_36"
             android:layout_height="@dimen/dp_36"
             android:scaleType="fitXY"
-            android:layout_gravity="center_vertical"
             android:src="@mipmap/department_two"/>
         <TextView
             android:id="@+id/department_tv"
@@ -39,7 +39,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_22"
             android:layout_marginRight="@dimen/dp_12"
             android:textColor="@color/color_393939" />
@@ -47,18 +46,16 @@
             android:id="@+id/count_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:textColor="@color/color_8A8A8A"
             android:textSize="@dimen/sp_12"
             android:singleLine="true"
-            android:text=""/>
+            android:text="( 123 )"/>
         <ImageView
             android:contentDescription="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:src="@mipmap/group_item_arrow"
-            android:layout_marginLeft="@dimen/dp_10"/>
+            android:layout_marginLeft="@dimen/dp_7"/>
     </LinearLayout>
 
     <RelativeLayout

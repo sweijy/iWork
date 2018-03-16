@@ -24,15 +24,13 @@ public class GlideModelConfig extends OkHttpGlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         // Define cache size and location
-        builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskSize));  //Mobile disk
-        //builder.setDiskCache(new ExternalCacheDiskCacheFactory(context, "cache", diskSize)); //sdcard disk
+        //builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskSize));  //Mobile disk
 
         // The custom memory pool size and pictures
-        builder.setMemoryCache(new LruResourceCache(memorySize));
-        builder.setBitmapPool(new LruBitmapPool(memorySize));
+        //builder.setMemoryCache(new LruResourceCache(memorySize));
+        //builder.setBitmapPool(new LruBitmapPool(memorySize));
 
         // Define the image format
-        //builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
         builder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);
     }
 
