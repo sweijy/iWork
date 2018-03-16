@@ -102,10 +102,10 @@
             android:name="connect.activity.contact.ContactInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.contact.SearchActivity"
+            android:name="connect.activity.contact.SearchContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="connect.activity.contact.SearchContentActivity"
+            android:name="connect.activity.contact.SearchContactUserActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="connect.activity.contact.ContactDepartmentActivity"

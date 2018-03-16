@@ -10,13 +10,14 @@
         android:layout_height="@dimen/dp_30"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_12"
         android:layout_toLeftOf="@id/relative_layout"
         android:background="@drawable/shape_stroke_deepblue"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_2"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_search_blue" />
         <TextView
@@ -34,6 +35,7 @@
         android:layout_height="@dimen/dp_28"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_12"
         android:layout_marginRight="@dimen/dp_12"
         android:background="@drawable/shape_stroke_frame_blue"
         android:gravity="center">

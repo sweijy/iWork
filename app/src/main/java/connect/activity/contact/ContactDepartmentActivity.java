@@ -40,10 +40,6 @@ public class ContactDepartmentActivity extends BaseActivity {
     TopToolBar toolbar;
     @Bind(R.id.avatar_imageview)
     ImageView avatarImageview;
-    @Bind(R.id.avatar_image)
-    DepartmentAvatar avatarImage;
-    @Bind(R.id.avatar_rela)
-    RelativeLayout avatarRela;
     @Bind(R.id.name_text)
     TextView nameText;
     @Bind(R.id.gender_image)
@@ -88,27 +84,11 @@ public class ContactDepartmentActivity extends BaseActivity {
         nameText.setText(workmate.getName());
         departmentText.setText(workmate.getOrganizational());
         accountText.setText(workmate.getUsername());
+        GlideUtil.loadAvatarRound(avatarImageview, workmate.getAvatar(), 8);
         if (workmate.getGender() == 1) {
             genderImage.setImageResource(R.mipmap.man);
         } else {
             genderImage.setImageResource(R.mipmap.woman);
-        }
-
-        if (ContactHelper.getInstance().loadFriendByUid(workmate.getUsername()) == null) {
-            contactBtn.setText(R.string.Link_Add_contacts);
-            contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_414141));
-        } else {
-            contactBtn.setText(R.string.Link_Delete_contact);
-            contactBtn.setTextColor(mActivity.getResources().getColor(R.color.color_F56565));
-        }
-        if(TextUtils.isEmpty(workmate.getAvatar())){
-            avatarImageview.setVisibility(View.GONE);
-            avatarImage.setVisibility(View.VISIBLE);
-            avatarImage.setAvatarName(workmate.getName(), workmate.getGender());
-        }else{
-            avatarImageview.setVisibility(View.VISIBLE);
-            avatarImage.setVisibility(View.GONE);
-            GlideUtil.loadAvatarRound(avatarImageview, workmate.getAvatar(), 8);
         }
     }
 

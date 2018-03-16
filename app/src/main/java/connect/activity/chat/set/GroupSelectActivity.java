@@ -201,10 +201,8 @@ public class GroupSelectActivity extends BaseFragmentActivity implements GroupSe
         boolean isenable = isCreateGroup() ? count > 1 : count > 0;
         toolbar.setRightTextEnable(isenable);
         if (count <= 0) {
-            toolbar.setRightTextEnable(false);
             toolbar.setRightText(getString(R.string.Common_OK));
         } else {
-            toolbar.setRightTextEnable(true);
             toolbar.setRightText(getString(R.string.Chat_Confirm_Number, count));
         }
     }

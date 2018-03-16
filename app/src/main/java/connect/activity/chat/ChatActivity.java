@@ -21,12 +21,16 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import connect.activity.base.BaseListener;
 import connect.activity.chat.activity.BaseChatSendActivity;
 import connect.activity.chat.adapter.ChatAdapter;
 import connect.activity.chat.bean.LinkMessageRow;
@@ -50,12 +54,17 @@ import connect.utils.ActivityUtil;
 import connect.utils.BitmapUtil;
 import connect.utils.FileUtil;
 import connect.utils.MediaUtil;
+import connect.utils.ProtoBufUtil;
+import connect.utils.RegularUtil;
 import connect.utils.TimeUtil;
+import connect.utils.UriUtil;
 import connect.utils.chatfile.inter.BaseFileUp;
 import connect.utils.chatfile.inter.FileUploadListener;
 import connect.utils.chatfile.upload.PhotoUpload;
 import connect.utils.chatfile.upload.VideoUpload;
 import connect.utils.log.LogManager;
+import connect.utils.okhttp.OkHttpUtil;
+import connect.utils.okhttp.ResultCall;
 import connect.utils.permission.PermissionUtil;
 import connect.widget.TopToolBar;
 import connect.widget.album.AlbumActivity;
@@ -111,6 +120,25 @@ public class ChatActivity extends BaseChatSendActivity {
         if (TextUtils.isEmpty(chatIdentify) || null == chatType) {
             ActivityUtil.goBack(this);
             return;
+        }
+
+        if (chatType == Connect.ChatType.GROUP) {
+            GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(chatIdentify);
+            List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemEntities(chatIdentify);
+            if (groupEntity == null || memberEntities == null || memberEntities.isEmpty()) {
+                pullGroupInfo(new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        initView();
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+
+                    }
+                });
+                return;
+            }
         }
 
         RoomSession.getInstance().setRoomType(chatType);
@@ -180,6 +208,73 @@ public class ChatActivity extends BaseChatSendActivity {
         PermissionUtil.getInstance().requestPermission(activity,
                 new String[]{PermissionUtil.PERMISSION_RECORD_AUDIO, PermissionUtil.PERMISSION_STORAGE},
                 permissomCallBack);
+    }
+
+    public void pullGroupInfo(final BaseListener<Boolean> baseListener) {
+        Connect.GroupId groupId = Connect.GroupId.newBuilder()
+                .setIdentifier(chatIdentify)
+                .build();
+
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.GROUP_PULLINFO, groupId, new ResultCall<Connect.HttpResponse>() {
+            @Override
+            public void onResponse(Connect.HttpResponse response) {
+                try {
+                    Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
+                    Connect.GroupInfo groupInfo = Connect.GroupInfo.parseFrom(structData.getPlainData());
+                    if (ProtoBufUtil.getInstance().checkProtoBuf(groupInfo)) {
+                        Connect.Group group = groupInfo.getGroup();
+                        String groupIdentifier = group.getIdentifier();
+
+                        GroupEntity groupEntity = ContactHelper.getInstance().loadGroupEntity(groupIdentifier);
+                        if (groupEntity == null) {
+                            groupEntity = new GroupEntity();
+                            groupEntity.setIdentifier(groupIdentifier);
+                            String groupname = group.getName();
+                            if (TextUtils.isEmpty(groupname)) {
+                                groupname = "groupname9";
+                            }
+                            groupEntity.setCategory(group.getCategory());
+                            groupEntity.setName(groupname);
+                            groupEntity.setAvatar(RegularUtil.groupAvatar(group.getIdentifier()));
+                            ContactHelper.getInstance().inserGroupEntity(groupEntity);
+                        }
+
+                        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
+                        String uid = userBean.getUid();
+
+                        Map<String, GroupMemberEntity> memberEntityMap = new HashMap<>();
+                        for (Connect.GroupMember member : groupInfo.getMembersList()) {
+                            GroupMemberEntity memEntity = new GroupMemberEntity();
+                            memEntity.setIdentifier(groupIdentifier);
+                            memEntity.setUid(member.getUid());
+                            memEntity.setAvatar(member.getAvatar());
+
+                            String showName = TextUtils.isEmpty(member.getName()) ?
+                                    member.getUsername() :
+                                    member.getName();
+                            memEntity.setUsername(showName);
+                            memEntity.setRole(member.getRole());
+                            memberEntityMap.put(member.getUid(), memEntity);
+
+                            if (uid.equals(member.getUid())) {
+                                ConversionSettingHelper.getInstance().updateDisturb(groupIdentifier, member.getMute() ? 1 : 0);
+                            }
+                        }
+                        Collection<GroupMemberEntity> memberEntityCollection = memberEntityMap.values();
+                        List<GroupMemberEntity> memEntities = new ArrayList<GroupMemberEntity>(memberEntityCollection);
+                        ContactHelper.getInstance().inserGroupMemEntity(memEntities);
+                        baseListener.Success(true);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Connect.HttpResponse response) {
+
+            }
+        });
     }
 
     @Override

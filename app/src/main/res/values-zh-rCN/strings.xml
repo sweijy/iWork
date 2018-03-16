@@ -31,7 +31,7 @@
     <string name="Chat_Organizational_structure">组织架构</string>
     <string name="Chat_Contact_details">联系人详情</string>
     <string name="Chat_Audio">[语音]</string>
-    <string name="Chat_Chats">聊天</string>
+    <string name="Chat_Chats">发送消息</string>
     <string name="Chat_Choose_Members">选择成员</string>
     <string name="Chat_Choose_contact">选择联系人</string>
     <string name="Chat_Complete">完成</string>
@@ -124,8 +124,10 @@
     <string name="Link_Commonly_used_search">常用搜索</string>
     <string name="Link_Scan_Result">扫描结果</string>
     <string name="Link_Send">发送</string>
+    <string name="Link_See_more_contacts">查看更多联系人</string>
     <string name="Link_Contacts">通信录</string>
     <string name="Link_Account">账号：</string>
+    <string name="Link_Such_as_in_the_group_of">%s等在此群</string>
     <string name="Link_My_group">我的群组</string>
     <string name="Link_Chat_record">聊天记录</string>
     <string name="Link_Dialogue">对话</string>
@@ -153,6 +155,7 @@
     <string name="Link_Delete_contact">删除联系人</string>
     <string name="Link_Added_to_contact">已添加到联系人</string>
     <string name="Link_Deleted_contact">已删除联系人</string>
+    <string name="Link_The_contact">联系人</string>
 
     <string name="Link_invited_to_the_group_chat">%1$s邀请了%2$s加入群聊</string>
     <string name="Link_update_Failed">修改失败</string>
@@ -183,6 +186,7 @@
     <string name="Login_scan_string_error">二维码错误</string>
     <string name="Message_send_fail_not_in_group">消息发送失败，你已经不在群组中</string>
     <string name="Network_No_data">无数据</string>
+    <string name="link_No_search_results">无搜索结果</string>
     <string name="Network_equest_failed_please_try_again_later">请求失败，请稍候再试</string>
     <string name="Set_About">关于</string>
     <string name="Set_Version_checking">版本检查</string>
@@ -281,7 +285,8 @@
     <string name="Work_No_More_Results">没有更多的搜索结果</string>
     <string name="Work_Third_Party_Service">第三方服务</string>
     <string name="Work_Service_Search">搜索应用</string>
-    <string name="Work_Search"> 搜索</string>
+    <string name="Work_Search">搜索</string>
+    <string name="Work_Search_hint"> 搜索</string>
     <string name="Work_Entering_the_warehouse">仓库位置：%1$s</string>
 
     <string name="Link_exit_the_group">%s离开了群聊</string>

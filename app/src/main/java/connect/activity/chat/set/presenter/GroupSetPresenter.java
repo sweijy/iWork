@@ -62,7 +62,8 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
 
         List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemEntities(groupIdentify);
         int size = memberEntities.size();
-        view.groupName(groupEntity.getName() + "(" + size + ")");
+        view.title(groupEntity.getName() + "(" + size + ")");
+        view.groupName(groupEntity.getName());
         view.countMember(memberEntities.size());
 
         int screenWidth = SystemUtil.getScreenWidth();

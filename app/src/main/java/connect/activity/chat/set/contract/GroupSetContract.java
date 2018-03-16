@@ -20,6 +20,8 @@ public interface GroupSetContract {
 
         void memberList(View view);
 
+        void title(String title);
+
         void groupName(String groupname);
 
         void groupNameClickable(boolean clickable);

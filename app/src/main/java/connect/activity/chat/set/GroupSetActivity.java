@@ -122,9 +122,12 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
     }
 
     @Override
-    public void groupName(String groupname) {
-        toolbar.setTitle(groupname);
+    public void title(String title) {
+        toolbar.setTitle(title);
+    }
 
+    @Override
+    public void groupName(String groupname) {
         View view = findViewById(R.id.groupset_groupname);
         TextView txt1 = (TextView) view.findViewById(R.id.txt1);
         TextView txt2 = (TextView) view.findViewById(R.id.txt2);

@@ -25,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.HomeActivity;
 import connect.activity.home.adapter.ConversationAdapter;
@@ -273,6 +274,12 @@ public class ConversationFragment extends BaseFragment {
                     .withString("chatIdentify", identify)
                     .navigation();
         }
+    }
+
+    @OnClick(R.id.linear_layout)
+    void search(View view) {
+        ARouter.getInstance().build("/contact/SearchContactActivity").
+                navigation();
     }
 
     @Override
