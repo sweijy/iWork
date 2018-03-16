@@ -10,7 +10,10 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
+        // 正式id
         applicationId "com.iwork.im"
+        // 测试 id
+        // applicationId "iwork.im"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 5

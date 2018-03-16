@@ -60,21 +60,21 @@ public class ConnectStateView extends RelativeLayout {
     }
 
     public void setConnect() {
-        view.setVisibility(GONE);
+        setVisibility(GONE);
     }
 
     public void setNetNotConnect() {
-        view.setVisibility(VISIBLE);
-        view.setBackgroundColor(getResources().getColor(R.color.color_F9E7E7));
-        img1.setBackgroundResource(R.mipmap.icon_conversation_error);
+        setVisibility(VISIBLE);
+        view.setBackgroundColor(getResources().getColor(R.color.color_F7E7E7));
+        img1.setImageResource(R.mipmap.icon_conversation_error);
         String showTxt = getContext().getString(R.string.Chat_Not_connected);
         txt1.setText(showTxt);
     }
 
     public void setCloseNotify() {
-        view.setVisibility(VISIBLE);
-        view.setBackgroundColor(getResources().getColor(R.color.color_D9E7EF));
-        img1.setBackgroundResource(R.mipmap.icon_conversation_notify);
+        setVisibility(VISIBLE);
+        view.setBackgroundColor(getResources().getColor(R.color.color_DBE7EF));
+        img1.setImageResource(R.mipmap.icon_conversation_notify);
         String showTxt = getContext().getString(R.string.Chat_Conversation_Notify_Close);
         txt1.setText(showTxt);
     }

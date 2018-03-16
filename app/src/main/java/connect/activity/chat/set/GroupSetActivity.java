@@ -89,7 +89,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
         }
     }
 
-    @OnClick(R.id.linearlayout_groupmember)
+    @OnClick({R.id.linearlayout_groupmember, R.id.scrollview})
     public void memberLayoutClick() {
         ARouter.getInstance().build("/iwork/chat/set/GroupMemberActivity")
                 .withString("groupIdentify", groupIdentify)
@@ -122,17 +122,20 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
     }
 
     @Override
-    public void groupName(String groupname) {
-        toolbar.setTitle(groupname);
+    public void title(String title) {
+        toolbar.setTitle(title);
+    }
 
+    @Override
+    public void groupName(String groupname) {
         View view = findViewById(R.id.groupset_groupname);
         TextView txt1 = (TextView) view.findViewById(R.id.txt1);
         TextView txt2 = (TextView) view.findViewById(R.id.txt2);
 
         txt1.setText(getString(R.string.Link_Group_Name));
         if (!TextUtils.isEmpty(groupname)) {
-            if (groupname.length() > 10) {
-                groupname = groupname.substring(0, 10) + "...";
+            if (groupname.length() > 20) {
+                groupname = groupname.substring(0, 20) + "...";
             }
             txt2.setText(groupname);
         }
@@ -141,7 +144,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build("/iwork/chat/set/GroupNameActivity")
-                        .withSerializable("groupIdentify", groupIdentify)
+                        .withSerializable("identify", groupIdentify)
                         .navigation();
             }
         });
@@ -157,7 +160,7 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
             public void onClick(View view) {
                 ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
                         .withBoolean("isCreateGroup", false)
-                        .withString("idnetify", groupIdentify)
+                        .withString("identify", groupIdentify)
                         .navigation();
             }
         });
@@ -292,13 +295,40 @@ public class GroupSetActivity extends BaseActivity implements GroupSetContract.B
     }
 
     @Override
-    public void exitGroup() {
+    public void quitExitGroup(final boolean isquit) {
         Button view = (Button) findViewById(R.id.groupset_exit_group);
-        view.setText(getResources().getString(R.string.Link_Delete_and_Leave));
+        String string = isquit ?
+                getString(R.string.Link_Delete_and_Leave) :
+                getString(R.string.Chat_Group_Disband);
+        view.setText(string);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.requestExitGroup();
+                if (isquit) {
+                    presenter.exitGroup(new BaseListener<Boolean>() {
+                        @Override
+                        public void Success(Boolean ts) {
+                            ARouter.getInstance().build("/iwork/HomeActivity").navigation();
+                        }
+
+                        @Override
+                        public void fail(Object... objects) {
+
+                        }
+                    });
+                } else {
+                    presenter.disbandGroup(new BaseListener<Boolean>() {
+                        @Override
+                        public void Success(Boolean ts) {
+                            ARouter.getInstance().build("/iwork/HomeActivity").navigation();
+                        }
+
+                        @Override
+                        public void fail(Object... objects) {
+
+                        }
+                    });
+                }
             }
         });
     }

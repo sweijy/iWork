@@ -25,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import connect.activity.base.BaseFragment;
 import connect.activity.home.HomeActivity;
 import connect.activity.home.adapter.ConversationAdapter;
@@ -36,6 +37,7 @@ import connect.activity.home.view.ToolbarSearch;
 import connect.activity.set.bean.SystemSetBean;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.DaoHelper.ParamManager;
+import connect.instant.bean.ConnectState;
 import connect.ui.activity.R;
 import connect.utils.log.LogManager;
 import connect.utils.system.SystemUtil;
@@ -69,6 +71,7 @@ public class ConversationFragment extends BaseFragment {
     private Activity activity;
     private View view;
 
+    private PopupWindow popWindow = null;
     private ConversationAdapter chatFragmentAdapter;
     private ConversationListener conversationListener = new ConversationListener();
 
@@ -226,24 +229,36 @@ public class ConversationFragment extends BaseFragment {
                     SearchPopBean feedbackBean = new SearchPopBean(R.mipmap.icon_popup_feedback, getString(R.string.Set_Help_and_feedback));
                     SearchPopBean[] popBeens = new SearchPopBean[]{chatBean, notifyBean, feedbackBean};
 
-                    PopupWindow popWindow = new SearchPopWindow(getActivity(), Arrays.asList(popBeens), new SearchPopupListener() {
+                    popWindow = new SearchPopWindow(getActivity(), Arrays.asList(popBeens), new SearchPopupListener() {
                         @Override
                         public void itemClick(int position, SearchPopBean popBean) {
+                            if (popWindow != null && popWindow.isShowing()) {
+                                popWindow.dismiss();
+                            }
+
+                            popWindow.dismiss();
                             switch (position) {
                                 case 0:
                                     ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
                                             .withBoolean("isCreateGroup", true)
+                                            .withString("identify","")
                                             .navigation();
                                     break;
                                 case 1:
+                                    int notify = ParamManager.getInstance().getInt(ParamManager.CONVERSATION_NOTIFY);
+                                    notify = (notify + 1) % 2;
+                                    ParamManager.getInstance().putInt(ParamManager.CONVERSATION_NOTIFY, notify);
+                                    ConnectState.getInstance().sendEvent(ConnectState.ConnectType.CONNECT);
                                     break;
                                 case 2:
+                                    ARouter.getInstance().build("/iwork/set/SupportFeedbackActivity")
+                                            .navigation();
                                     break;
                             }
                         }
                     });
-                    int offsetX = SystemUtil.dipToPx(30);
-                    int offsetY = SystemUtil.dipToPx(30);
+                    int offsetX = -SystemUtil.dipToPx(110);
+                    int offsetY = SystemUtil.dipToPx(15);
                     popWindow.showAsDropDown(toolbar.findViewById(R.id.relative_layout), offsetX, offsetY);
                 }
             });
@@ -259,6 +274,12 @@ public class ConversationFragment extends BaseFragment {
                     .withString("chatIdentify", identify)
                     .navigation();
         }
+    }
+
+    @OnClick(R.id.linear_layout)
+    void search(View view) {
+        ARouter.getInstance().build("/contact/SearchContactActivity").
+                navigation();
     }
 
     @Override

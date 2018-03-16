@@ -82,8 +82,8 @@ public class LoginUserActivity extends BaseActivity {
         relativeLogin.setEnabled(false);
 
         //// TODO: 2018/3/13 测试
-        nameEt.setText("jinlong.pu");
-        passwordEt.setText("Bitmain.com1!");
+//        nameEt.setText("jinlong.pu");
+//        passwordEt.setText("Bitmain.com1!");
 
         String deveiceName = getIntent().getStringExtra("VALUE");
         if (!TextUtils.isEmpty(deveiceName)) {

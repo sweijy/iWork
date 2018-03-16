@@ -8,12 +8,13 @@
     <connect.activity.home.view.ToolbarSearch
         android:id="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <connect.activity.home.view.ConnectStateView
         android:id="@id/connectstate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:visibility="gone"
+        android:layout_height="@dimen/dp_30" />
 
     <LinearLayout
         android:layout_width="match_parent"

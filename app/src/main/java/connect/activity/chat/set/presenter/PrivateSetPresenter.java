@@ -88,10 +88,10 @@ public class PrivateSetPresenter implements PrivateSetContract.Presenter {
                     Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
                     Connect.SessionInfo sessionInfo = Connect.SessionInfo.parseFrom(structData.getPlainData());
 
-                    boolean mute = sessionInfo.getMute();
                     boolean top = sessionInfo.getTop();
-                    ConversionSettingHelper.getInstance().updateDisturb(uid, mute ? 1 : 0);
+                    boolean mute = sessionInfo.getMute();
                     ConversionHelper.getInstance().updateRoomEntityTop(uid, top);
+                    ConversionSettingHelper.getInstance().updateDisturb(uid, mute ? 1 : 0);
                     checkMute();
                     checkTop();
                 } catch (Exception e) {

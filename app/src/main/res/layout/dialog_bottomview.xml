@@ -25,20 +25,6 @@
         android:gravity="center"
         android:background="@drawable/selector_list_item_bg"
         android:text="@string/Common_Cancel"
-        android:textColor="@color/color_E96464"
+        android:textColor="@color/color_535353"
         android:textSize="@dimen/sp_14"/>
-
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_8px_ffffff">
-        <TextView
-            android:id="@+id/tv_popup_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:gravity="center"
-            android:text="@string/Common_Cancel"
-            android:textColor="@color/color_161A21"
-            android:textSize="@dimen/sp_14"/>
-    </RelativeLayout>-->
 </LinearLayout>

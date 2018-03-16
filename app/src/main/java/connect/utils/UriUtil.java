@@ -34,7 +34,7 @@ public class UriUtil {
     /** 根据 部门id查询 所有员工 */
     public static String CONNECT_V3_DEPAERTMENT_WORKMATES = addressService + "/bm/users/v1/department/workmates";
     /** 群成员邀请入群 */
-    public static String CONNECT_V3_GROUP_INVITE = addressService + "/connect/v3/group/invite";
+    public static String CONNECT_V1_GROUP_INVITE = addressService + "/bm/users/v1/group/invite";
     /** The App update */
     public static String CONNECT_V1_VERSION = addressService + "/bm/users/v1/version";
     /** set user avatar */
@@ -57,6 +57,8 @@ public class UriUtil {
     public static String CREATE_GROUP = addressService + "/bm/users/v1/group";
     /** remove member */
     public static String GROUP_REMOVE = addressService + "/bm/users/v1/group/deluser";
+    /** exit from group */
+    public static String GROUP_DISBAND = addressService + "/bm/users/v1/group/disbanded";
     /** exit from group */
     public static String GROUP_QUIT = addressService + "/bm/users/v1/group/quit";
     /** command group */
@@ -83,6 +85,8 @@ public class UriUtil {
     public static String BM_USERS_V1_GROUP_DISBANDED = addressService + "/bm/users/v1/group/disbanded";
     /** 群组置顶设置 */
     public static String BM_USERS_V1_GROUP_TOP = addressService + "/bm/users/v1/group/top";
+    /** 删除群组成员 */
+    public static String BM_USERS_V1_GROUP_DELUSER = addressService + "/bm/users/v1/group/deluser";
 
     /** =================================== 访客系统 ==================================== */
     /** 修改访客时间 */

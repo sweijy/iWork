@@ -131,8 +131,8 @@
     </style>
 
     <style name="BtnSwitchStyle" parent="android:Animation">
-        <item name="android:layout_width">@dimen/dp_51</item>
-        <item name="android:layout_height">@dimen/dp_33</item>
+        <item name="android:layout_width">@dimen/dp_30</item>
+        <item name="android:layout_height">@dimen/dp_14</item>
         <item name="android:selectable">false</item>
         <item name="android:background">@drawable/sele_switch_btn</item>
         <item name="android:layout_gravity">center_vertical</item>

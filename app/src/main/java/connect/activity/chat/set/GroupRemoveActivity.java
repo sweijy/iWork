@@ -8,15 +8,15 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,19 +25,17 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import connect.activity.base.BaseActivity;
+import connect.activity.base.BaseListener;
 import connect.activity.base.compare.GroupComPara;
-import connect.activity.base.compare.GroupMemberCompara;
 import connect.activity.chat.adapter.GroupRemoveAdapter;
 import connect.activity.chat.set.contract.GroupRemoveContract;
 import connect.activity.chat.set.presenter.GroupRemovePresenter;
 import connect.activity.home.view.LineDecoration;
-import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
 import connect.database.green.bean.GroupMemberEntity;
 import connect.ui.activity.R;
-import connect.utils.dialog.DialogUtil;
+import connect.utils.glide.GlideUtil;
 import connect.widget.SideBar;
 import connect.widget.TopToolBar;
 
@@ -49,14 +47,6 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
 
     @Bind(R.id.toolbar)
     TopToolBar toolbar;
-    @Bind(R.id.line_view)
-    View lineView;
-    @Bind(R.id.txt_selected)
-    TextView txtSelected;
-    @Bind(R.id.btn_selected)
-    Button btnSelected;
-    @Bind(R.id.layout_selected)
-    RelativeLayout layoutSelected;
     @Bind(R.id.search_edit)
     EditText searchEdit;
     @Bind(R.id.recordview)
@@ -68,11 +58,16 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
     String groupIdentify;
 
     private static String TAG = "_GroupRemoveActivity";
+    @Bind(R.id.roundimg)
+    ImageView roundimg;
+    @Bind(R.id.name)
+    TextView name;
+
     private GroupRemoveActivity activity;
     private Map<String, GroupMemberEntity> removeMap = new HashMap<>();
 
     private LinearLayoutManager layoutManager;
-    private List<GroupMemberEntity> memberEntities;
+    private GroupRemoveContract.Presenter removePresenter;
     private GroupRemoveAdapter removeAdapter;
 
     @Override
@@ -87,10 +82,9 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
     @Override
     public void initView() {
         activity = this;
-        toolbar.setBlackStyle();
         toolbar.setLeftImg(R.mipmap.back_white);
         toolbar.setTitle(getString(R.string.Chat_Member_Remove));
-        toolbar.setRightText(getString(R.string.Chat_Member_Cancel));
+        toolbar.setRightText(getString(R.string.Chat_Confirm));
         toolbar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,22 +92,36 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
             }
         });
         toolbar.setRightListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                removeMap.clear();
-                totalRemove();
-                removeAdapter.setData(memberEntities);
+                List<GroupMemberEntity> memberEntities = new ArrayList();
+                Iterator iterator = removeMap.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry<String, GroupMemberEntity> entry = (Map.Entry) iterator.next();
+                    memberEntities.add(entry.getValue());
+                }
+
+                removePresenter.removeMembers(memberEntities, new BaseListener<Boolean>() {
+                    @Override
+                    public void Success(Boolean ts) {
+                        ARouter.getInstance().build("/iwork/chat/set/GroupSetActivity")
+                                .withString("groupIdentify", groupIdentify)
+                                .navigation();
+                    }
+
+                    @Override
+                    public void fail(Object... objects) {
+
+                    }
+                });
             }
         });
-        memberEntities = ContactHelper.getInstance().loadGroupMemberEntities(groupIdentify);
-        Collections.sort(memberEntities, new GroupComPara());
-
         recordview.addItemDecoration(new LineDecoration(activity));
         removeAdapter = new GroupRemoveAdapter();
         layoutManager = new LinearLayoutManager(activity);
         recordview.setLayoutManager(layoutManager);
         recordview.setAdapter(removeAdapter);
-        removeAdapter.setData(memberEntities);
         siderbar.setOnTouchingLetterChangedListener(new GroupRemoveLetterChanged());
         removeAdapter.setRemoveListener(new GroupRemoveAdapter.RemoveListener() {
 
@@ -151,48 +159,24 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
                 searchGroupMember(string);
             }
         });
-        totalRemove();
-        searchGroupMember("");
+
+        List<GroupMemberEntity> groupMemEntities = ContactHelper.getInstance().loadGroupMemEntities(groupIdentify);
+
+        GroupMemberEntity manageEntity = groupMemEntities.get(0);
+        GlideUtil.loadAvatarRound(roundimg, manageEntity.getAvatar());
+        name.setText(manageEntity.getUsername());
+
+        groupMemEntities = groupMemEntities.subList(1, groupMemEntities.size());
+        Collections.sort(groupMemEntities, new GroupComPara());
+        removeAdapter.setData(groupMemEntities);
 
         new GroupRemovePresenter(this).start();
-    }
-
-    @OnClick({R.id.btn_selected})
-    void onClickListener(View view) {
-        switch (view.getId()) {
-            case R.id.btn_selected:
-                String title = getString(R.string.Chat_Set_Remove_Members);
-
-                StringBuffer buffer = new StringBuffer();
-                Iterator iterator = removeMap.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry entry = (Map.Entry) iterator.next();
-                    GroupMemberEntity entity = (GroupMemberEntity) entry.getValue();
-                    buffer.append(entity.getUsername());
-                    buffer.append(",");
-                }
-                String content = buffer.substring(0, buffer.length() - 1);
-                String leftCancle = getString(R.string.Chat_Member_Cancel);
-                String rightConfirm = getString(R.string.Common_OK);
-                DialogUtil.showAlertTextView(activity, title, content, leftCancle, rightConfirm, true, new DialogUtil.OnItemClickListener() {
-
-                    @Override
-                    public void confirm(String value) {
-
-                    }
-
-                    @Override
-                    public void cancel() {
-
-                    }
-                });
-                break;
-        }
+        totalRemove();
     }
 
     @Override
     public void setPresenter(GroupRemoveContract.Presenter presenter) {
-
+        this.removePresenter = presenter;
     }
 
     @Override
@@ -201,15 +185,18 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
     }
 
     @Override
-    public String getGroupIdentify() {
+    public String getidentify() {
         return groupIdentify;
     }
 
     public void totalRemove() {
         int count = removeMap.size();
-        txtSelected.setText(getString(R.string.Chat_Selected_Member, count));
-        btnSelected.setText(getString(R.string.Chat_Determine_Count, count));
-        btnSelected.setEnabled(count > 0);
+        if (count == 0) {
+            toolbar.setRightText(getString(R.string.Chat_Confirm));
+        } else {
+            toolbar.setRightText(getString(R.string.Chat_Confirm_Number, count));
+        }
+        toolbar.setRightTextEnable(count > 0);
     }
 
     public void searchGroupMember(String memberKey) {
@@ -220,16 +207,8 @@ public class GroupRemoveActivity extends BaseActivity implements GroupRemoveCont
             groupMemEntities = ContactHelper.getInstance().loadGroupMemEntitiesLikeKey(groupIdentify, memberKey);
         }
 
-        String myPublicKey = SharedPreferenceUtil.getInstance().getUser().getUid();
-        Iterator<GroupMemberEntity> iterator = groupMemEntities.iterator();
-        while (iterator.hasNext()) {
-            GroupMemberEntity memberEntity = iterator.next();
-            if (memberEntity.getUid().equals(myPublicKey)) {
-                iterator.remove();
-            }
-        }
-
-        Collections.sort(groupMemEntities, new GroupMemberCompara());
+        groupMemEntities = groupMemEntities.subList(1, groupMemEntities.size());
+        Collections.sort(groupMemEntities, new GroupComPara());
         removeAdapter.setData(groupMemEntities);
     }
 

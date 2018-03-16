@@ -6,19 +6,33 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="@dimen/dp_17"
-        android:layout_height="@dimen/dp_17"
-        android:layout_margin="@dimen/dp_12"
-        android:background="@mipmap/department_search" />
-
-    <EditText
-        android:id="@id/search_edit"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_FFFFFF"
-        android:hint="@string/Work_Search"
-        android:textColor="@color/color_474747"
-        android:textColorHint="@color/color_AEAEAE"
-        android:textSize="@dimen/sp_12" />
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginBottom="@dimen/dp_9"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_9"
+        android:background="@drawable/shape_borad_search"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:background="@mipmap/department_search" />
+
+        <EditText
+            android:id="@id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:background="@null"
+            android:maxLines="1"
+            android:hint="@string/Work_Search"
+            android:textColor="@color/color_474747"
+            android:textColorHint="@color/color_AEAEAE"
+            android:textSize="@dimen/sp_12" />
+    </LinearLayout>
 </LinearLayout>

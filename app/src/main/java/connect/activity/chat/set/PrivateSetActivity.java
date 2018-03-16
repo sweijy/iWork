@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -22,7 +21,6 @@ import connect.activity.home.bean.ConversationAction;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.DaoHelper.ConversionSettingHelper;
-import connect.database.green.DaoHelper.OrganizerHelper;
 import connect.database.green.bean.ConversionEntity;
 import connect.database.green.bean.ConversionSettingEntity;
 import connect.ui.activity.R;
@@ -193,7 +191,7 @@ public class PrivateSetActivity extends BaseActivity implements PrivateSetContra
                 if (TextUtils.isEmpty(tag)) {
                     ARouter.getInstance().build("/iwork/chat/set/GroupSelectActivity")
                             .withBoolean("isCreate", true)
-                            .withSerializable("idnetify", uid)
+                            .withString("identify", uid)
                             .navigation();
                 } else if (SharedPreferenceUtil.getInstance().getUser().getUid().equals(tag)) {
                     ARouter.getInstance().build("/iwork/set/UserInfoActivity").

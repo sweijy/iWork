@@ -18,8 +18,10 @@ import connect.activity.home.bean.ConversationAction;
 import connect.activity.home.bean.RoomAttrBean;
 import connect.activity.home.view.ShowTextView;
 import connect.database.green.DaoHelper.ConversionHelper;
+import connect.database.green.DaoHelper.ConversionSettingHelper;
 import connect.database.green.DaoHelper.MessageHelper;
 import connect.database.green.bean.ConversionEntity;
+import connect.database.green.bean.ConversionSettingEntity;
 import connect.ui.activity.R;
 import connect.utils.FileUtil;
 import connect.utils.TimeUtil;
@@ -82,8 +84,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         } else if (roomAttr.getRoomtype() == Connect.ChatType.PRIVATE_VALUE ||
                 roomAttr.getRoomtype() == Connect.ChatType.GROUP_VALUE) {
             String showName = TextUtils.isEmpty(roomAttr.getName()) ? "" : roomAttr.getName();
-            if (showName.length() > 15) {
-                showName = showName.subSequence(0, 15) + "...";
+            if (showName.length() > 20) {
+                showName = showName.subSequence(0, 20) + "...";
             }
             String showAvatar = TextUtils.isEmpty(roomAttr.getAvatar()) ? "" : roomAttr.getAvatar();
 
@@ -109,8 +111,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         String[] strings = new String[]{
                 (roomAttr.getTop() <= 0 ? context.getResources().getString(R.string.Chat_Message_Top) :
                         context.getResources().getString(R.string.Chat_Message_Top_Remove)),
-                context.getResources().getString(R.string.Chat_Conversation_Del)
-        };
+                context.getResources().getString(R.string.Chat_Shielded_Message),
+                context.getResources().getString(R.string.Chat_Conversation_Del)};
         recyclerPopupWindow = new RecyclerPopupWindow(context);
         recyclerPopupWindow.popupWindow(holder.itemRelative, Arrays.asList(strings), new RecyclerPopupWindow.RecyclerPopupListener() {
 
@@ -138,6 +140,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                         topMessage(roomid);
                         break;
                     case 1:
+                        notifyMessage(roomid);
+                        break;
+                    case 2:
                         deleteMessage(roomid);
                         break;
                 }
@@ -152,6 +157,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 int top = (null == conversionEntity.getTop() || conversionEntity.getTop() == 0) ? 1 : 0;
                 conversionEntity.setTop(top);
                 ConversionHelper.getInstance().insertRoomEntity(conversionEntity);
+                ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
+            }
+
+            protected void notifyMessage(String roomId) {
+                ConversionSettingEntity settingEntity = ConversionSettingHelper.getInstance().loadSetEntity(roomId);
+                if (settingEntity == null) {
+                    settingEntity = new ConversionSettingEntity();
+                    settingEntity.setIdentifier(roomId);
+                    settingEntity.setDisturb(0);
+                }
+                int disturb = settingEntity.getDisturb() == 0 ? 1 : 0;
+                settingEntity.setDisturb(disturb);
+                ConversionSettingHelper.getInstance().insertSetEntity(settingEntity);
                 ConversationAction.conversationAction.sendEvent(ConversationAction.ConverType.LOAD_MESSAGE);
             }
 

@@ -179,7 +179,11 @@ public class CommandReceiver implements CommandListener {
                 memberEntity.setIdentifier(groupIdentifier);
                 memberEntity.setUid(member.getUid());
                 memberEntity.setAvatar(member.getAvatar());
-                memberEntity.setUsername(member.getName());
+
+                String showName = TextUtils.isEmpty(member.getName()) ?
+                        member.getUsername() :
+                        member.getName();
+                memberEntity.setUsername(showName);
                 memberEntity.setRole(member.getRole());
                 String memberIdentifyKey = groupIdentifier + member.getUid();
                 memberEntityMap.put(memberIdentifyKey, memberEntity);
@@ -237,7 +241,10 @@ public class CommandReceiver implements CommandListener {
                     GroupMemberEntity groupMemEntity = new GroupMemberEntity();
                     groupMemEntity.setIdentifier(groupKey);
                     groupMemEntity.setUid(info.getUid());
-                    groupMemEntity.setUsername(info.getName());
+                    String name = TextUtils.isEmpty(info.getName()) ?
+                            info.getUsername() :
+                            info.getName();
+                    groupMemEntity.setUsername(name);
                     groupMemEntity.setAvatar(info.getAvatar());
                     groupMemEntity.setRole(0);
                     memberEntityMap.put(info.getUid(), groupMemEntity);

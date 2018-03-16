@@ -10,7 +10,6 @@ import java.util.List;
 import connect.activity.base.BaseListener;
 import connect.activity.chat.bean.RecExtBean;
 import connect.activity.chat.set.contract.GroupSetContract;
-import connect.activity.home.HomeActivity;
 import connect.activity.login.bean.UserBean;
 import connect.database.SharedPreferenceUtil;
 import connect.database.green.DaoHelper.ContactHelper;
@@ -60,9 +59,11 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
             ActivityUtil.goBack(activity);
             return;
         }
-        view.groupName(groupEntity.getName());
 
         List<GroupMemberEntity> memberEntities = ContactHelper.getInstance().loadGroupMemEntities(groupIdentify);
+        int size = memberEntities.size();
+        view.title(groupEntity.getName() + "(" + size + ")");
+        view.groupName(groupEntity.getName());
         view.countMember(memberEntities.size());
 
         int screenWidth = SystemUtil.getScreenWidth();
@@ -71,7 +72,7 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
         int subPosi = memberEntities.size() >= maxMemberShow ? maxMemberShow : memberEntities.size();
         List<GroupMemberEntity> showMemberEntities = memberEntities.subList(0, subPosi);
         for (GroupMemberEntity entity : showMemberEntities) {
-            View headerview = LayoutInflater.from(activity).inflate(R.layout.linear_contact, null);
+            View headerview = LayoutInflater.from(activity).inflate(R.layout.linear_groupmember, null);
             ImageView headimg = (ImageView) headerview.findViewById(R.id.roundimg);
 
             UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
@@ -103,7 +104,11 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
 
         boolean common = Integer.valueOf(1).equals(groupEntity.getCommon());
         view.commonSwtich(common);
-        view.exitGroup();
+
+        UserBean userBean = SharedPreferenceUtil.getInstance().getUser();
+        GroupMemberEntity myMember = showMemberEntities.get(0);
+        boolean isquit = !userBean.getUid().equals(myMember.getUid());
+        view.quitExitGroup(isquit);
     }
 
     @Override
@@ -191,7 +196,48 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
     }
 
     @Override
-    public void requestExitGroup() {
+    public void disbandGroup(final BaseListener<Boolean> listener) {
+        DialogUtil.showAlertTextView(activity,
+                activity.getResources().getString(R.string.Set_tip_title),
+                activity.getResources().getString(R.string.Chat_Disband_Group),
+                "", "", false, new DialogUtil.OnItemClickListener() {
+                    @Override
+                    public void confirm(String value) {
+                        Connect.GroupId groupId = Connect.GroupId.newBuilder().
+                                setIdentifier(groupIdentify).
+                                build();
+
+                        OkHttpUtil.getInstance().postEncrySelf(UriUtil.GROUP_DISBAND, groupId, new ResultCall<Connect.HttpNotSignResponse>() {
+                            @Override
+                            public void onResponse(Connect.HttpNotSignResponse response) {
+                                RecExtBean.getInstance().sendEvent(RecExtBean.ExtType.CLEAR_HISTORY, groupIdentify);
+
+                                ContactHelper.getInstance().removeGroupInfos(groupIdentify);
+                                //FileUtil.deleteDirectory();
+                                listener.Success(true);
+                            }
+
+                            @Override
+                            public void onError(Connect.HttpNotSignResponse response) {
+                                listener.Success(false);
+                                if (response.getCode() == 2424) {
+                                    ToastEUtil.makeText(activity, R.string.Link_Already_delete_and_Leave, ToastEUtil.TOAST_STATUS_FAILE).show();
+                                } else {
+                                    ToastEUtil.makeText(activity, response.getMessage(), ToastEUtil.TOAST_STATUS_FAILE).show();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void exitGroup(final BaseListener<Boolean> listener) {
         DialogUtil.showAlertTextView(activity,
                 activity.getResources().getString(R.string.Set_tip_title),
                 activity.getResources().getString(R.string.Link_Delete_and_Leave),
@@ -206,11 +252,12 @@ public class GroupSetPresenter implements GroupSetContract.Presenter {
 
                                 ContactHelper.getInstance().removeGroupInfos(groupIdentify);
                                 //FileUtil.deleteDirectory();
-                                ActivityUtil.backActivityWithClearTop(activity, HomeActivity.class);
+                                listener.Success(true);
                             }
 
                             @Override
                             public void onError(Connect.HttpNotSignResponse response) {
+                                listener.fail();
                                 if (response.getCode() == 2424) {
                                     ToastEUtil.makeText(activity, R.string.Link_Already_delete_and_Leave, ToastEUtil.TOAST_STATUS_FAILE).show();
                                 } else {

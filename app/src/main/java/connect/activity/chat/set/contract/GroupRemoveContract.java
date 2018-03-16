@@ -15,7 +15,7 @@ public interface GroupRemoveContract {
 
     interface BView extends BaseView<GroupRemoveContract.Presenter> {
 
-        String getGroupIdentify();
+        String getidentify();
 
     }
 

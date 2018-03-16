@@ -100,6 +100,8 @@ public class AvatarSearchView extends RelativeLayout {
             editText.setTextColor(getResources().getColor(R.color.color_474747));
             editText.setHintTextColor(getResources().getColor(R.color.color_AEAEAE));
             editText.setHint(getResources().getText(R.string.Work_Search));
+            editText.setMaxLines(1);
+            editText.setSingleLine(true);
             editText.setGravity(Gravity.BOTTOM);
         }
         linearLayout.addView(editText);
@@ -162,8 +164,8 @@ public class AvatarSearchView extends RelativeLayout {
         }
     }
 
-    public void hideKeyboard(){
-        SystemUtil.hideKeyBoard(getContext(),editText);
+    public void hideKeyboard() {
+        SystemUtil.hideKeyBoard(getContext(), editText);
     }
 
     private AvatarListener clickListener;

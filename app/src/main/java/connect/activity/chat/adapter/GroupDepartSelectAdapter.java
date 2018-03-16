@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 import connect.database.green.bean.OrganizerEntity;
 import connect.ui.activity.R;
-import connect.widget.DepartmentAvatar;
+import connect.utils.glide.GlideUtil;
 
 /**
  * Created by PuJin on 2018/1/10.
@@ -31,6 +32,14 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
     public void notifyData(List<OrganizerEntity> departSelectBeens) {
         this.departSelectBeens = departSelectBeens;
         notifyDataSetChanged();
+    }
+
+    public void notifyData() {
+        notifyDataSetChanged();
+    }
+
+    public List<OrganizerEntity> getOrganizerEntities() {
+        return departSelectBeens;
     }
 
     @Override
@@ -59,26 +68,12 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
         final OrganizerEntity department = departSelectBeens.get(position);
         if (department.isDepartment()) {
             final DepartSelectHolder departSelectHolder = (DepartSelectHolder) holder;
-            final String departmentKey = String.valueOf(department.getId());
-            departSelectHolder.departSelectView.setSelected(departSelectListener.isContains(true, departmentKey));
             departSelectHolder.depaetCountTxt.setText("(" + department.getCount() + ")");
             departSelectHolder.depaetNameTxt.setText(department.getName());
-            departSelectHolder.departmentSelectRelative.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    boolean isselect = departSelectHolder.departSelectView.isSelected();
-                    isselect = !isselect;
-                    departSelectListener.departmentClick(isselect, department);
-                    departSelectHolder.departSelectView.setSelected(isselect);
-                }
-            });
             departSelectHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!departSelectListener.isContains(true, departmentKey)) {
-                        departSelectListener.itemClick(department);
-                    }
+                    departSelectListener.itemClick(department);
                 }
             });
         } else {
@@ -87,7 +82,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
 
             workmateSelectHolder.workmateSelectView.setSelected(departSelectListener.isContains(false, workmateKey));
             workmateSelectHolder.nickTxt.setText(department.getName());
-            workmateSelectHolder.avatarImg.setAvatarName(department.getName(), department.getGender());
+            GlideUtil.loadAvatarRound(workmateSelectHolder.avatarImg,department.getAvatar());
             workmateSelectHolder.workmateSelectRelative.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -119,16 +114,12 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
     static class DepartSelectHolder extends SelectHolder {
 
         View itemView;
-        RelativeLayout departmentSelectRelative;
-        View departSelectView;
         TextView depaetNameTxt;
         TextView depaetCountTxt;
 
         public DepartSelectHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
-            departmentSelectRelative = (RelativeLayout) itemView.findViewById(R.id.relative_department_select);
-            departSelectView = itemView.findViewById(R.id.view_department_select);
             depaetNameTxt = (TextView) itemView.findViewById(R.id.department_tv);
             depaetCountTxt = (TextView) itemView.findViewById(R.id.count_tv);
         }
@@ -139,7 +130,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
         View itemView;
         RelativeLayout workmateSelectRelative;
         View workmateSelectView;
-        DepartmentAvatar avatarImg;
+        ImageView avatarImg;
         TextView nickTxt;
 
         public WorkmateSelectHolder(View itemView) {
@@ -147,7 +138,7 @@ public class GroupDepartSelectAdapter extends RecyclerView.Adapter<GroupDepartSe
             this.itemView = itemView;
             workmateSelectRelative = (RelativeLayout) itemView.findViewById(R.id.relative_workmate_select);
             workmateSelectView = itemView.findViewById(R.id.view_workmate_select);
-            avatarImg = (DepartmentAvatar) itemView.findViewById(R.id.depart_avatar);
+            avatarImg = (ImageView) itemView.findViewById(R.id.avatar_image);
             nickTxt = (TextView) itemView.findViewById(R.id.nickname_tv);
         }
     }

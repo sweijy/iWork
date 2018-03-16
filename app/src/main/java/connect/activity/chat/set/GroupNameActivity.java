@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,12 +32,10 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
     EditText edittxt1;
 
     @Autowired
-    String groupIdentify;
+    String identify;
 
     private GroupNameActivity activity;
     private static String TAG = "_GroupNameActivity";
-    private static String GROUP_IDENTIFY = "GROUP_IDENTIFY";
-    private String groupKey = null;
 
     private GroupNameTextWatcher textWatcher=new GroupNameTextWatcher();
     private GroupNameContract.Presenter presenter;
@@ -46,6 +45,7 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_name);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
     }
 
@@ -60,19 +60,18 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
                 ActivityUtil.goBack(activity);
             }
         });
-        toolbar.setRightText(R.string.Chat_Complete);
+        toolbar.setRightText(R.string.Common_OK);
         toolbar.setRightTextEnable(false);
         toolbar.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String groupName = edittxt1.getText().toString();
+                String groupName = edittxt1.getText().toString().trim();
                 if (groupName.length() >= 2) {
                     presenter.updateGroupName(groupName);
                 }
             }
         });
 
-        groupKey = getIntent().getStringExtra(GROUP_IDENTIFY);
         edittxt1.addTextChangedListener(textWatcher);
         new GroupNamePresenter(this).start();
     }
@@ -93,17 +92,15 @@ public class GroupNameActivity extends BaseActivity implements GroupNameContract
         public void afterTextChanged(Editable s) {
             if (s.length() <2) {
                 toolbar.setRightTextEnable(false);
-                toolbar.setRightTextColor(R.color.color_68656f);
             } else {
                 toolbar.setRightTextEnable(true);
-                toolbar.setRightTextColor(R.color.color_green);
             }
         }
     }
 
     @Override
     public String getRoomKey() {
-        return groupKey;
+        return identify;
     }
 
     @Override

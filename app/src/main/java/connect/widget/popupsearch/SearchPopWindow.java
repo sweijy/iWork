@@ -14,9 +14,7 @@ import android.widget.PopupWindow;
 
 import java.util.List;
 
-import connect.activity.home.view.LineDecoration;
 import connect.ui.activity.R;
-import connect.utils.system.SystemUtil;
 
 /**
  * Created by PuJin on 2018/1/18.
@@ -57,7 +55,6 @@ public class SearchPopWindow extends PopupWindow {
         popupAdapter.setData(popBeanList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(popupAdapter);
-        recyclerView.addItemDecoration(new LineDecoration(activity));
         popupAdapter.setOnItemClick(searchPopupListener);
         //this.setElevation(SystemUtil.dipToPx(10));
     }

@@ -31,7 +31,7 @@
     <string name="Chat_Organizational_structure">组织架构</string>
     <string name="Chat_Contact_details">联系人详情</string>
     <string name="Chat_Audio">[语音]</string>
-    <string name="Chat_Chats">聊天</string>
+    <string name="Chat_Chats">发送消息</string>
     <string name="Chat_Choose_Members">选择成员</string>
     <string name="Chat_Choose_contact">选择联系人</string>
     <string name="Chat_Complete">完成</string>
@@ -50,7 +50,7 @@
     <string name="Chat_Name_Card">名片</string>
     <string name="Chat_Network_connection_failed_please_check_network">网络连接失败，请检查网络</string>
     <string name="Chat_Not_Group_Master">你不是该群的群主</string>
-    <string name="Chat_Not_connected">网络连接不可用</string>
+    <string name="Chat_Not_connected">当前网络不可用，请您检查当前网络设置</string>
     <string name="Chat_Photo">照片</string>
     <string name="Chat_Picture">[图片]</string>
     <string name="Chat_Preview">预览</string>
@@ -102,7 +102,7 @@
     <string name="Link_Clear_All_Chat_History">清除聊天记录</string>
     <string name="Link_Clear_Chat_History">清空聊天记录</string>
     <string name="Link_Delete_Successful">删除成功</string>
-    <string name="Link_Delete_and_Leave">退出群组</string>
+    <string name="Link_Delete_and_Leave">退出群聊</string>
     <string name="Link_Already_delete_and_Leave">你已经退出群</string>
     <string name="Link_Favorite_Friend">常用联系人</string>
     <string name="Link_Group">群组</string>
@@ -346,10 +346,15 @@
     <string name="Chat_Contacts_Choose">从通讯录中选择</string>
     <string name="Chat_Contacts_Select">选中联系人</string>
     <string name="Chat_Contacts_To_Select">选择联系人</string>
-    <string name="Chat_All">所有</string>
+    <string name="Chat_All">全选</string>
     <string name="Chat_Contacts">通讯录</string>
     <string name="Chat_Set_Remove_Members">是否确认移除群成员?</string>
     <string name="Chat_Remove_Conversation">是否移除该条会话记录?</string>
     <string name="Chat_Conversation_Notify_Close">已关闭手机提醒</string>
     <string name="Chat_Member_All_Count">全部成员(%1$d)</string>
+    <string name="Chat_Disband_Group">是否解散群?</string>
+    <string name="Chat_Group_Disband">解散群</string>
+    <string name="Chat_Confirm_Number">确认(%1$d)</string>
+    <string name="Chat_Confirm">确认</string>
+    <string name="Chat_Shielded_Message">屏蔽消息</string>
 </resources>

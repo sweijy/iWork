@@ -192,7 +192,7 @@ public class TopToolBar extends LinearLayout {
         if (enable) {
             rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FFFFFF));
         } else {
-            rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_767a82));
+            rightText.setTextColor(BaseApplication.getInstance().getResources().getColor(R.color.color_FAFBFC));
         }
         rightLayout.setEnabled(enable);
     }

@@ -439,7 +439,7 @@ int32 source=2;
 
 message DelOrQuitGroupMember {
 string identifier = 1;
-string uid=2;
+repeated string uids = 2;
 }
 
 message UpdateGroupInfo{

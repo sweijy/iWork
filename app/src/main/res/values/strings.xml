@@ -35,7 +35,7 @@
     <string name="Chat_Organizational_structure">Organizational structure</string>
     <string name="Chat_Contact_details">Contact details</string>
     <string name="Chat_Audio">[Audio]</string>
-    <string name="Chat_Chats">Chats</string>
+    <string name="Chat_Chats">send message</string>
     <string name="Chat_Choose_Members">Choose Members</string>
     <string name="Chat_Choose_contact">Choose contact</string>
     <string name="Chat_Complete">Complete</string>
@@ -57,7 +57,7 @@
         please check network
     </string>
     <string name="Chat_Not_Group_Master">You are not the group adminer</string>
-    <string name="Chat_Not_connected">Internet connection is not available</string>
+    <string name="Chat_Not_connected">The current network is not available, please check the current network settings</string>
     <string name="Chat_Photo">Photo</string>
     <string name="Chat_Picture">[Picture]</string>
     <string name="Chat_Preview">Preview</string>
@@ -385,4 +385,9 @@
     <string name="Chat_Conversation_Notify_Close">Already closed reminding</string>
     <string name="Chat_Group_Name">group member</string>
     <string name="Chat_Member_All_Count">All members(%1$d)</string>
+    <string name="Chat_Disband_Group">Dissolve the group?</string>
+    <string name="Chat_Group_Disband">Dissolve the group</string>
+    <string name="Chat_Confirm_Number">confirm(%1$d)</string>
+    <string name="Chat_Confirm">confirm</string>
+    <string name="Chat_Shielded_Message">Shielded message</string>
 </resources>

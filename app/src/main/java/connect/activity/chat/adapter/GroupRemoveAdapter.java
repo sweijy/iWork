@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,16 +49,26 @@ public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.
         holder.nameTxt.setText(name);
         GlideUtil.loadAvatarRound(holder.headImg, memEntity.getAvatar());
 
+        if (memEntity.getRole() == null || memEntity.getRole() == 0) {
+            holder.checkImg.setVisibility(View.VISIBLE);
+            holder.managerTxt.setVisibility(View.GONE);
+        } else {
+            holder.checkImg.setVisibility(View.INVISIBLE);
+            holder.managerTxt.setVisibility(View.VISIBLE);
+        }
+
         holder.checkImg.setSelected(removeListener.isCheckOn(uid));
-        holder.checkImg.setOnClickListener(new View.OnClickListener() {
+        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isremove = removeListener.isCheckOn(uid);
-                holder.checkImg.setSelected(!isremove);
-                if (isremove) {
-                    removeListener.remove(uid);
-                } else {
-                    removeListener.addRemove(memEntity);
+                if (memEntity.getRole() == null || memEntity.getRole() == 0) {
+                    boolean isremove = removeListener.isCheckOn(uid);
+                    holder.checkImg.setSelected(!isremove);
+                    if (isremove) {
+                        removeListener.remove(uid);
+                    } else {
+                        removeListener.addRemove(memEntity);
+                    }
                 }
             }
         });
@@ -104,7 +115,8 @@ public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.
         private ImageView headImg;
         private TextView txt;
         private TextView nameTxt;
-        private TextView departmentTxt;
+        private TextView managerTxt;
+        RelativeLayout itemLayout;
 
         public RemoveHolder(View itemView) {
             super(itemView);
@@ -112,7 +124,8 @@ public class GroupRemoveAdapter extends RecyclerView.Adapter<GroupRemoveAdapter.
             txt = (TextView) itemView.findViewById(R.id.txt);
             headImg = (ImageView) itemView.findViewById(R.id.roundimg);
             nameTxt = (TextView) itemView.findViewById(R.id.name);
-            departmentTxt = (TextView) itemView.findViewById(R.id.department);
+            managerTxt = (TextView) itemView.findViewById(R.id.manager_tv);
+            itemLayout = (RelativeLayout) itemView.findViewById(R.id.relative_item);
         }
     }
 

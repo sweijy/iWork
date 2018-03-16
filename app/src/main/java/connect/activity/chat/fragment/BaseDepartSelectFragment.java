@@ -23,18 +23,18 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import connect.activity.base.BaseFragment;
+import connect.activity.base.BaseListener;
 import connect.activity.chat.adapter.BaseGroupSelectAdapter;
 import connect.activity.chat.set.GroupSelectActivity;
 import connect.database.green.DaoHelper.ConversionHelper;
 import connect.database.green.bean.ConversionEntity;
 import connect.ui.activity.R;
-import connect.utils.ActivityUtil;
+import connect.utils.ToastEUtil;
 import connect.utils.UriUtil;
 import connect.utils.glide.GlideUtil;
 import connect.utils.okhttp.OkHttpUtil;
 import connect.utils.okhttp.ResultCall;
 import connect.widget.AvatarSearchView;
-import connect.widget.TopToolBar;
 import protos.Connect;
 
 /**
@@ -43,8 +43,6 @@ import protos.Connect;
  */
 public class BaseDepartSelectFragment extends BaseFragment {
 
-    @Bind(R.id.toolbar)
-    TopToolBar toolbar;
     @Bind(R.id.view_avatar_search)
     AvatarSearchView viewAvatarSearch;
     @Bind(R.id.recyclerview)
@@ -85,14 +83,7 @@ public class BaseDepartSelectFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        toolbar.setLeftImg(R.mipmap.back_white);
-        toolbar.setLeftListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtil.goBack(activity);
-            }
-        });
-        toolbar.setTitle(getResources().getString(R.string.Chat_Choose_contact));
+        activity.toolbarCancel(true);
 
         // 组织架构选择
         View organization = view.findViewById(R.id.include_organization);
@@ -119,7 +110,9 @@ public class BaseDepartSelectFragment extends BaseFragment {
 //            }
 //        });
 
-        requestUserInfo(activity.getUid());
+        if (activity.isCreateGroup() && !TextUtils.isEmpty(activity.getUid())) {
+            requestUserInfo(activity.getUid());
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         selectAdapter = new BaseGroupSelectAdapter();
@@ -166,17 +159,69 @@ public class BaseDepartSelectFragment extends BaseFragment {
     }
 
     public void searchContent(String string) {
-        List<ConversionEntity> conversionEntities = null;
         if (TextUtils.isEmpty(string)) {
             viewAvatarSearch.hideKeyboard();
-            conversionEntities = ConversionHelper.getInstance().loadRecentConversations();
+            List<ConversionEntity> conversionEntities = ConversionHelper.getInstance().loadRecentConversations();
             if (conversionEntities == null) {
                 conversionEntities = new ArrayList<>();
             }
+            selectAdapter.setData(conversionEntities);
         } else {
-            conversionEntities = ConversionHelper.getInstance().loadRecentConversationsLike(string);
+            requestWorkmateSearch(string, new BaseListener<List<ConversionEntity>>() {
+                @Override
+                public void Success(List<ConversionEntity> ts) {
+                    selectAdapter.setData(ts);
+                }
+
+                @Override
+                public void fail(Object... objects) {
+                    List<ConversionEntity> conversionEntities = selectAdapter.getContactEntities();
+                    conversionEntities.clear();
+                    selectAdapter.setData(conversionEntities);
+                }
+            });
         }
-        selectAdapter.setData(conversionEntities);
+    }
+
+    private void requestWorkmateSearch(String username, final BaseListener<List<ConversionEntity>> baseListener) {
+        if (TextUtils.isEmpty(username)) {
+            return;
+        }
+        Connect.SearchUser searchUser = Connect.SearchUser.newBuilder()
+                .setCriteria(username)
+                .build();
+        OkHttpUtil.getInstance().postEncrySelf(UriUtil.CONNECT_V3_WORKMATE_SEARCH, searchUser, new ResultCall<Connect.HttpNotSignResponse>() {
+            @Override
+            public void onResponse(Connect.HttpNotSignResponse response) {
+                try {
+                    Connect.StructData structData = Connect.StructData.parseFrom(response.getBody());
+                    Connect.Workmates workmates = Connect.Workmates.parseFrom(structData.getPlainData());
+                    if (workmates.getListList().size() == 0) {
+                        ToastEUtil.makeText(activity, R.string.Wallet_No_match_user).show();
+                    }
+
+                    ArrayList<ConversionEntity> conversionEntities = new ArrayList<>();
+                    for (Connect.Workmate workmate : workmates.getListList()) {
+                        ConversionEntity entity = new ConversionEntity();
+                        entity.setIdentifier(workmate.getUid());
+                        String showName = TextUtils.isEmpty(workmate.getName()) ?
+                                workmate.getUsername() :
+                                workmate.getName();
+                        entity.setName(showName);
+                        entity.setAvatar(workmate.getAvatar());
+                        conversionEntities.add(entity);
+                    }
+                    baseListener.Success(conversionEntities);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Connect.HttpNotSignResponse response) {
+                baseListener.fail();
+            }
+        });
     }
 
     private class GroupSelectListener implements BaseGroupSelectAdapter.BaseGroupSelectListener {

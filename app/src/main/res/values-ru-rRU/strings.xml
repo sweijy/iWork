@@ -37,7 +37,7 @@
     <string name="Chat_Organizational_structure">В структуру</string>
     <string name="Chat_Contact_details">За контактов</string>
     <string name="Chat_Audio">[Аудио]</string>
-    <string name="Chat_Chats">Чаты</string>
+    <string name="Chat_Chats">отправить сообщение</string>
     <string name="Chat_Choose_Members">Выбор членов</string>
     <string name="Chat_Choose_contact">Выбор контакта</string>
     <string name="Chat_Complete">Завершено</string>
@@ -60,7 +60,7 @@
         сети, пожалуйста проверьте сеть
     </string>
     <string name="Chat_Not_Group_Master">Ты не являешься администратором этой группы</string>
-    <string name="Chat_Not_connected">Интернет-соединение недоступно</string>
+    <string name="Chat_Not_connected">В настоящее время вы проверьте настройки сети</string>
     <string name="Chat_Photo">Фотография</string>
     <string name="Chat_Picture">[Изображение]</string>
     <string name="Chat_Preview">Предварительный просмотр</string>
@@ -408,4 +408,9 @@
     <string name="Chat_Remove_Conversation">удалить разговор?</string>
     <string name="Chat_Conversation_Notify_Close">уже закрыть напоминание</string>
     <string name="Chat_Member_All_Count">все члены(%1$d)</string>
+    <string name="Chat_Disband_Group">Роспуск группы Ли?</string>
+    <string name="Chat_Group_Disband">Роспуск группы</string>
+    <string name="Chat_Confirm_Number">Савала(%1$d)</string>
+    <string name="Chat_Confirm">Савала</string>
+    <string name="Chat_Shielded_Message">экранирование новости</string>
 </resources>
